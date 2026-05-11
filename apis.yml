@@ -28,6 +28,55 @@ common:
     url: https://chronosphere.io
   - type: Documentation
     url: https://docs.chronosphere.io
+  - type: Integrations
+    url: https://chronosphere.io/integrations/
+integrations:
+  - name: chronosphere
+  - name: Observability Platform
+  - name: Open Source Data Collection
+  - name: Control Plane
+  - name: Scalable and Reliable Data Stores
+  - name: Chronosphere Lens
+  - name: Differential Diagnosis DDx
+  - name: Chronosphere SLOs
+  - name: Telemetry Pipeline
+  - name: Telemetry Pipeline Demo
+  - name: Data Collection
+  - name: By Telemetry Data
+  - name: Metrics
+  - name: Distributed Tracing
+  - name: Chronosphere Logs
+  - name: By Layer
+  - name: Application Observability
+  - name: Business Observability
+  - name: Infrastructure Observability
+  - name: Control Costs
+  - name: Scale Prometheus
+  - name: AI Workload Observability
+  - name: Improve Developer Efficiency
+  - name: Kubernetes Workload Observability Simplified
+  - name: Company
+  - name: Security
+  - name: Newsroom
+  - name: FAQs
+  - name: Availability Commitment
+  - name: Resource Center
+  - name: Customer Stories
+  - name: Whitepapers
+  - name: Webinars
+  - name: Demos on Demand
+  - name: Videos
+  - name: Podcasts
+  - name: Research
+  - name: Briefs
+  - name: Business Value Calculator
+  - name: Migration Timeline Estimator
+  - name: Open Source
+  - name: OpenTelemetry
+  - name: Fluent Bit
+  - name: Prometheus
+  - name: nav-search
+  - name: Search Integrations
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
