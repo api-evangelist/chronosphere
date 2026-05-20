@@ -24,6 +24,10 @@ apis:
       - type: Documentation
         url: https://docs.chronosphere.io
 common:
+  - type: GitHubOrganization
+    url: https://github.com/chronosphereio
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/chronosphereio
   - type: Website
     url: https://chronosphere.io
   - type: Documentation
