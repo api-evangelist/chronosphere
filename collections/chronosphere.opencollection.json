@@ -1,0 +1,3358 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bucket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListBuckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/buckets",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Bucket with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Bucket with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/buckets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/buckets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/buckets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/buckets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force_delete",
+                "value": "",
+                "type": "query",
+                "description": "force_delete indicates deletion of the bucket and all resources that reference the bucket.\nThis includes monitors, dashboards, notification policies, recording rules, and alerts."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ClassicDashboard",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListClassicDashboards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/classic-dashboards",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any ClassicDashboard with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by bucket_slug, where any ClassicDashboard with a matching bucket_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "collection_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by collection_slug, where any ClassicDashboard with a matching collection_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any ClassicDashboard with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "include_dashboard_json",
+                "value": "",
+                "type": "query",
+                "description": "Optional flag to populate the dashboard_json of the returned dashboards.\nBy default, dashboard_json will be left empty."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateClassicDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/classic-dashboards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadClassicDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/classic-dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateClassicDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/classic-dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteClassicDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/classic-dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Collection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListCollections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/collections",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Collection with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "team_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by team_slug, where any Collection with a matching team_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Collection with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "notification_policy_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Get collections that directly reference notifications policies by the referenced policy slugs."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateCollection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/collections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadCollection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/collections/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateCollection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/collections/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteCollection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/collections/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Dashboard",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListDashboards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/dashboards",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Dashboard with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "collection_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by collection_slug, where any Dashboard with a matching collection_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Dashboard with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "include_dashboard_json",
+                "value": "",
+                "type": "query",
+                "description": "Optional. Flag to populate the `dashboard_json` field of the returned\ndashboards. By default, `dashboard_json` is empty."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/dashboards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Dataset",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListDatasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/datasets",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Dataset with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Dataset with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Custom filtering option: list filtered down to a specific telemetry type."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateDataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/datasets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadDataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/datasets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateDataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/datasets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteDataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/datasets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DerivedLabel",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListDerivedLabels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/derived-labels",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any DerivedLabel with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any DerivedLabel with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateDerivedLabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/derived-labels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadDerivedLabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/derived-labels/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateDerivedLabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/derived-labels/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteDerivedLabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/derived-labels/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DerivedMetric",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListDerivedMetrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/derived-metrics",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any DerivedMetric with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any DerivedMetric with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateDerivedMetric",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/derived-metrics",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadDerivedMetric",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/derived-metrics/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateDerivedMetric",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/derived-metrics/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteDerivedMetric",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/derived-metrics/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DropRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListDropRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/drop-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any DropRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any DropRule with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateDropRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/drop-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadDropRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/drop-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateDropRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/drop-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteDropRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/drop-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "GcpMetricsIntegration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListGcpMetricsIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/gcp-metrics-integrations",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any GcpMetricsIntegration with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any GcpMetricsIntegration with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateGcpMetricsIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/gcp-metrics-integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadGcpMetricsIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/gcp-metrics-integrations/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateGcpMetricsIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/gcp-metrics-integrations/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteGcpMetricsIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/gcp-metrics-integrations/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "GrafanaDashboard",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListGrafanaDashboards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/grafana-dashboards",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any GrafanaDashboard with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by bucket_slug, where any GrafanaDashboard with a matching bucket_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "collection_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by collection_slug, where any GrafanaDashboard with a matching collection_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any GrafanaDashboard with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "include_dashboard_json",
+                "value": "",
+                "type": "query",
+                "description": "Optional flag to populate the dashboard_json of the returned dashboards.\nBy default, dashboard_json will be left empty."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateGrafanaDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/grafana-dashboards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadGrafanaDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/grafana-dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateGrafanaDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/grafana-dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteGrafanaDashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/grafana-dashboards/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "LogAllocationConfig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadLogAllocationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-allocation-config"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateLogAllocationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/log-allocation-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateLogAllocationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/log-allocation-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteLogAllocationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/log-allocation-config"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "LogIngestConfig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-ingest-config"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/log-ingest-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/log-ingest-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/log-ingest-config"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "LogScaleAction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListLogScaleActions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-scale-actions",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any LogScaleAction with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any LogScaleAction with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateLogScaleAction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/log-scale-actions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadLogScaleAction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-scale-actions/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateLogScaleAction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/log-scale-actions/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteLogScaleAction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/log-scale-actions/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "LogScaleAlert",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListLogScaleAlerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-scale-alerts",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any LogScaleAlert with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any LogScaleAlert with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateLogScaleAlert",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/log-scale-alerts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadLogScaleAlert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-scale-alerts/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateLogScaleAlert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/log-scale-alerts/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteLogScaleAlert",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/log-scale-alerts/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "MappingRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListMappingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/mapping-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any MappingRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by bucket_slug, where any MappingRule with a matching bucket_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any MappingRule with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateMappingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/mapping-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadMappingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/mapping-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateMappingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/mapping-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteMappingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/mapping-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Monitor",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListMonitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/monitors",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Monitor with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by bucket_slug, where any Monitor with a matching bucket_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "collection_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by collection_slug, where any Monitor with a matching collection_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Monitor with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "team_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filter returned monitors by the teams that own the collections that they belong to."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateMonitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/monitors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadMonitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/monitors/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateMonitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/monitors/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteMonitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/monitors/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "MutingRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListMutingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/muting-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any MutingRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any MutingRule with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "states",
+                "value": "",
+                "type": "query",
+                "description": "Lists muting rules filtered by the states. If empty, all muting rules are\nincluded."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateMutingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/muting-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadMutingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/muting-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateMutingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/muting-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteMutingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/muting-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "NotificationPolicy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListNotificationPolicies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/notification-policies",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any NotificationPolicy with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any NotificationPolicy with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by bucket_slug, where any NotificationPolicy with a matching bucket_slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "team_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by team_slug, where any NotificationPolicy with a matching team_slug in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateNotificationPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/notification-policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadNotificationPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/notification-policies/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateNotificationPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/notification-policies/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteNotificationPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/notification-policies/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Notifier",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListNotifiers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/notifiers",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Notifier with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Notifier with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateNotifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/notifiers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadNotifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/notifiers/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateNotifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/notifiers/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteNotifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/notifiers/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OtelMetricsIngestion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/otel-metrics-ingestion"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/otel-metrics-ingestion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/otel-metrics-ingestion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/otel-metrics-ingestion"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RecordingRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListRecordingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/recording-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any RecordingRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any RecordingRule with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "The execution_groups filter cannot be used when a bucket_slug filter is provided."
+              },
+              {
+                "name": "execution_groups",
+                "value": "",
+                "type": "query",
+                "description": "The bucket_slugs filter cannot be used when an execution_group filter is provided."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateRecordingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/recording-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadRecordingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/recording-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateRecordingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/recording-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteRecordingRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/recording-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ResourcePools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/resource-pools"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/resource-pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "ResourcePools CRUD (subset for singleton objects)"
+        },
+        {
+          "info": {
+            "name": "UpdateResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/resource-pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/resource-pools",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RollupRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListRollupRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/rollup-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any RollupRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any RollupRule with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "bucket_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by bucket_slug, where any RollupRule with a matching bucket_slug in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateRollupRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/rollup-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadRollupRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/rollup-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateRollupRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/rollup-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteRollupRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/rollup-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ServiceAccount",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListServiceAccounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/service-accounts",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any ServiceAccount with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any ServiceAccount with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateServiceAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/service-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadServiceAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/service-accounts/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteServiceAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/service-accounts/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadService",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/services/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SLO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListSLOs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/slos",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any SLO with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any SLO with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "collection_slugs",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "service_slugs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateSLO",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/slos",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadSLO",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/slos/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateSLO",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/slos/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteSLO",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/slos/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Team",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTeams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/teams",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Team with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Team with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/teams/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/teams/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/teams/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TraceBehaviorConfig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-behavior-config"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-behavior-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-behavior-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-behavior-config",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TraceBehavior",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTraceBehaviors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-behaviors",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any TraceBehavior with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any TraceBehavior with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceBehavior",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-behaviors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadTraceBehavior",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-behaviors/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTraceBehavior",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-behaviors/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceBehavior",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-behaviors/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TraceJaegerRemoteSamplingStrategy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTraceJaegerRemoteSamplingStrategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-jaeger-remote-sampling-strategies",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any TraceJaegerRemoteSamplingStrategy with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any TraceJaegerRemoteSamplingStrategy with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "service_names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by service_name, where any TraceJaegerRemoteSamplingStrategy with a matching service_name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "name_or_service_contains",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceJaegerRemoteSamplingStrategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-jaeger-remote-sampling-strategies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadTraceJaegerRemoteSamplingStrategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-jaeger-remote-sampling-strategies/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTraceJaegerRemoteSamplingStrategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-jaeger-remote-sampling-strategies/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceJaegerRemoteSamplingStrategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-jaeger-remote-sampling-strategies/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TraceMetricsRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTraceMetricsRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-metrics-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any TraceMetricsRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any TraceMetricsRule with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "metric_names",
+                "value": "",
+                "type": "query",
+                "description": "Get trace metric rules by name."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-metrics-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "***\nTrace Metrics Rules\n***"
+        },
+        {
+          "info": {
+            "name": "ReadTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-metrics-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-metrics-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-metrics-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TraceTailSamplingRules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-tail-sampling-rules"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-tail-sampling-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "TraceTailSamplingRules CRUD (subset for singleton objects)"
+        },
+        {
+          "info": {
+            "name": "UpdateTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-tail-sampling-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-tail-sampling-rules",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
