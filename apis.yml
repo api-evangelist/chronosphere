@@ -34,7 +34,7 @@ common:
     url: https://docs.chronosphere.io
   - type: Integrations
     url: https://chronosphere.io/integrations/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.chronosphere.io/llms.txt
 integrations:
   - name: chronosphere
