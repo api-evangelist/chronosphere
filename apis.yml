@@ -24,6 +24,10 @@ apis:
       - type: Documentation
         url: https://docs.chronosphere.io
 common:
+  - type: TrustCenter
+    url: security/chronosphere-trust-center.yml
+  - type: DomainSecurity
+    url: security/chronosphere-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/chronosphereio
   - type: LinkedIn
@@ -36,6 +40,8 @@ common:
     url: https://chronosphere.io/integrations/
   - type: LlmsText
     url: https://docs.chronosphere.io/llms.txt
+  - url: https://chronosphere.io/blog/
+    type: Blog
 integrations:
   - name: chronosphere
   - name: Observability Platform
