@@ -24,6 +24,8 @@ apis:
       - type: Documentation
         url: https://docs.chronosphere.io
 common:
+  - type: AgenticAccess
+    url: agentic-access/chronosphere-agentic-access.yml
   - type: TrustCenter
     url: security/chronosphere-trust-center.yml
   - type: DomainSecurity
