@@ -1,0 +1,393 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket LogScaleAlert API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: LogScaleAlert
+paths:
+  /api/v1/config/log-scale-alerts:
+    get:
+      tags:
+      - LogScaleAlert
+      operationId: ListLogScaleAlerts
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any LogScaleAlert with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any LogScaleAlert with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListLogScaleAlertsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - LogScaleAlert
+      operationId: CreateLogScaleAlert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateLogScaleAlertRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created LogScaleAlert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateLogScaleAlertResponse'
+        '400':
+          description: Cannot create the LogScaleAlert because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the LogScaleAlert because there is a conflict with an existing LogScaleAlert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/log-scale-alerts/{slug}:
+    get:
+      tags:
+      - LogScaleAlert
+      operationId: ReadLogScaleAlert
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadLogScaleAlertResponse'
+        '404':
+          description: Cannot read the LogScaleAlert because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - LogScaleAlert
+      operationId: UpdateLogScaleAlert
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateLogScaleAlertBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated LogScaleAlert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateLogScaleAlertResponse'
+        '400':
+          description: Cannot update the LogScaleAlert because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the LogScaleAlert because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the LogScaleAlert because there is a conflict with an existing LogScaleAlert.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - LogScaleAlert
+      operationId: DeleteLogScaleAlert
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteLogScaleAlertResponse'
+        '400':
+          description: Cannot delete the LogScaleAlert because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the LogScaleAlert because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1LogScaleAlert:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the LogScaleAlert. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the LogScaleAlert is created.
+        repository:
+          type: string
+          description: Name of LogScale repository the alerts belongs to. Required.
+        name:
+          type: string
+          description: Name of the alert.
+        created_at:
+          type: string
+          description: Timestamp of when the LogScaleAlert was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the LogScaleAlert was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        description:
+          type: string
+          description: Description of the alert.
+        disabled:
+          type: boolean
+          description: Flag indicating whether the alert is disabled.
+        log_scale_query:
+          type: string
+          description: LogScale query to execute.
+          example: level = ERROR | severity > 3 | count(as=numErrors) | numErrors > 500
+        time_window_secs:
+          type: integer
+          description: 'Lookback window used for an alert''s evaluation.
+
+            If this is set to 86400 seconds (24 hours), only the events from the last 24 hours will be considered when the alert query is run.'
+          format: int32
+          example: 3600
+        throttle_secs:
+          type: integer
+          description: Throttle time in seconds. The alert is triggered at most once per throttle period.
+          format: int32
+        throttle_field:
+          type: string
+          description: Field to throttle on. Optional.
+        log_scale_action_slugs:
+          type: array
+          description: 'Slugs of LogScale actions that will receive the alerts. When the value is empty
+
+            this alert won''t trigger. Optional.'
+          items:
+            type: string
+        tags:
+          type: array
+          description: Tags attached to the alert.
+          items:
+            type: string
+        run_as_user:
+          type: string
+          description: Email of the user that the alert runs on behalf of. Required.
+        alert_type:
+          $ref: '#/components/schemas/LogScaleAlertAlertType'
+    ConfigV1UpdateLogScaleAlertBody:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogScaleAlert will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAlert does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAlert isn't created or updated, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
+    configv1UpdateLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1ReadLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1DeleteLogScaleAlertResponse:
+      type: object
+    configv1CreateLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateLogScaleAlertRequest:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAlert isn't created, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1ListLogScaleAlertsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_scale_alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LogScaleAlert'
+    LogScaleAlertAlertType:
+      type: string
+      enum:
+      - STANDARD
+      - FILTER
+x-original-swagger-version: '2.0'

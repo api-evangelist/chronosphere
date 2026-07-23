@@ -1,0 +1,397 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket ClassicDashboard API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: ClassicDashboard
+paths:
+  /api/v1/config/classic-dashboards:
+    get:
+      tags:
+      - ClassicDashboard
+      operationId: ListClassicDashboards
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any ClassicDashboard with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: bucket_slugs
+        in: query
+        description: Filters results by bucket_slug, where any ClassicDashboard with a matching bucket_slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: collection_slugs
+        in: query
+        description: Filters results by collection_slug, where any ClassicDashboard with a matching collection_slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any ClassicDashboard with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: include_dashboard_json
+        in: query
+        description: 'Optional flag to populate the dashboard_json of the returned dashboards.
+
+          By default, dashboard_json will be left empty.'
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListClassicDashboardsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - ClassicDashboard
+      operationId: CreateClassicDashboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateClassicDashboardRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created GrafanaDashboard.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateClassicDashboardResponse'
+        '400':
+          description: Cannot create the GrafanaDashboard because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the GrafanaDashboard because there is a conflict with an existing GrafanaDashboard.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/classic-dashboards/{slug}:
+    get:
+      tags:
+      - ClassicDashboard
+      operationId: ReadClassicDashboard
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadClassicDashboardResponse'
+        '404':
+          description: Cannot read the GrafanaDashboard because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - ClassicDashboard
+      operationId: UpdateClassicDashboard
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateClassicDashboardBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated GrafanaDashboard.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateClassicDashboardResponse'
+        '400':
+          description: Cannot update the GrafanaDashboard because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the GrafanaDashboard because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the GrafanaDashboard because there is a conflict with an existing GrafanaDashboard.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - ClassicDashboard
+      operationId: DeleteClassicDashboard
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteClassicDashboardResponse'
+        '400':
+          description: Cannot delete the GrafanaDashboard because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the GrafanaDashboard because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1DeleteClassicDashboardResponse:
+      type: object
+    configv1UpdateClassicDashboardResponse:
+      type: object
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+    configv1CreateClassicDashboardRequest:
+      type: object
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    configv1ReadClassicDashboardResponse:
+      type: object
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    configv1GrafanaDashboard:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the GrafanaDashboard. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the GrafanaDashboard is created.
+        name:
+          type: string
+          description: Required. Name of the GrafanaDashboard. You can modify this value after the GrafanaDashboard is created.
+        created_at:
+          type: string
+          description: Timestamp of when the GrafanaDashboard was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the GrafanaDashboard was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        bucket_slug:
+          type: string
+          description: 'Slug of the bucket the dashboard belongs to. Required if collection_slug
+
+            is not set.'
+        collection_slug:
+          type: string
+          description: 'Slug of the collection the dashboard belongs to. Required if bucket_slug
+
+            is not set.'
+        collection:
+          $ref: '#/components/schemas/configv1CollectionReference'
+        dashboard_json:
+          type: string
+          description: Required raw JSON of the Grafana dashboard.
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CollectionReference:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
+          type: string
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ListClassicDashboardsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        classic_dashboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1GrafanaDashboard'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    ConfigV1UpdateClassicDashboardBody:
+      type: object
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+        create_if_missing:
+          type: boolean
+          description: If true, the GrafanaDashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the GrafanaDashboard does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    configv1CreateClassicDashboardResponse:
+      type: object
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+x-original-swagger-version: '2.0'

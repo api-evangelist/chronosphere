@@ -1,0 +1,352 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket Team API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: Team
+paths:
+  /api/v1/config/teams:
+    get:
+      tags:
+      - Team
+      operationId: ListTeams
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any Team with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any Team with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListTeamsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - Team
+      operationId: CreateTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateTeamRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created Team.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateTeamResponse'
+        '400':
+          description: Cannot create the Team because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Team because there is a conflict with an existing Team.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/teams/{slug}:
+    get:
+      tags:
+      - Team
+      operationId: ReadTeam
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadTeamResponse'
+        '404':
+          description: Cannot read the Team because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - Team
+      operationId: UpdateTeam
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateTeamBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated Team.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateTeamResponse'
+        '400':
+          description: Cannot update the Team because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Team because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Team because there is a conflict with an existing Team.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Team
+      operationId: DeleteTeam
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteTeamResponse'
+        '400':
+          description: Cannot delete the Team because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Team because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1DeleteTeamResponse:
+      type: object
+    configv1Team:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Team. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Team is created.
+        name:
+          type: string
+          description: Required. Name of the Team. You can modify this value after the Team is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Team was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Team was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        user_emails:
+          type: array
+          description: Unordered set of emails whose users are members of this team.
+          items:
+            type: string
+        description:
+          type: string
+          description: Optional short description of the team.
+    configv1ListTeamsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Team'
+    configv1ReadTeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+    configv1UpdateTeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+    configv1CreateTeamRequest:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    ConfigV1UpdateTeamBody:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+        create_if_missing:
+          type: boolean
+          description: If true, the Team will be created if it does not already exist, identified by slug. If false, an error will be returned if the Team does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created or updated, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateTeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+x-original-swagger-version: '2.0'

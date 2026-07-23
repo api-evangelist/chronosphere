@@ -1,0 +1,442 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket MappingRule API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: MappingRule
+paths:
+  /api/v1/config/mapping-rules:
+    get:
+      tags:
+      - MappingRule
+      operationId: ListMappingRules
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any MappingRule with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: bucket_slugs
+        in: query
+        description: Filters results by bucket_slug, where any MappingRule with a matching bucket_slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any MappingRule with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListMappingRulesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - MappingRule
+      operationId: CreateMappingRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateMappingRuleRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created MappingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateMappingRuleResponse'
+        '400':
+          description: Cannot create the MappingRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the MappingRule because there is a conflict with an existing MappingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/mapping-rules/{slug}:
+    get:
+      tags:
+      - MappingRule
+      operationId: ReadMappingRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadMappingRuleResponse'
+        '404':
+          description: Cannot read the MappingRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - MappingRule
+      operationId: UpdateMappingRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateMappingRuleBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated MappingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateMappingRuleResponse'
+        '400':
+          description: Cannot update the MappingRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the MappingRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the MappingRule because there is a conflict with an existing MappingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - MappingRule
+      operationId: DeleteMappingRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteMappingRuleResponse'
+        '400':
+          description: Cannot delete the MappingRule because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the MappingRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1CreateMappingRuleResponse:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+    configv1LabelFilter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
+    configv1AggregationType:
+      type: string
+      enum:
+      - LAST
+      - MIN
+      - MAX
+      - MEAN
+      - MEDIAN
+      - COUNT
+      - SUM
+      - SUMSQ
+      - STDEV
+      - P10
+      - P20
+      - P30
+      - P40
+      - P50
+      - P60
+      - P70
+      - P80
+      - P90
+      - P95
+      - P99
+      - P999
+      - P9999
+      - P25
+      - P75
+      - COUNT_SAMPLES
+      - HISTOGRAM
+    MappingRuleAggregationPolicy:
+      type: object
+      properties:
+        aggregation:
+          $ref: '#/components/schemas/configv1AggregationType'
+        storage_policy:
+          $ref: '#/components/schemas/configv1MappingRuleStoragePolicy'
+        interval:
+          type: string
+          description: 'Interval between aggregated data points, equivalent to the resolution
+
+            field in storage policy. If set, then the storage_policy field can''t be
+
+            set.'
+        drop_timestamp:
+          type: boolean
+          description: 'Deprecated: This field is no longer supported.'
+    configv1ListMappingRulesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        mapping_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1MappingRule'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateMappingRuleRequest:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+        dry_run:
+          type: boolean
+          description: If true, the MappingRule isn't created, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
+    configv1MappingRule:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the MappingRule. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the MappingRule is created.
+        name:
+          type: string
+          description: Required. Name of the MappingRule. You can modify this value after the MappingRule is created.
+        created_at:
+          type: string
+          description: Timestamp of when the MappingRule was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the MappingRule was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        bucket_slug:
+          type: string
+          description: Required. Slug of the bucket the MappingRule belongs to.
+        filters:
+          type: array
+          description: Required filters that determine to which metrics to apply the rule.
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+        aggregation_policy:
+          $ref: '#/components/schemas/MappingRuleAggregationPolicy'
+        drop:
+          type: boolean
+          description: 'Whether to drop the given set of metrics. If set, then the aggregation
+
+            policy can''t be set.'
+        mode:
+          $ref: '#/components/schemas/configv1MappingRuleMode'
+    ConfigV1UpdateMappingRuleBody:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+        create_if_missing:
+          type: boolean
+          description: If true, the MappingRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the MappingRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the MappingRule isn't created or updated, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
+    configv1DeleteMappingRuleResponse:
+      type: object
+    configv1ReadMappingRuleResponse:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1MappingRuleMode:
+      type: string
+      description: " - ENABLED: ENABLED rules are applied. Rules default to ENABLED.\n - PREVIEW: PREVIEW rules are not applied, but shaping impact stats\nfor them rule are recorded."
+      enum:
+      - ENABLED
+      - PREVIEW
+    configv1UpdateMappingRuleResponse:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+    configv1MappingRuleStoragePolicy:
+      type: object
+      properties:
+        resolution:
+          type: string
+          description: Required resolution of the aggregated metrics.
+        retention:
+          type: string
+          description: Required retention of the aggregated metrics.
+x-original-swagger-version: '2.0'

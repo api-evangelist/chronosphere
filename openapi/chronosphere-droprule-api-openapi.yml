@@ -1,0 +1,417 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket DropRule API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: DropRule
+paths:
+  /api/v1/config/drop-rules:
+    get:
+      tags:
+      - DropRule
+      operationId: ListDropRules
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any DropRule with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any DropRule with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListDropRulesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - DropRule
+      operationId: CreateDropRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateDropRuleRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created DropRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateDropRuleResponse'
+        '400':
+          description: Cannot create the DropRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the DropRule because there is a conflict with an existing DropRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/drop-rules/{slug}:
+    get:
+      tags:
+      - DropRule
+      operationId: ReadDropRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadDropRuleResponse'
+        '404':
+          description: Cannot read the DropRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - DropRule
+      operationId: UpdateDropRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateDropRuleBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated DropRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateDropRuleResponse'
+        '400':
+          description: Cannot update the DropRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the DropRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the DropRule because there is a conflict with an existing DropRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - DropRule
+      operationId: DeleteDropRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteDropRuleResponse'
+        '400':
+          description: Cannot delete the DropRule because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the DropRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1UpdateDropRuleResponse:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+    configv1LabelFilter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
+    configv1DeleteDropRuleResponse:
+      type: object
+    ConfigV1UpdateDropRuleBody:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+        create_if_missing:
+          type: boolean
+          description: If true, the DropRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the DropRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the DropRule isn't created or updated, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
+    configv1ListDropRulesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        drop_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1DropRule'
+    configv1DropRule:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the DropRule. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the DropRule is created.
+        name:
+          type: string
+          description: Required. Name of the DropRule. You can modify this value after the DropRule is created.
+        created_at:
+          type: string
+          description: Timestamp of when the DropRule was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the DropRule was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        mode:
+          $ref: '#/components/schemas/configv1DropRuleMode'
+        filters:
+          type: array
+          description: 'Defines the conditions that determine whether to drop a metric. Drop rules can
+
+            have multiple filter conditions on different labels, making it possible to drop
+
+            a subset of the series matching a particular metric name.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+        conditional_rate_based_drop:
+          $ref: '#/components/schemas/DropRuleConditionalRateBasedDrop'
+        value_based_drop:
+          $ref: '#/components/schemas/DropRuleValueBasedDrop'
+        drop_nan_value:
+          type: boolean
+          description: 'Drops data points if values are Not a Number (NaN). If set to true, Chronosphere
+
+            drops NaN data points, along with any published staleness markers. See the
+
+            [drop rules
+
+            documentation](https://docs.chronosphere.io/control/shaping/rules/drop-rules#define-a-value-based-drop-rule)
+
+            for more information.'
+    DropRuleConditionalRateBasedDrop:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Enables rate-based metric dropping.
+        rate_limit_threshold:
+          type: number
+          description: 'Percentage of the licensed limit reached in order to activate the drop
+
+            rule, between 0 and 100.'
+          format: double
+        activated_drop_duration_secs:
+          type: integer
+          description: 'Once activated, activated_drop_duration_secs defines how long the drop
+
+            rule stays activated before rechecking against the rate_limit_threshold.'
+          format: int32
+      description: 'No longer supported and cannot be used.
+
+        Defines behavior for conditional drop policies.'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    DropRuleValueBasedDrop:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Enables dropping metrics based on a set value.
+        target_drop_value:
+          type: number
+          description: The target data point value at which to drop metrics.
+          format: double
+    configv1CreateDropRuleRequest:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+        dry_run:
+          type: boolean
+          description: If true, the DropRule isn't created, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateDropRuleResponse:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+    configv1DropRuleMode:
+      type: string
+      enum:
+      - ENABLED
+      - DISABLED
+    configv1ReadDropRuleResponse:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+x-original-swagger-version: '2.0'

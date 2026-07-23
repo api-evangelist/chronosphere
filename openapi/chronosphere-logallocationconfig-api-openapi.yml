@@ -1,0 +1,309 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket LogAllocationConfig API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: LogAllocationConfig
+paths:
+  /api/v1/config/log-allocation-config:
+    get:
+      tags:
+      - LogAllocationConfig
+      operationId: ReadLogAllocationConfig
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadLogAllocationConfigResponse'
+        '404':
+          description: Cannot read the LogAllocationConfig because LogAllocationConfig has not been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - LogAllocationConfig
+      operationId: UpdateLogAllocationConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1UpdateLogAllocationConfigRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated LogAllocationConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateLogAllocationConfigResponse'
+        '400':
+          description: Cannot update the LogAllocationConfig because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the LogAllocationConfig because LogAllocationConfig has not been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    post:
+      tags:
+      - LogAllocationConfig
+      operationId: CreateLogAllocationConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateLogAllocationConfigRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created LogAllocationConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateLogAllocationConfigResponse'
+        '400':
+          description: Cannot create the LogAllocationConfig because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the LogAllocationConfig because there is a conflict with an existing LogAllocationConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - LogAllocationConfig
+      operationId: DeleteLogAllocationConfig
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteLogAllocationConfigResponse'
+        '400':
+          description: Cannot delete the LogAllocationConfig because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the LogAllocationConfig because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1LogSearchFilter:
+      type: object
+      properties:
+        query:
+          type: string
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
+    configv1CreateLogAllocationConfigResponse:
+      type: object
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig'
+    configv1LogAllocationConfig:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Timestamp of when the LogAllocationConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the LogAllocationConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        default_dataset:
+          $ref: '#/components/schemas/LogAllocationConfigDefaultDataset'
+        dataset_allocations:
+          type: array
+          description: Defines datasets and budget allocations. Datasets are evaluated in order.
+          items:
+            $ref: '#/components/schemas/LogAllocationConfigDatasetAllocation'
+      description: 'LogAllocationConfig is a singleton configuration object that specifies the
+
+        configuration for Log budget allocations.'
+    LogAllocationConfigDefaultDataset:
+      type: object
+      properties:
+        allocation:
+          $ref: '#/components/schemas/configv1LogAllocationConfigAllocation'
+        priorities:
+          $ref: '#/components/schemas/LogAllocationConfigHighLowPriorities'
+      description: Configuration for default dataset.
+    configv1DeleteLogAllocationConfigResponse:
+      type: object
+    configv1ReadLogAllocationConfigResponse:
+      type: object
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig'
+    configv1UpdateLogAllocationConfigResponse:
+      type: object
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig'
+    LogAllocationConfigHighLowPriorities:
+      type: object
+      properties:
+        high_priority_filters:
+          type: array
+          description: 'A list of search filters defining which logs are considered high priority in
+
+            this dataset. Filters are combined as OR statements so only one filter needs
+
+            to match.'
+          items:
+            $ref: '#/components/schemas/configv1LogSearchFilter'
+        low_priority_filters:
+          type: array
+          description: 'A list of search filters defining which logs are considered low priority in
+
+            this dataset. Filters are combined as OR statements so only one filter needs
+
+            to match.'
+          items:
+            $ref: '#/components/schemas/configv1LogSearchFilter'
+      description: 'Defines explicit high and low priority match criteria to specify which logs to
+
+        drop first (low) and last (high). Anything not matched by either set of rules is
+
+        considered default priority and is dropped after low priority but before high
+
+        priority data.'
+    configv1LogAllocationConfigAllocation:
+      type: object
+      properties:
+        percent_of_license:
+          type: number
+          description: Sets the percentage of the license limit to allocate to the default dataset.
+          format: double
+      description: Configuration for allocating resources to a dataset.
+    LogAllocationConfigDatasetAllocation:
+      type: object
+      properties:
+        dataset_slug:
+          type: string
+          description: Slug of the dataset.
+        allocation:
+          $ref: '#/components/schemas/configv1LogAllocationConfigAllocation'
+        priorities:
+          $ref: '#/components/schemas/LogAllocationConfigHighLowPriorities'
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1UpdateLogAllocationConfigRequest:
+      type: object
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogAllocationConfig will be created if it does not already exist. If false, an error will be returned if the LogAllocationConfig does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogAllocationConfig isn't created or updated, and no response LogAllocationConfig will be returned. The response will return an error if the given LogAllocationConfig is invalid.
+    configv1CreateLogAllocationConfigRequest:
+      type: object
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig'
+        dry_run:
+          type: boolean
+          description: If true, the LogAllocationConfig isn't created, and no response LogAllocationConfig will be returned. The response will return an error if the given LogAllocationConfig is invalid.
+x-original-swagger-version: '2.0'

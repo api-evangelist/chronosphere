@@ -1,0 +1,419 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket DerivedMetric API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: DerivedMetric
+paths:
+  /api/v1/config/derived-metrics:
+    get:
+      tags:
+      - DerivedMetric
+      operationId: ListDerivedMetrics
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any DerivedMetric with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any DerivedMetric with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListDerivedMetricsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - DerivedMetric
+      operationId: CreateDerivedMetric
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateDerivedMetricRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created DerivedMetric.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateDerivedMetricResponse'
+        '400':
+          description: Cannot create the DerivedMetric because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the DerivedMetric because there is a conflict with an existing DerivedMetric.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/derived-metrics/{slug}:
+    get:
+      tags:
+      - DerivedMetric
+      operationId: ReadDerivedMetric
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadDerivedMetricResponse'
+        '404':
+          description: Cannot read the DerivedMetric because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - DerivedMetric
+      operationId: UpdateDerivedMetric
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateDerivedMetricBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated DerivedMetric.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateDerivedMetricResponse'
+        '400':
+          description: Cannot update the DerivedMetric because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the DerivedMetric because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the DerivedMetric because there is a conflict with an existing DerivedMetric.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - DerivedMetric
+      operationId: DeleteDerivedMetric
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteDerivedMetricResponse'
+        '400':
+          description: Cannot delete the DerivedMetric because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the DerivedMetric because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    ConfigV1UpdateDerivedMetricBody:
+      type: object
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+        create_if_missing:
+          type: boolean
+          description: If true, the DerivedMetric will be created if it does not already exist, identified by slug. If false, an error will be returned if the DerivedMetric does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the DerivedMetric isn't created or updated, and no response DerivedMetric will be returned. The response will return an error if the given DerivedMetric is invalid.
+    DerivedMetricSelectorQuery:
+      type: object
+      properties:
+        selector:
+          $ref: '#/components/schemas/DerivedMetricSelector'
+        query:
+          $ref: '#/components/schemas/DerivedMetricQuery'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1DeleteDerivedMetricResponse:
+      type: object
+    DerivedMetricVariable:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Required name of the variable.
+          example: service
+        default_prometheus_selector:
+          type: string
+          description: 'Required PromQL label selector which must match the given variable name.
+
+            If the variable is not specified in the derived metric usage, then this
+
+            default selector is used.'
+          example: service=~".*"
+    configv1ListDerivedMetricsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        derived_metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1DerivedMetric'
+    configv1CreateDerivedMetricResponse:
+      type: object
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    DerivedMetricQuery:
+      type: object
+      properties:
+        prometheus_expr:
+          type: string
+          description: 'Required PromQL expression which the derived metric executes. Should
+
+            include all configured variables.'
+          example: cpu_usage{$service, $instance} / sum(cpu_usage{$service})
+        variables:
+          type: array
+          description: 'Optional variables which may be used in the derived metric as label
+
+            selectors.'
+          items:
+            $ref: '#/components/schemas/DerivedMetricVariable'
+    configv1ReadDerivedMetricResponse:
+      type: object
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+    configv1DerivedMetric:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Required. Name of the DerivedMetric. You can modify this value after the DerivedMetric is created.
+        slug:
+          type: string
+          description: Unique identifier of the DerivedMetric. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the DerivedMetric is created.
+        created_at:
+          type: string
+          description: Timestamp of when the DerivedMetric was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the DerivedMetric was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        metric_name:
+          type: string
+          description: Required metric name of the derived metric, which must be unique across the system.
+          example: cpu_usage:instance
+        description:
+          type: string
+          description: Optional description of the derived metric.
+        queries:
+          type: array
+          description: Required queries that the derived metric can map to.
+          items:
+            $ref: '#/components/schemas/DerivedMetricSelectorQuery'
+    configv1CreateDerivedMetricRequest:
+      type: object
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+        dry_run:
+          type: boolean
+          description: If true, the DerivedMetric isn't created, and no response DerivedMetric will be returned. The response will return an error if the given DerivedMetric is invalid.
+    configv1DerivedMetricLabelMatcherMatcherType:
+      type: string
+      enum:
+      - EXACT
+    DerivedMetricSelector:
+      type: object
+      properties:
+        labels:
+          type: array
+          description: 'Labels which must match in the derived metric usage for the selector to
+
+            match.'
+          items:
+            $ref: '#/components/schemas/configv1DerivedMetricLabelMatcher'
+    configv1DerivedMetricLabelMatcher:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1DerivedMetricLabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
+    configv1UpdateDerivedMetricResponse:
+      type: object
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+    genericError:
+      type: object
+      additionalProperties: true
+x-original-swagger-version: '2.0'

@@ -1,0 +1,375 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket Collection API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: Collection
+paths:
+  /api/v1/config/collections:
+    get:
+      tags:
+      - Collection
+      operationId: ListCollections
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any Collection with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: team_slugs
+        in: query
+        description: Filters results by team_slug, where any Collection with a matching team_slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any Collection with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: notification_policy_slugs
+        in: query
+        description: Get collections that directly reference notifications policies by the referenced policy slugs.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListCollectionsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - Collection
+      operationId: CreateCollection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateCollectionRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateCollectionResponse'
+        '400':
+          description: Cannot create the Collection because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Collection because there is a conflict with an existing Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/collections/{slug}:
+    get:
+      tags:
+      - Collection
+      operationId: ReadCollection
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadCollectionResponse'
+        '404':
+          description: Cannot read the Collection because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - Collection
+      operationId: UpdateCollection
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateCollectionBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateCollectionResponse'
+        '400':
+          description: Cannot update the Collection because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Collection because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Collection because there is a conflict with an existing Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Collection
+      operationId: DeleteCollection
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteCollectionResponse'
+        '400':
+          description: Cannot delete the Collection because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Collection because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    ConfigV1UpdateCollectionBody:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+        create_if_missing:
+          type: boolean
+          description: If true, the Collection will be created if it does not already exist, identified by slug. If false, an error will be returned if the Collection does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Collection isn't created or updated, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
+    configv1DeleteCollectionResponse:
+      type: object
+    configv1ListCollectionsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Collection'
+    configv1ReadCollectionResponse:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+    configv1CreateCollectionRequest:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+        dry_run:
+          type: boolean
+          description: If true, the Collection isn't created, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateCollectionResponse:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+    configv1Collection:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Collection. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Collection is created.
+        name:
+          type: string
+          description: Required. Name of the Collection. You can modify this value after the Collection is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Collection was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Collection was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        team_slug:
+          type: string
+          description: Required slug of the team the collection belongs to.
+        description:
+          type: string
+          description: Optional description of the collection.
+        notification_policy_slug:
+          type: string
+          description: 'Slug of the notification policy used by default for monitors in this collection.
+
+            This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
+
+            This does not override the policy used when a monitor explicitly references a policy.'
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1UpdateCollectionResponse:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+x-original-swagger-version: '2.0'

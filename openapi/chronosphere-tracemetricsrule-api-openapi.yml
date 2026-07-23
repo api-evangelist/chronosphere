@@ -1,0 +1,539 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket TraceMetricsRule API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: TraceMetricsRule
+paths:
+  /api/v1/config/trace-metrics-rules:
+    get:
+      tags:
+      - TraceMetricsRule
+      operationId: ListTraceMetricsRules
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any TraceMetricsRule with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any TraceMetricsRule with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: metric_names
+        in: query
+        description: Get trace metric rules by name.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListTraceMetricsRulesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - TraceMetricsRule
+      description: '***
+
+        Trace Metrics Rules
+
+        ***'
+      operationId: CreateTraceMetricsRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateTraceMetricsRuleRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created TraceMetricsRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateTraceMetricsRuleResponse'
+        '400':
+          description: Cannot create the TraceMetricsRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the TraceMetricsRule because there is a conflict with an existing TraceMetricsRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/trace-metrics-rules/{slug}:
+    get:
+      tags:
+      - TraceMetricsRule
+      operationId: ReadTraceMetricsRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadTraceMetricsRuleResponse'
+        '404':
+          description: Cannot read the TraceMetricsRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - TraceMetricsRule
+      operationId: UpdateTraceMetricsRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateTraceMetricsRuleBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated TraceMetricsRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateTraceMetricsRuleResponse'
+        '400':
+          description: Cannot update the TraceMetricsRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the TraceMetricsRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the TraceMetricsRule because there is a conflict with an existing TraceMetricsRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - TraceMetricsRule
+      operationId: DeleteTraceMetricsRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteTraceMetricsRuleResponse'
+        '400':
+          description: Cannot delete the TraceMetricsRule because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the TraceMetricsRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    TraceSearchFilterStringFilter:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+        value:
+          type: string
+          description: The value of the filter compared to the target trace or span field.
+        in_values:
+          type: array
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+    configv1CreateTraceMetricsRuleRequest:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+        dry_run:
+          type: boolean
+          description: If true, the TraceMetricsRule isn't created, and no response TraceMetricsRule will be returned. The response will return an error if the given TraceMetricsRule is invalid.
+    GroupByGroupByKey:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/GroupByKeyGroupByKeyType'
+        named_key:
+          type: string
+          description: For named KeyTypes (e.g. span tags), the name of the key to group by.
+      description: GroupByKey describes a key to group by.
+    configv1ReadTraceMetricsRuleResponse:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+    configv1TraceMetricsRuleGroupBy:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The label to use in the resultant metrics.
+        key:
+          $ref: '#/components/schemas/GroupByGroupByKey'
+      description: GroupBy contains fields required to group the resultant metrics of a TraceMetricsRule by a specific key.
+    StringFilterStringFilterMatchType:
+      type: string
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+    genericError:
+      type: object
+      additionalProperties: true
+    NumericFilterComparisonType:
+      type: string
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+    TraceSearchFilterDurationFilter:
+      type: object
+      properties:
+        min_secs:
+          type: number
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+        max_secs:
+          type: number
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+    configv1ListTraceMetricsRulesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_metrics_rules:
+          type: array
+          description: Found trace metrics rules.
+          items:
+            $ref: '#/components/schemas/configv1TraceMetricsRule'
+    TraceSearchFilterTraceFilter:
+      type: object
+      properties:
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+    TraceSearchFilterTagFilter:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key or name of the span tag that this filter inspects.
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+    configv1DeleteTraceMetricsRuleResponse:
+      type: object
+    GroupByKeyGroupByKeyType:
+      type: string
+      description: " - SERVICE: Group by service.\n - OPERATION: Group by operation.\n - TAG: Group by span tag."
+      enum:
+      - SERVICE
+      - OPERATION
+      - TAG
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1TraceSearchFilter:
+      type: object
+      properties:
+        trace:
+          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
+        span:
+          type: array
+          description: 'Specifies the span conditions to match on. All conditions must be true in a
+
+            single span for the span to be considered a match. If `span_count` is specified,
+
+            the number of spans within the trace that match span conditions must be within
+
+            `[min, max]`. You can specify multiple span conditions, and each can be
+
+            satisfied by any number of spans within the trace.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1UpdateTraceMetricsRuleResponse:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+    SpanFilterSpanFilterMatchType:
+      type: string
+      enum:
+      - INCLUDE
+      - EXCLUDE
+    TraceSearchFilterBoolFilter:
+      type: object
+      properties:
+        value:
+          type: boolean
+          description: The value of the filter compared to the target trace or span field.
+    configv1TraceMetricsRule:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Required. Name of the TraceMetricsRule. You can modify this value after the TraceMetricsRule is created.
+        slug:
+          type: string
+          description: Unique identifier of the TraceMetricsRule. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the TraceMetricsRule is created.
+        created_at:
+          type: string
+          description: Timestamp of when the TraceMetricsRule was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the TraceMetricsRule was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        metric_name:
+          type: string
+          description: The name of the generated trace metrics.
+        metric_labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: Labels to apply to the generated trace metrics.
+        histogram_buckets_secs:
+          type: array
+          description: Histogram bucket values, in seconds, for generated duration metrics.
+          items:
+            type: number
+            format: double
+        trace_filter:
+          $ref: '#/components/schemas/configv1TraceSearchFilter'
+        group_by:
+          type: array
+          description: Add labels to the resultant metrics based on these specified GroupBy messages.
+          items:
+            $ref: '#/components/schemas/configv1TraceMetricsRuleGroupBy'
+    ConfigV1UpdateTraceMetricsRuleBody:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceMetricsRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceMetricsRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceMetricsRule isn't created or updated, and no response TraceMetricsRule will be returned. The response will return an error if the given TraceMetricsRule is invalid.
+    TraceSearchFilterSpanFilter:
+      type: object
+      properties:
+        match_type:
+          $ref: '#/components/schemas/SpanFilterSpanFilterMatchType'
+        service:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        operation:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        parent_service:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        parent_operation:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+        tags:
+          type: array
+          description: Matches the tags of the candidate span.
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterTagFilter'
+        span_count:
+          $ref: '#/components/schemas/TraceSearchFilterCountFilter'
+        is_root_span:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+    configv1CreateTraceMetricsRuleResponse:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+    TraceSearchFilterCountFilter:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+        max:
+          type: integer
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
+    TraceSearchFilterNumericFilter:
+      type: object
+      properties:
+        comparison:
+          $ref: '#/components/schemas/NumericFilterComparisonType'
+        value:
+          type: number
+          description: The filter value used in comparison against match candidates.
+          format: double
+x-original-swagger-version: '2.0'

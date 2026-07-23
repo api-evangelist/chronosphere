@@ -1,0 +1,413 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket TraceJaegerRemoteSamplingStrategy API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: TraceJaegerRemoteSamplingStrategy
+paths:
+  /api/v1/config/trace-jaeger-remote-sampling-strategies:
+    get:
+      tags:
+      - TraceJaegerRemoteSamplingStrategy
+      operationId: ListTraceJaegerRemoteSamplingStrategies
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any TraceJaegerRemoteSamplingStrategy with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any TraceJaegerRemoteSamplingStrategy with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: service_names
+        in: query
+        description: Filters results by service_name, where any TraceJaegerRemoteSamplingStrategy with a matching service_name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: name_or_service_contains
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListTraceJaegerRemoteSamplingStrategiesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - TraceJaegerRemoteSamplingStrategy
+      operationId: CreateTraceJaegerRemoteSamplingStrategy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateTraceJaegerRemoteSamplingStrategyRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created TraceJaegerRemoteSamplingStrategy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateTraceJaegerRemoteSamplingStrategyResponse'
+        '400':
+          description: Cannot create the TraceJaegerRemoteSamplingStrategy because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the TraceJaegerRemoteSamplingStrategy because there is a conflict with an existing TraceJaegerRemoteSamplingStrategy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/trace-jaeger-remote-sampling-strategies/{slug}:
+    get:
+      tags:
+      - TraceJaegerRemoteSamplingStrategy
+      operationId: ReadTraceJaegerRemoteSamplingStrategy
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadTraceJaegerRemoteSamplingStrategyResponse'
+        '404':
+          description: Cannot read the TraceJaegerRemoteSamplingStrategy because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - TraceJaegerRemoteSamplingStrategy
+      operationId: UpdateTraceJaegerRemoteSamplingStrategy
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated TraceJaegerRemoteSamplingStrategy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateTraceJaegerRemoteSamplingStrategyResponse'
+        '400':
+          description: Cannot update the TraceJaegerRemoteSamplingStrategy because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the TraceJaegerRemoteSamplingStrategy because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the TraceJaegerRemoteSamplingStrategy because there is a conflict with an existing TraceJaegerRemoteSamplingStrategy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - TraceJaegerRemoteSamplingStrategy
+      operationId: DeleteTraceJaegerRemoteSamplingStrategy
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteTraceJaegerRemoteSamplingStrategyResponse'
+        '400':
+          description: Cannot delete the TraceJaegerRemoteSamplingStrategy because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the TraceJaegerRemoteSamplingStrategy because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+    configv1UpdateTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+    PerOperationSamplingStrategiesPerOperationSamplingStrategy:
+      type: object
+      properties:
+        operation:
+          type: string
+          description: The operation to which this specific strategy should apply.
+        probabilistic_sampling_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
+    TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies:
+      type: object
+      properties:
+        default_sampling_rate:
+          type: number
+          description: Defines the service-wide sampling probability (in the range [0, 1]) when specific operations are not matched.
+          format: double
+        default_lower_bound_traces_per_second:
+          type: number
+          description: Defines a minimum number of traces to send for ANY operation in the service, regardless of matching per operation strategy.
+          format: double
+        default_upper_bound_traces_per_second:
+          type: number
+          description: Defines a maximum number of traces to send for ANY operation in the service, regardless of matching per operation strategy.
+          format: double
+        per_operation_strategies:
+          type: array
+          description: Defines explicit operations-specific strategies that take precedence over the default sampling rate.
+          items:
+            $ref: '#/components/schemas/PerOperationSamplingStrategiesPerOperationSamplingStrategy'
+    TraceJaegerRemoteSamplingStrategyProbabilisticStrategy:
+      type: object
+      properties:
+        sampling_rate:
+          type: number
+          description: Value in the range [0, 1] that defines the probability of sampling any trace.
+          format: double
+    configv1TraceJaegerRemoteSamplingStrategy:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the TraceJaegerRemoteSamplingStrategy. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the TraceJaegerRemoteSamplingStrategy is created.
+        name:
+          type: string
+          description: Required. Name of the TraceJaegerRemoteSamplingStrategy. You can modify this value after the TraceJaegerRemoteSamplingStrategy is created.
+        created_at:
+          type: string
+          description: Timestamp of when the TraceJaegerRemoteSamplingStrategy was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the TraceJaegerRemoteSamplingStrategy was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        service_name:
+          type: string
+          description: The name of the service this sampling strategy applies to. This must match the slug and name fields.
+        applied_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyAppliedStrategy'
+    configv1DeleteTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+    configv1ReadTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceJaegerRemoteSamplingStrategy does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created or updated, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
+    TraceJaegerRemoteSamplingStrategyAppliedStrategy:
+      type: object
+      properties:
+        probabilistic_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
+        per_operation_strategies:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies'
+        rate_limiting_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy'
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1CreateTraceJaegerRemoteSamplingStrategyRequest:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+        dry_run:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
+    TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy:
+      type: object
+      properties:
+        max_traces_per_second:
+          type: integer
+          description: Maximum number of traces to sample per second.
+          format: int32
+    configv1ListTraceJaegerRemoteSamplingStrategiesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_jaeger_remote_sampling_strategies:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+x-original-swagger-version: '2.0'

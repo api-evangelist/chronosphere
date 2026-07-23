@@ -1,0 +1,525 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket Dataset API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: Dataset
+paths:
+  /api/v1/config/datasets:
+    get:
+      tags:
+      - Dataset
+      operationId: ListDatasets
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any Dataset with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any Dataset with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: type
+        in: query
+        description: 'Custom filtering option: list filtered down to a specific telemetry type.'
+        schema:
+          type: string
+          enum:
+          - TRACES
+          - LOGS
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListDatasetsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - Dataset
+      operationId: CreateDataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateDatasetRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created Dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateDatasetResponse'
+        '400':
+          description: Cannot create the Dataset because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Dataset because there is a conflict with an existing Dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/datasets/{slug}:
+    get:
+      tags:
+      - Dataset
+      operationId: ReadDataset
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadDatasetResponse'
+        '404':
+          description: Cannot read the Dataset because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - Dataset
+      operationId: UpdateDataset
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateDatasetBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated Dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateDatasetResponse'
+        '400':
+          description: Cannot update the Dataset because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Dataset because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Dataset because there is a conflict with an existing Dataset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Dataset
+      operationId: DeleteDataset
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteDatasetResponse'
+        '400':
+          description: Cannot delete the Dataset because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Dataset because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    DatasetDatasetConfiguration:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DatasetDatasetType'
+        trace_dataset:
+          $ref: '#/components/schemas/configv1TraceDataset'
+        log_dataset:
+          $ref: '#/components/schemas/configv1LogDataset'
+    configv1DeleteDatasetResponse:
+      type: object
+    TraceSearchFilterStringFilter:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+        value:
+          type: string
+          description: The value of the filter compared to the target trace or span field.
+        in_values:
+          type: array
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+    ConfigV1UpdateDatasetBody:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+        create_if_missing:
+          type: boolean
+          description: If true, the Dataset will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dataset does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Dataset isn't created or updated, and no response Dataset will be returned. The response will return an error if the given Dataset is invalid.
+    StringFilterStringFilterMatchType:
+      type: string
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ListDatasetsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Dataset'
+    configv1Dataset:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Required. Name of the Dataset. You can modify this value after the Dataset is created.
+        slug:
+          type: string
+          description: Unique identifier of the Dataset. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Dataset is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Dataset was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Dataset was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        description:
+          type: string
+          description: Required. Description of the dataset.
+        configuration:
+          $ref: '#/components/schemas/DatasetDatasetConfiguration'
+    NumericFilterComparisonType:
+      type: string
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+    TraceSearchFilterDurationFilter:
+      type: object
+      properties:
+        min_secs:
+          type: number
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+        max_secs:
+          type: number
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+    TraceSearchFilterTraceFilter:
+      type: object
+      properties:
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+    TraceSearchFilterTagFilter:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key or name of the span tag that this filter inspects.
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+    configv1UpdateDatasetResponse:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    DatasetDatasetType:
+      type: string
+      enum:
+      - TRACES
+      - LOGS
+    configv1LogSearchFilter:
+      type: object
+      properties:
+        query:
+          type: string
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
+    configv1TraceSearchFilter:
+      type: object
+      properties:
+        trace:
+          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
+        span:
+          type: array
+          description: 'Specifies the span conditions to match on. All conditions must be true in a
+
+            single span for the span to be considered a match. If `span_count` is specified,
+
+            the number of spans within the trace that match span conditions must be within
+
+            `[min, max]`. You can specify multiple span conditions, and each can be
+
+            satisfied by any number of spans within the trace.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateDatasetResponse:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+    SpanFilterSpanFilterMatchType:
+      type: string
+      enum:
+      - INCLUDE
+      - EXCLUDE
+    TraceSearchFilterBoolFilter:
+      type: object
+      properties:
+        value:
+          type: boolean
+          description: The value of the filter compared to the target trace or span field.
+    configv1CreateDatasetRequest:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+        dry_run:
+          type: boolean
+          description: If true, the Dataset isn't created, and no response Dataset will be returned. The response will return an error if the given Dataset is invalid.
+    configv1LogDataset:
+      type: object
+      properties:
+        match_criteria:
+          $ref: '#/components/schemas/configv1LogSearchFilter'
+    configv1ReadDatasetResponse:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+    TraceSearchFilterSpanFilter:
+      type: object
+      properties:
+        match_type:
+          $ref: '#/components/schemas/SpanFilterSpanFilterMatchType'
+        service:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        operation:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        parent_service:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        parent_operation:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+        tags:
+          type: array
+          description: Matches the tags of the candidate span.
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterTagFilter'
+        span_count:
+          $ref: '#/components/schemas/TraceSearchFilterCountFilter'
+        is_root_span:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+    configv1TraceDataset:
+      type: object
+      properties:
+        match_criteria:
+          $ref: '#/components/schemas/configv1TraceSearchFilter'
+    TraceSearchFilterCountFilter:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+        max:
+          type: integer
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
+    TraceSearchFilterNumericFilter:
+      type: object
+      properties:
+        comparison:
+          $ref: '#/components/schemas/NumericFilterComparisonType'
+        value:
+          type: number
+          description: The filter value used in comparison against match candidates.
+          format: double
+x-original-swagger-version: '2.0'

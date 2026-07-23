@@ -1,0 +1,250 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket LogIngestConfig API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: LogIngestConfig
+paths:
+  /api/v1/config/log-ingest-config:
+    get:
+      tags:
+      - LogIngestConfig
+      operationId: ReadLogIngestConfig
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadLogIngestConfigResponse'
+        '404':
+          description: Cannot read the LogIngestConfig because LogIngestConfig has not been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - LogIngestConfig
+      operationId: UpdateLogIngestConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1UpdateLogIngestConfigRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated LogIngestConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateLogIngestConfigResponse'
+        '400':
+          description: Cannot update the LogIngestConfig because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the LogIngestConfig because LogIngestConfig has not been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    post:
+      tags:
+      - LogIngestConfig
+      operationId: CreateLogIngestConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateLogIngestConfigRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created LogIngestConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateLogIngestConfigResponse'
+        '400':
+          description: Cannot create the LogIngestConfig because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the LogIngestConfig because there is a conflict with an existing LogIngestConfig.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - LogIngestConfig
+      operationId: DeleteLogIngestConfig
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteLogIngestConfigResponse'
+        '400':
+          description: Cannot delete the LogIngestConfig because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the LogIngestConfig because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1UpdateLogIngestConfigResponse:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+    configv1CreateLogIngestConfigRequest:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
+    configv1LogParser:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name is the name of the parser.
+        regex:
+          type: string
+          description: Regex is the Re2 regex parser pattern to apply. Named capturing groups become named fields in the extracted log.
+    configv1CreateLogIngestConfigResponse:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+    configv1UpdateLogIngestConfigRequest:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogIngestConfig will be created if it does not already exist. If false, an error will be returned if the LogIngestConfig does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created or updated, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
+    configv1DeleteLogIngestConfigResponse:
+      type: object
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ReadLogIngestConfigResponse:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1LogIngestConfig:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Timestamp of when the LogIngestConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the LogIngestConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        parsers:
+          type: array
+          description: The ordered list of parsers to run on ingested logs. The first parser which matches the log is used.
+          items:
+            $ref: '#/components/schemas/configv1LogParser'
+      description: LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.
+x-original-swagger-version: '2.0'

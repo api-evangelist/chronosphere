@@ -1,0 +1,368 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket GcpMetricsIntegration API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: GcpMetricsIntegration
+paths:
+  /api/v1/config/gcp-metrics-integrations:
+    get:
+      tags:
+      - GcpMetricsIntegration
+      operationId: ListGcpMetricsIntegrations
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any GcpMetricsIntegration with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any GcpMetricsIntegration with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListGcpMetricsIntegrationsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - GcpMetricsIntegration
+      operationId: CreateGcpMetricsIntegration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateGcpMetricsIntegrationRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created GcpMetricsIntegration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateGcpMetricsIntegrationResponse'
+        '400':
+          description: Cannot create the GcpMetricsIntegration because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the GcpMetricsIntegration because there is a conflict with an existing GcpMetricsIntegration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/gcp-metrics-integrations/{slug}:
+    get:
+      tags:
+      - GcpMetricsIntegration
+      operationId: ReadGcpMetricsIntegration
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadGcpMetricsIntegrationResponse'
+        '404':
+          description: Cannot read the GcpMetricsIntegration because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - GcpMetricsIntegration
+      operationId: UpdateGcpMetricsIntegration
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateGcpMetricsIntegrationBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated GcpMetricsIntegration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateGcpMetricsIntegrationResponse'
+        '400':
+          description: Cannot update the GcpMetricsIntegration because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the GcpMetricsIntegration because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the GcpMetricsIntegration because there is a conflict with an existing GcpMetricsIntegration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - GcpMetricsIntegration
+      operationId: DeleteGcpMetricsIntegration
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteGcpMetricsIntegrationResponse'
+        '400':
+          description: Cannot delete the GcpMetricsIntegration because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the GcpMetricsIntegration because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1GcpMetricsIntegrationServiceAccount:
+      type: object
+      properties:
+        client_email:
+          type: string
+          description: Email address of the service account to impersonate.
+    configv1UpdateGcpMetricsIntegrationResponse:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+    configv1CreateGcpMetricsIntegrationResponse:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+    configv1ReadGcpMetricsIntegrationResponse:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ListGcpMetricsIntegrationsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        gcp_metrics_integrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+    configv1DeleteGcpMetricsIntegrationResponse:
+      type: object
+    GcpMetricsIntegrationMetricGroup:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID that has access to the metric data.
+        prefixes:
+          type: array
+          description: List of Gcp metric prefixes to ingest.
+          items:
+            type: string
+    configv1CreateGcpMetricsIntegrationRequest:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+        dry_run:
+          type: boolean
+          description: If true, the GcpMetricsIntegration isn't created, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
+    configv1GcpMetricsIntegration:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the GcpMetricsIntegration. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the GcpMetricsIntegration is created.
+        name:
+          type: string
+          description: Required. Name of the GcpMetricsIntegration. You can modify this value after the GcpMetricsIntegration is created.
+        created_at:
+          type: string
+          description: Timestamp of when the GcpMetricsIntegration was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the GcpMetricsIntegration was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        service_account:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegrationServiceAccount'
+        metric_groups:
+          type: array
+          description: Metric groups to be ingested for this integration.
+          items:
+            $ref: '#/components/schemas/GcpMetricsIntegrationMetricGroup'
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    ConfigV1UpdateGcpMetricsIntegrationBody:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+        create_if_missing:
+          type: boolean
+          description: If true, the GcpMetricsIntegration will be created if it does not already exist, identified by slug. If false, an error will be returned if the GcpMetricsIntegration does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the GcpMetricsIntegration isn't created or updated, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
+x-original-swagger-version: '2.0'

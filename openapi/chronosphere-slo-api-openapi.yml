@@ -1,0 +1,604 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket SLO API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: SLO
+paths:
+  /api/v1/config/slos:
+    get:
+      tags:
+      - SLO
+      operationId: ListSLOs
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any SLO with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any SLO with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: collection_slugs
+        in: query
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: service_slugs
+        in: query
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListSLOsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - SLO
+      operationId: CreateSLO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateSLORequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created SLO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateSLOResponse'
+        '400':
+          description: Cannot create the SLO because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the SLO because there is a conflict with an existing SLO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/slos/{slug}:
+    get:
+      tags:
+      - SLO
+      operationId: ReadSLO
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadSLOResponse'
+        '404':
+          description: Cannot read the SLO because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - SLO
+      operationId: UpdateSLO
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateSLOBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated SLO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateSLOResponse'
+        '400':
+          description: Cannot update the SLO because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the SLO because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the SLO because there is a conflict with an existing SLO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - SLO
+      operationId: DeleteSLO
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteSLOResponse'
+        '400':
+          description: Cannot delete the SLO because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the SLO because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    SLICustomIndicatorConfig:
+      type: object
+      properties:
+        good_query_template:
+          type: string
+          description: 'A PromQL query that measures the number of "good" events for this SLI.
+
+            Either this or the bad_query_template must be set.'
+        bad_query_template:
+          type: string
+          description: 'A PromQL query that measures the number of "bad" events for this SLI.
+
+            Either this or the good_query_template must be set.'
+        total_query_template:
+          type: string
+          description: 'A PromQL query that measures the total number of events for this SLI.
+
+            This is required for all error ratio SLOs.'
+      description: 'Configuration for error ratio SLIs.
+
+        You can include these variables in PromQL queries for SLIs:
+
+        - {{.Window}}. Specifies the window of time that the PromQL query operates on.
+
+        - {{.GroupBy}}. Specifies a comma-separated list of signal and dimension labels to group the results by.
+
+        - {{.AdditionalFilters}}. Requires setting `additional_promql_filters`.'
+    SLODefinition:
+      type: object
+      properties:
+        objective:
+          type: number
+          format: double
+        time_window:
+          $ref: '#/components/schemas/DefinitionTimeWindow'
+        burn_rate_alerting_config:
+          type: array
+          description: 'Provides the burn rate alert configuration for the SLO. If not provided the
+
+            default burn rates will be used. The configuration is only valid if the
+
+            enable_burn_rate_alerting flag is set to true.'
+          items:
+            $ref: '#/components/schemas/DefinitionBurnRateDefinition'
+        enable_burn_rate_alerting:
+          type: boolean
+          description: If true enables burn rate alerting.
+    ConfigV1UpdateSLOBody:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+        create_if_missing:
+          type: boolean
+          description: If true, the SLO will be created if it does not already exist, identified by slug. If false, an error will be returned if the SLO does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the SLO isn't created or updated, and no response SLO will be returned. The response will return an error if the given SLO is invalid.
+    commonPromQLMatcherType:
+      type: string
+      enum:
+      - MatchEqual
+      - MatchRegexp
+      - MatchNotEqual
+      - MatchNotRegexp
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ListSLOsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        slos:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1SLO'
+    SLITimeSliceSize:
+      title: Defines the supported time slice sizes for TimeSlice SLIs.
+      type: string
+      enum:
+      - TIMESLICE_SIZE_ONE_MINUTE
+      - TIMESLICE_SIZE_FIVE_MINUTES
+    configv1ReadSLOResponse:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+    configv1DeleteSLOResponse:
+      type: object
+    configv1CollectionReference:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
+          type: string
+    ConditionOp:
+      type: string
+      enum:
+      - GEQ
+      - GT
+      - LEQ
+      - LT
+      - EQ
+      - NEQ
+      - EXISTS
+      - NOT_EXISTS
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateSLORequest:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+        dry_run:
+          type: boolean
+          description: If true, the SLO isn't created, and no response SLO will be returned. The response will return an error if the given SLO is invalid.
+    DefinitionTimeWindow:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: duration as a string in the format "28d" or "24h", etc.
+    configv1SLI:
+      type: object
+      properties:
+        custom_indicator:
+          $ref: '#/components/schemas/SLICustomIndicatorConfig'
+        custom_timeslice_indicator:
+          $ref: '#/components/schemas/SLICustomTimeSliceIndicatorConfig'
+        custom_dimension_labels:
+          type: array
+          description: 'Used to configure additional labels to export from
+
+            the underlying queries. This feature provides a logical budget to group
+
+            unique combination of dimensions. For example, if you want to track a
+
+            budget per endpoint, add the endpoint label as a dimension. These dimensions
+
+            are provided on the top-level SLI so that SLOs will receive them
+
+            in `.GroupBy`.'
+          items:
+            type: string
+        additional_promql_filters:
+          type: array
+          description: 'These are made available to the SLO queries and are intended to be used for things
+
+            like `cluster!~"dev"`'
+          items:
+            $ref: '#/components/schemas/commonPromQLMatcher'
+    configv1UpdateSLOResponse:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+    MonitorSignalGrouping:
+      type: object
+      properties:
+        label_names:
+          type: array
+          description: 'Set of label names used to split series into signals. Each unique combination
+
+            of labels result in its own signal. For example, if `label_names` is
+
+            `["service", "code"]`, then all series including labels
+
+            `{service="foo",code="404"}` will be grouped together in the same signal.
+
+
+            Cannot be used if `graphite_query` is set.'
+          items:
+            type: string
+        signal_per_series:
+          type: boolean
+          description: 'If set to `true`, each series will have its own signal. Cannot be used with
+
+            `label_names`.'
+      description: SignalGrouping defines how the set of series from the query are split into signals.
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    commonPromQLMatcher:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/commonPromQLMatcherType'
+        name:
+          type: string
+          description: Prometheus label name for the matcher
+        value:
+          type: string
+          description: Prometheus label value for the matcher
+    SLICustomTimeSliceIndicatorConfig:
+      title: 'Defines the configuration for TimeSlice SLIs.
+
+        TimeSlice SLIs are evaluated by running a PromQL query over a certain time window and comparing the result again a condition.
+
+        You can include these variables in PromQL queries for SLIs:
+
+        - {{.Window}}. Specifies the window of time that the PromQL query operates on.
+
+        - {{.GroupBy}}. Specifies a comma-separated list of signal and dimension labels to group the results by.
+
+        - {{.TimeSlice}} :The time slice being evaluated, e.g. `1m` or `5m`.
+
+        - {{.AdditionalFilters}}. Requires setting `additional_promql_filters`.'
+      type: object
+      properties:
+        query_template:
+          type: string
+          description: A PromQL query template for the timeslice SLI.
+        timeslice_size:
+          $ref: '#/components/schemas/SLITimeSliceSize'
+        condition:
+          $ref: '#/components/schemas/SLITimeSliceCondition'
+    SLITimeSliceCondition:
+      title: Defines the condition for evaluating TimeSlice SLIs.
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/ConditionOp'
+        value:
+          type: number
+          description: The value to compare against.
+          format: double
+    DefinitionBurnRateDefinition:
+      type: object
+      properties:
+        window:
+          type: string
+        budget:
+          type: number
+          description: 'The amount of allowed errors during a given time window,
+
+            expressed as a percentage of the error budget. Must be a
+
+            value between `0.0` and `100.0`, exclusive.'
+          format: double
+        severity:
+          type: string
+          description: 'Severity may only be one of: critical, warn.'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Labels to attach when this burn rate triggers. If you add these labels to
+
+            `signal_groupings`, you can route them in the notification policy, and
+
+            can route different burn rates to other notifiers.'
+    configv1CreateSLOResponse:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+    configv1SLO:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the SLO. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the SLO is created.
+        name:
+          type: string
+          description: Required. Name of the SLO. You can modify this value after the SLO is created.
+        description:
+          type: string
+        created_at:
+          type: string
+          description: Timestamp of when the SLO was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the SLO was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        collection_ref:
+          $ref: '#/components/schemas/configv1CollectionReference'
+        notification_policy_slug:
+          type: string
+          description: 'Optional notification policy to explicitly apply to the generated monitors.
+
+            Slug of the notification policy to use for the SLO. If you don''t specify a value,
+
+            then the collection or service this SLO belongs to must have a notification
+
+            policy.'
+        signal_grouping:
+          $ref: '#/components/schemas/MonitorSignalGrouping'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Labels are visible in notifications generated by this SLO,
+
+            and can be used to route alerts with notification overrides.'
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Annotations are visible in notifications generated by this SLO
+
+            They can be be templated with labels from notifications.'
+        sli:
+          $ref: '#/components/schemas/configv1SLI'
+        definition:
+          $ref: '#/components/schemas/SLODefinition'
+x-original-swagger-version: '2.0'

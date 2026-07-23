@@ -1,0 +1,399 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket MutingRule API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: MutingRule
+paths:
+  /api/v1/config/muting-rules:
+    get:
+      tags:
+      - MutingRule
+      operationId: ListMutingRules
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any MutingRule with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any MutingRule with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: states
+        in: query
+        description: 'Lists muting rules filtered by the states. If empty, all muting rules are
+
+          included.'
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - PENDING
+            - ACTIVE
+            - EXPIRED
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListMutingRulesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - MutingRule
+      operationId: CreateMutingRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateMutingRuleRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created MutingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateMutingRuleResponse'
+        '400':
+          description: Cannot create the MutingRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the MutingRule because there is a conflict with an existing MutingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/muting-rules/{slug}:
+    get:
+      tags:
+      - MutingRule
+      operationId: ReadMutingRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadMutingRuleResponse'
+        '404':
+          description: Cannot read the MutingRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - MutingRule
+      operationId: UpdateMutingRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateMutingRuleBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated MutingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateMutingRuleResponse'
+        '400':
+          description: Cannot update the MutingRule because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the MutingRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the MutingRule because there is a conflict with an existing MutingRule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - MutingRule
+      operationId: DeleteMutingRule
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteMutingRuleResponse'
+        '400':
+          description: Cannot delete the MutingRule because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the MutingRule because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1MutingRuleLabelMatcher:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1MutingRuleLabelMatcherMatcherType'
+        name:
+          type: string
+          description: Required. Always matches against an exact label name.
+        value:
+          type: string
+          description: Required. Matches against a label value based on the configured type.
+    configv1CreateMutingRuleRequest:
+      type: object
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
+        dry_run:
+          type: boolean
+          description: If true, the MutingRule isn't created, and no response MutingRule will be returned. The response will return an error if the given MutingRule is invalid.
+    configv1DeleteMutingRuleResponse:
+      type: object
+    configv1CreateMutingRuleResponse:
+      type: object
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
+    configv1UpdateMutingRuleResponse:
+      type: object
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
+    configv1MutingRuleLabelMatcherMatcherType:
+      type: string
+      enum:
+      - EXACT
+      - REGEX
+      - NOT_EXACT
+      - NOT_REGEXP
+    configv1ReadMutingRuleResponse:
+      type: object
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ListMutingRulesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        muting_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1MutingRule'
+    configv1MutingRule:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the MutingRule. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the MutingRule is created.
+        name:
+          type: string
+          description: Required. Name of the MutingRule. You can modify this value after the MutingRule is created.
+        created_at:
+          type: string
+          description: Timestamp of when the MutingRule was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the MutingRule was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        label_matchers:
+          type: array
+          description: 'Required. Specifies which series are silenced by the muting rule. Alerting
+
+            series must match all muting rule matchers to be silenced. You can''t update this
+
+            value. Updates must specify the original value.'
+          items:
+            $ref: '#/components/schemas/configv1MutingRuleLabelMatcher'
+        starts_at:
+          type: string
+          description: 'Required. Timestamp of when the muting rule becomes active. You can''t update
+
+            this value. Updates must specify the original value.'
+          format: date-time
+        ends_at:
+          type: string
+          description: Required. Timestamp of when the muting rule stops being active.
+          format: date-time
+        comment:
+          type: string
+          description: Descriptive comment that explains why the muting rule was created.
+    genericError:
+      type: object
+      additionalProperties: true
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    ConfigV1UpdateMutingRuleBody:
+      type: object
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
+        create_if_missing:
+          type: boolean
+          description: If true, the MutingRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the MutingRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the MutingRule isn't created or updated, and no response MutingRule will be returned. The response will return an error if the given MutingRule is invalid.
+x-original-swagger-version: '2.0'

@@ -1,0 +1,433 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket DerivedLabel API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: DerivedLabel
+paths:
+  /api/v1/config/derived-labels:
+    get:
+      tags:
+      - DerivedLabel
+      operationId: ListDerivedLabels
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any DerivedLabel with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any DerivedLabel with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListDerivedLabelsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - DerivedLabel
+      operationId: CreateDerivedLabel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateDerivedLabelRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created DerivedLabel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateDerivedLabelResponse'
+        '400':
+          description: Cannot create the DerivedLabel because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the DerivedLabel because there is a conflict with an existing DerivedLabel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/derived-labels/{slug}:
+    get:
+      tags:
+      - DerivedLabel
+      operationId: ReadDerivedLabel
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadDerivedLabelResponse'
+        '404':
+          description: Cannot read the DerivedLabel because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - DerivedLabel
+      operationId: UpdateDerivedLabel
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateDerivedLabelBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated DerivedLabel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateDerivedLabelResponse'
+        '400':
+          description: Cannot update the DerivedLabel because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the DerivedLabel because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the DerivedLabel because there is a conflict with an existing DerivedLabel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - DerivedLabel
+      operationId: DeleteDerivedLabel
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteDerivedLabelResponse'
+        '400':
+          description: Cannot delete the DerivedLabel because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the DerivedLabel because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1ReadDerivedLabelResponse:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+    configv1ListDerivedLabelsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        derived_labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1DerivedLabel'
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1CreateDerivedLabelResponse:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+    configv1DerivedLabel:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Required. Name of the DerivedLabel. You can modify this value after the DerivedLabel is created.
+        slug:
+          type: string
+          description: Unique identifier of the DerivedLabel. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the DerivedLabel is created.
+        created_at:
+          type: string
+          description: Timestamp of when the DerivedLabel was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the DerivedLabel was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        label_name:
+          type: string
+          description: Name of the derived label. It needs to be unique across the system.
+        description:
+          type: string
+          description: Optional description of the derived label.
+        metric_label:
+          $ref: '#/components/schemas/DerivedLabelMetricLabel'
+        existing_label_policy:
+          $ref: '#/components/schemas/configv1DerivedLabelLabelPolicy'
+    MetricLabelConstructedLabel:
+      type: object
+      properties:
+        value_definitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstructedLabelValueDefinition'
+    MappingLabelNameMapping:
+      type: object
+      properties:
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+        source_label:
+          type: string
+          description: The actual label ingested on the time series
+        value_mappings:
+          type: array
+          description: These value mappings apply to just the name mapping they belong to.
+          items:
+            $ref: '#/components/schemas/MappingLabelValueMapping'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1DeleteDerivedLabelResponse:
+      type: object
+    configv1UpdateDerivedLabelResponse:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    MappingLabelValueMapping:
+      type: object
+      properties:
+        source_value_globs:
+          type: array
+          description: Defines the source label values that should be mapped into the given target_value.
+          items:
+            type: string
+        target_value:
+          type: string
+          description: "The value that source_value_globs are mapped into.\nFor example, given this mapping:\n```yaml\nvalue_mappings:\n - source_value_globs:\n     - Cat\n     - CAT\n   target_value: cat\n```\nThis indicates that the target value `cat` maps to the source label's values `Cat` and `CAT`."
+    ConfigV1UpdateDerivedLabelBody:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+        create_if_missing:
+          type: boolean
+          description: If true, the DerivedLabel will be created if it does not already exist, identified by slug. If false, an error will be returned if the DerivedLabel does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the DerivedLabel isn't created or updated, and no response DerivedLabel will be returned. The response will return an error if the given DerivedLabel is invalid.
+    configv1CreateDerivedLabelRequest:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+        dry_run:
+          type: boolean
+          description: If true, the DerivedLabel isn't created, and no response DerivedLabel will be returned. The response will return an error if the given DerivedLabel is invalid.
+    configv1LabelFilter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
+    configv1DerivedLabelLabelPolicy:
+      type: string
+      enum:
+      - KEEP
+      - OVERRIDE
+    DerivedLabelMetricLabel:
+      type: object
+      properties:
+        constructed_label:
+          $ref: '#/components/schemas/MetricLabelConstructedLabel'
+        mapping_label:
+          $ref: '#/components/schemas/MetricLabelMappingLabel'
+    ConstructedLabelValueDefinition:
+      type: object
+      properties:
+        value:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+    MetricLabelMappingLabel:
+      type: object
+      properties:
+        name_mappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingLabelNameMapping'
+        value_mappings:
+          type: array
+          description: 'These value mappings apply to the whole mapping label.
+
+            If there''s no name_mappings, these value mappings apply to the label that exists on the metric.'
+          items:
+            $ref: '#/components/schemas/MappingLabelValueMapping'
+x-original-swagger-version: '2.0'

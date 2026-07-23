@@ -1,0 +1,408 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: Bucket
+paths:
+  /api/v1/config/buckets:
+    get:
+      tags:
+      - Bucket
+      operationId: ListBuckets
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any Bucket with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any Bucket with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListBucketsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - Bucket
+      operationId: CreateBucket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateBucketRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created Bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateBucketResponse'
+        '400':
+          description: Cannot create the Bucket because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Bucket because there is a conflict with an existing Bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/buckets/{slug}:
+    get:
+      tags:
+      - Bucket
+      operationId: ReadBucket
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadBucketResponse'
+        '404':
+          description: Cannot read the Bucket because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - Bucket
+      operationId: UpdateBucket
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateBucketBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated Bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateBucketResponse'
+        '400':
+          description: Cannot update the Bucket because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Bucket because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Bucket because there is a conflict with an existing Bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Bucket
+      operationId: DeleteBucket
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: force_delete
+        in: query
+        description: 'force_delete indicates deletion of the bucket and all resources that reference the bucket.
+
+          This includes monitors, dashboards, notification policies, recording rules, and alerts.'
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteBucketResponse'
+        '400':
+          description: Cannot delete the Bucket because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Bucket because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    configv1CreateBucketRequest:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+        dry_run:
+          type: boolean
+          description: If true, the Bucket isn't created, and no response Bucket will be returned. The response will return an error if the given Bucket is invalid.
+    ResourceChange:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/configv1ResourceType'
+        slug:
+          type: string
+        action:
+          $ref: '#/components/schemas/ResourceChangeAction'
+    ConfigV1UpdateBucketBody:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+        create_if_missing:
+          type: boolean
+          description: If true, the Bucket will be created if it does not already exist, identified by slug. If false, an error will be returned if the Bucket does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Bucket isn't created or updated, and no response Bucket will be returned. The response will return an error if the given Bucket is invalid.
+    configv1ListBucketsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Bucket'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ResourceType:
+      type: string
+      enum:
+      - BUCKET
+      - DASHBOARD
+      - GRAFANA_DASHBOARD
+      - MONITOR
+      - NOTIFICATION_POLICY
+      - RECORDING_RULE
+      - MAPPING_RULE
+      - ROLLUP_RULE
+    configv1Bucket:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Bucket. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Bucket is created.
+        name:
+          type: string
+          description: Required. Name of the Bucket. You can modify this value after the Bucket is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Bucket was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Bucket was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        description:
+          type: string
+          description: Optional description of the bucket.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional labels marking the bucket.
+        team_slug:
+          type: string
+          description: Optional slug of the team the bucket belongs to.
+        notification_policy_slug:
+          type: string
+          description: 'Slug of the notification policy used by default for monitors in this bucket.
+
+            This is optional if the bucket does not contain monitors or all of its monitors explicitly reference a policy.
+
+            This policy takes precedence over a bucket-owned notification policy.
+
+            This does not override the policy used when a monitor explicitly references a policy.'
+    configv1CreateBucketResponse:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ReadBucketResponse:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1DeleteBucketResponse:
+      type: object
+      properties:
+        changes:
+          type: array
+          description: 'Changes contains what resources are deleted. The bucket being deleted will
+
+            always be included. When force_delete is used, the changelog will include
+
+            all resources that reference the bucket that were deleted.'
+          items:
+            $ref: '#/components/schemas/ResourceChange'
+    ResourceChangeAction:
+      type: string
+      enum:
+      - CREATED
+      - UPDATED
+      - DELETED
+      - NOOP
+    configv1UpdateBucketResponse:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+x-original-swagger-version: '2.0'

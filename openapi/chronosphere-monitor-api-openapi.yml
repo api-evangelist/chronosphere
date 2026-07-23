@@ -1,0 +1,610 @@
+openapi: 3.0.1
+info:
+  title: Config V1 Bucket Monitor API
+  description: '
+
+    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
+
+    '
+  version: v1
+servers:
+- url: /
+tags:
+- name: Monitor
+paths:
+  /api/v1/config/monitors:
+    get:
+      tags:
+      - Monitor
+      operationId: ListMonitors
+      parameters:
+      - name: page.max_size
+        in: query
+        description: 'Page size preference (i.e. how many items are returned in the next
+
+          page). If zero, the server will use a default. Regardless of what size
+
+          is given, clients must never assume how many items will be returned.'
+        schema:
+          type: integer
+          format: int64
+      - name: page.token
+        in: query
+        description: 'Opaque page token identifying which page to request. An empty token
+
+          identifies the first page.'
+        schema:
+          type: string
+      - name: slugs
+        in: query
+        description: Filters results by slug, where any Monitor with a matching slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: bucket_slugs
+        in: query
+        description: Filters results by bucket_slug, where any Monitor with a matching bucket_slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: collection_slugs
+        in: query
+        description: Filters results by collection_slug, where any Monitor with a matching collection_slug in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: names
+        in: query
+        description: Filters results by name, where any Monitor with a matching name in the given list (and matches all other filters) is returned.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: team_slugs
+        in: query
+        description: Filter returned monitors by the teams that own the collections that they belong to.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListMonitorsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    post:
+      tags:
+      - Monitor
+      operationId: CreateMonitor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateMonitorRequest'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the created Monitor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateMonitorResponse'
+        '400':
+          description: Cannot create the Monitor because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Monitor because there is a conflict with an existing Monitor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+  /api/v1/config/monitors/{slug}:
+    get:
+      tags:
+      - Monitor
+      operationId: ReadMonitor
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadMonitorResponse'
+        '404':
+          description: Cannot read the Monitor because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+    put:
+      tags:
+      - Monitor
+      operationId: UpdateMonitor
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateMonitorBody'
+        required: true
+      responses:
+        '200':
+          description: A successful response containing the updated Monitor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateMonitorResponse'
+        '400':
+          description: Cannot update the Monitor because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Monitor because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Monitor because there is a conflict with an existing Monitor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - Monitor
+      operationId: DeleteMonitor
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteMonitorResponse'
+        '400':
+          description: Cannot delete the Monitor because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Monitor because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+components:
+  schemas:
+    MonitorSchedule:
+      type: object
+      properties:
+        timezone:
+          type: string
+          description: The timezone of the time ranges.
+        weekly_schedule:
+          $ref: '#/components/schemas/ScheduleWeeklySchedule'
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ReadMonitorResponse:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
+    ScheduleDayActive:
+      type: string
+      enum:
+      - ALL_DAY
+      - ONLY_DURING_RANGES
+      - NEVER
+    configv1CreateMonitorResponse:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
+    configv1CollectionReference:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
+          type: string
+    ConditionOp:
+      type: string
+      enum:
+      - GEQ
+      - GT
+      - LEQ
+      - LT
+      - EQ
+      - NEQ
+      - EXISTS
+      - NOT_EXISTS
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateMonitorRequest:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
+        dry_run:
+          type: boolean
+          description: If true, the Monitor isn't created, and no response Monitor will be returned. The response will return an error if the given Monitor is invalid.
+    configv1LabelMatcher:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
+    SeriesConditionsConditions:
+      type: object
+      properties:
+        conditions:
+          type: array
+          description: 'List of conditions to evaluate against a series. Only one condition must
+
+            match to assign a severity to a signal.'
+          items:
+            $ref: '#/components/schemas/MonitorCondition'
+    configv1DeleteMonitorResponse:
+      type: object
+    ConfigV1UpdateMonitorBody:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
+        create_if_missing:
+          type: boolean
+          description: If true, the Monitor will be created if it does not already exist, identified by slug. If false, an error will be returned if the Monitor does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Monitor isn't created or updated, and no response Monitor will be returned. The response will return an error if the given Monitor is invalid.
+    MonitorSeriesConditionsOverride:
+      type: object
+      properties:
+        label_matchers:
+          type: array
+          description: 'Set of matchers on a series'' labels. If all labels match, then the conditions
+
+            defined in this override are used.'
+          items:
+            $ref: '#/components/schemas/configv1LabelMatcher'
+        severity_conditions:
+          $ref: '#/components/schemas/SeriesConditionsSeverityConditions'
+    SeriesConditionsSeverityConditions:
+      type: object
+      properties:
+        warn:
+          $ref: '#/components/schemas/SeriesConditionsConditions'
+        critical:
+          $ref: '#/components/schemas/SeriesConditionsConditions'
+    MonitorSignalGrouping:
+      type: object
+      properties:
+        label_names:
+          type: array
+          description: 'Set of label names used to split series into signals. Each unique combination
+
+            of labels result in its own signal. For example, if `label_names` is
+
+            `["service", "code"]`, then all series including labels
+
+            `{service="foo",code="404"}` will be grouped together in the same signal.
+
+
+            Cannot be used if `graphite_query` is set.'
+          items:
+            type: string
+        signal_per_series:
+          type: boolean
+          description: 'If set to `true`, each series will have its own signal. Cannot be used with
+
+            `label_names`.'
+      description: SignalGrouping defines how the set of series from the query are split into signals.
+    configv1Monitor:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Monitor. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Monitor is created.
+        name:
+          type: string
+          description: Required. Name of the Monitor. You can modify this value after the Monitor is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Monitor was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Monitor was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        bucket_slug:
+          type: string
+          description: 'Slug of the bucket the monitor belongs to. Required if `collection_slug` isn''t
+
+            set.'
+        collection_slug:
+          type: string
+          description: 'Slug of the collection the monitor belongs to. Required if `bucket_slug` isn''t
+
+            set.'
+        collection:
+          $ref: '#/components/schemas/configv1CollectionReference'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Required. Labels to include in notifications generated by this monitor, and can
+
+            be used to route alerts with notification overrides.'
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Annotations are visible in notifications generated by this monitor.
+
+            They can be be templated with labels from notifications.'
+        signal_grouping:
+          $ref: '#/components/schemas/MonitorSignalGrouping'
+        series_conditions:
+          $ref: '#/components/schemas/MonitorSeriesConditions'
+        notification_policy_slug:
+          type: string
+          description: 'Specifies the notification policy used to route alerts generated by the monitor.
+
+            If omitted, the notification policy is inherited from the monitor.'
+        interval_secs:
+          type: integer
+          description: 'Specifies how often alerts are evaluated. Default: `60s`.'
+          format: int32
+        prometheus_query:
+          type: string
+          description: PromQL query to evaluate for the alert. If set, no other queries can be set.
+          example: up{job="prometheus"} == 0
+        graphite_query:
+          type: string
+          description: Graphite query to evaluate for the alert. If set, no other queries can be set.
+          example: sumSeries(stats.timers.*.mean_90)
+        schedule:
+          $ref: '#/components/schemas/MonitorSchedule'
+        logging_query:
+          type: string
+          description: Logging query to evaluate for the alert. If set, no other queries can be set.
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1UpdateMonitorResponse:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
+    ScheduleScheduleDay:
+      type: object
+      properties:
+        active:
+          $ref: '#/components/schemas/ScheduleDayActive'
+        ranges:
+          type: array
+          description: 'The time ranges that the monitor is active on this day. Required if `active`
+
+            is set to `ONLY_DURING_RANGES`. Otherwise, this field must be empty.'
+          items:
+            $ref: '#/components/schemas/ScheduleDayTimeRange'
+    ScheduleDayTimeRange:
+      type: object
+      properties:
+        start_hh_mm:
+          type: string
+          description: Start time in the in format `"<hour>:<minute>"`. For example, `"15:30"`.
+        end_hh_mm:
+          type: string
+          description: End time in the in format `"<hour>:<minute>"`. For example, `"15:30"`.
+    MonitorCondition:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/ConditionOp'
+        value:
+          type: number
+          description: Required. The value to compare to the metric value using the `op` operation.
+          format: double
+        sustain_secs:
+          type: integer
+          description: 'Amount of time the query needs to fail the condition check before an alert is
+
+            triggered. Must be an integer. Accepts one of `s` (seconds), `m` (minutes), or
+
+            `h` (hours) as units.'
+          format: int32
+        resolve_sustain_secs:
+          type: integer
+          description: 'Amount of time the query needs to no longer fire before resolving. Must be an
+
+            integer. Accepts one of `s` (seconds), `m` (minutes), or `h` (hours) as units.'
+          format: int32
+    ScheduleWeeklySchedule:
+      type: object
+      properties:
+        monday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        tuesday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        wednesday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        thursday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        friday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        saturday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        sunday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    configv1LabelMatcherMatcherType:
+      type: string
+      enum:
+      - EXACT
+      - REGEX
+    configv1ListMonitorsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        monitors:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Monitor'
+    MonitorSeriesConditions:
+      type: object
+      properties:
+        defaults:
+          $ref: '#/components/schemas/SeriesConditionsSeverityConditions'
+        overrides:
+          type: array
+          description: 'Optional. Specifies a list of overrides to use for series having matching
+
+            labels. Each override defines labels that potentially match a series'' labels.
+
+            If one or more overrides match a series, the severity conditions of the first
+
+            matching override are used instead of the defaults.
+
+
+            Cannot be used if `graphite_query` is set.'
+          items:
+            $ref: '#/components/schemas/MonitorSeriesConditionsOverride'
+      description: Conditions evaluated against each queried series to determine the severity of each series.
+x-original-swagger-version: '2.0'
