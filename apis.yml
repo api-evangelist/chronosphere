@@ -3,7 +3,19 @@ name: Chronosphere
 description: >-
   Chronosphere is a cloud-native observability platform for managing and controlling observability data at scale.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/chronosphere.png
 tags:
   - AIOps
   - Observability
@@ -13,16 +25,309 @@ created: '2026-03-27'
 modified: '2026-03-27'
 specificationVersion: '0.19'
 apis:
-  - aid: chronosphere:chronosphere
-    name: Chronosphere
-    description: >-
-      Chronosphere is a cloud-native observability platform for managing and controlling observability data at scale.
-    humanURL: https://chronosphere.io
-    tags:
-      - AIOps
-    properties:
-      - type: Documentation
-        url: https://docs.chronosphere.io
+- aid: chronosphere:chronosphere
+  name: Chronosphere
+  description: >-
+    Chronosphere is a cloud-native observability platform for managing and controlling observability data
+    at scale.
+  humanURL: https://chronosphere.io
+  tags:
+  - AIOps
+  properties:
+  - type: Documentation
+    url: https://docs.chronosphere.io
+- aid: chronosphere:chronosphere-bucket-api
+  name: Chronosphere Bucket API
+  description: The Bucket API from Chronosphere — 2 operation(s) for bucket.
+  humanURL: https://chronosphere.io
+  tags:
+  - Bucket
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-bucket-api-openapi.yml
+- aid: chronosphere:chronosphere-classicdashboard-api
+  name: Chronosphere ClassicDashboard API
+  description: The ClassicDashboard API from Chronosphere — 2 operation(s) for classicdashboard.
+  humanURL: https://chronosphere.io
+  tags:
+  - ClassicDashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-classicdashboard-api-openapi.yml
+- aid: chronosphere:chronosphere-collection-api
+  name: Chronosphere Collection API
+  description: The Collection API from Chronosphere — 2 operation(s) for collection.
+  humanURL: https://chronosphere.io
+  tags:
+  - Collection
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-collection-api-openapi.yml
+- aid: chronosphere:chronosphere-dashboard-api
+  name: Chronosphere Dashboard API
+  description: The Dashboard API from Chronosphere — 2 operation(s) for dashboard.
+  humanURL: https://chronosphere.io
+  tags:
+  - Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-dashboard-api-openapi.yml
+- aid: chronosphere:chronosphere-dataset-api
+  name: Chronosphere Dataset API
+  description: The Dataset API from Chronosphere — 2 operation(s) for dataset.
+  humanURL: https://chronosphere.io
+  tags:
+  - Dataset
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-dataset-api-openapi.yml
+- aid: chronosphere:chronosphere-derivedlabel-api
+  name: Chronosphere DerivedLabel API
+  description: The DerivedLabel API from Chronosphere — 2 operation(s) for derivedlabel.
+  humanURL: https://chronosphere.io
+  tags:
+  - DerivedLabel
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-derivedlabel-api-openapi.yml
+- aid: chronosphere:chronosphere-derivedmetric-api
+  name: Chronosphere DerivedMetric API
+  description: The DerivedMetric API from Chronosphere — 2 operation(s) for derivedmetric.
+  humanURL: https://chronosphere.io
+  tags:
+  - DerivedMetric
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-derivedmetric-api-openapi.yml
+- aid: chronosphere:chronosphere-droprule-api
+  name: Chronosphere DropRule API
+  description: The DropRule API from Chronosphere — 2 operation(s) for droprule.
+  humanURL: https://chronosphere.io
+  tags:
+  - DropRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-droprule-api-openapi.yml
+- aid: chronosphere:chronosphere-gcpmetricsintegration-api
+  name: Chronosphere GcpMetricsIntegration API
+  description: >-
+    The GcpMetricsIntegration API from Chronosphere — 2 operation(s) for gcpmetricsintegration.
+  humanURL: https://chronosphere.io
+  tags:
+  - GcpMetricsIntegration
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-gcpmetricsintegration-api-openapi.yml
+- aid: chronosphere:chronosphere-grafanadashboard-api
+  name: Chronosphere GrafanaDashboard API
+  description: The GrafanaDashboard API from Chronosphere — 2 operation(s) for grafanadashboard.
+  humanURL: https://chronosphere.io
+  tags:
+  - GrafanaDashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-grafanadashboard-api-openapi.yml
+- aid: chronosphere:chronosphere-logallocationconfig-api
+  name: Chronosphere LogAllocationConfig API
+  description: The LogAllocationConfig API from Chronosphere — 1 operation(s) for logallocationconfig.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogAllocationConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logallocationconfig-api-openapi.yml
+- aid: chronosphere:chronosphere-logingestconfig-api
+  name: Chronosphere LogIngestConfig API
+  description: The LogIngestConfig API from Chronosphere — 1 operation(s) for logingestconfig.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogIngestConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logingestconfig-api-openapi.yml
+- aid: chronosphere:chronosphere-logscaleaction-api
+  name: Chronosphere LogScaleAction API
+  description: The LogScaleAction API from Chronosphere — 2 operation(s) for logscaleaction.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogScaleAction
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logscaleaction-api-openapi.yml
+- aid: chronosphere:chronosphere-logscalealert-api
+  name: Chronosphere LogScaleAlert API
+  description: The LogScaleAlert API from Chronosphere — 2 operation(s) for logscalealert.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogScaleAlert
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logscalealert-api-openapi.yml
+- aid: chronosphere:chronosphere-mappingrule-api
+  name: Chronosphere MappingRule API
+  description: The MappingRule API from Chronosphere — 2 operation(s) for mappingrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - MappingRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-mappingrule-api-openapi.yml
+- aid: chronosphere:chronosphere-monitor-api
+  name: Chronosphere Monitor API
+  description: The Monitor API from Chronosphere — 2 operation(s) for monitor.
+  humanURL: https://chronosphere.io
+  tags:
+  - Monitor
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-monitor-api-openapi.yml
+- aid: chronosphere:chronosphere-mutingrule-api
+  name: Chronosphere MutingRule API
+  description: The MutingRule API from Chronosphere — 2 operation(s) for mutingrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - MutingRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-mutingrule-api-openapi.yml
+- aid: chronosphere:chronosphere-notificationpolicy-api
+  name: Chronosphere NotificationPolicy API
+  description: The NotificationPolicy API from Chronosphere — 2 operation(s) for notificationpolicy.
+  humanURL: https://chronosphere.io
+  tags:
+  - NotificationPolicy
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-notificationpolicy-api-openapi.yml
+- aid: chronosphere:chronosphere-notifier-api
+  name: Chronosphere Notifier API
+  description: The Notifier API from Chronosphere — 2 operation(s) for notifier.
+  humanURL: https://chronosphere.io
+  tags:
+  - Notifier
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-notifier-api-openapi.yml
+- aid: chronosphere:chronosphere-otelmetricsingestion-api
+  name: Chronosphere OtelMetricsIngestion API
+  description: >-
+    The OtelMetricsIngestion API from Chronosphere — 1 operation(s) for otelmetricsingestion.
+  humanURL: https://chronosphere.io
+  tags:
+  - OtelMetricsIngestion
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-otelmetricsingestion-api-openapi.yml
+- aid: chronosphere:chronosphere-recordingrule-api
+  name: Chronosphere RecordingRule API
+  description: The RecordingRule API from Chronosphere — 2 operation(s) for recordingrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - RecordingRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-recordingrule-api-openapi.yml
+- aid: chronosphere:chronosphere-resourcepools-api
+  name: Chronosphere ResourcePools API
+  description: The ResourcePools API from Chronosphere — 1 operation(s) for resourcepools.
+  humanURL: https://chronosphere.io
+  tags:
+  - ResourcePools
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-resourcepools-api-openapi.yml
+- aid: chronosphere:chronosphere-rolluprule-api
+  name: Chronosphere RollupRule API
+  description: The RollupRule API from Chronosphere — 2 operation(s) for rolluprule.
+  humanURL: https://chronosphere.io
+  tags:
+  - RollupRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-rolluprule-api-openapi.yml
+- aid: chronosphere:chronosphere-service-api
+  name: Chronosphere Service API
+  description: The Service API from Chronosphere — 1 operation(s) for service.
+  humanURL: https://chronosphere.io
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-service-api-openapi.yml
+- aid: chronosphere:chronosphere-serviceaccount-api
+  name: Chronosphere ServiceAccount API
+  description: The ServiceAccount API from Chronosphere — 2 operation(s) for serviceaccount.
+  humanURL: https://chronosphere.io
+  tags:
+  - ServiceAccount
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-serviceaccount-api-openapi.yml
+- aid: chronosphere:chronosphere-slo-api
+  name: Chronosphere SLO API
+  description: The SLO API from Chronosphere — 2 operation(s) for slo.
+  humanURL: https://chronosphere.io
+  tags:
+  - SLO
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-slo-api-openapi.yml
+- aid: chronosphere:chronosphere-team-api
+  name: Chronosphere Team API
+  description: The Team API from Chronosphere — 2 operation(s) for team.
+  humanURL: https://chronosphere.io
+  tags:
+  - Team
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-team-api-openapi.yml
+- aid: chronosphere:chronosphere-tracebehavior-api
+  name: Chronosphere TraceBehavior API
+  description: The TraceBehavior API from Chronosphere — 2 operation(s) for tracebehavior.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceBehavior
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracebehavior-api-openapi.yml
+- aid: chronosphere:chronosphere-tracebehaviorconfig-api
+  name: Chronosphere TraceBehaviorConfig API
+  description: The TraceBehaviorConfig API from Chronosphere — 1 operation(s) for tracebehaviorconfig.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceBehaviorConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracebehaviorconfig-api-openapi.yml
+- aid: chronosphere:chronosphere-tracejaegerremotesamplingstrategy-api
+  name: Chronosphere TraceJaegerRemoteSamplingStrategy API
+  description: >-
+    The TraceJaegerRemoteSamplingStrategy API from Chronosphere — 2 operation(s) for tracejaegerremotesamplingstrategy.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceJaegerRemoteSamplingStrategy
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracejaegerremotesamplingstrategy-api-openapi.yml
+- aid: chronosphere:chronosphere-tracemetricsrule-api
+  name: Chronosphere TraceMetricsRule API
+  description: The TraceMetricsRule API from Chronosphere — 2 operation(s) for tracemetricsrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceMetricsRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracemetricsrule-api-openapi.yml
+- aid: chronosphere:chronosphere-tracetailsamplingrules-api
+  name: Chronosphere TraceTailSamplingRules API
+  description: >-
+    The TraceTailSamplingRules API from Chronosphere — 1 operation(s) for tracetailsamplingrules.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceTailSamplingRules
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracetailsamplingrules-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/chronosphere-agentic-access.yml
