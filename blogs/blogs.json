@@ -2,6 +2,13 @@
   "repo": "chronosphere",
   "feeds": [
     {
+      "source": "https://chronosphere.io/blog/feed/",
+      "feed_url": "https://chronosphere.io/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://chronosphere.io/blog/",
       "feed_url": "https://chronosphere.io/blog/feed/",
       "title": "",
@@ -9,6 +16,6 @@
       "method": "discovered"
     }
   ],
-  "fetched": "2026-07-11T11:50:51Z",
+  "fetched": "2026-08-01T15:49:00Z",
   "post_count": 6
 }
