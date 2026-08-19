@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket LogIngestConfig API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LogIngestConfig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/log-ingest-config"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/log-ingest-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/log-ingest-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteLogIngestConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/log-ingest-config"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

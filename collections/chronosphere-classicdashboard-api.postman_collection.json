@@ -1,0 +1,1559 @@
+{
+  "item": [
+    {
+      "id": "a3cdfecc-5b86-4818-8119-9681df47f2d7",
+      "name": "ClassicDashboard",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9039e4d0-a081-469e-a6ac-f23517afd4c6",
+          "name": "List Classic Dashboards",
+          "request": {
+            "name": "List Classic Dashboards",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "classic-dashboards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any ClassicDashboard with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any ClassicDashboard with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by bucket_slug, where any ClassicDashboard with a matching bucket_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by bucket_slug, where any ClassicDashboard with a matching bucket_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by collection_slug, where any ClassicDashboard with a matching collection_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by collection_slug, where any ClassicDashboard with a matching collection_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any ClassicDashboard with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any ClassicDashboard with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_dashboard_json",
+                  "value": "<boolean>",
+                  "description": "Optional flag to populate the dashboard_json of the returned dashboards.\nBy default, dashboard_json will be left empty."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdea5352-b5ee-41c2-99b4-5513fabe1aa2",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_dashboard_json",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"classic_dashboards\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1986-05-04T12:14:38.210Z\",\n      \"updated_at\": \"1977-06-24T13:32:28.275Z\",\n      \"bucket_slug\": \"string\",\n      \"collection_slug\": \"string\",\n      \"collection\": {\n        \"type\": \"SIMPLE\",\n        \"slug\": \"string\"\n      },\n      \"dashboard_json\": \"string\"\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"2014-02-02T16:09:38.167Z\",\n      \"updated_at\": \"2009-10-30T06:26:13.833Z\",\n      \"bucket_slug\": \"string\",\n      \"collection_slug\": \"string\",\n      \"collection\": {\n        \"type\": \"SIMPLE\",\n        \"slug\": \"string\"\n      },\n      \"dashboard_json\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ac282f1-c3c1-4bfa-b027-fa018b34357f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_dashboard_json",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8f1e432-7545-404e-9318-cd4d0f786b52",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_dashboard_json",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 6215,\n  \"key_2\": 4296\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f21c08be-1755-4f4c-a239-c1d6626b63ac",
+          "name": "Create Classic Dashboard",
+          "request": {
+            "name": "Create Classic Dashboard",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "classic-dashboards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "58e17bf6-8b51-443a-834a-286b0b23075d",
+              "name": "A successful response containing the created GrafanaDashboard.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2017-09-26T22:19:44.074Z\",\n    \"updated_at\": \"2004-06-30T22:04:47.194Z\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "598fb4dc-da97-442a-b1ae-9e1378534019",
+              "name": "Cannot create the GrafanaDashboard because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eae8eeb6-157a-4458-a0d0-c7a90ba155b4",
+              "name": "Cannot create the GrafanaDashboard because there is a conflict with an existing GrafanaDashboard.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47d4b641-6ed4-462a-a888-4595aaa5cf61",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5310266-2376-4c9b-b429-2fafeaedb38e",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 6215,\n  \"key_2\": 4296\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f1d2e241-51d4-40d3-bd43-c9b4c98d68e8",
+          "name": "Read Classic Dashboard",
+          "request": {
+            "name": "Read Classic Dashboard",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "classic-dashboards",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c678d094-fa13-46f9-a119-c8fa44715966",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2017-09-26T22:19:44.074Z\",\n    \"updated_at\": \"2004-06-30T22:04:47.194Z\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0241772e-82d8-4d7d-882b-d5a45ba1308e",
+              "name": "Cannot read the GrafanaDashboard because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ddd3b4b-e642-4fae-b4ca-62e202f12b50",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "381e8a3c-8951-4368-aeb7-e2b0a4f2ef58",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 6215,\n  \"key_2\": 4296\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3757af59-1fc4-4b3f-b11a-62039b085afe",
+          "name": "Update Classic Dashboard",
+          "request": {
+            "name": "Update Classic Dashboard",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "classic-dashboards",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f214c849-d20c-4132-93e5-38a5d2358d9b",
+              "name": "A successful response containing the updated GrafanaDashboard.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2017-09-26T22:19:44.074Z\",\n    \"updated_at\": \"2004-06-30T22:04:47.194Z\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dab9d464-de8c-4981-8cd9-85373a73c941",
+              "name": "Cannot update the GrafanaDashboard because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dfc128b-21e8-4284-a051-ff1bc6ebd8e6",
+              "name": "Cannot update the GrafanaDashboard because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f855b23-5b3f-431d-ba63-919c61a95036",
+              "name": "Cannot update the GrafanaDashboard because there is a conflict with an existing GrafanaDashboard.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13c1f298-662a-408a-885e-9bf258a9c93f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "096bbb98-3058-4f9a-8e6e-34871c461d2c",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"classic_dashboard\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"collection_slug\": \"<string>\",\n    \"collection\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"dashboard_json\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 6215,\n  \"key_2\": 4296\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7782a809-337b-426b-8300-5f02ccae6c36",
+          "name": "Delete Classic Dashboard",
+          "request": {
+            "name": "Delete Classic Dashboard",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "classic-dashboards",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50c67f71-e503-4fc3-aef1-827f2d7aa2e0",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44ae85b5-ef0e-4402-9077-b7a1a83cb38f",
+              "name": "Cannot delete the GrafanaDashboard because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "760e9e01-0c18-460b-a3a9-4e3871753f46",
+              "name": "Cannot delete the GrafanaDashboard because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e80a706-2574-4371-bd37-4e52310b1778",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92f38c8b-ba4c-42d2-b36a-fb0793c87421",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "classic-dashboards",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 6215,\n  \"key_2\": 4296\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "247178e6-5f2a-4240-ae27-2921c787f7b8",
+    "name": "Config V1 Bucket ClassicDashboard API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

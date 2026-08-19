@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket OtelMetricsIngestion API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OtelMetricsIngestion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/otel-metrics-ingestion"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/otel-metrics-ingestion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/otel-metrics-ingestion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteOtelMetricsIngestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/otel-metrics-ingestion"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

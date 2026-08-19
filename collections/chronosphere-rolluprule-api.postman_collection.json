@@ -1,0 +1,1505 @@
+{
+  "item": [
+    {
+      "id": "0e25e766-b4e2-4535-9b99-fc6edf23a0d9",
+      "name": "RollupRule",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4c395a2a-1f23-4cec-be0d-5d69ae8c01ab",
+          "name": "List Rollup Rules",
+          "request": {
+            "name": "List Rollup Rules",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "rollup-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any RollupRule with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any RollupRule with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any RollupRule with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any RollupRule with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by bucket_slug, where any RollupRule with a matching bucket_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by bucket_slug, where any RollupRule with a matching bucket_slug in the given list (and matches all other filters) is returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dffa4edd-511a-4d9b-aa58-f7bc55720483",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"rollup_rules\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1961-03-18T20:29:03.192Z\",\n      \"updated_at\": \"1996-08-18T13:59:22.225Z\",\n      \"bucket_slug\": \"string\",\n      \"filters\": [\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        },\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        }\n      ],\n      \"metric_name\": \"string\",\n      \"metric_type\": \"DELTA_EXPONENTIAL_HISTOGRAM\",\n      \"aggregation\": \"P50\",\n      \"storage_policy\": {\n        \"resolution\": \"string\",\n        \"retention\": \"string\"\n      },\n      \"interval\": \"string\",\n      \"expansive_match\": true,\n      \"add_metric_type_label\": false,\n      \"drop_raw\": true,\n      \"label_policy\": {\n        \"keep\": [\n          \"string\",\n          \"string\"\n        ],\n        \"discard\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"label_replace\": {},\n      \"mode\": \"ENABLED\",\n      \"graphite_label_policy\": {\n        \"replace\": [\n          {\n            \"name\": \"__g1__\",\n            \"new_value\": \"ALL_HOSTS\"\n          },\n          {\n            \"name\": \"__g1__\",\n            \"new_value\": \"ALL_HOSTS\"\n          }\n        ]\n      }\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"2024-11-24T22:51:52.089Z\",\n      \"updated_at\": \"1981-01-17T15:33:26.750Z\",\n      \"bucket_slug\": \"string\",\n      \"filters\": [\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        },\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        }\n      ],\n      \"metric_name\": \"string\",\n      \"metric_type\": \"GAUGE\",\n      \"aggregation\": \"MEDIAN\",\n      \"storage_policy\": {\n        \"resolution\": \"string\",\n        \"retention\": \"string\"\n      },\n      \"interval\": \"string\",\n      \"expansive_match\": false,\n      \"add_metric_type_label\": true,\n      \"drop_raw\": true,\n      \"label_policy\": {\n        \"keep\": [\n          \"string\",\n          \"string\"\n        ],\n        \"discard\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"label_replace\": {},\n      \"mode\": \"PREVIEW\",\n      \"graphite_label_policy\": {\n        \"replace\": [\n          {\n            \"name\": \"__g1__\",\n            \"new_value\": \"ALL_HOSTS\"\n          },\n          {\n            \"name\": \"__g1__\",\n            \"new_value\": \"ALL_HOSTS\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50247f6c-1963-4d48-9815-aeee0bb36f33",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1da022e-2d1c-4584-8a04-ce75c679dedc",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4276.784597203848\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08563e91-daef-46ee-8859-599e31db0cd6",
+          "name": "Create Rollup Rule",
+          "request": {
+            "name": "Create Rollup Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "rollup-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"<string>\",\n          \"new_value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"new_value\": \"<string>\"\n        }\n      ]\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcbd3abc-73e3-4715-8db7-836cf2ae20ef",
+              "name": "A successful response containing the created RollupRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1982-11-02T02:32:34.979Z\",\n    \"updated_at\": \"1983-02-23T17:37:45.090Z\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1decee46-68b1-4210-a1c8-e2d68a2e3810",
+              "name": "Cannot create the RollupRule because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "081673be-4dab-453e-ae47-1017cff56b6a",
+              "name": "Cannot create the RollupRule because there is a conflict with an existing RollupRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "373541fb-75e7-4e27-8d98-fd5ce4e811e5",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1e86895-4af5-4d2b-8125-896acf51efdd",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4276.784597203848\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27d99b20-adf1-46f1-9f74-17edc09c9e79",
+          "name": "Read Rollup Rule",
+          "request": {
+            "name": "Read Rollup Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "rollup-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d39c709-7349-4fab-9d8e-da044c8bb1eb",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1982-11-02T02:32:34.979Z\",\n    \"updated_at\": \"1983-02-23T17:37:45.090Z\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92c1c499-9ec7-4cf6-9bf1-6334c4eeb1b1",
+              "name": "Cannot read the RollupRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a81c0576-0206-4b55-aa4b-e795e7003910",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "195b66eb-2d10-44c4-ac73-ebb5664cd929",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4276.784597203848\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ae44fff-2922-4450-82a0-254a261c180e",
+          "name": "Update Rollup Rule",
+          "request": {
+            "name": "Update Rollup Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "rollup-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"<string>\",\n          \"new_value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"new_value\": \"<string>\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d560bbe4-8330-4b8f-a98b-17b581627a61",
+              "name": "A successful response containing the updated RollupRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1982-11-02T02:32:34.979Z\",\n    \"updated_at\": \"1983-02-23T17:37:45.090Z\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4aea44d-22e5-4272-94b9-6985392b293b",
+              "name": "Cannot update the RollupRule because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ddb27b4-c6d2-4e4d-9231-9afe0f816826",
+              "name": "Cannot update the RollupRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "813ca6aa-fe15-4925-8d8f-1924d52a62e6",
+              "name": "Cannot update the RollupRule because there is a conflict with an existing RollupRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "422a4c35-ca0a-40d9-899f-fc095859b1a7",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f04704bf-04a2-4e73-ba20-aedb56b78362",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rollup_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"metric_name\": \"<string>\",\n    \"metric_type\": \"<string>\",\n    \"aggregation\": \"<string>\",\n    \"storage_policy\": {\n      \"resolution\": \"<string>\",\n      \"retention\": \"<string>\"\n    },\n    \"interval\": \"<string>\",\n    \"expansive_match\": \"<boolean>\",\n    \"add_metric_type_label\": \"<boolean>\",\n    \"drop_raw\": \"<boolean>\",\n    \"label_policy\": {\n      \"keep\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"discard\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"label_replace\": \"<object>\",\n    \"mode\": \"<string>\",\n    \"graphite_label_policy\": {\n      \"replace\": [\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        },\n        {\n          \"name\": \"__g1__\",\n          \"new_value\": \"ALL_HOSTS\"\n        }\n      ]\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4276.784597203848\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e0b142e-0291-4800-915c-7b58934697ea",
+          "name": "Delete Rollup Rule",
+          "request": {
+            "name": "Delete Rollup Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "rollup-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1aef7bac-bf60-46df-ae59-ed65853901fc",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4fd477b-3418-4afa-9c5d-1c4bf8d6ee7a",
+              "name": "Cannot delete the RollupRule because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3f244c3-1f54-4402-ac98-495fc2b8f3eb",
+              "name": "Cannot delete the RollupRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec29afb4-4e2a-4f71-81c8-e82ce74531cc",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73732987-ba7c-4d77-81a1-f34ddc478e2e",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "rollup-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4276.784597203848\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c4135f97-3200-4012-bdde-47cbc103132a",
+    "name": "Config V1 Bucket RollupRule API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

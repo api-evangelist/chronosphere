@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket Team API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Team",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTeams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/teams",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Team with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Team with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/teams/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/teams/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/teams/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

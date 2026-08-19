@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bucket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListBuckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/buckets",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any Bucket with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any Bucket with a matching name in the given list (and matches all other filters) is returned."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/buckets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ReadBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/buckets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/buckets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteBucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/buckets/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force_delete",
+                "value": "",
+                "type": "query",
+                "description": "force_delete indicates deletion of the bucket and all resources that reference the bucket.\nThis includes monitors, dashboards, notification policies, recording rules, and alerts."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

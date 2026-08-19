@@ -1,0 +1,1031 @@
+{
+  "item": [
+    {
+      "id": "1607ae37-004f-4475-803b-80fc1b035db6",
+      "name": "TraceBehaviorConfig",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4e7115aa-4f20-45e4-bd6c-ac27dc6abae1",
+          "name": "Read Trace Behavior Config",
+          "request": {
+            "name": "Read Trace Behavior Config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behavior-config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1b92cdb-b332-4818-994a-d3c1f143f234",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_behavior_config\": {\n    \"created_at\": \"2023-03-16T08:36:03.421Z\",\n    \"updated_at\": \"1947-06-06T05:40:08.190Z\",\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"1982-03-14T03:51:15.932Z\",\n        \"updated_at\": \"1964-01-21T23:28:37.681Z\",\n        \"dataset_slug\": \"string\",\n        \"behavior_slug\": \"string\",\n        \"created_by\": \"string\",\n        \"description\": \"string\"\n      },\n      {\n        \"created_at\": \"1964-05-19T14:47:11.334Z\",\n        \"updated_at\": \"2018-09-21T17:01:34.839Z\",\n        \"dataset_slug\": \"string\",\n        \"behavior_slug\": \"string\",\n        \"created_by\": \"string\",\n        \"description\": \"string\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"2009-09-06T13:39:40.368Z\",\n        \"updated_at\": \"1995-07-12T19:57:26.824Z\",\n        \"dataset_slug\": \"string\",\n        \"behavior_slug\": \"string\",\n        \"start_time\": \"1952-12-23T21:33:25.235Z\",\n        \"end_time\": \"1960-05-28T22:47:39.610Z\",\n        \"created_by\": \"string\",\n        \"description\": \"string\"\n      },\n      {\n        \"created_at\": \"1973-06-05T17:43:36.131Z\",\n        \"updated_at\": \"1963-12-06T17:22:11.700Z\",\n        \"dataset_slug\": \"string\",\n        \"behavior_slug\": \"string\",\n        \"start_time\": \"1970-09-18T16:26:48.463Z\",\n        \"end_time\": \"1975-11-24T16:29:21.477Z\",\n        \"created_by\": \"string\",\n        \"description\": \"string\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"string\",\n      \"string\"\n    ],\n    \"baseline_behavior_slug\": \"string\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"2014-06-25T09:49:04.975Z\",\n        \"updated_at\": \"2006-08-05T18:53:12.945Z\",\n        \"dataset_slug\": \"string\",\n        \"behavior_slug\": \"string\",\n        \"start_time\": \"1953-03-09T21:48:14.893Z\",\n        \"end_time\": \"2002-02-10T15:03:48.180Z\",\n        \"created_by\": \"string\",\n        \"description\": \"string\"\n      },\n      {\n        \"created_at\": \"1981-01-15T18:03:28.095Z\",\n        \"updated_at\": \"1975-08-15T02:23:51.837Z\",\n        \"dataset_slug\": \"string\",\n        \"behavior_slug\": \"string\",\n        \"start_time\": \"2012-01-12T23:05:43.201Z\",\n        \"end_time\": \"1953-11-25T23:48:28.399Z\",\n        \"created_by\": \"string\",\n        \"description\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc6f113b-a618-4747-aabb-a02226a851c6",
+              "name": "Cannot read the TraceBehaviorConfig because TraceBehaviorConfig has not been created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5393a7b5-eb38-4448-8872-cf82e22def02",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6cbc0c5-8a7b-4280-820e-ba6bb092ada8",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37f65bc0-ea6f-47a5-948a-3580bd40d455",
+          "name": "Update Trace Behavior Config",
+          "request": {
+            "name": "Update Trace Behavior Config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behavior-config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49b08e02-5aa6-49b0-b553-0a151cc31e99",
+              "name": "A successful response containing the updated TraceBehaviorConfig.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_behavior_config\": {\n    \"created_at\": \"1985-07-04T17:06:22.053Z\",\n    \"updated_at\": \"2006-06-20T12:16:53.173Z\",\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b10819c6-01d2-447d-a012-a990e019aaa8",
+              "name": "Cannot update the TraceBehaviorConfig because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73e3d4e7-e5e2-4236-b5c9-3bc4d81fb1a7",
+              "name": "Cannot update the TraceBehaviorConfig because TraceBehaviorConfig has not been created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f201c06-3fd2-409d-bae3-619e3d558fef",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1258ca8d-2a7d-4afe-a918-672e7a95edd5",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dccbd0f6-424c-486b-8370-fc1d63927188",
+          "name": "Create Trace Behavior Config",
+          "request": {
+            "name": "Create Trace Behavior Config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behavior-config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4fe1a648-7415-432f-8781-87908954b981",
+              "name": "A successful response containing the created TraceBehaviorConfig.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_behavior_config\": {\n    \"created_at\": \"1985-07-04T17:06:22.053Z\",\n    \"updated_at\": \"2006-06-20T12:16:53.173Z\",\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29acc468-1eab-4c07-8a20-5b72403bc388",
+              "name": "Cannot create the TraceBehaviorConfig because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca51228b-21f3-41de-9ca5-9b92e96f3518",
+              "name": "Cannot create the TraceBehaviorConfig because there is a conflict with an existing TraceBehaviorConfig.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf9b919f-ffad-43fe-bb89-a3d8d5ce3484",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f951775-b798-47b4-836b-8527f9a02834",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior_config\": {\n    \"main_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"override_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"dataset_priorities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseline_behavior_slug\": \"<string>\",\n    \"preview_behavior_assignments\": [\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"dataset_slug\": \"<string>\",\n        \"behavior_slug\": \"<string>\",\n        \"start_time\": \"<dateTime>\",\n        \"end_time\": \"<dateTime>\",\n        \"created_by\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ]\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85761338-5e1c-4c19-a5bf-8974e7d0bd19",
+          "name": "Delete Trace Behavior Config",
+          "request": {
+            "name": "Delete Trace Behavior Config",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behavior-config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "dry_run",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6d35e03-05e6-43ad-9e6d-bc752fee0fbb",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3789eb1f-e179-42e0-93cb-d52c75736061",
+              "name": "Cannot delete the TraceBehaviorConfig because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3202358-9ecf-4484-9879-e02f6fe28059",
+              "name": "Cannot delete the TraceBehaviorConfig because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e46753c4-7dd5-4461-8d2e-39c56ce070b0",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5921,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bee1d60-ca42-4ecb-9a09-6a7e7f4e7595",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behavior-config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e00ce76d-b8a7-4a2c-b3cd-62547fda3686",
+    "name": "Config V1 Bucket TraceBehaviorConfig API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

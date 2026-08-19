@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket TraceBehaviorConfig API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TraceBehaviorConfig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-behavior-config"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-behavior-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-behavior-config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceBehaviorConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-behavior-config",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

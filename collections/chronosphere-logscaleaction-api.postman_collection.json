@@ -1,0 +1,1469 @@
+{
+  "item": [
+    {
+      "id": "d2cb8330-5ae4-4b60-83af-4acb1a38b1df",
+      "name": "LogScaleAction",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a2465329-23ae-46c0-927a-f6ccd2faa2ae",
+          "name": "List Log Scale Actions",
+          "request": {
+            "name": "List Log Scale Actions",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "log-scale-actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any LogScaleAction with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any LogScaleAction with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any LogScaleAction with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any LogScaleAction with a matching name in the given list (and matches all other filters) is returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95ae15dd-9d19-40be-88a4-83ab5278db7c",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"log_scale_actions\": [\n    {\n      \"slug\": \"string\",\n      \"repository\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1961-12-12T00:25:45.420Z\",\n      \"updated_at\": \"1956-11-13T08:46:16.804Z\",\n      \"action_type\": \"OPS_GENIE\",\n      \"email_action\": {\n        \"recipients\": [\n          \"string\",\n          \"string\"\n        ],\n        \"subject_template\": \"string\",\n        \"body_template\": \"string\",\n        \"attach_csv\": true,\n        \"use_proxy\": true\n      },\n      \"humio_action\": {\n        \"ingest_token\": \"string\"\n      },\n      \"ops_genie_action\": {\n        \"api_url\": \"string\",\n        \"ops_genie_key\": \"string\",\n        \"use_proxy\": true\n      },\n      \"pager_duty_action\": {\n        \"severity\": \"ERROR\",\n        \"routing_key\": \"string\",\n        \"use_proxy\": true\n      },\n      \"slack_action\": {\n        \"url\": \"string\",\n        \"fields\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\",\n          \"key_4\": \"string\"\n        },\n        \"use_proxy\": false\n      },\n      \"slack_post_message_action\": {\n        \"api_token\": \"string\",\n        \"channels\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fields\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"use_proxy\": false\n      },\n      \"victor_ops_action\": {\n        \"message_type\": \"string\",\n        \"notify_url\": \"string\",\n        \"use_proxy\": false\n      },\n      \"webhook_action\": {\n        \"method\": \"HEAD\",\n        \"url\": \"string\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"body_template\": \"string\",\n        \"ignore_ssl\": false,\n        \"use_proxy\": false\n      },\n      \"upload_file_action\": {\n        \"file_name\": \"string\"\n      }\n    },\n    {\n      \"slug\": \"string\",\n      \"repository\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1965-07-25T17:17:44.651Z\",\n      \"updated_at\": \"1966-02-21T21:58:27.373Z\",\n      \"action_type\": \"OPS_GENIE\",\n      \"email_action\": {\n        \"recipients\": [\n          \"string\",\n          \"string\"\n        ],\n        \"subject_template\": \"string\",\n        \"body_template\": \"string\",\n        \"attach_csv\": false,\n        \"use_proxy\": true\n      },\n      \"humio_action\": {\n        \"ingest_token\": \"string\"\n      },\n      \"ops_genie_action\": {\n        \"api_url\": \"string\",\n        \"ops_genie_key\": \"string\",\n        \"use_proxy\": true\n      },\n      \"pager_duty_action\": {\n        \"severity\": \"WARNING\",\n        \"routing_key\": \"string\",\n        \"use_proxy\": false\n      },\n      \"slack_action\": {\n        \"url\": \"string\",\n        \"fields\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"use_proxy\": false\n      },\n      \"slack_post_message_action\": {\n        \"api_token\": \"string\",\n        \"channels\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fields\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"use_proxy\": true\n      },\n      \"victor_ops_action\": {\n        \"message_type\": \"string\",\n        \"notify_url\": \"string\",\n        \"use_proxy\": true\n      },\n      \"webhook_action\": {\n        \"method\": \"HEAD\",\n        \"url\": \"string\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"body_template\": \"string\",\n        \"ignore_ssl\": true,\n        \"use_proxy\": true\n      },\n      \"upload_file_action\": {\n        \"file_name\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4ba1da6-2ce0-42e9-8458-d360c360b0bf",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "958a7382-53b7-488c-883e-3a318a78f70b",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2234\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb47be8b-3eac-4bb4-a2d9-b8889b49c372",
+          "name": "Create Log Scale Action",
+          "request": {
+            "name": "Create Log Scale Action",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "log-scale-actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1304eca5-b026-49e2-ac72-bd79541e5544",
+              "name": "A successful response containing the created LogScaleAction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1980-11-06T15:12:39.618Z\",\n    \"updated_at\": \"1970-04-30T07:33:43.236Z\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f8373a4-e2c6-41df-a88d-b785d4d3e6a0",
+              "name": "Cannot create the LogScaleAction because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b959987b-925c-41d2-b353-7cf4dbcae89b",
+              "name": "Cannot create the LogScaleAction because there is a conflict with an existing LogScaleAction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f773e4e5-2ed6-46fa-b88b-1b63fc049a13",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f61addf0-a6a9-4519-8358-df2ef0b5ddb5",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2234\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ebe4cd5-622c-40e1-a6d5-ec2dadb566aa",
+          "name": "Read Log Scale Action",
+          "request": {
+            "name": "Read Log Scale Action",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "log-scale-actions",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f89b822-334e-43ba-a734-722fdf2ac8fe",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1980-11-06T15:12:39.618Z\",\n    \"updated_at\": \"1970-04-30T07:33:43.236Z\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76938f9f-2e03-4de2-8d52-f3a9fa9bcff2",
+              "name": "Cannot read the LogScaleAction because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67423db1-9324-4e0e-bd61-9a32c906660b",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c32f1596-96ff-4a1e-b057-74847481c50d",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2234\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15722994-87c9-4a3b-b423-ef26426a15d7",
+          "name": "Update Log Scale Action",
+          "request": {
+            "name": "Update Log Scale Action",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "log-scale-actions",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\",\n        \"key_3\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\",\n        \"key_3\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\",\n        \"key_3\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ba8adc5-fd4b-4fd1-a884-831dcdf73f3f",
+              "name": "A successful response containing the updated LogScaleAction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1980-11-06T15:12:39.618Z\",\n    \"updated_at\": \"1970-04-30T07:33:43.236Z\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9bffb5d-3283-4b8b-a251-59913aa7b384",
+              "name": "Cannot update the LogScaleAction because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ba76e2c-4036-4ce9-b182-0f19e0dde1dd",
+              "name": "Cannot update the LogScaleAction because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6ee89df-135e-4db8-bf93-633656d605a0",
+              "name": "Cannot update the LogScaleAction because there is a conflict with an existing LogScaleAction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec6d0f5c-b6b9-4138-89f9-cc341bb601a2",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6912297-4029-4323-8d28-ad3dfd7666f7",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_scale_action\": {\n    \"slug\": \"<string>\",\n    \"repository\": \"<string>\",\n    \"name\": \"<string>\",\n    \"action_type\": \"<string>\",\n    \"email_action\": {\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subject_template\": \"<string>\",\n      \"body_template\": \"<string>\",\n      \"attach_csv\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"humio_action\": {\n      \"ingest_token\": \"<string>\"\n    },\n    \"ops_genie_action\": {\n      \"api_url\": \"<string>\",\n      \"ops_genie_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"pager_duty_action\": {\n      \"severity\": \"<string>\",\n      \"routing_key\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_action\": {\n      \"url\": \"<string>\",\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"slack_post_message_action\": {\n      \"api_token\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"key_0\": \"<string>\"\n      },\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"victor_ops_action\": {\n      \"message_type\": \"<string>\",\n      \"notify_url\": \"<string>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"webhook_action\": {\n      \"method\": \"<string>\",\n      \"url\": \"<string>\",\n      \"headers\": {\n        \"key_0\": \"<string>\"\n      },\n      \"body_template\": \"<string>\",\n      \"ignore_ssl\": \"<boolean>\",\n      \"use_proxy\": \"<boolean>\"\n    },\n    \"upload_file_action\": {\n      \"file_name\": \"<string>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2234\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e30bb28b-a690-40e8-af09-0cf55243ff78",
+          "name": "Delete Log Scale Action",
+          "request": {
+            "name": "Delete Log Scale Action",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "log-scale-actions",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "128aa4e2-906b-479b-972c-c1e9d0226636",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41b478cf-bdd7-4791-8c46-0e9c720f80aa",
+              "name": "Cannot delete the LogScaleAction because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "908cbeee-0490-4fd9-aec2-b7fd19c92d1d",
+              "name": "Cannot delete the LogScaleAction because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7bc9edc-6531-45bc-864d-2d2d835a84cd",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6929,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e1a8e54-bc1b-4988-9936-7457c1834c26",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "log-scale-actions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2234\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "be35953f-6bc6-40cb-943b-0e3020450d1d",
+    "name": "Config V1 Bucket LogScaleAction API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

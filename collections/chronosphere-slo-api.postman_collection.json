@@ -1,0 +1,1537 @@
+{
+  "item": [
+    {
+      "id": "2244a98b-6c8a-4860-8965-990b46ae06a3",
+      "name": "SLO",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e0aad416-4959-45a0-9ce1-7a9575427aa4",
+          "name": "List SL Os",
+          "request": {
+            "name": "List SL Os",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "slos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any SLO with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any SLO with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any SLO with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any SLO with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_slugs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "collection_slugs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "service_slugs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "service_slugs",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6e9e3df8-36d2-4379-bdaf-1841232c572c",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_slugs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"slos\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": \"2014-12-13T03:26:20.659Z\",\n      \"updated_at\": \"2022-09-19T22:49:09.597Z\",\n      \"collection_ref\": {\n        \"type\": \"SIMPLE\",\n        \"slug\": \"string\"\n      },\n      \"notification_policy_slug\": \"string\",\n      \"signal_grouping\": {\n        \"label_names\": [\n          \"string\",\n          \"string\"\n        ],\n        \"signal_per_series\": false\n      },\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"annotations\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"sli\": {\n        \"custom_indicator\": {\n          \"good_query_template\": \"string\",\n          \"bad_query_template\": \"string\",\n          \"total_query_template\": \"string\"\n        },\n        \"custom_timeslice_indicator\": {\n          \"query_template\": \"string\",\n          \"timeslice_size\": \"TIMESLICE_SIZE_ONE_MINUTE\",\n          \"condition\": {\n            \"op\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"custom_dimension_labels\": [\n          \"string\",\n          \"string\"\n        ],\n        \"additional_promql_filters\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"definition\": {\n        \"objective\": 108.85194799792441,\n        \"time_window\": {\n          \"duration\": \"string\"\n        },\n        \"burn_rate_alerting_config\": [\n          {\n            \"window\": \"string\",\n            \"budget\": 1917.089988758527,\n            \"severity\": \"string\",\n            \"labels\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"window\": \"string\",\n            \"budget\": 2605.966938047929,\n            \"severity\": \"string\",\n            \"labels\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"enable_burn_rate_alerting\": true\n      }\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": \"1990-07-29T12:52:48.015Z\",\n      \"updated_at\": \"1962-03-21T19:11:45.980Z\",\n      \"collection_ref\": {\n        \"type\": \"SIMPLE\",\n        \"slug\": \"string\"\n      },\n      \"notification_policy_slug\": \"string\",\n      \"signal_grouping\": {\n        \"label_names\": [\n          \"string\",\n          \"string\"\n        ],\n        \"signal_per_series\": false\n      },\n      \"labels\": {\n        \"key_0\": \"string\"\n      },\n      \"annotations\": {\n        \"key_0\": \"string\"\n      },\n      \"sli\": {\n        \"custom_indicator\": {\n          \"good_query_template\": \"string\",\n          \"bad_query_template\": \"string\",\n          \"total_query_template\": \"string\"\n        },\n        \"custom_timeslice_indicator\": {\n          \"query_template\": \"string\",\n          \"timeslice_size\": \"TIMESLICE_SIZE_ONE_MINUTE\",\n          \"condition\": {\n            \"op\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"custom_dimension_labels\": [\n          \"string\",\n          \"string\"\n        ],\n        \"additional_promql_filters\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"definition\": {\n        \"objective\": 324.0862405189304,\n        \"time_window\": {\n          \"duration\": \"string\"\n        },\n        \"burn_rate_alerting_config\": [\n          {\n            \"window\": \"string\",\n            \"budget\": 4973.703594266405,\n            \"severity\": \"string\",\n            \"labels\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"window\": \"string\",\n            \"budget\": 2049.3335706424755,\n            \"severity\": \"string\",\n            \"labels\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"enable_burn_rate_alerting\": true\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea412f33-1707-4eba-bd33-0aa4fef9eae6",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_slugs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1ccc502-7236-4f39-b335-65843eca114e",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "collection_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_slugs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": 9564\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2332c92a-e186-4070-a815-16b92083e3fa",
+          "name": "Create SLO",
+          "request": {
+            "name": "Create SLO",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "slos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c479237-0054-4a05-bb56-8722f5f7da2e",
+              "name": "A successful response containing the created SLO.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"created_at\": \"1969-06-02T07:38:58.582Z\",\n    \"updated_at\": \"2019-03-04T21:15:30.865Z\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2bbe07a-4d75-4269-9ecc-d1e203270e92",
+              "name": "Cannot create the SLO because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47eb9786-6cc6-4b3a-a12a-fad89ab71ba6",
+              "name": "Cannot create the SLO because there is a conflict with an existing SLO.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2f544b1-0f76-451d-b62c-7792d7eebdc8",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aaa0519b-2871-4860-9939-e7ddef89a108",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": 9564\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca1d7245-78f1-4461-9f4b-5bab4700906b",
+          "name": "Read SLO",
+          "request": {
+            "name": "Read SLO",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "slos",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b18d3ce-c54e-4e53-a221-f16ab30462b7",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"created_at\": \"1969-06-02T07:38:58.582Z\",\n    \"updated_at\": \"2019-03-04T21:15:30.865Z\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6a62db0-3da1-4d45-bcdb-76e2e31e4149",
+              "name": "Cannot read the SLO because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "726e7ec7-2784-4121-a6b1-0283df8b5717",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cb4c233-9c24-4cec-96a4-c6b18b4babcf",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": 9564\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec988432-b1ca-4d7d-8703-fbe5cf7253bf",
+          "name": "Update SLO",
+          "request": {
+            "name": "Update SLO",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "slos",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40ad186d-ed57-4fe1-979e-66142f0c0a94",
+              "name": "A successful response containing the updated SLO.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"created_at\": \"1969-06-02T07:38:58.582Z\",\n    \"updated_at\": \"2019-03-04T21:15:30.865Z\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90e1fcc1-33fd-4ae3-9149-9928d227d9c1",
+              "name": "Cannot update the SLO because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41451483-a537-4608-8a18-d14efed42109",
+              "name": "Cannot update the SLO because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7201729-63be-4657-b102-8e07f7739065",
+              "name": "Cannot update the SLO because there is a conflict with an existing SLO.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f9d3b62-2bf3-41dd-b020-ab576363ea7f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9bbb78a-7255-442a-9d65-6432ed5bcc33",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slo\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"collection_ref\": {\n      \"type\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    \"notification_policy_slug\": \"<string>\",\n    \"signal_grouping\": {\n      \"label_names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"signal_per_series\": \"<boolean>\"\n    },\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"sli\": {\n      \"custom_indicator\": {\n        \"good_query_template\": \"<string>\",\n        \"bad_query_template\": \"<string>\",\n        \"total_query_template\": \"<string>\"\n      },\n      \"custom_timeslice_indicator\": {\n        \"query_template\": \"<string>\",\n        \"timeslice_size\": \"<string>\",\n        \"condition\": {\n          \"op\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"<double>\"\n        }\n      },\n      \"custom_dimension_labels\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additional_promql_filters\": [\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    \"definition\": {\n      \"objective\": \"<double>\",\n      \"time_window\": {\n        \"duration\": \"<string>\"\n      },\n      \"burn_rate_alerting_config\": [\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          }\n        },\n        {\n          \"window\": \"<string>\",\n          \"budget\": \"<double>\",\n          \"severity\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"enable_burn_rate_alerting\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": 9564\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4af8d32e-9f76-485f-8f9c-14b27a2f7ed9",
+          "name": "Delete SLO",
+          "request": {
+            "name": "Delete SLO",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "slos",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37553865-cace-49f5-8f49-1725cc9f664b",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "527fa054-a3e1-4fb7-9bc5-b56e59e27b4f",
+              "name": "Cannot delete the SLO because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ade8d6b8-6341-492b-a567-82cc959204fe",
+              "name": "Cannot delete the SLO because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5acaa09f-133e-4589-a4a7-88dfdc24bfd9",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1023,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97c02c35-7e71-4074-9f1c-5e8133483fc8",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "slos",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": 9564\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3c16ed2d-bfa8-441f-9e70-df5bccc32e16",
+    "name": "Config V1 Bucket SLO API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

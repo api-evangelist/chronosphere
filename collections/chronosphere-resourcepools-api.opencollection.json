@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket ResourcePools API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ResourcePools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/resource-pools"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/resource-pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "ResourcePools CRUD (subset for singleton objects)"
+        },
+        {
+          "info": {
+            "name": "UpdateResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/resource-pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteResourcePools",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/resource-pools",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

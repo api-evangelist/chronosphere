@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket TraceTailSamplingRules API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TraceTailSamplingRules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReadTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-tail-sampling-rules"
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-tail-sampling-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "TraceTailSamplingRules CRUD (subset for singleton objects)"
+        },
+        {
+          "info": {
+            "name": "UpdateTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-tail-sampling-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceTailSamplingRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-tail-sampling-rules",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

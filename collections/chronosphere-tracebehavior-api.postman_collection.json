@@ -1,0 +1,1469 @@
+{
+  "item": [
+    {
+      "id": "ade80e95-012c-4268-8b47-835e2e8438d0",
+      "name": "TraceBehavior",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5069528f-7aaa-4b9b-a880-ea148a499716",
+          "name": "List Trace Behaviors",
+          "request": {
+            "name": "List Trace Behaviors",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behaviors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any TraceBehavior with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any TraceBehavior with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any TraceBehavior with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any TraceBehavior with a matching name in the given list (and matches all other filters) is returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "85c912c8-f7be-4da5-b191-eb211a7a9c96",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"trace_behaviors\": [\n    {\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"created_at\": \"1965-04-02T22:14:36.422Z\",\n      \"updated_at\": \"2016-03-09T09:04:12.371Z\",\n      \"description\": \"string\",\n      \"base_tail_sample_rate\": 7369.819723528394,\n      \"base_head_sample_rate\": 4291.807654037757,\n      \"error_sample_options\": {\n        \"sample_rate\": 2613.4155070930674,\n        \"sampling_type\": \"LOW_VALUE\",\n        \"enabled\": true\n      },\n      \"fast_sample_options\": {\n        \"max_duration_seconds\": 9183.176581798934,\n        \"sample_rate\": 7824.775337287617,\n        \"sampling_type\": \"HIGH_VALUE\",\n        \"enabled\": true\n      },\n      \"slow_sample_options\": {\n        \"min_duration_seconds\": 9943.833427542992,\n        \"sample_rate\": 4513.1867962373535,\n        \"sampling_type\": \"HIGH_VALUE\",\n        \"enabled\": false\n      },\n      \"large_trace_sample_options\": {\n        \"span_count_threshold\": 5826,\n        \"sample_rate\": 7687.208688185407,\n        \"sampling_type\": \"LOW_VALUE\",\n        \"enabled\": false\n      },\n      \"small_trace_sample_options\": {\n        \"span_count_threshold\": 1379,\n        \"sample_rate\": 8111.98952296329,\n        \"sampling_type\": \"HIGH_VALUE\",\n        \"enabled\": false\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"created_at\": \"2006-08-05T18:31:06.600Z\",\n      \"updated_at\": \"1981-10-25T07:00:20.267Z\",\n      \"description\": \"string\",\n      \"base_tail_sample_rate\": 2749.0821291159286,\n      \"base_head_sample_rate\": 341.2746121717547,\n      \"error_sample_options\": {\n        \"sample_rate\": 7719.443029136986,\n        \"sampling_type\": \"HIGH_VALUE\",\n        \"enabled\": false\n      },\n      \"fast_sample_options\": {\n        \"max_duration_seconds\": 3803.6182423608957,\n        \"sample_rate\": 6912.554225143165,\n        \"sampling_type\": \"LOW_VALUE\",\n        \"enabled\": true\n      },\n      \"slow_sample_options\": {\n        \"min_duration_seconds\": 3874.796650136776,\n        \"sample_rate\": 1254.0568234280524,\n        \"sampling_type\": \"LOW_VALUE\",\n        \"enabled\": true\n      },\n      \"large_trace_sample_options\": {\n        \"span_count_threshold\": 5610,\n        \"sample_rate\": 1654.960424068479,\n        \"sampling_type\": \"LOW_VALUE\",\n        \"enabled\": true\n      },\n      \"small_trace_sample_options\": {\n        \"span_count_threshold\": 4754,\n        \"sample_rate\": 8661.566484959603,\n        \"sampling_type\": \"LOW_VALUE\",\n        \"enabled\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99f85d54-c70b-477d-b298-d20e557e889e",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0967290-6780-4961-aeae-a7fdb7962505",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4316,\n  \"key_1\": 4745,\n  \"key_2\": true,\n  \"key_3\": 5636.029585440188\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18dd7eed-261a-4955-bf0d-c207e866767d",
+          "name": "Create Trace Behavior",
+          "request": {
+            "name": "Create Trace Behavior",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behaviors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5392fe5c-b26b-4553-b17e-461f8697c7b5",
+              "name": "A successful response containing the created TraceBehavior.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"created_at\": \"1962-02-10T23:48:50.561Z\",\n    \"updated_at\": \"1981-11-22T02:06:41.328Z\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a61e3575-1179-4e52-b7cc-be75f5c7ae21",
+              "name": "Cannot create the TraceBehavior because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "705b4db5-74fb-44ab-bcae-932bdd6a5824",
+              "name": "Cannot create the TraceBehavior because there is a conflict with an existing TraceBehavior.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6115e6d9-cf6f-4af2-9ae6-d438bd152530",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37b8be17-18da-4e1e-bbab-a185747fb52f",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4316,\n  \"key_1\": 4745,\n  \"key_2\": true,\n  \"key_3\": 5636.029585440188\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35d5bee6-8566-4a53-8d60-f0cfcdbf9aa4",
+          "name": "Read Trace Behavior",
+          "request": {
+            "name": "Read Trace Behavior",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behaviors",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "15753e4b-abab-479c-97f8-1aa736daa21d",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"created_at\": \"1962-02-10T23:48:50.561Z\",\n    \"updated_at\": \"1981-11-22T02:06:41.328Z\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6806e247-9462-4c05-9894-6f35cd66bc61",
+              "name": "Cannot read the TraceBehavior because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c946f3d5-b391-48e7-af9b-aee51ccb8a94",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "462a094e-5296-4ef7-88ed-f3ddc2086866",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4316,\n  \"key_1\": 4745,\n  \"key_2\": true,\n  \"key_3\": 5636.029585440188\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d35340a5-edcb-47ec-a695-b9d26242c9c3",
+          "name": "Update Trace Behavior",
+          "request": {
+            "name": "Update Trace Behavior",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behaviors",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0cf7fdbe-39b5-46b3-b557-b219e820433c",
+              "name": "A successful response containing the updated TraceBehavior.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"created_at\": \"1962-02-10T23:48:50.561Z\",\n    \"updated_at\": \"1981-11-22T02:06:41.328Z\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dac0690c-8503-4294-905d-0b791327ce81",
+              "name": "Cannot update the TraceBehavior because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e4f3fe2-e237-499c-b947-9fa79d3ffe7b",
+              "name": "Cannot update the TraceBehavior because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dde3a60b-9deb-493b-9ba1-0880ca64df1d",
+              "name": "Cannot update the TraceBehavior because there is a conflict with an existing TraceBehavior.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c478651-f62a-41e6-b2c3-231b1b1078d4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f62d2dc-d27f-47f7-9df3-44a75ab89297",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_behavior\": {\n    \"name\": \"<string>\",\n    \"slug\": \"<string>\",\n    \"description\": \"<string>\",\n    \"base_tail_sample_rate\": \"<double>\",\n    \"base_head_sample_rate\": \"<double>\",\n    \"error_sample_options\": {\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"fast_sample_options\": {\n      \"max_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"slow_sample_options\": {\n      \"min_duration_seconds\": \"<double>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"large_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"small_trace_sample_options\": {\n      \"span_count_threshold\": \"<long>\",\n      \"sample_rate\": \"<double>\",\n      \"sampling_type\": \"<string>\",\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4316,\n  \"key_1\": 4745,\n  \"key_2\": true,\n  \"key_3\": 5636.029585440188\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d80d90a3-b9d1-4257-8894-e4639335242d",
+          "name": "Delete Trace Behavior",
+          "request": {
+            "name": "Delete Trace Behavior",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-behaviors",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64ab512d-ccfe-4dbb-8fbd-1e638b0a1d20",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9bb1579-a6c9-408d-8097-7bd0bf644c4e",
+              "name": "Cannot delete the TraceBehavior because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d2dd9c7-d901-4958-a89d-9e288f6764e3",
+              "name": "Cannot delete the TraceBehavior because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f2c1888-fa8d-4214-9355-b2ef8320ac9b",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2632,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "660b8e8c-2fd8-4a1f-8d44-ce8ca37e400f",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-behaviors",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4316,\n  \"key_1\": 4745,\n  \"key_2\": true,\n  \"key_3\": 5636.029585440188\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b1bd2845-daa5-4952-8a3d-2cdd2b54bafa",
+    "name": "Config V1 Bucket TraceBehavior API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

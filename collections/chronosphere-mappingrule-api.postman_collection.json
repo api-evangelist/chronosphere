@@ -1,0 +1,1505 @@
+{
+  "item": [
+    {
+      "id": "dacb2635-91e0-4a68-b43a-c33bdb78dfa2",
+      "name": "MappingRule",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39203a16-af40-4b43-88b5-9487fe7ad1ac",
+          "name": "List Mapping Rules",
+          "request": {
+            "name": "List Mapping Rules",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "mapping-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any MappingRule with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any MappingRule with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by bucket_slug, where any MappingRule with a matching bucket_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "bucket_slugs",
+                  "value": "<string>",
+                  "description": "Filters results by bucket_slug, where any MappingRule with a matching bucket_slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any MappingRule with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any MappingRule with a matching name in the given list (and matches all other filters) is returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6822b34d-9999-4393-a813-f5bc30928e26",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"mapping_rules\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1966-05-27T07:45:51.052Z\",\n      \"updated_at\": \"2022-06-16T19:22:30.162Z\",\n      \"bucket_slug\": \"string\",\n      \"filters\": [\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        },\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        }\n      ],\n      \"aggregation_policy\": {\n        \"aggregation\": \"P9999\",\n        \"storage_policy\": {\n          \"resolution\": \"string\",\n          \"retention\": \"string\"\n        },\n        \"interval\": \"string\",\n        \"drop_timestamp\": false\n      },\n      \"drop\": true,\n      \"mode\": \"PREVIEW\"\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"1999-11-06T22:44:03.283Z\",\n      \"updated_at\": \"1973-03-02T13:02:44.079Z\",\n      \"bucket_slug\": \"string\",\n      \"filters\": [\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        },\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        }\n      ],\n      \"aggregation_policy\": {\n        \"aggregation\": \"P30\",\n        \"storage_policy\": {\n          \"resolution\": \"string\",\n          \"retention\": \"string\"\n        },\n        \"interval\": \"string\",\n        \"drop_timestamp\": true\n      },\n      \"drop\": true,\n      \"mode\": \"ENABLED\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22eefebe-b50d-459d-beb6-21fbf42cdc72",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3115671d-df59-40b2-b81e-b26b37f7a522",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bucket_slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 1463,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d7edfb1-826c-4288-a6d0-f1d4c15b630a",
+          "name": "Create Mapping Rule",
+          "request": {
+            "name": "Create Mapping Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "mapping-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42552bb7-784b-4354-a1c2-5db0623ba3b1",
+              "name": "A successful response containing the created MappingRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1993-06-08T08:29:51.366Z\",\n    \"updated_at\": \"1972-12-11T13:49:46.692Z\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80870d61-3bc6-4227-9678-9ff616f52a85",
+              "name": "Cannot create the MappingRule because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b718bc56-3d36-4622-95a1-3fae819eb01c",
+              "name": "Cannot create the MappingRule because there is a conflict with an existing MappingRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e77e434-f09e-4cee-a952-7db4d2515f9a",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "182ebaad-a4a2-4d82-9cb1-078e8c6d742e",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 1463,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18a4ea43-85f6-4de4-967d-b10c6252fa5a",
+          "name": "Read Mapping Rule",
+          "request": {
+            "name": "Read Mapping Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "mapping-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f17e3d6-2a9e-4883-973b-32eb2bddc2dc",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1993-06-08T08:29:51.366Z\",\n    \"updated_at\": \"1972-12-11T13:49:46.692Z\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8decb093-e84d-424d-a6be-8141c3bd14b4",
+              "name": "Cannot read the MappingRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f18d2dcc-9232-447f-a1fe-29ed29446d93",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b71cf7b-adee-444f-8c87-346e4a02d744",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 1463,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0591fbc9-3800-46d1-8e1d-cc4c24bf9643",
+          "name": "Update Mapping Rule",
+          "request": {
+            "name": "Update Mapping Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "mapping-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ce93528-ecbd-44a7-af2e-1c67f3d14dca",
+              "name": "A successful response containing the updated MappingRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"1993-06-08T08:29:51.366Z\",\n    \"updated_at\": \"1972-12-11T13:49:46.692Z\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f317426f-5388-42dc-b20b-6f16ab9eea47",
+              "name": "Cannot update the MappingRule because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f75648c4-0143-4b59-aebb-a9c1833b926e",
+              "name": "Cannot update the MappingRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf46f099-a50b-442e-a9c9-14c3cc815d14",
+              "name": "Cannot update the MappingRule because there is a conflict with an existing MappingRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9835886e-9094-41ea-a2ea-c736dd379b6d",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de556ecf-ee0c-4c9f-abb8-452d3388ac99",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mapping_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"bucket_slug\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"aggregation_policy\": {\n      \"aggregation\": \"<string>\",\n      \"storage_policy\": {\n        \"resolution\": \"<string>\",\n        \"retention\": \"<string>\"\n      },\n      \"interval\": \"<string>\",\n      \"drop_timestamp\": \"<boolean>\"\n    },\n    \"drop\": \"<boolean>\",\n    \"mode\": \"<string>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 1463,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b9c81dc-f665-44ab-bc77-5f63eda30ce0",
+          "name": "Delete Mapping Rule",
+          "request": {
+            "name": "Delete Mapping Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "mapping-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14a1d890-66f8-4ba7-a763-551862ff98ef",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81dd193e-88dc-4b48-89d1-f395d8666d40",
+              "name": "Cannot delete the MappingRule because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f64e56c-ff85-4f4d-a1bb-68c3368e04a6",
+              "name": "Cannot delete the MappingRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "776e8653-1cdb-4cf1-b788-63713d6ffe6f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2193,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f85e7f88-0d5a-4cef-bebb-08680cf3fa62",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "mapping-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 1463,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6e4d27ab-a700-478b-8bbc-cc59143f1b55",
+    "name": "Config V1 Bucket MappingRule API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

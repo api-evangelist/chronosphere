@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Config V1 Bucket TraceMetricsRule API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TraceMetricsRule",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTraceMetricsRules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-metrics-rules",
+            "params": [
+              {
+                "name": "page.max_size",
+                "value": "",
+                "type": "query",
+                "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+              },
+              {
+                "name": "page.token",
+                "value": "",
+                "type": "query",
+                "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+              },
+              {
+                "name": "slugs",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by slug, where any TraceMetricsRule with a matching slug in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Filters results by name, where any TraceMetricsRule with a matching name in the given list (and matches all other filters) is returned."
+              },
+              {
+                "name": "metric_names",
+                "value": "",
+                "type": "query",
+                "description": "Get trace metric rules by name."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/api/v1/config/trace-metrics-rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "***\nTrace Metrics Rules\n***"
+        },
+        {
+          "info": {
+            "name": "ReadTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/api/v1/config/trace-metrics-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/api/v1/config/trace-metrics-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteTraceMetricsRule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/api/v1/config/trace-metrics-rules/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

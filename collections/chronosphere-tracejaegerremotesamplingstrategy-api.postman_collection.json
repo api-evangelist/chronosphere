@@ -1,0 +1,1522 @@
+{
+  "item": [
+    {
+      "id": "be306fd3-ce25-4194-9ab4-994fc68dd86a",
+      "name": "TraceJaegerRemoteSamplingStrategy",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e36a6bfd-d08a-4811-9919-b0706e66bd28",
+          "name": "List Trace Jaeger Remote Sampling Strategies",
+          "request": {
+            "name": "List Trace Jaeger Remote Sampling Strategies",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-jaeger-remote-sampling-strategies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any TraceJaegerRemoteSamplingStrategy with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any TraceJaegerRemoteSamplingStrategy with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any TraceJaegerRemoteSamplingStrategy with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any TraceJaegerRemoteSamplingStrategy with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_names",
+                  "value": "<string>",
+                  "description": "Filters results by service_name, where any TraceJaegerRemoteSamplingStrategy with a matching service_name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "service_names",
+                  "value": "<string>",
+                  "description": "Filters results by service_name, where any TraceJaegerRemoteSamplingStrategy with a matching service_name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "name_or_service_contains",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6c7bb2f-5b49-4b14-a214-d299d15cedb4",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name_or_service_contains",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"trace_jaeger_remote_sampling_strategies\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"2004-01-10T04:18:45.320Z\",\n      \"updated_at\": \"1999-02-16T14:46:03.985Z\",\n      \"service_name\": \"string\",\n      \"applied_strategy\": {\n        \"probabilistic_strategy\": {\n          \"sampling_rate\": 2814.6511801742836\n        },\n        \"per_operation_strategies\": {\n          \"default_sampling_rate\": 727.5575469513162,\n          \"default_lower_bound_traces_per_second\": 6380.736791033927,\n          \"default_upper_bound_traces_per_second\": 9369.84090122967,\n          \"per_operation_strategies\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"rate_limiting_strategy\": {\n          \"max_traces_per_second\": 4556\n        }\n      }\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"2009-04-12T04:09:46.076Z\",\n      \"updated_at\": \"1959-08-15T23:36:41.075Z\",\n      \"service_name\": \"string\",\n      \"applied_strategy\": {\n        \"probabilistic_strategy\": {\n          \"sampling_rate\": 4983.904994429123\n        },\n        \"per_operation_strategies\": {\n          \"default_sampling_rate\": 98.39498048709427,\n          \"default_lower_bound_traces_per_second\": 8796.325660058515,\n          \"default_upper_bound_traces_per_second\": 1.6394924849372217,\n          \"per_operation_strategies\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"rate_limiting_strategy\": {\n          \"max_traces_per_second\": 6852\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7935203-b9c3-4caf-b2fe-8db6ecbee09a",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name_or_service_contains",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57d6bf8a-19ed-460b-9c51-2652713d97f8",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "service_names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name_or_service_contains",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c131dbd3-e674-463d-8582-a3dffd0922da",
+          "name": "Create Trace Jaeger Remote Sampling Strategy",
+          "request": {
+            "name": "Create Trace Jaeger Remote Sampling Strategy",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-jaeger-remote-sampling-strategies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c303e53-b1a9-470c-b8f9-68d4bcee973c",
+              "name": "A successful response containing the created TraceJaegerRemoteSamplingStrategy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2008-06-20T07:37:44.391Z\",\n    \"updated_at\": \"1985-07-30T06:59:40.432Z\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfcf98c1-5e6d-45ee-947f-07060842785a",
+              "name": "Cannot create the TraceJaegerRemoteSamplingStrategy because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16638927-dba3-408f-b03a-4e228ae0fe6d",
+              "name": "Cannot create the TraceJaegerRemoteSamplingStrategy because there is a conflict with an existing TraceJaegerRemoteSamplingStrategy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88c60ade-97ba-4277-818e-ec4b09aa0056",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e90da5b-3abc-44bc-b124-6a93ccd54da4",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f97bd865-9a24-4a81-a4a7-4b23329647b0",
+          "name": "Read Trace Jaeger Remote Sampling Strategy",
+          "request": {
+            "name": "Read Trace Jaeger Remote Sampling Strategy",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-jaeger-remote-sampling-strategies",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "833bd645-0feb-4e84-8e57-de570f5b6c37",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2008-06-20T07:37:44.391Z\",\n    \"updated_at\": \"1985-07-30T06:59:40.432Z\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60fb5059-ce44-4d82-8626-b1515ce346c0",
+              "name": "Cannot read the TraceJaegerRemoteSamplingStrategy because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ae318ee-f8e4-44be-a426-f13a29a44200",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "039b0a00-8236-46c5-8532-0bd556325e29",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31dbd583-2ad1-4aa5-b873-69ef0c00f362",
+          "name": "Update Trace Jaeger Remote Sampling Strategy",
+          "request": {
+            "name": "Update Trace Jaeger Remote Sampling Strategy",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-jaeger-remote-sampling-strategies",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9b96d8b-60fa-44a2-b982-1b382d32aa79",
+              "name": "A successful response containing the updated TraceJaegerRemoteSamplingStrategy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2008-06-20T07:37:44.391Z\",\n    \"updated_at\": \"1985-07-30T06:59:40.432Z\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a544d16-2d8a-400b-9089-73e59fcec402",
+              "name": "Cannot update the TraceJaegerRemoteSamplingStrategy because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb73d2db-d94c-46b6-9341-39e1f8a9d88b",
+              "name": "Cannot update the TraceJaegerRemoteSamplingStrategy because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97d57135-7d48-4318-86ce-38b018932572",
+              "name": "Cannot update the TraceJaegerRemoteSamplingStrategy because there is a conflict with an existing TraceJaegerRemoteSamplingStrategy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dae9a8c8-8d12-4010-9f0f-4a3d06bf81b5",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec1876db-25dc-4755-8e0a-21146c66f29d",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_jaeger_remote_sampling_strategy\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"applied_strategy\": {\n      \"probabilistic_strategy\": {\n        \"sampling_rate\": \"<double>\"\n      },\n      \"per_operation_strategies\": {\n        \"default_sampling_rate\": \"<double>\",\n        \"default_lower_bound_traces_per_second\": \"<double>\",\n        \"default_upper_bound_traces_per_second\": \"<double>\",\n        \"per_operation_strategies\": [\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"operation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"probabilistic_sampling_strategy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"rate_limiting_strategy\": {\n        \"max_traces_per_second\": \"<integer>\"\n      }\n    }\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ad92a5d-d29b-48f3-874a-1a88fcf166a6",
+          "name": "Delete Trace Jaeger Remote Sampling Strategy",
+          "request": {
+            "name": "Delete Trace Jaeger Remote Sampling Strategy",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "trace-jaeger-remote-sampling-strategies",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2139e705-2119-4326-861b-330ea35660f4",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f01b5463-e6a2-4c2f-ad86-2ec1badf0eac",
+              "name": "Cannot delete the TraceJaegerRemoteSamplingStrategy because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd83cfa5-db13-41b3-bce6-3f1428394b4b",
+              "name": "Cannot delete the TraceJaegerRemoteSamplingStrategy because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e33972d3-632c-47c3-b058-f89d6122c4a4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9378,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "faecb428-920a-4ac1-a4e2-0bf885e16ddb",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "trace-jaeger-remote-sampling-strategies",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c5ef0c01-ebee-497b-b96e-8aa76f7b9230",
+    "name": "Config V1 Bucket TraceJaegerRemoteSamplingStrategy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}

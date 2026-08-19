@@ -1,0 +1,1469 @@
+{
+  "item": [
+    {
+      "id": "3bb35a1f-d247-49c0-b0ab-33f8e6ac5200",
+      "name": "DropRule",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04b3e9d4-7a33-4241-8e5f-7a3d2ee528cc",
+          "name": "List Drop Rules",
+          "request": {
+            "name": "List Drop Rules",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "drop-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page.max_size",
+                  "value": "<long>",
+                  "description": "Page size preference (i.e. how many items are returned in the next\npage). If zero, the server will use a default. Regardless of what size\nis given, clients must never assume how many items will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "page.token",
+                  "value": "<string>",
+                  "description": "Opaque page token identifying which page to request. An empty token\nidentifies the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any DropRule with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "slugs",
+                  "value": "<string>",
+                  "description": "Filters results by slug, where any DropRule with a matching slug in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any DropRule with a matching name in the given list (and matches all other filters) is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>",
+                  "description": "Filters results by name, where any DropRule with a matching name in the given list (and matches all other filters) is returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6faca9bc-aa3a-4281-a332-da224b19ef21",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"next_token\": \"string\"\n  },\n  \"drop_rules\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"2014-11-29T14:01:04.249Z\",\n      \"updated_at\": \"2024-06-30T16:50:55.699Z\",\n      \"mode\": \"DISABLED\",\n      \"filters\": [\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        },\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        }\n      ],\n      \"conditional_rate_based_drop\": {\n        \"enabled\": true,\n        \"rate_limit_threshold\": 2697.2343847041257,\n        \"activated_drop_duration_secs\": 167\n      },\n      \"value_based_drop\": {\n        \"enabled\": true,\n        \"target_drop_value\": 3978.6336114357036\n      },\n      \"drop_nan_value\": false\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"created_at\": \"2016-09-24T23:19:26.794Z\",\n      \"updated_at\": \"1987-04-03T01:35:47.724Z\",\n      \"mode\": \"ENABLED\",\n      \"filters\": [\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        },\n        {\n          \"name\": \"job\",\n          \"value_glob\": \"myservice*\"\n        }\n      ],\n      \"conditional_rate_based_drop\": {\n        \"enabled\": true,\n        \"rate_limit_threshold\": 6515.309178391678,\n        \"activated_drop_duration_secs\": 7460\n      },\n      \"value_based_drop\": {\n        \"enabled\": false,\n        \"target_drop_value\": 4651.999632609194\n      },\n      \"drop_nan_value\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eec0ff1-52ff-40b5-ad9e-54cbfe2c1394",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc92ac77-26c1-47f8-85d5-f7f813f76d63",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page.max_size",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "page.token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slugs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 9224.71475676673,\n  \"key_1\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7babeb45-a44d-453a-bbe1-67927908f236",
+          "name": "Create Drop Rule",
+          "request": {
+            "name": "Create Drop Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "drop-rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "303b51ba-c992-45f7-a1d3-706561d2d596",
+              "name": "A successful response containing the created DropRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2020-02-20T22:36:54.116Z\",\n    \"updated_at\": \"2017-06-28T01:41:33.059Z\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91d4a9f0-c07a-4b35-83da-0589b3d37945",
+              "name": "Cannot create the DropRule because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7526a43a-fdc3-4741-befe-ef80f66182d7",
+              "name": "Cannot create the DropRule because there is a conflict with an existing DropRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "104b089f-f9a7-4303-ab78-bd8b1ed6704f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55435514-6981-494c-938b-c5ec3bc8a2c9",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 9224.71475676673,\n  \"key_1\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acfbac0a-1708-4a2f-8eb8-c4ecab8d0ccd",
+          "name": "Read Drop Rule",
+          "request": {
+            "name": "Read Drop Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "drop-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "315de38f-9ca7-4d35-a8f9-3a96602de8fd",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2020-02-20T22:36:54.116Z\",\n    \"updated_at\": \"2017-06-28T01:41:33.059Z\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07e12c75-f6e3-48bb-a38e-8dc45b70cd1c",
+              "name": "Cannot read the DropRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96fce813-b5f5-4e67-8472-b7e1d033a16f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "580a663b-3b0d-4dae-984c-d0338e572416",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 9224.71475676673,\n  \"key_1\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd2c458f-e4b8-498b-9aac-6bed04aca35c",
+          "name": "Update Drop Rule",
+          "request": {
+            "name": "Update Drop Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "drop-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value_glob\": \"<string>\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "76db9750-93e1-4ea2-858e-23aa2b8ceebf",
+              "name": "A successful response containing the updated DropRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"2020-02-20T22:36:54.116Z\",\n    \"updated_at\": \"2017-06-28T01:41:33.059Z\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea1f3e3d-ba90-4466-bb43-e20e9f89a563",
+              "name": "Cannot update the DropRule because the request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21398f1d-5127-4694-a581-4642b5c424d1",
+              "name": "Cannot update the DropRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a802a81e-c49b-4813-9f2b-f8411a5d82a1",
+              "name": "Cannot update the DropRule because there is a conflict with an existing DropRule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95011f81-debd-49aa-9908-4ac9a2dffc84",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76f45c99-6fd4-4785-a2e1-f4195a1b1012",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"drop_rule\": {\n    \"slug\": \"<string>\",\n    \"name\": \"<string>\",\n    \"mode\": \"<string>\",\n    \"filters\": [\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      },\n      {\n        \"name\": \"job\",\n        \"value_glob\": \"myservice*\"\n      }\n    ],\n    \"conditional_rate_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"rate_limit_threshold\": \"<double>\",\n      \"activated_drop_duration_secs\": \"<integer>\"\n    },\n    \"value_based_drop\": {\n      \"enabled\": \"<boolean>\",\n      \"target_drop_value\": \"<double>\"\n    },\n    \"drop_nan_value\": \"<boolean>\"\n  },\n  \"create_if_missing\": \"<boolean>\",\n  \"dry_run\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 9224.71475676673,\n  \"key_1\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b70abb91-3814-40d1-b4df-e2baa4312647",
+          "name": "Delete Drop Rule",
+          "request": {
+            "name": "Delete Drop Rule",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "config",
+                "drop-rules",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "73db9c6b-b783-4865-8820-2e08f14f56a3",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ef91b40-9f32-4076-bd32-f41582234abf",
+              "name": "Cannot delete the DropRule because it is in use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28893b32-ff08-465e-afd2-9dd8b56345e0",
+              "name": "Cannot delete the DropRule because the slug does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a2fa3ff-89b4-43e5-bdd6-78ffd3415061",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7618,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "890adc90-d296-4d26-aeb6-f9f2b783cd06",
+              "name": "An undefined error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "config",
+                    "drop-rules",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 9224.71475676673,\n  \"key_1\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "91b4930d-802b-42b9-8bc6-88d1d1aed18f",
+    "name": "Config V1 Bucket DropRule API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Config API provides standard HTTP/JSON REST endpoints for creating, reading,\nupdating, deleting, and listing configurable Chronosphere resources.\n\nUse this link to download the raw Swagger specification:\n<a href=\"/api/v1/config/swagger.json\">/api/v1/config/swagger.json</a>\n",
+      "type": "text/plain"
+    }
+  }
+}
