@@ -1,0 +1,145 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.chronosphere.io/investigate/alerts/notifications/notifiers/webhook,
+  /investigate/alerts/notifications/notifiers, /investigate/alerts/notifications/policies and
+  /docs/status, fetched 2026-08-29; notifier resource shapes read from the published Config V1
+  OpenAPI.
+provider: Chronosphere
+providerId: chronosphere
+asyncapi_published: false
+asyncapi_note: >-
+  Chronosphere publishes no AsyncAPI document. Probed 2026-08-29: /asyncapi.yaml and
+  /asyncapi.json return 404 on both chronosphere.io and docs.chronosphere.io, and no such document
+  is referenced anywhere in the docs or in the 84 public repos of the chronosphereio GitHub
+  organization. The event surface is real but described only in prose, so this catalog is the
+  machine-readable form of it.
+surface: outbound-webhook
+direction: provider-to-subscriber
+description: >-
+  Chronosphere emits HTTP POST callbacks from Observability Platform to customer endpoints when a
+  monitor's alert state changes. Delivery targets are configured as first-class API resources —
+  a Notifier of type webhook, routed by a NotificationPolicy — so the whole subscription surface
+  is manageable through the Config API, Chronoctl and Terraform rather than through a console
+  only.
+configuration:
+  resource: Notifier
+  api_paths:
+  - /api/v1/config/notifiers
+  - /api/v1/config/notifiers/{slug}
+  operationIds:
+  - ListNotifiers
+  - ReadNotifier
+  - CreateNotifier
+  - UpdateNotifier
+  - DeleteNotifier
+  routing_resource: NotificationPolicy
+  routing_paths:
+  - /api/v1/config/notification-policies
+  - /api/v1/config/notification-policies/{slug}
+  chronoctl:
+    kind: Notifier
+    api_version: v1/config
+    example_fields:
+    - name
+    - slug
+    - skip_resolved
+    - webhook.url
+  terraform: chronosphere_webhook_alert_notifier
+events:
+- name: alert.firing
+  transport: HTTPS POST
+  content_type: application/json
+  trigger: A monitor condition enters the firing state.
+  envelope_field: status
+  envelope_value: firing
+- name: alert.resolved
+  transport: HTTPS POST
+  content_type: application/json
+  trigger: A previously firing condition resolves.
+  envelope_field: status
+  envelope_value: resolved
+  opt_out: >-
+    Per-notifier. "Notify when resolved" in the UI; `skip_resolved` on the Chronoctl/Config API
+    resource.
+payload:
+  version_field: version
+  observed_version: '4'
+  shape: Alertmanager-compatible notification envelope
+  fields:
+  - name: notifier
+    description: Slug or name of the notifier that delivered this payload.
+  - name: status
+    description: firing or resolved, for the notification as a whole.
+  - name: alerts[]
+    description: One entry per alerting series.
+  - name: alerts[].status
+  - name: alerts[].labels
+    description: Full label set of the alerting series, including alertname and severity.
+  - name: alerts[].annotations
+    description: Includes ruleid, monitor_slug and notification_policy_slug.
+  - name: alerts[].startsAt
+  - name: alerts[].endsAt
+    description: Zero value (0001-01-01T00:00:00Z) while the alert is still firing.
+  - name: alerts[].fingerprint
+    description: Deterministic hash of the series labels; a stable identity for deduplication.
+  - name: groupLabels
+    description: Label values for the related signal display, plus severity.
+  - name: commonLabels
+    description: Labels common across every alert in the notification, including static labels.
+  - name: commonAnnotations
+  - name: version
+  note: >-
+    The envelope is deliberately Alertmanager-shaped, so a receiver already written for Prometheus
+    Alertmanager webhooks works with little change. It is another instance of the domain-standard
+    posture recorded in conformance/chronosphere-conformance.yml.
+security:
+  signed: true
+  algorithm: HMAC-SHA256
+  headers:
+  - name: Chronosphere-Webhook-Timestamp
+    description: Unix timestamp of construction. Verify within a 5-15 minute tolerance.
+  - name: Chronosphere-Webhook-Signature-V1
+    description: >-
+      One or more hex-encoded signatures, comma separated, always with a trailing comma so clients
+      must split on commas. Multiple values appear during key rotation.
+  signing_string: '"v1:" + timestamp + ":" + request_body'
+  key_management: >-
+    A per-account Webhook Signing Key, revealed in the web app under My Account. Retrieving it
+    requires membership of a team with the SysAdmin role.
+  verification_guidance: >-
+    Read the raw body bytes and disable client-side parsing before computing the HMAC. Fail closed
+    if either header is missing.
+  assessment: >-
+    This is a well-built webhook security model — timestamped, HMAC-signed, rotation-aware, with
+    published verification steps. It is stronger than most webhook surfaces in the catalog, and it
+    is documented only in prose.
+other_notifier_types:
+- pagerduty
+- slack
+- opsgenie
+- victorops
+- email
+- incident
+- discard
+note_other: >-
+  All are configured through the same Notifier resource, so the Config API is the single control
+  plane for every alert destination.
+additional_subscriptions:
+- name: Status page incident notifications
+  channels:
+  - email
+  - SMS
+  - webhook
+  source: https://docs.chronosphere.io/status
+  note: >-
+    Subscribed from the Chronosphere Status page, which sits behind Okta SSO, so the subscription
+    itself cannot be created anonymously.
+gaps:
+- No AsyncAPI or JSON Schema is published for the webhook payload; the example body above is the
+  only specification of it.
+- No retry, timeout or delivery-guarantee policy is documented.
+- No delivery log or replay endpoint is exposed in the Config API.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

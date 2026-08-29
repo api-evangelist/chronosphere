@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket Dashboard API
   description: '
@@ -270,13 +270,6 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1CreateDashboardResponse:
-      type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-    configv1DeleteDashboardResponse:
-      type: object
     configv1Dashboard:
       type: object
       properties:
@@ -309,17 +302,11 @@ components:
           additionalProperties:
             type: string
           description: Optional. Defines tags that add metadata about the dashboard.
-    configv1CollectionReferenceType:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-    configv1ReadDashboardResponse:
+    genericError:
       type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
+      additionalProperties: true
+    configv1DeleteDashboardResponse:
+      type: object
     configv1CreateDashboardRequest:
       type: object
       properties:
@@ -328,21 +315,13 @@ components:
         dry_run:
           type: boolean
           description: If true, the Dashboard isn't created, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
-    configv1PageResult:
+    configv1CollectionReference:
       type: object
       properties:
-        next_token:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
           type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1UpdateDashboardResponse:
-      type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
     ConfigV1UpdateDashboardBody:
       type: object
       properties:
@@ -354,13 +333,26 @@ components:
         dry_run:
           type: boolean
           description: If true, the Dashboard isn't created or updated, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
-    configv1CollectionReference:
+    configv1PageResult:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-        slug:
+        next_token:
           type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ReadDashboardResponse:
+      type: object
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
+    configv1CreateDashboardResponse:
+      type: object
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
     configv1ListDashboardsResponse:
       type: object
       properties:
@@ -370,9 +362,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/configv1Dashboard'
-    genericError:
+    configv1UpdateDashboardResponse:
       type: object
-      additionalProperties: true
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
     apiError:
       type: object
       properties:
@@ -383,4 +377,10 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
 x-original-swagger-version: '2.0'

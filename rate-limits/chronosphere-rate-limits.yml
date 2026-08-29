@@ -4,86 +4,136 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Chronosphere
 providerId: chronosphere
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-08-29'
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.chronosphere.io/administer/limits-licensing/limits,
+  /administer/limits-licensing/limits/query-limits, /administer/limits-licensing/limits/metric-limits
+  and /administer/limits-licensing/licensing, fetched 2026-08-29; response-code coverage checked
+  against all six published OpenAPI documents.
 tags:
   - AIOps
   - Observability
   - Rate Limiting
   - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Chronosphere API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: >-
+  Chronosphere publishes throttling BEHAVIOUR in detail and throttling NUMBERS not at all. The
+  limits are per-tenant and derived from the customer's contracted capacity, so the docs describe
+  the meter, the trigger and the consequence precisely while the value of every limit lives in the
+  contract and in an in-product dashboard. There are no published numeric thresholds to record and
+  no rate-limit response headers at all.
+limit_count: 0
+limit_count_note: >-
+  Zero published numeric limits, not zero limits. Five distinct throttles are documented and
+  catalogued below; none carries a public number.
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+headers_note: >-
+  No X-RateLimit-*, RateLimit-* or Retry-After header is documented anywhere in the Chronosphere
+  documentation — a full-text search of the docs corpus for "Retry-After" and "X-RateLimit"
+  returns no match. An agent that hits a limit gets a status code and nothing else: no remaining
+  count, no reset time, no backoff hint. This is the most consequential runtime gap in the
+  Chronosphere API surface, because the documented recovery for the main throttle is "keep
+  dropping an indiscriminate subset of queries" until demand falls.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  detail: >-
+    429 Too Many Requests on query-side throttling. 429 is declared on zero of the 195 operations
+    in the v1 OpenAPI documents, so a generated client will not model it.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Chronosphere
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Chronosphere
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Chronosphere
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Chronosphere
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Chronosphere
+- name: Selectors per second
+  scope: per-tenant
+  applies_to: automated query sources (monitors, recording rules, service accounts)
+  metric: PromQL selectors evaluated per second
+  limit: contract-derived
+  published_value: null
+  window: >-
+    Sustained. Chronosphere does not begin dropping until the limit is exceeded for 10 consecutive
+    minutes, which deliberately tolerates spikes.
+  on_exhaustion: >-
+    HTTP 429; Observability Platform then keeps dropping an indiscriminate subset of incoming
+    queries to hold traffic within the limit.
+  adjustable: false
+  adjustable_note: 'Documented verbatim: "The selectors per second query limit can''t be increased."'
+  visibility: Metrics Query Capacity Overview managed dashboard, in-product.
+  mitigation:
+  - Lengthen monitor and recording-rule evaluation intervals (1,000 single-selector queries at 15s
+    is ~66 selectors/s; at 60s it is ~16).
+  - Collapse per-service alerts into one aggregated PromQL query grouped by label.
+  docs: https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits#selectors-per-second
+- name: Data reads per second
+  scope: per-tenant
+  applies_to: automated query sources
+  metric: 'READS = sum(DATAPOINTS_RETURNED_FOR_SERIES), minimum 60 data points per series'
+  limit: contract-derived
+  published_value: null
+  window: sustained; same 10-minute grace before dropping
+  on_exhaustion: HTTP 429 and indiscriminate query dropping.
+  visibility: Metrics Query Capacity Overview managed dashboard.
+  docs: https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits#data-reads-per-second
+- name: Log global query limit
+  scope: per-tenant
+  metric: total compute resources available for log queries
+  limit: contract-derived
+  published_value: null
+  on_exhaustion: Queries are QUEUED rather than rejected, and run when resources free up.
+  docs: https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits#log-query-rate-limits
+- name: Log user query limit
+  scope: per-user
+  metric: percentage of total available query resources
+  limit: contract-derived
+  published_value: null
+  purpose: Stops a single person consuming all query capacity.
+- name: Log API query limit
+  scope: per-api-caller
+  metric: percentage of total available query resources
+  limit: contract-derived
+  published_value: null
+  note: >-
+    The only limit explicitly scoped to API traffic. Its share of total capacity is not published,
+    so an integrator cannot size a workload in advance.
+system_limits:
+  description: >-
+    Separate from query throttling, Chronosphere enforces unchangeable ingest-side system limits
+    described as circuit breakers against catastrophic traffic patterns. Exceeding license capacity
+    can cause data to be dropped; which data drops first is governed by quotas and resource pools.
+  categories:
+  - events — ingest rate caps and field-level validation
+  - logs — maximum individual log size, label length constraints
+  - metrics — label size, label count, total series byte limits, late/future-arrival windows
+  - queries — the throttles catalogued above
+  - traces — tag size, span timing validity, trace span count, per-pod ingest caps
+  docs: https://docs.chronosphere.io/administer/limits-licensing/limits
+customer_controls:
+  note: >-
+    Unusually, the tenant's own share-out of capacity is API-manageable: ResourcePools and quota
+    allocations decide which data drops first, and DropRule, RollupRule, MappingRule and
+    ConsumptionBudget let a customer shed load before a limit trips.
+  operations:
+  - ReadResourcePools
+  - UpdateResourcePools
+  - DeleteResourcePools
+  - ListConsumptionBudgets
+  - UpdateConsumptionConfig
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+- name: Grace window
+  description: Neither query limit begins dropping until it has been exceeded for 10 consecutive minutes.
+- name: Drop, not queue (metrics queries)
+  description: >-
+    Metrics query overload sheds an indiscriminate subset of queries. A client cannot assume its
+    own request will survive, and cannot tell a dropped query from a failed one without the 429.
+- name: Queue, not drop (log queries)
+  description: Log queries exceeding the global limit are queued and run when resources free up.
+provenance_note: >-
+  This file replaces a 2026-05-04 bulk-sweep scaffold that invented free/professional/enterprise
+  tiers with 10/100/1000 requests-per-minute limits and a full set of X-RateLimit-* headers.
+  Chronosphere publishes none of that. The headers in particular were fabricated, and their
+  absence is one of the more useful facts in this artifact.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

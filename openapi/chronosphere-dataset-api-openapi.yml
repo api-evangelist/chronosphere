@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket Dataset API
   description: '
@@ -262,17 +262,56 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    DatasetDatasetConfiguration:
+    configv1UpdateDatasetResponse:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/DatasetDatasetType'
-        trace_dataset:
-          $ref: '#/components/schemas/configv1TraceDataset'
-        log_dataset:
-          $ref: '#/components/schemas/configv1LogDataset'
-    configv1DeleteDatasetResponse:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+    genericError:
       type: object
+      additionalProperties: true
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    TraceSearchFilterTraceFilter:
+      type: object
+      properties:
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+    configv1CreateDatasetResponse:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+    TraceSearchFilterTagFilter:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key or name of the span tag that this filter inspects.
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+    configv1LogSearchFilter:
+      type: object
+      properties:
+        query:
+          type: string
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
     TraceSearchFilterStringFilter:
       type: object
       properties:
@@ -286,29 +325,38 @@ components:
           description: Values the filter tests against when using `IN` or `NOT_IN` match type.
           items:
             type: string
-    ConfigV1UpdateDatasetBody:
-      type: object
-      properties:
-        dataset:
-          $ref: '#/components/schemas/configv1Dataset'
-        create_if_missing:
-          type: boolean
-          description: If true, the Dataset will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dataset does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Dataset isn't created or updated, and no response Dataset will be returned. The response will return an error if the given Dataset is invalid.
-    StringFilterStringFilterMatchType:
+    DatasetDatasetType:
       type: string
       enum:
-      - EXACT
-      - REGEX
-      - EXACT_NEGATION
-      - REGEX_NEGATION
-      - IN
-      - NOT_IN
-    genericError:
+      - TRACES
+      - LOGS
+    DatasetDatasetConfiguration:
       type: object
-      additionalProperties: true
+      properties:
+        type:
+          $ref: '#/components/schemas/DatasetDatasetType'
+        trace_dataset:
+          $ref: '#/components/schemas/configv1TraceDataset'
+        log_dataset:
+          $ref: '#/components/schemas/configv1LogDataset'
+    configv1TraceSearchFilter:
+      type: object
+      properties:
+        trace:
+          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
+        span:
+          type: array
+          description: 'Specifies the span conditions to match on. All conditions must be true in a
+
+            single span for the span to be considered a match. If `span_count` is specified,
+
+            the number of spans within the trace that match span conditions must be within
+
+            `[min, max]`. You can specify multiple span conditions, and each can be
+
+            satisfied by any number of spans within the trace.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
     configv1ListDatasetsResponse:
       type: object
       properties:
@@ -342,15 +390,36 @@ components:
           description: Required. Description of the dataset.
         configuration:
           $ref: '#/components/schemas/DatasetDatasetConfiguration'
-    NumericFilterComparisonType:
+    configv1TraceDataset:
+      type: object
+      properties:
+        match_criteria:
+          $ref: '#/components/schemas/configv1TraceSearchFilter'
+    ConfigV1UpdateDatasetBody:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/configv1Dataset'
+        create_if_missing:
+          type: boolean
+          description: If true, the Dataset will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dataset does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Dataset isn't created or updated, and no response Dataset will be returned. The response will return an error if the given Dataset is invalid.
+    StringFilterStringFilterMatchType:
       type: string
       enum:
-      - EQUAL
-      - NOT_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+    configv1LogDataset:
+      type: object
+      properties:
+        match_criteria:
+          $ref: '#/components/schemas/configv1LogSearchFilter'
     TraceSearchFilterDurationFilter:
       type: object
       properties:
@@ -362,97 +431,20 @@ components:
           type: number
           description: Maximum duration, in seconds, required for a span or trace to match.
           format: double
-    TraceSearchFilterTraceFilter:
-      type: object
-      properties:
-        duration:
-          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
-        error:
-          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-    TraceSearchFilterTagFilter:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The key or name of the span tag that this filter inspects.
-        value:
-          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
-        numeric_value:
-          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
-    configv1UpdateDatasetResponse:
-      type: object
-      properties:
-        dataset:
-          $ref: '#/components/schemas/configv1Dataset'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    DatasetDatasetType:
-      type: string
-      enum:
-      - TRACES
-      - LOGS
-    configv1LogSearchFilter:
-      type: object
-      properties:
-        query:
-          type: string
-          description: 'Returns logs that match this query. The query can include only top-level
-
-            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
-
-            operator is allowed.'
-    configv1TraceSearchFilter:
-      type: object
-      properties:
-        trace:
-          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
-        span:
-          type: array
-          description: 'Specifies the span conditions to match on. All conditions must be true in a
-
-            single span for the span to be considered a match. If `span_count` is specified,
-
-            the number of spans within the trace that match span conditions must be within
-
-            `[min, max]`. You can specify multiple span conditions, and each can be
-
-            satisfied by any number of spans within the trace.'
-          items:
-            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1CreateDatasetResponse:
-      type: object
-      properties:
-        dataset:
-          $ref: '#/components/schemas/configv1Dataset'
     SpanFilterSpanFilterMatchType:
       type: string
       enum:
       - INCLUDE
       - EXCLUDE
-    TraceSearchFilterBoolFilter:
-      type: object
-      properties:
-        value:
-          type: boolean
-          description: The value of the filter compared to the target trace or span field.
+    NumericFilterComparisonType:
+      type: string
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
     configv1CreateDatasetRequest:
       type: object
       properties:
@@ -461,16 +453,24 @@ components:
         dry_run:
           type: boolean
           description: If true, the Dataset isn't created, and no response Dataset will be returned. The response will return an error if the given Dataset is invalid.
-    configv1LogDataset:
-      type: object
-      properties:
-        match_criteria:
-          $ref: '#/components/schemas/configv1LogSearchFilter'
     configv1ReadDatasetResponse:
       type: object
       properties:
         dataset:
           $ref: '#/components/schemas/configv1Dataset'
+    TraceSearchFilterCountFilter:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+        max:
+          type: integer
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
+    configv1DeleteDatasetResponse:
+      type: object
     TraceSearchFilterSpanFilter:
       type: object
       properties:
@@ -497,22 +497,22 @@ components:
           $ref: '#/components/schemas/TraceSearchFilterCountFilter'
         is_root_span:
           $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-    configv1TraceDataset:
+    TraceSearchFilterBoolFilter:
       type: object
       properties:
-        match_criteria:
-          $ref: '#/components/schemas/configv1TraceSearchFilter'
-    TraceSearchFilterCountFilter:
+        value:
+          type: boolean
+          description: The value of the filter compared to the target trace or span field.
+    apiError:
       type: object
       properties:
-        min:
+        code:
           type: integer
-          description: Minimum number of spans that must match a span query, inclusive.
+          description: An optional private error code whose values are undefined.
           format: int32
-        max:
-          type: integer
-          description: Maximum number of spans that must match a span query, inclusive.
-          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     TraceSearchFilterNumericFilter:
       type: object
       properties:

@@ -1,0 +1,153 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  Registry metadata read unauthenticated on 2026-08-29 from registry.terraform.io,
+  proxy.golang.org, registry.npmjs.org, pypi.org and api.nuget.org, cross-checked against the
+  Chronosphere docs (/tooling/chronoctl/install, /tooling/infrastructure/terraform/install,
+  /tooling/infrastructure/pulumi) and the github.com/chronosphereio organization.
+provider: Chronosphere
+providerId: chronosphere
+summary:
+  official_count: 9
+  finding: >-
+    Chronosphere publishes no first-party REST client library for the Config, Data or State API in
+    any language registry. Its shipped client surface is infrastructure-as-code and CLI: a
+    Terraform provider, a Pulumi provider in four languages, a Go MCP server and the Chronoctl
+    binary. A developer calling the HTTP API writes their own client.
+  currency: >-
+    The Terraform provider (2026-08-25) and Chronoctl (2026-08-20) are actively released. The
+    Pulumi provider's language SDKs have drifted apart from each other and from the provider: the
+    NuGet package last published 2024-07-02 and the npm package 2025-10-23, while the Go/PyPI
+    SDKs track 0.9.16 from mid-2026.
+packages:
+- name: chronosphereio/chronosphere
+  registry: terraform
+  official: true
+  url: https://registry.terraform.io/providers/chronosphereio/chronosphere/latest
+  repository: https://github.com/chronosphereio/terraform-provider-chronosphere
+  version: 1.35.0
+  published: '2026-08-25'
+  language: HCL
+  description: >-
+    Chronosphere Terraform provider. Open source from v1.0.0; manages Observability Platform
+    resources as code. Chronosphere supports each 1.x release for one year from its release date.
+  downloads: 3096524
+- name: github.com/chronosphereio/terraform-provider-chronosphere
+  registry: go
+  official: true
+  url: https://pkg.go.dev/github.com/chronosphereio/terraform-provider-chronosphere
+  version: v1.35.0
+  published: '2026-08-25'
+  language: Go
+  description: Source module for the Terraform provider above.
+- name: github.com/chronosphereio/chronosphere-mcp
+  registry: go
+  official: true
+  url: https://pkg.go.dev/github.com/chronosphereio/chronosphere-mcp
+  repository: https://github.com/chronosphereio/chronosphere-mcp
+  version: v0.6.0
+  published: '2026-02-11'
+  language: Go
+  license: Apache-2.0
+  description: >-
+    Chronosphere MCP server. Also distributed as prebuilt Darwin/Linux/Windows archives on each
+    GitHub release. Pre-1.0, so minor versions may break.
+- name: github.com/chronosphereio/chronoctl-core
+  registry: go
+  official: true
+  url: https://pkg.go.dev/github.com/chronosphereio/chronoctl-core
+  repository: https://github.com/chronosphereio/chronoctl-core
+  version: v1.33.0
+  published: '2026-08-20'
+  language: Go
+  description: Core module behind the Chronoctl CLI.
+- name: chronoctl
+  registry: cdn
+  official: true
+  url: https://storage.googleapis.com/chronosphere-release/latest/chronoctl-darwin-arm64
+  version: null
+  published: null
+  language: binary
+  description: >-
+    The Chronoctl CLI binary as the docs tell you to install it, for darwin/linux amd64+arm64.
+  note: >-
+    The documented download URL is unpinned — it always resolves to `latest`, with no versioned
+    path and no metadata endpoint. A consumer cannot tell from the URL which build they got, and
+    neither can this pipeline, so version and published are null by measurement rather than by
+    omission. `chronoctl version` after install is the only way to find out. The chronoctl-core
+    Go module above (v1.33.0, 2026-08-20) is the closest dated proxy.
+- name: github.com/chronosphereio/pulumi-chronosphere
+  registry: go
+  official: true
+  url: https://pkg.go.dev/github.com/chronosphereio/pulumi-chronosphere
+  repository: https://github.com/chronosphereio/pulumi-chronosphere
+  version: v0.9.16
+  published: '2026-06-05'
+  language: Go
+  description: Chronosphere Pulumi provider.
+- name: pulumi-chronosphere
+  registry: pypi
+  official: true
+  url: https://pypi.org/project/pulumi-chronosphere/
+  version: 0.9.16
+  published: '2026-06-10'
+  language: Python
+  description: Python SDK for the Chronosphere Pulumi provider. Homepage chronosphere.io.
+- name: '@pulumi-chronosphere/pulumi-chronosphere'
+  registry: npm
+  official: true
+  url: https://www.npmjs.com/package/@pulumi-chronosphere/pulumi-chronosphere
+  version: 0.9.10
+  published: '2025-10-23'
+  language: JavaScript/TypeScript
+  description: >-
+    Node SDK for the Chronosphere Pulumi provider, linked from the Chronosphere Pulumi docs page.
+  note: Ten months behind the Go and Python SDKs of the same provider.
+- name: Chronosphere.Pulumi.Chronosphere
+  registry: nuget
+  official: true
+  url: https://www.nuget.org/packages/Chronosphere.Pulumi.Chronosphere
+  version: 0.9.0
+  published: '2024-07-02'
+  language: .NET
+  description: .NET SDK for the Chronosphere Pulumi provider, linked from the Chronosphere Pulumi docs page.
+  note: >-
+    Two years stale against the provider it wraps. The docs page still offers it as a first-class
+    install option.
+- name: github.com/chronosphereio/calyptia-api
+  registry: go
+  official: true
+  url: https://pkg.go.dev/github.com/chronosphereio/calyptia-api
+  repository: https://github.com/chronosphereio/calyptia-api
+  version: v1.11.0
+  published: '2024-08-28'
+  language: Go
+  description: >-
+    OpenAPI spec, types and Go client for Calyptia Cloud, the API behind Chronosphere Telemetry
+    Pipeline. Predates the Chronosphere rebrand of the product.
+- name: github.com/chronosphereio/calyptia-cli
+  registry: go
+  official: true
+  url: https://pkg.go.dev/github.com/chronosphereio/calyptia-cli
+  version: v1.20.3
+  published: '2024-06-24'
+  language: Go
+  description: Calyptia Cloud CLI, distributed for macOS through the chronosphereio/calyptia-homebrew-tap.
+not_first_party:
+- name: chronosphere
+  registry: npm
+  version: 1.0.2
+  published: '2017-03-10'
+  official: false
+  note: >-
+    Unrelated 2017 package that happens to hold the name. Recorded so a later pass does not
+    mistake it for a Chronosphere SDK.
+- name: chronosphere
+  registry: pypi
+  version: 0.0.1
+  published: '2023-06-14'
+  official: false
+  note: Unrelated name squat; not published by Chronosphere.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

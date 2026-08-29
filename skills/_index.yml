@@ -1,0 +1,87 @@
+generated: '2026-08-29'
+method: searched
+provider: Chronosphere
+providerId: chronosphere
+description: >-
+  Agent Skills for the Chronosphere APIs. One is published by Chronosphere itself and saved
+  verbatim; three are packaged by API Evangelist from the provider's own OpenAPI operationIds and
+  documented runtime semantics.
+skills:
+- name: chronosphere
+  file: chronosphere-observability-platform.md
+  method: searched
+  source: https://docs.chronosphere.io/.well-known/agent-skills/chronosphere/skill.md
+  x-evidence:
+    fetched: '2026-08-29'
+    http_status: 200
+    content_type: text/markdown
+  provider_published: true
+  referenced_by: >-
+    a2a/chronosphere-agent-card.json — skills[0].url on the published A2A agent card points at
+    this exact file.
+  description: >-
+    Chronosphere's own Agent Skill. Covers dashboards, monitors and alerts, querying
+    metrics/logs/traces, telemetry ingestion, cardinality reduction, SLOs, and automation through
+    the APIs, Terraform and Chronoctl. Saved verbatim, unedited.
+- name: chronosphere-alerting-setup
+  file: chronosphere-alerting-setup.md
+  method: generated
+  provider_published: false
+  api: Chronosphere Config V1 API
+  operations:
+  - ListTeams
+  - ListCollections
+  - ListNotifiers
+  - CreateNotifier
+  - ListNotificationPolicies
+  - CreateNotificationPolicy
+  - ListMonitors
+  - CreateMonitor
+  - ReadMonitor
+  - UpdateMonitor
+  - DeleteMonitor
+  description: >-
+    End-to-end alert path — notifier, notification policy, monitor — in dependency order, with
+    dry_run rehearsal, the bucket-or-collection constraint the schema does not enforce, and
+    leaf-first teardown.
+- name: chronosphere-metrics-cost-control
+  file: chronosphere-metrics-cost-control.md
+  method: generated
+  provider_published: false
+  api: Chronosphere State V1 API, Chronosphere Config V1 API
+  operations:
+  - ListMetricUsagesByMetricName
+  - ListMetricUsagesByLabelName
+  - ListRuleEvaluations
+  - CreateDropRule
+  - CreateRollupRule
+  - CreateMappingRule
+  - UpdateResourcePools
+  - CreateConsumptionBudget
+  description: >-
+    Measure usage from the State API, then shed it with drop, rollup and mapping rules, resource
+    pools and consumption budgets — with the warning that dropped data has no restore path.
+- name: chronosphere-safe-config-change
+  file: chronosphere-safe-config-change.md
+  method: generated
+  provider_published: false
+  api: Chronosphere Config V1 API
+  operations:
+  - ReadMonitor
+  - UpdateMonitor
+  - DeleteMonitor
+  - ReadResourcePools
+  - UpdateResourcePools
+  - DeleteResourcePools
+  - UpdateTraceTailSamplingRules
+  - DeleteTraceTailSamplingRules
+  description: >-
+    The read-rehearse-write-verify loop for any Config API write, including the secret-redaction
+    sentinel trap, the create_if_missing upsert switch, and the fact that a saved read body is the
+    only undo the API offers.
+grounding: >-
+  Every operationId named in the generated skills was grepped out of the provider's published
+  OpenAPI documents at https://docs.chronosphere.io/openapi/ on 2026-08-29. None was invented.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

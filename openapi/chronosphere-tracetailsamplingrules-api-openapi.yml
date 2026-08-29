@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket TraceTailSamplingRules API
+  title: Config V1 Bucket Trace Tail Sampling Rules API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -176,107 +176,6 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    TraceSearchFilterStringFilter:
-      type: object
-      properties:
-        match:
-          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
-        value:
-          type: string
-          description: The value of the filter compared to the target trace or span field.
-        in_values:
-          type: array
-          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
-          items:
-            type: string
-    configv1CreateTraceTailSamplingRulesRequest:
-      type: object
-      properties:
-        trace_tail_sampling_rules:
-          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
-        dry_run:
-          type: boolean
-          description: If true, the TraceTailSamplingRules isn't created, and no response TraceTailSamplingRules will be returned. The response will return an error if the given TraceTailSamplingRules is invalid.
-    StringFilterStringFilterMatchType:
-      type: string
-      enum:
-      - EXACT
-      - REGEX
-      - EXACT_NEGATION
-      - REGEX_NEGATION
-      - IN
-      - NOT_IN
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1UpdateTraceTailSamplingRulesRequest:
-      type: object
-      properties:
-        trace_tail_sampling_rules:
-          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
-        create_if_missing:
-          type: boolean
-          description: If true, the TraceTailSamplingRules will be created if it does not already exist. If false, an error will be returned if the TraceTailSamplingRules does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the TraceTailSamplingRules isn't created or updated, and no response TraceTailSamplingRules will be returned. The response will return an error if the given TraceTailSamplingRules is invalid.
-    configv1ReadTraceTailSamplingRulesResponse:
-      type: object
-      properties:
-        trace_tail_sampling_rules:
-          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
-    NumericFilterComparisonType:
-      type: string
-      enum:
-      - EQUAL
-      - NOT_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-    TraceSearchFilterDurationFilter:
-      type: object
-      properties:
-        min_secs:
-          type: number
-          description: Minimum duration, in seconds, required for a span or trace to match.
-          format: double
-        max_secs:
-          type: number
-          description: Maximum duration, in seconds, required for a span or trace to match.
-          format: double
-    TraceSearchFilterTraceFilter:
-      type: object
-      properties:
-        duration:
-          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
-        error:
-          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-    configv1CreateTraceTailSamplingRulesResponse:
-      type: object
-      properties:
-        trace_tail_sampling_rules:
-          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
-    TraceSearchFilterTagFilter:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The key or name of the span tag that this filter inspects.
-        value:
-          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
-        numeric_value:
-          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     configv1TraceTailSamplingRules:
       type: object
       properties:
@@ -300,11 +199,85 @@ components:
         default_sample_rate:
           $ref: '#/components/schemas/configv1DefaultSampleRate'
       description: Root object containing all tail sampling rules (for a tenant).
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1DefaultSampleRate:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether to override the default sample rate
+        sample_rate:
+          type: number
+          description: A fraction of traces to keep, which should be a number between 0 and 1, inclusive
+          format: double
+    TraceSearchFilterTraceFilter:
+      type: object
+      properties:
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+    TraceSearchFilterTagFilter:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key or name of the span tag that this filter inspects.
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+    configv1CreateTraceTailSamplingRulesResponse:
+      type: object
+      properties:
+        trace_tail_sampling_rules:
+          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
+    configv1CreateTraceTailSamplingRulesRequest:
+      type: object
+      properties:
+        trace_tail_sampling_rules:
+          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
+        dry_run:
+          type: boolean
+          description: If true, the TraceTailSamplingRules isn't created, and no response TraceTailSamplingRules will be returned. The response will return an error if the given TraceTailSamplingRules is invalid.
+    configv1ReadTraceTailSamplingRulesResponse:
+      type: object
+      properties:
+        trace_tail_sampling_rules:
+          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
+    configv1UpdateTraceTailSamplingRulesRequest:
+      type: object
+      properties:
+        trace_tail_sampling_rules:
+          $ref: '#/components/schemas/configv1TraceTailSamplingRules'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceTailSamplingRules will be created if it does not already exist. If false, an error will be returned if the TraceTailSamplingRules does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceTailSamplingRules isn't created or updated, and no response TraceTailSamplingRules will be returned. The response will return an error if the given TraceTailSamplingRules is invalid.
+    configv1DeleteTraceTailSamplingRulesResponse:
+      type: object
     configv1UpdateTraceTailSamplingRulesResponse:
       type: object
       properties:
         trace_tail_sampling_rules:
           $ref: '#/components/schemas/configv1TraceTailSamplingRules'
+    TraceSearchFilterStringFilter:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+        value:
+          type: string
+          description: The value of the filter compared to the target trace or span field.
+        in_values:
+          type: array
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
     configv1TraceSearchFilter:
       type: object
       properties:
@@ -323,29 +296,15 @@ components:
             satisfied by any number of spans within the trace.'
           items:
             $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
-    configv1DeleteTraceTailSamplingRulesResponse:
-      type: object
-    SpanFilterSpanFilterMatchType:
+    StringFilterStringFilterMatchType:
       type: string
       enum:
-      - INCLUDE
-      - EXCLUDE
-    TraceSearchFilterBoolFilter:
-      type: object
-      properties:
-        value:
-          type: boolean
-          description: The value of the filter compared to the target trace or span field.
-    configv1DefaultSampleRate:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether to override the default sample rate
-        sample_rate:
-          type: number
-          description: A fraction of traces to keep, which should be a number between 0 and 1, inclusive
-          format: double
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
     configv1TraceTailSamplingRule:
       type: object
       properties:
@@ -370,6 +329,42 @@ components:
           description: When the rule was updated (existing system_name)
           format: date-time
       description: Contains configuration for one tail sampling rule.
+    TraceSearchFilterDurationFilter:
+      type: object
+      properties:
+        min_secs:
+          type: number
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+        max_secs:
+          type: number
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+    SpanFilterSpanFilterMatchType:
+      type: string
+      enum:
+      - INCLUDE
+      - EXCLUDE
+    NumericFilterComparisonType:
+      type: string
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+    TraceSearchFilterCountFilter:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+        max:
+          type: integer
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
     TraceSearchFilterSpanFilter:
       type: object
       properties:
@@ -396,17 +391,22 @@ components:
           $ref: '#/components/schemas/TraceSearchFilterCountFilter'
         is_root_span:
           $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-    TraceSearchFilterCountFilter:
+    TraceSearchFilterBoolFilter:
       type: object
       properties:
-        min:
+        value:
+          type: boolean
+          description: The value of the filter compared to the target trace or span field.
+    apiError:
+      type: object
+      properties:
+        code:
           type: integer
-          description: Minimum number of spans that must match a span query, inclusive.
+          description: An optional private error code whose values are undefined.
           format: int32
-        max:
-          type: integer
-          description: Maximum number of spans that must match a span query, inclusive.
-          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     TraceSearchFilterNumericFilter:
       type: object
       properties:

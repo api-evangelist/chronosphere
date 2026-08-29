@@ -1,0 +1,99 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  Derived from the securitySchemes of the provider's published Config V1, Data V1 and State V1
+  OpenAPI documents (https://docs.chronosphere.io/openapi/), then upgraded against
+  https://docs.chronosphere.io/tooling/api-info,
+  /administer/accounts-teams/service-accounts, /administer/accounts-teams/personal-access-tokens
+  and /tooling/prometheus-api, all fetched 2026-08-29.
+docs: https://docs.chronosphere.io/tooling/api-info
+provider: Chronosphere
+providerId: chronosphere
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2: false
+  mutual_tls: false
+  openid_connect: false
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: API-Token
+  description: Chronosphere API token
+  applies_to: >-
+    Every operation of Config V1, Data V1 and State V1. The Config V1 document declares a global
+    security requirement of [{ApiKeyAuth: []}].
+  sources:
+  - openapi/_original/chronosphere-config-v1-openapi3.json
+  - openapi/chronosphere-data-v1-api-openapi.json
+  - openapi/chronosphere-state-v1-api-openapi.json
+  example: 'curl -H "API-Token: ${CHRONOSPHERE_API_TOKEN}" "https://${CHRONOSPHERE_DOMAIN}/api/v1/config/monitors"'
+- name: PrometheusBearer
+  type: http
+  scheme: bearer
+  in: header
+  parameter: Authorization
+  description: >-
+    The Prometheus-compatible query surface at /data/metrics/api/v1/* uses a bearer token, NOT the
+    API-Token header. Same host, same credential, different header.
+  declared_in_openapi: false
+  source: https://docs.chronosphere.io/tooling/prometheus-api
+  example: 'curl -H "Authorization: Bearer ${CHRONOSPHERE_API_TOKEN}" "https://${CHRONOSPHERE_DOMAIN}/data/metrics/api/v1/..."'
+- name: McpOAuth
+  type: oauth2
+  applies_to: the Chronosphere MCP server and the WordPress site MCP adapter only
+  description: >-
+    OAuth 2.0 with PKCE (S256), authorization_code and refresh_token grants. The MCP server accepts
+    either OAuth or an Authorization bearer API token. See scopes/chronosphere-scopes.yml.
+  declared_in_openapi: false
+  source: https://chronosphere.io/.well-known/oauth-authorization-server
+credentials:
+- type: service account token
+  issued_with: a service account, created in Observability Platform
+  lifetime: non-expiring
+  scope: >-
+    An identity for automation — CI/CD, telemetry ingest, automated queries. Cannot sign in to the
+    UI. Actions are attributed to the service account. Many Chronosphere API requests require an
+    unrestricted service account.
+  docs: https://docs.chronosphere.io/administer/accounts-teams/service-accounts
+- type: personal access token
+  issued_with: a user account
+  lifetime: expires after a defined period of up to 30 days
+  scope: >-
+    Acts as the user, with the permissions of the user's team. Does not require SysAdmin to
+    create. Cannot be used as the Collector's API token.
+  docs: https://docs.chronosphere.io/administer/accounts-teams/personal-access-tokens
+host:
+  form: https://{tenant}.chronosphere.io
+  env_var: CHRONOSPHERE_DOMAIN
+  note: >-
+    The token is only valid against its own tenant subdomain, so host and credential are
+    inseparable. Chronoctl and the MCP server both take CHRONOSPHERE_ORG_NAME alongside the token.
+authorization_model:
+  style: role-based
+  roles_named_in_docs:
+  - SysAdmin
+  scopes: none on the HTTP API
+  machine_readable: false
+  note: >-
+    Privilege requirements are documented per feature in prose. No operation in any published
+    OpenAPI declares 401 or 403, so a client cannot discover from the contract which calls need
+    elevated rights.
+rotation:
+  documented: partial
+  detail: >-
+    Personal access tokens expire within 30 days by design. Service-account tokens are
+    non-expiring and no rotation procedure is published. Webhook signing keys support rotation
+    explicitly — the signature header carries multiple comma-separated signatures during a
+    rotation.
+secret_redaction:
+  behaviour: >-
+    The Config API returns a redaction sentinel in place of secret fields on read. A client that
+    round-trips a read into a write will overwrite the real secret with the sentinel; the Terraform
+    provider shipped an explicit fix for this in v1.28.0 (2026-05-28).
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

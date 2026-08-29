@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket API
   description: '
@@ -261,6 +261,18 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
+    configv1DeleteBucketResponse:
+      type: object
+      properties:
+        changes:
+          type: array
+          description: 'Changes contains what resources are deleted. The bucket being deleted will
+
+            always be included. When force_delete is used, the changelog will include
+
+            all resources that reference the bucket that were deleted.'
+          items:
+            $ref: '#/components/schemas/ResourceChange'
     configv1CreateBucketRequest:
       type: object
       properties:
@@ -269,15 +281,14 @@ components:
         dry_run:
           type: boolean
           description: If true, the Bucket isn't created, and no response Bucket will be returned. The response will return an error if the given Bucket is invalid.
-    ResourceChange:
+    configv1CreateBucketResponse:
       type: object
       properties:
-        resource:
-          $ref: '#/components/schemas/configv1ResourceType'
-        slug:
-          type: string
-        action:
-          $ref: '#/components/schemas/ResourceChangeAction'
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+    genericError:
+      type: object
+      additionalProperties: true
     ConfigV1UpdateBucketBody:
       type: object
       properties:
@@ -289,15 +300,6 @@ components:
         dry_run:
           type: boolean
           description: If true, the Bucket isn't created or updated, and no response Bucket will be returned. The response will return an error if the given Bucket is invalid.
-    configv1ListBucketsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        buckets:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1Bucket'
     configv1PageResult:
       type: object
       properties:
@@ -308,6 +310,44 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
+    configv1ReadBucketResponse:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+    configv1ListBucketsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Bucket'
+    configv1UpdateBucketResponse:
+      type: object
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+    ResourceChange:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/configv1ResourceType'
+        slug:
+          type: string
+        action:
+          $ref: '#/components/schemas/ResourceChangeAction'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     configv1ResourceType:
       type: string
       enum:
@@ -319,6 +359,13 @@ components:
       - RECORDING_RULE
       - MAPPING_RULE
       - ROLLUP_RULE
+    ResourceChangeAction:
+      type: string
+      enum:
+      - CREATED
+      - UPDATED
+      - DELETED
+      - NOOP
     configv1Bucket:
       type: object
       properties:
@@ -358,51 +405,4 @@ components:
             This policy takes precedence over a bucket-owned notification policy.
 
             This does not override the policy used when a monitor explicitly references a policy.'
-    configv1CreateBucketResponse:
-      type: object
-      properties:
-        bucket:
-          $ref: '#/components/schemas/configv1Bucket'
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1ReadBucketResponse:
-      type: object
-      properties:
-        bucket:
-          $ref: '#/components/schemas/configv1Bucket'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1DeleteBucketResponse:
-      type: object
-      properties:
-        changes:
-          type: array
-          description: 'Changes contains what resources are deleted. The bucket being deleted will
-
-            always be included. When force_delete is used, the changelog will include
-
-            all resources that reference the bucket that were deleted.'
-          items:
-            $ref: '#/components/schemas/ResourceChange'
-    ResourceChangeAction:
-      type: string
-      enum:
-      - CREATED
-      - UPDATED
-      - DELETED
-      - NOOP
-    configv1UpdateBucketResponse:
-      type: object
-      properties:
-        bucket:
-          $ref: '#/components/schemas/configv1Bucket'
 x-original-swagger-version: '2.0'

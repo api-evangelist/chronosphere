@@ -1,0 +1,276 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived by binding the 39 tools in the Chronosphere MCP server's published "Available Tools"
+  table (https://github.com/chronosphereio/chronosphere-mcp) to operationIds in the provider's own
+  published OpenAPI documents: Config V1 (183 operations), Data V1 (9), State V1 (3) and State
+  Unstable (2), all fetched from https://docs.chronosphere.io/openapi/ on 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+confidence_note: >-
+  The hosted MCP endpoint is per-tenant and authenticated, so no live tools/list with inputSchema
+  could be obtained. Bindings are made by name and by resource semantics against real operationIds
+  that were grepped out of the specs. Where a tool has an exact one-to-one resource counterpart the
+  confidence is high; where the tool wraps a query surface that has no public REST operation it is
+  recorded in mcp_only[] rather than guessed at.
+surfaces:
+  openapi:
+  - file: openapi/_original/chronosphere-config-v1-openapi3.json
+    name: Config V1 API
+    operations: 183
+    gated: false
+  - file: openapi/chronosphere-data-v1-api-openapi.json
+    name: Data V1 API
+    operations: 9
+    gated: false
+  - file: openapi/chronosphere-state-v1-api-openapi.json
+    name: State V1 API
+    operations: 3
+    gated: false
+  - file: openapi/_original/chronosphere-config-unstable-swagger.json
+    name: Config Unstable API
+    operations: 62
+    gated: false
+    note: Published but explicitly unstable; excluded from the coverage denominator.
+  graphql: null
+  mcp:
+  - url: https://{org}.chronosphere.io/api/mcp/mcp
+    gated: true
+    note: per-tenant, OAuth or API token
+  - url: https://docs.chronosphere.io/mcp
+    gated: false
+    note: documentation search only; not bound to the product API
+crosswalk:
+- tool: get_classic_dashboard
+  category: configapi
+  rest:
+  - ReadClassicDashboard
+  binding: one-to-one
+  confidence: high
+- tool: get_dashboard
+  category: configapi
+  rest:
+  - ReadDashboard
+  binding: one-to-one
+  confidence: high
+- tool: get_drop_rule
+  category: configapi
+  rest:
+  - ReadDropRule
+  binding: one-to-one
+  confidence: high
+- tool: get_mapping_rule
+  category: configapi
+  rest:
+  - ReadMappingRule
+  binding: one-to-one
+  confidence: high
+- tool: get_monitor
+  category: configapi
+  rest:
+  - ReadMonitor
+  binding: one-to-one
+  confidence: high
+- tool: get_notification_policy
+  category: configapi
+  rest:
+  - ReadNotificationPolicy
+  binding: one-to-one
+  confidence: high
+- tool: get_recording_rule
+  category: configapi
+  rest:
+  - ReadRecordingRule
+  binding: one-to-one
+  confidence: high
+- tool: get_rollup_rule
+  category: configapi
+  rest:
+  - ReadRollupRule
+  binding: one-to-one
+  confidence: high
+- tool: get_slo
+  category: configapi
+  rest:
+  - ReadSLO
+  binding: one-to-one
+  confidence: high
+- tool: list_classic_dashboards
+  category: configapi
+  rest:
+  - ListClassicDashboards
+  binding: one-to-one
+  confidence: high
+- tool: list_dashboards
+  category: configapi
+  rest:
+  - ListDashboards
+  binding: one-to-one
+  confidence: high
+- tool: list_drop_rules
+  category: configapi
+  rest:
+  - ListDropRules
+  binding: one-to-one
+  confidence: high
+- tool: list_mapping_rules
+  category: configapi
+  rest:
+  - ListMappingRules
+  binding: one-to-one
+  confidence: high
+- tool: list_monitors
+  category: configapi
+  rest:
+  - ListMonitors
+  binding: one-to-one
+  confidence: high
+- tool: list_notification_policies
+  category: configapi
+  rest:
+  - ListNotificationPolicies
+  binding: one-to-one
+  confidence: high
+- tool: list_recording_rules
+  category: configapi
+  rest:
+  - ListRecordingRules
+  binding: one-to-one
+  confidence: high
+- tool: list_rollup_rules
+  category: configapi
+  rest:
+  - ListRollupRules
+  binding: one-to-one
+  confidence: high
+- tool: list_slos
+  category: configapi
+  rest:
+  - ListSLOs
+  binding: one-to-one
+  confidence: high
+- tool: list_events
+  category: events
+  rest:
+  - ListEvents
+  binding: one-to-one
+  confidence: high
+  note: Data V1, GET /api/v1/data/events
+- tool: query_logs_range
+  category: logs
+  rest:
+  - QueryLogsRange
+  binding: one-to-one
+  confidence: high
+  note: Data V1, GET /api/v1/data/logs:range
+- tool: list_traces
+  category: traces
+  rest:
+  - ListTraces
+  binding: one-to-one
+  confidence: high
+  note: Data V1, POST /api/v1/data/traces
+- tool: list_metric_usages_by_label_name
+  category: metric_usage
+  rest:
+  - ListMetricUsagesByLabelName
+  binding: one-to-one
+  confidence: high
+  note: State V1
+- tool: list_metric_usages_by_metric_name
+  category: metric_usage
+  rest:
+  - ListMetricUsagesByMetricName
+  binding: one-to-one
+  confidence: high
+  note: State V1
+- tool: list_rule_evaluations
+  category: metric_usage
+  rest:
+  - ListRuleEvaluations
+  binding: one-to-one
+  confidence: high
+  note: State V1
+- tool: list_monitor_statuses
+  category: monitors
+  rest:
+  - ListMonitorStatuses
+  binding: one-to-one
+  confidence: medium
+  note: >-
+    Backed by the State Unstable API, which Chronosphere publishes but labels UNSTABLE and may
+    change without warning. The tool is the stable way to reach it.
+mcp_only:
+- tool: get_events_metadata
+  reason: >-
+    No public REST operation. The Data V1 events surface exposes list and create, not a metadata
+    or queryable-properties endpoint.
+- tool: list_events_label_values
+  reason: No public REST operation for event label values in Data V1 or Data Unstable.
+- tool: get_log
+  reason: >-
+    Data V1 publishes logs:range only; fetching a single log message by ID has no published REST
+    operation.
+- tool: get_log_histogram
+  reason: No published REST operation; the histogram is computed over the log query surface.
+- tool: list_log_field_names
+  reason: No published REST operation for log field-name discovery.
+- tool: list_log_field_values
+  reason: No published REST operation for log field-value discovery.
+- tool: list_prometheus_label_names
+  reason: >-
+    Backed by the Prometheus HTTP API that Chronosphere exposes at
+    /data/metrics/api/v1/* (documented at /tooling/prometheus-api), not by the Config/Data/State
+    OpenAPI documents. It is a standards-based surface with no first-party OpenAPI.
+- tool: list_prometheus_label_values
+  reason: Prometheus HTTP API surface; no first-party OpenAPI operation.
+- tool: list_prometheus_series
+  reason: Prometheus HTTP API surface; no first-party OpenAPI operation.
+- tool: list_prometheus_series_metadata
+  reason: Prometheus HTTP API surface; no first-party OpenAPI operation.
+- tool: query_prometheus_instant
+  reason: Prometheus HTTP API /query; no first-party OpenAPI operation.
+- tool: query_prometheus_range
+  reason: >-
+    Prometheus HTTP API /query_range plus Chronosphere PromQL custom functions; no first-party
+    OpenAPI operation.
+- tool: render_prometheus_range_query
+  reason: >-
+    Renders a PromQL range query as a PNG. Composite, agent-facing only; no REST counterpart.
+rest_only:
+  count: 171
+  summary: >-
+    The MCP server is deliberately read-oriented. Of the 183 Config V1 operations only the 18
+    Read/List operations above are exposed as tools; all 38 Create, 37 Update and 38 Delete
+    operations, plus every List/Read on the other 30 configured resource types, have no tool.
+  notable_families_with_no_tool:
+  - Create/Update/Delete on every Config V1 resource (113 write operations)
+  - Bucket, Collection, Dataset, DerivedLabel, DerivedMetric, Service, ServiceAccount, Team
+  - MutingRule, Notifier, ExternalConnection, SyntheticTest, CloudIntegration
+  - ResourcePools, ConsumptionBudget, ConsumptionConfig, LogAllocationConfig, LogIngestConfig
+  - TraceBehavior, TraceBehaviorConfig, TraceMetricsRule, TraceTailSamplingRules
+  - TraceJaegerRemoteSamplingStrategy, OtelMetricsIngestion, GrafanaDashboard
+  - Data V1 CreateEvent, ReadMetricMetadata and the whole PanelAnnotation family
+coverage:
+  mcp_tools: 38
+  tools_bound_to_rest: 25
+  tools_mcp_only: 13
+  rest_operations_v1: 195
+  rest_operations_with_a_tool: 24
+  rest_operations_without_a_tool: 171
+  bound_ratio_tools: 0.66
+  bound_ratio_rest: 0.12
+  note: >-
+    38 is the count of rows in the provider's own Available Tools table (configapi 18, events 3,
+    logs 5, metrics 7, metric_usage 3, monitors 1, traces 1). 24 of the 25 bound tools map into
+    the v1 contracts; list_monitor_statuses maps into the State Unstable contract and so is
+    excluded from rest_operations_with_a_tool.
+note: >-
+  The three tools on the documentation MCP server (search_chronosphere_documentation,
+  query_docs_filesystem_chronosphere_documentation, submit_feedback) are a separate surface and
+  are not crosswalked here. The headline finding is asymmetry: an agent can read nine
+  Chronosphere resource types through MCP and write none of them, while the REST contract
+  exposes 113 write operations, every one of which accepts dry_run.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

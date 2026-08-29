@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket RecordingRule API
+  title: Config V1 Bucket Recording Rule API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -272,6 +272,36 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
+    ConfigV1UpdateRecordingRuleBody:
+      type: object
+      properties:
+        recording_rule:
+          $ref: '#/components/schemas/configv1RecordingRule'
+        create_if_missing:
+          type: boolean
+          description: If true, the RecordingRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the RecordingRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the RecordingRule isn't created or updated, and no response RecordingRule will be returned. The response will return an error if the given RecordingRule is invalid.
+    configv1ListRecordingRulesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        recording_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1RecordingRule'
+    configv1DeleteRecordingRuleResponse:
+      type: object
+    configv1UpdateRecordingRuleResponse:
+      type: object
+      properties:
+        recording_rule:
+          $ref: '#/components/schemas/configv1RecordingRule'
+    genericError:
+      type: object
+      additionalProperties: true
     configv1RecordingRule:
       type: object
       properties:
@@ -317,30 +347,11 @@ components:
           description: 'Optional execution_group in which this rule is to be evaluated.
 
             At least one of bucket_slug and execution_group must be set. If both are set, then they are expected to match.'
-    configv1CreateRecordingRuleRequest:
+    configv1CreateRecordingRuleResponse:
       type: object
       properties:
         recording_rule:
           $ref: '#/components/schemas/configv1RecordingRule'
-        dry_run:
-          type: boolean
-          description: If true, the RecordingRule isn't created, and no response RecordingRule will be returned. The response will return an error if the given RecordingRule is invalid.
-    configv1DeleteRecordingRuleResponse:
-      type: object
-    configv1ReadRecordingRuleResponse:
-      type: object
-      properties:
-        recording_rule:
-          $ref: '#/components/schemas/configv1RecordingRule'
-    configv1ListRecordingRulesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        recording_rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1RecordingRule'
     configv1PageResult:
       type: object
       properties:
@@ -351,30 +362,19 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    configv1CreateRecordingRuleResponse:
+    configv1ReadRecordingRuleResponse:
       type: object
       properties:
         recording_rule:
           $ref: '#/components/schemas/configv1RecordingRule'
-    ConfigV1UpdateRecordingRuleBody:
+    configv1CreateRecordingRuleRequest:
       type: object
       properties:
         recording_rule:
           $ref: '#/components/schemas/configv1RecordingRule'
-        create_if_missing:
-          type: boolean
-          description: If true, the RecordingRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the RecordingRule does not already exist.
         dry_run:
           type: boolean
-          description: If true, the RecordingRule isn't created or updated, and no response RecordingRule will be returned. The response will return an error if the given RecordingRule is invalid.
-    configv1RecordingRuleLabelPolicy:
-      type: object
-      properties:
-        add:
-          type: object
-          additionalProperties:
-            type: string
-          description: Labels to add or overwrite before storing the result.
+          description: If true, the RecordingRule isn't created, and no response RecordingRule will be returned. The response will return an error if the given RecordingRule is invalid.
     apiError:
       type: object
       properties:
@@ -385,12 +385,12 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1UpdateRecordingRuleResponse:
+    configv1RecordingRuleLabelPolicy:
       type: object
       properties:
-        recording_rule:
-          $ref: '#/components/schemas/configv1RecordingRule'
+        add:
+          type: object
+          additionalProperties:
+            type: string
+          description: Labels to add or overwrite before storing the result.
 x-original-swagger-version: '2.0'

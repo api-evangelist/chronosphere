@@ -1,0 +1,160 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://github.com/chronosphereio/chronosphere-mcp (README, Apache-2.0, release v0.6.0) and a live
+  anonymous tools/list POST to https://docs.chronosphere.io/mcp on 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+description: >-
+  Chronosphere ships two Model Context Protocol surfaces. The product MCP server exposes the
+  Observability Platform itself — metrics, logs, traces, events, monitor status and the Config API
+  — and is reachable both as a hosted per-tenant HTTP endpoint and as a self-run Go binary. The
+  documentation MCP server is a separate, anonymous, read-only search surface over the public docs.
+deployment:
+  mode: both
+  endpoint: https://{org}.chronosphere.io/api/mcp/mcp
+  install: make chronomcp
+  package: https://github.com/chronosphereio/chronosphere-mcp
+  auth: oauth
+  verified: searched
+  note: >-
+    mode is `both` because Chronosphere publishes a hosted HTTP endpoint an MCP client POSTs to
+    AND an open-source Go server the same repo builds. The hosted endpoint is templated on the
+    customer's organization subdomain, so it could not be probed anonymously; the endpoint form,
+    the auth options and the tool list are quoted verbatim from the provider's own README.
+    auth is `oauth` OR a Chronosphere API token passed as `Authorization: Bearer <token>` — the
+    README documents both and treats OAuth as the default when no Authorization header is set.
+servers:
+- name: Chronosphere MCP server
+  role: product
+  transport: streamable-http
+  endpoint: https://{org}.chronosphere.io/api/mcp/mcp
+  auth:
+  - oauth
+  - api-key
+  auth_detail: >-
+    Authorization: Bearer <chronosphere api token>, or OAuth 2.0 for MCP clients that support it.
+  source_repo: https://github.com/chronosphereio/chronosphere-mcp
+  license: Apache-2.0
+  latest_release: v0.6.0
+  latest_release_date: '2026-02-11'
+  local_stdio:
+    build: make chronomcp
+    binary: bin/chronomcp
+    config: -c config.yaml
+    env:
+    - CHRONOSPHERE_ORG_NAME
+    - CHRONOSPHERE_API_TOKEN
+    release_binaries: >-
+      Darwin/Linux/Windows arm64 + x86_64 archives attached to each GitHub release (goreleaser).
+  custom_headers:
+  - name: X-Chrono-MCP-Disable-Tools
+    description: Comma-separated list of MCP tool names to hide from the client's tool list.
+  status: searched
+  verified: searched
+  probe_note: >-
+    Not probed. The endpoint is per-tenant; no anonymous organization subdomain exists to POST to.
+  tool_groups:
+  - group: configapi
+    tools:
+    - get_classic_dashboard
+    - get_dashboard
+    - get_drop_rule
+    - get_mapping_rule
+    - get_monitor
+    - get_notification_policy
+    - get_recording_rule
+    - get_rollup_rule
+    - get_slo
+    - list_classic_dashboards
+    - list_dashboards
+    - list_drop_rules
+    - list_mapping_rules
+    - list_monitors
+    - list_notification_policies
+    - list_recording_rules
+    - list_rollup_rules
+    - list_slos
+  - group: events
+    tools:
+    - get_events_metadata
+    - list_events
+    - list_events_label_values
+  - group: logs
+    tools:
+    - get_log
+    - get_log_histogram
+    - list_log_field_names
+    - list_log_field_values
+    - query_logs_range
+  - group: metrics
+    tools:
+    - list_prometheus_label_names
+    - list_prometheus_label_values
+    - list_prometheus_series
+    - list_prometheus_series_metadata
+    - query_prometheus_instant
+    - query_prometheus_range
+    - render_prometheus_range_query
+  - group: metric_usage
+    tools:
+    - list_metric_usages_by_label_name
+    - list_metric_usages_by_metric_name
+    - list_rule_evaluations
+  - group: monitors
+    tools:
+    - list_monitor_statuses
+  - group: traces
+    tools:
+    - list_traces
+  tool_count: 38
+  tool_source: >-
+    The "Available Tools" table in the provider's README at
+    https://github.com/chronosphereio/chronosphere-mcp — names and descriptions only. Live
+    inputSchema values require an authenticated tools/list against a customer tenant.
+- name: Chronosphere Documentation MCP server
+  role: documentation
+  transport: streamable-http
+  endpoint: https://docs.chronosphere.io/mcp
+  auth:
+  - none
+  discovery: https://docs.chronosphere.io/.well-known/mcp
+  status: live
+  verified: probed
+  probe:
+    fetched: '2026-08-29'
+    method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 200
+    content_type: text/event-stream
+    file: chronosphere-docs-mcp-tools.json
+  tools:
+  - name: search_chronosphere_documentation
+    title: Search documentation
+    read_only: true
+  - name: query_docs_filesystem_chronosphere_documentation
+    title: Read-only virtual filesystem over the docs and the published OpenAPI specs
+    read_only: true
+  - name: submit_feedback
+    title: Submit documentation feedback
+    read_only: false
+  tool_count: 3
+  note: >-
+    Mintlify-hosted. Its query_docs_filesystem tool exposes the published Chronosphere OpenAPI
+    documents at /openapi/, which is how the Data V1, State V1 and Config Unstable contracts in
+    this repo were located.
+- name: WordPress site MCP adapter
+  role: marketing-site
+  endpoint: https://chronosphere.io/wp-json/mcp/mcp-adapter-default-server
+  auth:
+  - oauth
+  discovery:
+  - https://chronosphere.io/.well-known/oauth-authorization-server
+  - https://chronosphere.io/.well-known/oauth-protected-resource
+  status: gated
+  verified: probed
+  probe_note: >-
+    Both OAuth metadata documents return 200 anonymously (scopes_supported ["mcp"]), but the
+    adapter route itself requires an OAuth bearer token, so no tools/list was obtained.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

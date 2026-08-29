@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket TraceJaegerRemoteSamplingStrategy API
+  title: Config V1 Bucket Trace Jaeger Remote Sampling Strategy API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -267,22 +267,7 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     configv1CreateTraceJaegerRemoteSamplingStrategyResponse:
-      type: object
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-    configv1UpdateTraceJaegerRemoteSamplingStrategyResponse:
       type: object
       properties:
         trace_jaeger_remote_sampling_strategy:
@@ -295,6 +280,99 @@ components:
           description: The operation to which this specific strategy should apply.
         probabilistic_sampling_strategy:
           $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
+    configv1DeleteTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+    genericError:
+      type: object
+      additionalProperties: true
+    ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceJaegerRemoteSamplingStrategy does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created or updated, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
+    TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy:
+      type: object
+      properties:
+        max_traces_per_second:
+          type: integer
+          description: Maximum number of traces to sample per second.
+          format: int32
+    TraceJaegerRemoteSamplingStrategyAppliedStrategy:
+      type: object
+      properties:
+        probabilistic_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
+        per_operation_strategies:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies'
+        rate_limiting_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy'
+    configv1UpdateTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+    configv1CreateTraceJaegerRemoteSamplingStrategyRequest:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+        dry_run:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
+    configv1ListTraceJaegerRemoteSamplingStrategiesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_jaeger_remote_sampling_strategies:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+    configv1ReadTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+    configv1TraceJaegerRemoteSamplingStrategy:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the TraceJaegerRemoteSamplingStrategy. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the TraceJaegerRemoteSamplingStrategy is created.
+        name:
+          type: string
+          description: Required. Name of the TraceJaegerRemoteSamplingStrategy. You can modify this value after the TraceJaegerRemoteSamplingStrategy is created.
+        created_at:
+          type: string
+          description: Timestamp of when the TraceJaegerRemoteSamplingStrategy was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the TraceJaegerRemoteSamplingStrategy was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        service_name:
+          type: string
+          description: The name of the service this sampling strategy applies to. This must match the slug and name fields.
+        applied_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyAppliedStrategy'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies:
       type: object
       properties:
@@ -322,92 +400,14 @@ components:
           type: number
           description: Value in the range [0, 1] that defines the probability of sampling any trace.
           format: double
-    configv1TraceJaegerRemoteSamplingStrategy:
+    apiError:
       type: object
       properties:
-        slug:
-          type: string
-          description: Unique identifier of the TraceJaegerRemoteSamplingStrategy. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the TraceJaegerRemoteSamplingStrategy is created.
-        name:
-          type: string
-          description: Required. Name of the TraceJaegerRemoteSamplingStrategy. You can modify this value after the TraceJaegerRemoteSamplingStrategy is created.
-        created_at:
-          type: string
-          description: Timestamp of when the TraceJaegerRemoteSamplingStrategy was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          description: Timestamp of when the TraceJaegerRemoteSamplingStrategy was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        service_name:
-          type: string
-          description: The name of the service this sampling strategy applies to. This must match the slug and name fields.
-        applied_strategy:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyAppliedStrategy'
-    configv1DeleteTraceJaegerRemoteSamplingStrategyResponse:
-      type: object
-    configv1ReadTraceJaegerRemoteSamplingStrategyResponse:
-      type: object
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody:
-      type: object
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-        create_if_missing:
-          type: boolean
-          description: If true, the TraceJaegerRemoteSamplingStrategy will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceJaegerRemoteSamplingStrategy does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created or updated, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
-    TraceJaegerRemoteSamplingStrategyAppliedStrategy:
-      type: object
-      properties:
-        probabilistic_strategy:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
-        per_operation_strategies:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies'
-        rate_limiting_strategy:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy'
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1CreateTraceJaegerRemoteSamplingStrategyRequest:
-      type: object
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-        dry_run:
-          type: boolean
-          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
-    TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy:
-      type: object
-      properties:
-        max_traces_per_second:
+        code:
           type: integer
-          description: Maximum number of traces to sample per second.
+          description: An optional private error code whose values are undefined.
           format: int32
-    configv1ListTraceJaegerRemoteSamplingStrategiesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        trace_jaeger_remote_sampling_strategies:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+        message:
+          type: string
+          description: An error message describing what went wrong.
 x-original-swagger-version: '2.0'

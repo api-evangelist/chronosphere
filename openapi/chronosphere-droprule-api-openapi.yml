@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket DropRule API
+  title: Config V1 Bucket Drop Rule API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -254,11 +254,6 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1UpdateDropRuleResponse:
-      type: object
-      properties:
-        drop_rule:
-          $ref: '#/components/schemas/configv1DropRule'
     configv1LabelFilter:
       type: object
       properties:
@@ -270,28 +265,14 @@ components:
           type: string
           description: Glob value of the label to match.
           example: myservice*
-    configv1DeleteDropRuleResponse:
+    genericError:
       type: object
-    ConfigV1UpdateDropRuleBody:
+      additionalProperties: true
+    configv1ReadDropRuleResponse:
       type: object
       properties:
         drop_rule:
           $ref: '#/components/schemas/configv1DropRule'
-        create_if_missing:
-          type: boolean
-          description: If true, the DropRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the DropRule does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the DropRule isn't created or updated, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
-    configv1ListDropRulesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        drop_rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1DropRule'
     configv1DropRule:
       type: object
       properties:
@@ -337,27 +318,17 @@ components:
             documentation](https://docs.chronosphere.io/control/shaping/rules/drop-rules#define-a-value-based-drop-rule)
 
             for more information.'
-    DropRuleConditionalRateBasedDrop:
+    ConfigV1UpdateDropRuleBody:
       type: object
       properties:
-        enabled:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+        create_if_missing:
           type: boolean
-          description: Enables rate-based metric dropping.
-        rate_limit_threshold:
-          type: number
-          description: 'Percentage of the licensed limit reached in order to activate the drop
-
-            rule, between 0 and 100.'
-          format: double
-        activated_drop_duration_secs:
-          type: integer
-          description: 'Once activated, activated_drop_duration_secs defines how long the drop
-
-            rule stays activated before rechecking against the rate_limit_threshold.'
-          format: int32
-      description: 'No longer supported and cannot be used.
-
-        Defines behavior for conditional drop policies.'
+          description: If true, the DropRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the DropRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the DropRule isn't created or updated, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
     configv1PageResult:
       type: object
       properties:
@@ -386,9 +357,22 @@ components:
         dry_run:
           type: boolean
           description: If true, the DropRule isn't created, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
-    genericError:
+    configv1ListDropRulesResponse:
       type: object
-      additionalProperties: true
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        drop_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1DropRule'
+    configv1UpdateDropRuleResponse:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+    configv1DeleteDropRuleResponse:
+      type: object
     apiError:
       type: object
       properties:
@@ -409,9 +393,25 @@ components:
       enum:
       - ENABLED
       - DISABLED
-    configv1ReadDropRuleResponse:
+    DropRuleConditionalRateBasedDrop:
       type: object
       properties:
-        drop_rule:
-          $ref: '#/components/schemas/configv1DropRule'
+        enabled:
+          type: boolean
+          description: Enables rate-based metric dropping.
+        rate_limit_threshold:
+          type: number
+          description: 'Percentage of the licensed limit reached in order to activate the drop
+
+            rule, between 0 and 100.'
+          format: double
+        activated_drop_duration_secs:
+          type: integer
+          description: 'Once activated, activated_drop_duration_secs defines how long the drop
+
+            rule stays activated before rechecking against the rate_limit_threshold.'
+          format: int32
+      description: 'No longer supported and cannot be used.
+
+        Defines behavior for conditional drop policies.'
 x-original-swagger-version: '2.0'

@@ -1,0 +1,218 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  Derived from the provider's own published Config V1 OpenAPI 3.0.3 document
+  (https://docs.chronosphere.io/openapi/api_v1_config_openapi3_DOCUMENTATION_ONLY.json, 183
+  operations) and the Data V1 and State V1 documents, and read against
+  https://docs.chronosphere.io/tooling/api-info, /tooling/chronoctl,
+  /administer/accounts-teams/service-accounts and /administer/limits-licensing/limits, all
+  fetched 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+description: >-
+  Cross-cutting runtime semantics for the Chronosphere HTTP APIs — how to authenticate, page,
+  retry, undo, and read an error. The APIs are grpc-gateway generated, which shows: the
+  conventions are uniform across all 183 Config operations rather than varying per resource.
+auth:
+  style: api-key-header
+  header: API-Token
+  scheme_name: ApiKeyAuth
+  applies_to: 'every operation (global security: [{ApiKeyAuth: []}])'
+  token_types:
+  - type: service account token
+    lifetime: non-expiring
+    docs: https://docs.chronosphere.io/administer/accounts-teams/service-accounts
+    note: >-
+      Created together with the service account. Many Chronosphere API calls require an
+      unrestricted service account. A service account cannot sign in to the UI.
+  - type: personal access token
+    lifetime: expires after a defined period of up to 30 days
+    docs: https://docs.chronosphere.io/administer/accounts-teams/personal-access-tokens
+    note: Cannot be used as the Collector's API token.
+  exception:
+    surface: Prometheus HTTP API
+    header: 'Authorization: Bearer <token>'
+    docs: https://docs.chronosphere.io/tooling/prometheus-api
+    note: >-
+      The Prometheus-compatible query surface uses a bearer token, not API-Token. Two different
+      auth headers on the same host is the single sharpest edge in this API for a client author.
+  details: authentication/chronosphere-authentication.yml
+host:
+  form: https://{tenant}.chronosphere.io
+  note: >-
+    Per-customer subdomain issued at provisioning; the docs call it CHRONOSPHERE_DOMAIN. The
+    provider's own OpenAPI declares it as a templated server variable named `tenant`.
+idempotency:
+  supported: true
+  mechanism: http-semantics + explicit upsert
+  header: none
+  detail: >-
+    There is no Idempotency-Key header and no request-id replay window. Retry safety is designed
+    into the resource model instead: writes are slug-addressed PUTs, and 37 of the 38 Update
+    operations accept a `create_if_missing` boolean that turns the PUT into an upsert. With
+    create_if_missing true a repeated PUT converges on the same state; with it false a PUT against
+    a missing resource errors rather than silently creating one. Repeating a POST Create against
+    an existing slug returns 409 rather than duplicating, and DELETE is naturally idempotent.
+  scope: per-resource slug
+  retention: not applicable — no key store
+  fields:
+  - name: create_if_missing
+    location: request body
+    operations: 37 Update operations
+    description: >-
+      "If true, the resource will be created if it does not already exist, identified by slug. If
+      false, an error will be returned if it does not already exist." (verbatim from the spec)
+  limits: >-
+    A retried POST Create with a server-generated slug is NOT safe — without a caller-supplied
+    slug there is nothing to collide on, so a retry after a timeout can create a second resource.
+    Agents should always supply their own slug.
+dry_run:
+  supported: true
+  grade: verified
+  mechanism: request field and query parameter
+  coverage: >-
+    A `dry_run` boolean appears on every Config V1 create and update body (75 request schemas) and
+    as a query parameter on DeleteResourcePools, DeleteTraceBehaviorConfig and
+    DeleteTraceTailSamplingRules.
+  semantics: >-
+    "If true, validates the specified configuration without creating or updating the resource. If
+    the specified configuration is valid, the endpoint returns a partial response without the
+    resource. If the specified configuration is invalid, the endpoint returns an error."
+    (verbatim from the spec)
+  cli_equivalent: chronoctl --dry-run / -d, which simulates a manifest and prints the predicted result
+  note: >-
+    This is unusually complete. Most catalog providers offer dry-run on nothing; Chronosphere
+    offers it on every write in the Config API and mirrors it in the CLI.
+reversibility:
+  state: documented
+  grade_basis: >-
+    Every write has a reversal path expressed in the same contract, but Chronosphere publishes no
+    retention or restore window for any of them, so this grades `documented` rather than
+    `verified`. Do not read an undo window into this API that its docs do not state.
+  surfaces:
+  - surface: Config V1 resources (39 resource types, 113 write operations)
+    write_operations: Create*, Update*, Delete*
+    reversal:
+    - action: undo a create
+      operation: Delete<Resource>
+      window: none stated
+    - action: undo an update
+      operation: Update<Resource> with the previous body
+      window: none stated
+      note: >-
+        The API stores no prior version and exposes no history, diff or rollback operation. The
+        previous state is recoverable only if the caller kept it, or if the resource is managed by
+        Terraform or a GitOps pipeline, which is why Chronosphere pushes configuration-as-code.
+    - action: undo a delete
+      operation: none
+      window: none stated
+      note: >-
+        There is no Restore, Undelete or trash operation anywhere in the 183-operation Config V1
+        contract. A delete is final from the API's point of view.
+    pre_flight: >-
+      dry_run on creates and updates lets an agent rehearse the write, and force_delete on
+      DeleteBucket makes destructive deletion explicit rather than implicit.
+  - surface: Data V1 panel annotations
+    write_operations: CreatePanelAnnotation, PutPanelAnnotation, DeletePanelAnnotation
+    reversal:
+    - action: undo a create
+      operation: DeletePanelAnnotation
+      window: none stated
+  - surface: Data V1 events
+    write_operations: CreateEvent
+    reversal:
+    - action: undo a create
+      operation: none
+      window: none stated
+      note: >-
+        Ingested change events have no delete operation. Event ingest is append-only from the
+        API's point of view; data leaves through retention, not through reversal.
+  agent_guidance: >-
+    Before any Config write, read the current resource (Read<Resource>) and keep the body. That
+    read is the only undo Chronosphere gives you.
+pagination:
+  style: opaque-cursor
+  request:
+  - name: page.max_size
+    in: query
+    type: integer(int64)
+    description: >-
+      Page size preference. Zero means server default. The spec states explicitly that clients
+      must never assume how many items are returned regardless of the size requested.
+  - name: page.token
+    in: query
+    type: string
+    description: Opaque page token. An empty token identifies the first page.
+  response:
+    envelope: page
+    field: page.next_token
+    terminal: an empty next_token means there are no more items
+  applies_to: every List operation across Config V1, Data V1 and State V1
+filtering:
+  common_query_params:
+  - slugs
+  - names
+  description: >-
+    List operations accept repeated `slugs` and `names` query parameters (form style, exploded)
+    that filter conjunctively with the other filters on the operation.
+field_expansion:
+  supported: false
+  note: No expand, fields or include parameter anywhere in the contract.
+metadata:
+  supported: false
+  note: >-
+    There is no generic customer-supplied metadata bag. Resources carry typed fields plus
+    labels/annotations where the resource model defines them.
+request_id_tracing:
+  supported: false
+  note: >-
+    The contract declares no request-id or correlation-id response header, and none is documented.
+    An agent debugging a failure has nothing to quote back to support.
+versioning:
+  scheme: path
+  stable: /api/v1/...
+  unstable: /api/unstable/...
+  documents:
+  - Config V1, Data V1, State V1
+  - Config Unstable, Data Unstable, State Unstable
+  policy: >-
+    "Chronosphere supports only publicly documented API endpoints. Undocumented, private, or
+    experimental API endpoints might change without warning."
+  details: lifecycle/chronosphere-lifecycle.yml
+errors:
+  envelope: >-
+    A `default` response on all 183 Config operations returning application/json with schema
+    genericError, declared as an open object (`type: object, additionalProperties: true`) with no
+    named fields.
+  rfc9457: false
+  declared_codes:
+  - 200
+  - 400
+  - 404
+  - 409
+  - 500
+  details: errors/chronosphere-problem-types.yml
+  weakness: >-
+    The error body is untyped in the contract. A client cannot know from the spec whether an
+    error carries a code, a message or a field path. This is the single largest machine-readability
+    gap in an otherwise uniform contract.
+rate_limit_signaling:
+  headers_published: none
+  status_on_exhaustion: 429
+  detail: >-
+    Query-side protections return 429 Too Many Requests for automated sources that exceed
+    selectors-per-second or data-reads-per-second, and Chronosphere continues dropping requests
+    over the limit. No X-RateLimit-*, RateLimit-* or Retry-After header is documented, and 429 is
+    not declared on any operation in the OpenAPI, so an agent has to discover throttling from the
+    status code alone with no backoff hint.
+  details: rate-limits/chronosphere-rate-limits.yml
+secret_handling:
+  redaction_sentinel: true
+  note: >-
+    The Config API returns a redaction sentinel in place of secret fields on read. The Terraform
+    provider had to add explicit handling for it (v1.28.0, 2026-05-28) so a refresh would not
+    overwrite configured secrets with the sentinel. A hand-written client that round-trips a read
+    into a write will clobber its own credentials.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

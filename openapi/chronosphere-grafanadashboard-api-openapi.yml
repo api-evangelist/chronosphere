@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket GrafanaDashboard API
+  title: Config V1 Bucket Grafana Dashboard API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -279,29 +279,27 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1CreateGrafanaDashboardResponse:
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    configv1CollectionReference:
       type: object
       properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-    configv1CreateGrafanaDashboardRequest:
-      type: object
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-        dry_run:
-          type: boolean
-          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
           type: string
-          description: An error message describing what went wrong.
+    configv1UpdateGrafanaDashboardResponse:
+      type: object
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
     ConfigV1UpdateGrafanaDashboardBody:
       type: object
       properties:
@@ -313,34 +311,6 @@ components:
         dry_run:
           type: boolean
           description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
-    configv1ReadGrafanaDashboardResponse:
-      type: object
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-    configv1CollectionReferenceType:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-    configv1UpdateGrafanaDashboardResponse:
-      type: object
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-    configv1DeleteGrafanaDashboardResponse:
-      type: object
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
     configv1GrafanaDashboard:
       type: object
       properties:
@@ -375,16 +345,26 @@ components:
         dashboard_json:
           type: string
           description: Required raw JSON of the Grafana dashboard.
-    configv1CollectionReference:
+    configv1PageResult:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-        slug:
+        next_token:
           type: string
-    genericError:
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ReadGrafanaDashboardResponse:
       type: object
-      additionalProperties: true
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+    configv1CreateGrafanaDashboardResponse:
+      type: object
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
     configv1ListGrafanaDashboardsResponse:
       type: object
       properties:
@@ -394,4 +374,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/configv1GrafanaDashboard'
+    configv1CreateGrafanaDashboardRequest:
+      type: object
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1DeleteGrafanaDashboardResponse:
+      type: object
 x-original-swagger-version: '2.0'

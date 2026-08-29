@@ -1,0 +1,36 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Chronosphere Data V1 API
+  version: 1.0.0
+extends: chronosphere-data-v1-api-openapi.json
+x-generated: '2026-08-29'
+x-method: generated
+x-source: The base document is Chronosphere's own published OpenAPI 3.0.3, saved verbatim from https://docs.chronosphere.io/openapi/
+  on 2026-08-29. It already declares the correct templated server and the ApiKeyAuth scheme, so this overlay
+  adds only cross-references and the response statuses the contract omits.
+x-operations: 9
+actions:
+- target: $.info
+  description: Point contact at the support surfaces Chronosphere publishes and cross-link the runtime-semantics
+    artifacts.
+  update:
+    contact:
+      name: Chronosphere Support
+      email: support@chronosphere.io
+      url: https://docs.chronosphere.io/support
+    x-api-evangelist:
+      runtime-semantics: conventions/chronosphere-conventions.yml
+      errors: errors/chronosphere-problem-types.yml
+      rate-limits: rate-limits/chronosphere-rate-limits.yml
+      lifecycle: lifecycle/chronosphere-lifecycle.yml
+      authentication: authentication/chronosphere-authentication.yml
+      data-model: data-model/chronosphere-data-model.yml
+- target: $
+  description: Record the statuses Chronosphere returns but declares on no operation. 429 is documented
+    at https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits and appears in no
+    responses[] block in any published document.
+  update:
+    x-undeclared-responses:
+      '401': Missing or invalid API-Token.
+      '403': Token lacks the required role.
+      '429': Query-side throttling. No Retry-After or RateLimit-* header is published.

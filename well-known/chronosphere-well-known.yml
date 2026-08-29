@@ -1,0 +1,84 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  Live anonymous GET of each /.well-known/ path on every host named in apis.yml and in the
+  Chronosphere OpenAPI servers[] block, 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+note: >-
+  The Chronosphere API base is per-tenant (https://{tenant}.chronosphere.io), so no customer
+  instance host could be probed anonymously — only the marketing host (chronosphere.io) and the
+  documentation host (docs.chronosphere.io) are reachable without a tenant name. chronosphere.io
+  serves OAuth 2.0 authorization-server and protected-resource metadata for the WordPress MCP
+  adapter mounted at /wp-json/mcp (scope "mcp"); docs.chronosphere.io serves a real A2A agent card
+  and an MCP discovery manifest. Every other probed path returned 404. A 404 body that is an
+  HTML shell is recorded as a miss.
+hosts:
+- host: chronosphere.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+    note: returns the site 404 HTML page, not a document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: chronosphere-oauth-authorization-server.json
+    content_type: application/json
+    note: >-
+      OAuth 2.0 Authorization Server Metadata (RFC 8414) for the site MCP adapter; issuer
+      https://chronosphere.io, scopes_supported ["mcp"], PKCE S256, dynamic client id metadata
+      documents supported.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: chronosphere-oauth-protected-resource.json
+    content_type: application/json
+    note: >-
+      OAuth 2.0 Protected Resource Metadata (RFC 9728); resource
+      https://chronosphere.io/wp-json/mcp/mcp-oauth-server, bearer via header.
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: docs.chronosphere.io
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: ../a2a/chronosphere-agent-card.json
+    content_type: application/json
+    note: >-
+      Real A2A Agent Card (protocolVersion 0.3). Saved verbatim under a2a/ and graded in
+      a2a/chronosphere-a2a.yml.
+  - path: /.well-known/mcp
+    status: 200
+    file: chronosphere-docs-mcp-manifest.json
+    content_type: application/json
+    note: >-
+      MCP discovery manifest naming https://docs.chronosphere.io/mcp, transport http,
+      authentication none. Confirmed live by a tools/list POST.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: '{tenant}.chronosphere.io'
+  documents: []
+  note: >-
+    Not probed. The API host is a per-customer subdomain issued at provisioning; there is no
+    anonymous tenant to resolve, so no /.well-known/ path on the API host can be measured.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

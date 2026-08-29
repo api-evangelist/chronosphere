@@ -1,0 +1,123 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.chronosphere.io/tooling/infrastructure/terraform/release-notes and
+  https://docs.chronosphere.io/ingest/pipeline/v2/release-notes, fetched 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+description: >-
+  Chronosphere publishes no changelog for the Config, Data or State HTTP APIs themselves. The
+  Observability Platform product release notes sit behind the application sign-in (More
+  information > Release Notes). Two dated changelogs are public, and because the Terraform
+  provider is generated one-to-one from the Config API, its release notes are the closest public
+  proxy for API change: new resources, new fields and removals land there in step with the API.
+streams:
+- name: Terraform provider release notes
+  url: https://docs.chronosphere.io/tooling/infrastructure/terraform/release-notes
+  scheme: semver
+  current_version: 1.35.0
+  current_date: '2026-08-25'
+  entry_count_published: 27
+  cadence: roughly every two to four weeks
+  support_window: >-
+    Chronosphere supports each 1.x release for one year from its release date, and instructs
+    customers to run only supported versions.
+  categories:
+  - Feature
+  - Fix
+  - Deprecation
+  - Removal
+  - Breaking change
+  entries:
+  - version: 1.35.0
+    date: '2026-08-25'
+    breaking: true
+    additions:
+    - chronosphere_synthetic_test resource — probes an endpoint over HTTP, DNS, TCP or TLS from
+      Observability Platform tenants and alerts on the result.
+    - chronosphere_cloud_integration resource — ingests metrics from a cloud provider through an
+      external connection; provider_config is free-form JSON keyed by provider_type, so new cloud
+      providers do not require a provider upgrade.
+    removals:
+    - chronosphere_logscale_alert and chronosphere_logscale_action removed. Remove them from
+      configuration and state before upgrading.
+    note: >-
+      Matches the API: LogScaleAlert and LogScaleAction are present in the Config V1 spec archived
+      in this repo from an earlier harvest and absent from the spec published on 2026-08-29.
+  - version: 1.34.0
+    date: '2026-08-03'
+    breaking: false
+    additions:
+    - Write-only (*_wo) attributes on secret fields, whose values Terraform never persists to state.
+    - resolve_sustain_for_no_data on chronosphere_monitor series conditions.
+    - new_series_delay on chronosphere_monitor series conditions.
+  - version: 1.33.0
+    date: '2026-07-13'
+    breaking: false
+    additions:
+    - disable_repeat on chronosphere_notification_policy routes.
+    - Unstable chronosphere_command_center_group resource.
+  - version: 1.32.0
+    date: '2026-07-01'
+    breaking: false
+    additions:
+    - TRACE_PROCESSED_BYTES, TRACE_PERSISTED_BYTES, TRACE_ALL and ALL resource_group values on
+      chronosphere_consumption_budget thresholds.
+  - version: 1.31.0
+    date: '2026-06-22'
+    breaking: false
+    additions:
+    - LOG_ALL resource_group value on consumption budget thresholds.
+    - trace_span_filters on chronosphere_consumption_config partition filter conditions.
+  - version: 1.30.0
+    date: '2026-06-12'
+    breaking: false
+    additions:
+    - PARENT_SERVICE, PARENT_OPERATION, ROOT_SERVICE, ROOT_OPERATION group-by key types on
+      chronosphere_trace_metrics_rule.
+    removals:
+    - Deprecated sku_group field removed from consumption budget thresholds; use resource_group.
+  - version: 1.29.0
+    date: '2026-06-04'
+    breaking: false
+    additions:
+    - resource_group replaces sku_group on consumption budget thresholds.
+    - Generated reference documentation published for every resource and data source on the
+      Terraform Registry.
+    deprecations:
+    - sku_group on chronosphere_consumption_budget thresholds.
+  - version: 1.28.0
+    date: '2026-05-28'
+    breaking: false
+    additions:
+    - ROLLING_30_MINUTE_VOLUME consumption budget threshold type.
+    fixes:
+    - Preserve configured secret values on refresh when the Config API returns its redaction
+      sentinel, for the webhook, Slack, PagerDuty and related alert notifier resources.
+  - version: 1.27.0
+    date: '2026-05-04'
+    breaking: true
+- name: Telemetry Pipeline release notes
+  url: https://docs.chronosphere.io/ingest/pipeline/v2/release-notes
+  scheme: semver
+  current_version: 2.84.0
+  current_date: '2026-04-15'
+  components:
+  - Pipeline agent
+  - Pipeline infrastructure
+  - Web interface
+  note: >-
+    Chronosphere Telemetry Pipeline (formerly Calyptia) is a standalone product with its own
+    release train, separate from Observability Platform.
+gaps:
+- surface: Config V1 / Data V1 / State V1 HTTP APIs
+  finding: >-
+    No public, dated changelog. API change has to be inferred from the Terraform provider notes or
+    by diffing the published Swagger, which is what this repo now does — the 2026-08-29 harvest of
+    Config V1 carries 70 paths and 183 operations against the 57 paths and 149 operations of the
+    previously archived copy, and no announcement covers the difference.
+- surface: Chronoctl
+  finding: Release notes require an authenticated Observability Platform session.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

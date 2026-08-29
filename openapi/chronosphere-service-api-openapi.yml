@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket Service API
   description: '
@@ -57,24 +57,6 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    genericError:
-      type: object
-      additionalProperties: true
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1ReadServiceResponse:
-      type: object
-      properties:
-        service:
-          $ref: '#/components/schemas/configv1Service'
     configv1Service:
       type: object
       properties:
@@ -107,4 +89,22 @@ components:
             This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
 
             This does not override the policy used when a monitor explicitly references a policy.'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ReadServiceResponse:
+      type: object
+      properties:
+        service:
+          $ref: '#/components/schemas/configv1Service'
 x-original-swagger-version: '2.0'

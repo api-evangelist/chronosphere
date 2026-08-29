@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket MappingRule API
+  title: Config V1 Bucket Mapping Rule API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -263,11 +263,15 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1CreateMappingRuleResponse:
+    configv1MappingRuleStoragePolicy:
       type: object
       properties:
-        mapping_rule:
-          $ref: '#/components/schemas/configv1MappingRule'
+        resolution:
+          type: string
+          description: Required resolution of the aggregated metrics.
+        retention:
+          type: string
+          description: Required retention of the aggregated metrics.
     configv1LabelFilter:
       type: object
       properties:
@@ -279,61 +283,17 @@ components:
           type: string
           description: Glob value of the label to match.
           example: myservice*
-    configv1AggregationType:
-      type: string
-      enum:
-      - LAST
-      - MIN
-      - MAX
-      - MEAN
-      - MEDIAN
-      - COUNT
-      - SUM
-      - SUMSQ
-      - STDEV
-      - P10
-      - P20
-      - P30
-      - P40
-      - P50
-      - P60
-      - P70
-      - P80
-      - P90
-      - P95
-      - P99
-      - P999
-      - P9999
-      - P25
-      - P75
-      - COUNT_SAMPLES
-      - HISTOGRAM
-    MappingRuleAggregationPolicy:
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1CreateMappingRuleRequest:
       type: object
       properties:
-        aggregation:
-          $ref: '#/components/schemas/configv1AggregationType'
-        storage_policy:
-          $ref: '#/components/schemas/configv1MappingRuleStoragePolicy'
-        interval:
-          type: string
-          description: 'Interval between aggregated data points, equivalent to the resolution
-
-            field in storage policy. If set, then the storage_policy field can''t be
-
-            set.'
-        drop_timestamp:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+        dry_run:
           type: boolean
-          description: 'Deprecated: This field is no longer supported.'
-    configv1ListMappingRulesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        mapping_rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1MappingRule'
+          description: If true, the MappingRule isn't created, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
     configv1PageResult:
       type: object
       properties:
@@ -344,14 +304,6 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    configv1CreateMappingRuleRequest:
-      type: object
-      properties:
-        mapping_rule:
-          $ref: '#/components/schemas/configv1MappingRule'
-        dry_run:
-          type: boolean
-          description: If true, the MappingRule isn't created, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
     configv1MappingRule:
       type: object
       properties:
@@ -388,6 +340,89 @@ components:
             policy can''t be set.'
         mode:
           $ref: '#/components/schemas/configv1MappingRuleMode'
+    configv1MappingRuleMode:
+      type: string
+      description: " - ENABLED: ENABLED rules are applied. Rules default to ENABLED.\n - PREVIEW: PREVIEW rules are not applied, but shaping impact stats\nfor them rule are recorded."
+      enum:
+      - ENABLED
+      - PREVIEW
+    MappingRuleAggregationPolicy:
+      type: object
+      properties:
+        aggregation:
+          $ref: '#/components/schemas/configv1AggregationType'
+        storage_policy:
+          $ref: '#/components/schemas/configv1MappingRuleStoragePolicy'
+        interval:
+          type: string
+          description: 'Interval between aggregated data points, equivalent to the resolution
+
+            field in storage policy. If set, then the storage_policy field can''t be
+
+            set.'
+        drop_timestamp:
+          type: boolean
+          description: 'Deprecated: This field is no longer supported.'
+    configv1AggregationType:
+      type: string
+      enum:
+      - LAST
+      - MIN
+      - MAX
+      - MEAN
+      - MEDIAN
+      - COUNT
+      - SUM
+      - SUMSQ
+      - STDEV
+      - P10
+      - P20
+      - P30
+      - P40
+      - P50
+      - P60
+      - P70
+      - P80
+      - P90
+      - P95
+      - P99
+      - P999
+      - P9999
+      - P25
+      - P75
+      - COUNT_SAMPLES
+      - HISTOGRAM
+    configv1DeleteMappingRuleResponse:
+      type: object
+    configv1ListMappingRulesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        mapping_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1MappingRule'
+    configv1UpdateMappingRuleResponse:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+    configv1CreateMappingRuleResponse:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     ConfigV1UpdateMappingRuleBody:
       type: object
       properties:
@@ -399,44 +434,9 @@ components:
         dry_run:
           type: boolean
           description: If true, the MappingRule isn't created or updated, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
-    configv1DeleteMappingRuleResponse:
-      type: object
     configv1ReadMappingRuleResponse:
       type: object
       properties:
         mapping_rule:
           $ref: '#/components/schemas/configv1MappingRule'
-    genericError:
-      type: object
-      additionalProperties: true
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1MappingRuleMode:
-      type: string
-      description: " - ENABLED: ENABLED rules are applied. Rules default to ENABLED.\n - PREVIEW: PREVIEW rules are not applied, but shaping impact stats\nfor them rule are recorded."
-      enum:
-      - ENABLED
-      - PREVIEW
-    configv1UpdateMappingRuleResponse:
-      type: object
-      properties:
-        mapping_rule:
-          $ref: '#/components/schemas/configv1MappingRule'
-    configv1MappingRuleStoragePolicy:
-      type: object
-      properties:
-        resolution:
-          type: string
-          description: Required resolution of the aggregated metrics.
-        retention:
-          type: string
-          description: Required retention of the aggregated metrics.
 x-original-swagger-version: '2.0'

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket TraceMetricsRule API
+  title: Config V1 Bucket Trace Metrics Rule API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -268,19 +268,20 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    TraceSearchFilterStringFilter:
+    ConfigV1UpdateTraceMetricsRuleBody:
       type: object
       properties:
-        match:
-          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
-        value:
-          type: string
-          description: The value of the filter compared to the target trace or span field.
-        in_values:
-          type: array
-          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
-          items:
-            type: string
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceMetricsRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceMetricsRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceMetricsRule isn't created or updated, and no response TraceMetricsRule will be returned. The response will return an error if the given TraceMetricsRule is invalid.
+    genericError:
+      type: object
+      additionalProperties: true
     configv1CreateTraceMetricsRuleRequest:
       type: object
       properties:
@@ -298,116 +299,6 @@ components:
           type: string
           description: For named KeyTypes (e.g. span tags), the name of the key to group by.
       description: GroupByKey describes a key to group by.
-    configv1ReadTraceMetricsRuleResponse:
-      type: object
-      properties:
-        trace_metrics_rule:
-          $ref: '#/components/schemas/configv1TraceMetricsRule'
-    configv1TraceMetricsRuleGroupBy:
-      type: object
-      properties:
-        label:
-          type: string
-          description: The label to use in the resultant metrics.
-        key:
-          $ref: '#/components/schemas/GroupByGroupByKey'
-      description: GroupBy contains fields required to group the resultant metrics of a TraceMetricsRule by a specific key.
-    StringFilterStringFilterMatchType:
-      type: string
-      enum:
-      - EXACT
-      - REGEX
-      - EXACT_NEGATION
-      - REGEX_NEGATION
-      - IN
-      - NOT_IN
-    genericError:
-      type: object
-      additionalProperties: true
-    NumericFilterComparisonType:
-      type: string
-      enum:
-      - EQUAL
-      - NOT_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-    TraceSearchFilterDurationFilter:
-      type: object
-      properties:
-        min_secs:
-          type: number
-          description: Minimum duration, in seconds, required for a span or trace to match.
-          format: double
-        max_secs:
-          type: number
-          description: Maximum duration, in seconds, required for a span or trace to match.
-          format: double
-    configv1ListTraceMetricsRulesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        trace_metrics_rules:
-          type: array
-          description: Found trace metrics rules.
-          items:
-            $ref: '#/components/schemas/configv1TraceMetricsRule'
-    TraceSearchFilterTraceFilter:
-      type: object
-      properties:
-        duration:
-          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
-        error:
-          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-    TraceSearchFilterTagFilter:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The key or name of the span tag that this filter inspects.
-        value:
-          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
-        numeric_value:
-          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
-    configv1DeleteTraceMetricsRuleResponse:
-      type: object
-    GroupByKeyGroupByKeyType:
-      type: string
-      description: " - SERVICE: Group by service.\n - OPERATION: Group by operation.\n - TAG: Group by span tag."
-      enum:
-      - SERVICE
-      - OPERATION
-      - TAG
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1TraceSearchFilter:
-      type: object
-      properties:
-        trace:
-          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
-        span:
-          type: array
-          description: 'Specifies the span conditions to match on. All conditions must be true in a
-
-            single span for the span to be considered a match. If `span_count` is specified,
-
-            the number of spans within the trace that match span conditions must be within
-
-            `[min, max]`. You can specify multiple span conditions, and each can be
-
-            satisfied by any number of spans within the trace.'
-          items:
-            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
     configv1PageResult:
       type: object
       properties:
@@ -418,22 +309,13 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    configv1UpdateTraceMetricsRuleResponse:
+    TraceSearchFilterTraceFilter:
       type: object
       properties:
-        trace_metrics_rule:
-          $ref: '#/components/schemas/configv1TraceMetricsRule'
-    SpanFilterSpanFilterMatchType:
-      type: string
-      enum:
-      - INCLUDE
-      - EXCLUDE
-    TraceSearchFilterBoolFilter:
-      type: object
-      properties:
-        value:
-          type: boolean
-          description: The value of the filter compared to the target trace or span field.
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
     configv1TraceMetricsRule:
       type: object
       properties:
@@ -474,17 +356,123 @@ components:
           description: Add labels to the resultant metrics based on these specified GroupBy messages.
           items:
             $ref: '#/components/schemas/configv1TraceMetricsRuleGroupBy'
-    ConfigV1UpdateTraceMetricsRuleBody:
+    TraceSearchFilterTagFilter:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key or name of the span tag that this filter inspects.
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+    GroupByKeyGroupByKeyType:
+      type: string
+      description: " - SERVICE: Group by service.\n - OPERATION: Group by operation.\n - TAG: Group by span tag."
+      enum:
+      - SERVICE
+      - OPERATION
+      - TAG
+    configv1CreateTraceMetricsRuleResponse:
       type: object
       properties:
         trace_metrics_rule:
           $ref: '#/components/schemas/configv1TraceMetricsRule'
-        create_if_missing:
-          type: boolean
-          description: If true, the TraceMetricsRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceMetricsRule does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the TraceMetricsRule isn't created or updated, and no response TraceMetricsRule will be returned. The response will return an error if the given TraceMetricsRule is invalid.
+    configv1TraceMetricsRuleGroupBy:
+      type: object
+      properties:
+        label:
+          type: string
+          description: The label to use in the resultant metrics.
+        key:
+          $ref: '#/components/schemas/GroupByGroupByKey'
+      description: GroupBy contains fields required to group the resultant metrics of a TraceMetricsRule by a specific key.
+    TraceSearchFilterStringFilter:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+        value:
+          type: string
+          description: The value of the filter compared to the target trace or span field.
+        in_values:
+          type: array
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+    configv1TraceSearchFilter:
+      type: object
+      properties:
+        trace:
+          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
+        span:
+          type: array
+          description: 'Specifies the span conditions to match on. All conditions must be true in a
+
+            single span for the span to be considered a match. If `span_count` is specified,
+
+            the number of spans within the trace that match span conditions must be within
+
+            `[min, max]`. You can specify multiple span conditions, and each can be
+
+            satisfied by any number of spans within the trace.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+    configv1UpdateTraceMetricsRuleResponse:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+    StringFilterStringFilterMatchType:
+      type: string
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+    configv1ReadTraceMetricsRuleResponse:
+      type: object
+      properties:
+        trace_metrics_rule:
+          $ref: '#/components/schemas/configv1TraceMetricsRule'
+    TraceSearchFilterDurationFilter:
+      type: object
+      properties:
+        min_secs:
+          type: number
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+        max_secs:
+          type: number
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+    SpanFilterSpanFilterMatchType:
+      type: string
+      enum:
+      - INCLUDE
+      - EXCLUDE
+    NumericFilterComparisonType:
+      type: string
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+    TraceSearchFilterCountFilter:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+        max:
+          type: integer
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
     TraceSearchFilterSpanFilter:
       type: object
       properties:
@@ -511,22 +499,34 @@ components:
           $ref: '#/components/schemas/TraceSearchFilterCountFilter'
         is_root_span:
           $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-    configv1CreateTraceMetricsRuleResponse:
+    TraceSearchFilterBoolFilter:
       type: object
       properties:
-        trace_metrics_rule:
-          $ref: '#/components/schemas/configv1TraceMetricsRule'
-    TraceSearchFilterCountFilter:
+        value:
+          type: boolean
+          description: The value of the filter compared to the target trace or span field.
+    configv1ListTraceMetricsRulesResponse:
       type: object
       properties:
-        min:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_metrics_rules:
+          type: array
+          description: Found trace metrics rules.
+          items:
+            $ref: '#/components/schemas/configv1TraceMetricsRule'
+    configv1DeleteTraceMetricsRuleResponse:
+      type: object
+    apiError:
+      type: object
+      properties:
+        code:
           type: integer
-          description: Minimum number of spans that must match a span query, inclusive.
+          description: An optional private error code whose values are undefined.
           format: int32
-        max:
-          type: integer
-          description: Maximum number of spans that must match a span query, inclusive.
-          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     TraceSearchFilterNumericFilter:
       type: object
       properties:

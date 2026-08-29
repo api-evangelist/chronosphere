@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket SLO API
   description: '
@@ -270,33 +270,61 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    SLICustomIndicatorConfig:
+    genericError:
+      type: object
+      additionalProperties: true
+    commonPromQLMatcher:
       type: object
       properties:
-        good_query_template:
+        type:
+          $ref: '#/components/schemas/commonPromQLMatcherType'
+        name:
           type: string
-          description: 'A PromQL query that measures the number of "good" events for this SLI.
-
-            Either this or the bad_query_template must be set.'
-        bad_query_template:
+          description: Prometheus label name for the matcher
+        value:
           type: string
-          description: 'A PromQL query that measures the number of "bad" events for this SLI.
-
-            Either this or the good_query_template must be set.'
-        total_query_template:
+          description: Prometheus label value for the matcher
+    configv1CollectionReference:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
           type: string
-          description: 'A PromQL query that measures the total number of events for this SLI.
+    SLITimeSliceSize:
+      title: Defines the supported time slice sizes for TimeSlice SLIs.
+      type: string
+      enum:
+      - TIMESLICE_SIZE_ONE_MINUTE
+      - TIMESLICE_SIZE_FIVE_MINUTES
+    commonPromQLMatcherType:
+      type: string
+      enum:
+      - MatchEqual
+      - MatchRegexp
+      - MatchNotEqual
+      - MatchNotRegexp
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
 
-            This is required for all error ratio SLOs.'
-      description: 'Configuration for error ratio SLIs.
+            client should request. An empty next_token indicates that there are no
 
-        You can include these variables in PromQL queries for SLIs:
-
-        - {{.Window}}. Specifies the window of time that the PromQL query operates on.
-
-        - {{.GroupBy}}. Specifies a comma-separated list of signal and dimension labels to group the results by.
-
-        - {{.AdditionalFilters}}. Requires setting `additional_promql_filters`.'
+            more items to return.'
+    ConfigV1UpdateSLOBody:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+        create_if_missing:
+          type: boolean
+          description: If true, the SLO will be created if it does not already exist, identified by slug. If false, an error will be returned if the SLO does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the SLO isn't created or updated, and no response SLO will be returned. The response will return an error if the given SLO is invalid.
     SLODefinition:
       type: object
       properties:
@@ -317,198 +345,6 @@ components:
         enable_burn_rate_alerting:
           type: boolean
           description: If true enables burn rate alerting.
-    ConfigV1UpdateSLOBody:
-      type: object
-      properties:
-        slo:
-          $ref: '#/components/schemas/configv1SLO'
-        create_if_missing:
-          type: boolean
-          description: If true, the SLO will be created if it does not already exist, identified by slug. If false, an error will be returned if the SLO does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the SLO isn't created or updated, and no response SLO will be returned. The response will return an error if the given SLO is invalid.
-    commonPromQLMatcherType:
-      type: string
-      enum:
-      - MatchEqual
-      - MatchRegexp
-      - MatchNotEqual
-      - MatchNotRegexp
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1ListSLOsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        slos:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1SLO'
-    SLITimeSliceSize:
-      title: Defines the supported time slice sizes for TimeSlice SLIs.
-      type: string
-      enum:
-      - TIMESLICE_SIZE_ONE_MINUTE
-      - TIMESLICE_SIZE_FIVE_MINUTES
-    configv1ReadSLOResponse:
-      type: object
-      properties:
-        slo:
-          $ref: '#/components/schemas/configv1SLO'
-    configv1DeleteSLOResponse:
-      type: object
-    configv1CollectionReference:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-        slug:
-          type: string
-    ConditionOp:
-      type: string
-      enum:
-      - GEQ
-      - GT
-      - LEQ
-      - LT
-      - EQ
-      - NEQ
-      - EXISTS
-      - NOT_EXISTS
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1CreateSLORequest:
-      type: object
-      properties:
-        slo:
-          $ref: '#/components/schemas/configv1SLO'
-        dry_run:
-          type: boolean
-          description: If true, the SLO isn't created, and no response SLO will be returned. The response will return an error if the given SLO is invalid.
-    DefinitionTimeWindow:
-      type: object
-      properties:
-        duration:
-          type: string
-          description: duration as a string in the format "28d" or "24h", etc.
-    configv1SLI:
-      type: object
-      properties:
-        custom_indicator:
-          $ref: '#/components/schemas/SLICustomIndicatorConfig'
-        custom_timeslice_indicator:
-          $ref: '#/components/schemas/SLICustomTimeSliceIndicatorConfig'
-        custom_dimension_labels:
-          type: array
-          description: 'Used to configure additional labels to export from
-
-            the underlying queries. This feature provides a logical budget to group
-
-            unique combination of dimensions. For example, if you want to track a
-
-            budget per endpoint, add the endpoint label as a dimension. These dimensions
-
-            are provided on the top-level SLI so that SLOs will receive them
-
-            in `.GroupBy`.'
-          items:
-            type: string
-        additional_promql_filters:
-          type: array
-          description: 'These are made available to the SLO queries and are intended to be used for things
-
-            like `cluster!~"dev"`'
-          items:
-            $ref: '#/components/schemas/commonPromQLMatcher'
-    configv1UpdateSLOResponse:
-      type: object
-      properties:
-        slo:
-          $ref: '#/components/schemas/configv1SLO'
-    MonitorSignalGrouping:
-      type: object
-      properties:
-        label_names:
-          type: array
-          description: 'Set of label names used to split series into signals. Each unique combination
-
-            of labels result in its own signal. For example, if `label_names` is
-
-            `["service", "code"]`, then all series including labels
-
-            `{service="foo",code="404"}` will be grouped together in the same signal.
-
-
-            Cannot be used if `graphite_query` is set.'
-          items:
-            type: string
-        signal_per_series:
-          type: boolean
-          description: 'If set to `true`, each series will have its own signal. Cannot be used with
-
-            `label_names`.'
-      description: SignalGrouping defines how the set of series from the query are split into signals.
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1CollectionReferenceType:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-    commonPromQLMatcher:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/commonPromQLMatcherType'
-        name:
-          type: string
-          description: Prometheus label name for the matcher
-        value:
-          type: string
-          description: Prometheus label value for the matcher
-    SLICustomTimeSliceIndicatorConfig:
-      title: 'Defines the configuration for TimeSlice SLIs.
-
-        TimeSlice SLIs are evaluated by running a PromQL query over a certain time window and comparing the result again a condition.
-
-        You can include these variables in PromQL queries for SLIs:
-
-        - {{.Window}}. Specifies the window of time that the PromQL query operates on.
-
-        - {{.GroupBy}}. Specifies a comma-separated list of signal and dimension labels to group the results by.
-
-        - {{.TimeSlice}} :The time slice being evaluated, e.g. `1m` or `5m`.
-
-        - {{.AdditionalFilters}}. Requires setting `additional_promql_filters`.'
-      type: object
-      properties:
-        query_template:
-          type: string
-          description: A PromQL query template for the timeslice SLI.
-        timeslice_size:
-          $ref: '#/components/schemas/SLITimeSliceSize'
-        condition:
-          $ref: '#/components/schemas/SLITimeSliceCondition'
     SLITimeSliceCondition:
       title: Defines the condition for evaluating TimeSlice SLIs.
       type: object
@@ -519,36 +355,6 @@ components:
           type: number
           description: The value to compare against.
           format: double
-    DefinitionBurnRateDefinition:
-      type: object
-      properties:
-        window:
-          type: string
-        budget:
-          type: number
-          description: 'The amount of allowed errors during a given time window,
-
-            expressed as a percentage of the error budget. Must be a
-
-            value between `0.0` and `100.0`, exclusive.'
-          format: double
-        severity:
-          type: string
-          description: 'Severity may only be one of: critical, warn.'
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Labels to attach when this burn rate triggers. If you add these labels to
-
-            `signal_groupings`, you can route them in the notification policy, and
-
-            can route different burn rates to other notifiers.'
-    configv1CreateSLOResponse:
-      type: object
-      properties:
-        slo:
-          $ref: '#/components/schemas/configv1SLO'
     configv1SLO:
       type: object
       properties:
@@ -601,4 +407,198 @@ components:
           $ref: '#/components/schemas/configv1SLI'
         definition:
           $ref: '#/components/schemas/SLODefinition'
+    configv1UpdateSLOResponse:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+    DefinitionBurnRateDefinition:
+      type: object
+      properties:
+        window:
+          type: string
+        budget:
+          type: number
+          description: 'The amount of allowed errors during a given time window,
+
+            expressed as a percentage of the error budget. Must be a
+
+            value between `0.0` and `100.0`, exclusive.'
+          format: double
+        severity:
+          type: string
+          description: 'Severity may only be one of: critical, warn.'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Labels to attach when this burn rate triggers. If you add these labels to
+
+            `signal_groupings`, you can route them in the notification policy, and
+
+            can route different burn rates to other notifiers.'
+    SLICustomTimeSliceIndicatorConfig:
+      title: 'Defines the configuration for TimeSlice SLIs.
+
+        TimeSlice SLIs are evaluated by running a PromQL query over a certain time window and comparing the result again a condition.
+
+        You can include these variables in PromQL queries for SLIs:
+
+        - {{.Window}}. Specifies the window of time that the PromQL query operates on.
+
+        - {{.GroupBy}}. Specifies a comma-separated list of signal and dimension labels to group the results by.
+
+        - {{.TimeSlice}} :The time slice being evaluated, e.g. `1m` or `5m`.
+
+        - {{.AdditionalFilters}}. Requires setting `additional_promql_filters`.'
+      type: object
+      properties:
+        query_template:
+          type: string
+          description: A PromQL query template for the timeslice SLI.
+        timeslice_size:
+          $ref: '#/components/schemas/SLITimeSliceSize'
+        condition:
+          $ref: '#/components/schemas/SLITimeSliceCondition'
+    configv1ReadSLOResponse:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+    configv1SLI:
+      type: object
+      properties:
+        custom_indicator:
+          $ref: '#/components/schemas/SLICustomIndicatorConfig'
+        custom_timeslice_indicator:
+          $ref: '#/components/schemas/SLICustomTimeSliceIndicatorConfig'
+        custom_dimension_labels:
+          type: array
+          description: 'Used to configure additional labels to export from
+
+            the underlying queries. This feature provides a logical budget to group
+
+            unique combination of dimensions. For example, if you want to track a
+
+            budget per endpoint, add the endpoint label as a dimension. These dimensions
+
+            are provided on the top-level SLI so that SLOs will receive them
+
+            in `.GroupBy`.'
+          items:
+            type: string
+        additional_promql_filters:
+          type: array
+          description: 'These are made available to the SLO queries and are intended to be used for things
+
+            like `cluster!~"dev"`'
+          items:
+            $ref: '#/components/schemas/commonPromQLMatcher'
+    SLICustomIndicatorConfig:
+      type: object
+      properties:
+        good_query_template:
+          type: string
+          description: 'A PromQL query that measures the number of "good" events for this SLI.
+
+            Either this or the bad_query_template must be set.'
+        bad_query_template:
+          type: string
+          description: 'A PromQL query that measures the number of "bad" events for this SLI.
+
+            Either this or the good_query_template must be set.'
+        total_query_template:
+          type: string
+          description: 'A PromQL query that measures the total number of events for this SLI.
+
+            This is required for all error ratio SLOs.'
+      description: 'Configuration for error ratio SLIs.
+
+        You can include these variables in PromQL queries for SLIs:
+
+        - {{.Window}}. Specifies the window of time that the PromQL query operates on.
+
+        - {{.GroupBy}}. Specifies a comma-separated list of signal and dimension labels to group the results by.
+
+        - {{.AdditionalFilters}}. Requires setting `additional_promql_filters`.'
+    configv1CreateSLOResponse:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+    ConditionOp:
+      type: string
+      enum:
+      - GEQ
+      - GT
+      - LEQ
+      - LT
+      - EQ
+      - NEQ
+      - EXISTS
+      - NOT_EXISTS
+    configv1DeleteSLOResponse:
+      type: object
+    DefinitionTimeWindow:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: duration as a string in the format "28d" or "24h", etc.
+    configv1CreateSLORequest:
+      type: object
+      properties:
+        slo:
+          $ref: '#/components/schemas/configv1SLO'
+        dry_run:
+          type: boolean
+          description: If true, the SLO isn't created, and no response SLO will be returned. The response will return an error if the given SLO is invalid.
+    MonitorSignalGrouping:
+      type: object
+      properties:
+        label_names:
+          type: array
+          description: 'Set of label names used to split series into signals. Each unique combination
+
+            of labels result in its own signal. For example, if `label_names` is
+
+            `["service", "code"]`, then all series including labels
+
+            `{service="foo",code="404"}` will be grouped together in the same signal.
+
+
+            Cannot be used if `graphite_query` is set.'
+          items:
+            type: string
+        signal_per_series:
+          type: boolean
+          description: 'If set to `true`, each series will have its own signal. Cannot be used with
+
+            `label_names`.'
+      description: SignalGrouping defines how the set of series from the query are split into signals.
+    configv1ListSLOsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        slos:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1SLO'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
 x-original-swagger-version: '2.0'

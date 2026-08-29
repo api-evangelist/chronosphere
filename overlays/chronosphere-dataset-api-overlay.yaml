@@ -1,0 +1,61 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Config V1 Bucket Dataset API
+  version: 1.0.0
+extends: chronosphere-dataset-api-openapi.yml
+x-generated: '2026-08-29'
+x-method: generated
+x-source: 'Values taken verbatim from the provider''s own published Config V1 OpenAPI 3.0.3 at https://docs.chronosphere.io/openapi/api_v1_config_openapi3_DOCUMENTATION_ONLY.json
+  (fetched 2026-08-29). This overlay does not invent anything; it carries the server and security declarations
+  Chronosphere publishes on the master document onto the per-tag documents refined from the older /openapi.yaml
+  export, which declares only "servers: [{url: /}]" and no securitySchemes.'
+x-operations: 5
+actions:
+- target: $
+  description: Replace the placeholder relative server with the real templated Chronosphere host. The
+    API is served from a per-customer subdomain; "tenant" is the organization subdomain the docs call
+    CHRONOSPHERE_DOMAIN.
+  update:
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
+- target: $
+  description: 'Declare the API-Token header scheme Chronosphere requires on every operation. Note this
+    is NOT Authorization: the Prometheus query API uses a bearer token, the Config/Data/State APIs use
+    API-Token.'
+  update:
+    components:
+      securitySchemes:
+        ApiKeyAuth:
+          type: apiKey
+          in: header
+          name: API-Token
+          description: Chronosphere API token
+    security:
+    - ApiKeyAuth: []
+- target: $.info
+  description: Point contact and terms at the surfaces Chronosphere actually publishes.
+  update:
+    contact:
+      name: Chronosphere Support
+      email: support@chronosphere.io
+      url: https://docs.chronosphere.io/support
+    x-api-evangelist:
+      runtime-semantics: conventions/chronosphere-conventions.yml
+      errors: errors/chronosphere-problem-types.yml
+      rate-limits: rate-limits/chronosphere-rate-limits.yml
+      lifecycle: lifecycle/chronosphere-lifecycle.yml
+      authentication: authentication/chronosphere-authentication.yml
+      data-model: data-model/chronosphere-data-model.yml
+- target: $
+  description: Record the throttling status Chronosphere returns but declares on no operation. 429 is
+    documented at https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits and appears
+    in no responses[] block in any published document.
+  update:
+    x-undeclared-responses:
+      '401': Missing or invalid API-Token.
+      '403': Token lacks the required role; many operations need SysAdmin or an unrestricted service account.
+      '429': Query-side throttling. No Retry-After or RateLimit-* header is published.

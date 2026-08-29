@@ -1,0 +1,69 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  https://chronosphere.io/.well-known/oauth-authorization-server and
+  https://chronosphere.io/.well-known/oauth-protected-resource (both HTTP 200, fetched
+  2026-08-29), cross-read against https://github.com/chronosphereio/chronosphere-mcp and
+  https://docs.chronosphere.io/administer/accounts-teams/service-accounts.
+provider: Chronosphere
+providerId: chronosphere
+summary: >-
+  The Chronosphere HTTP APIs have no OAuth surface at all — Config, Data and State authenticate
+  with an API-Token header and declare no scopes. OAuth exists only around the Model Context
+  Protocol surfaces, and the one authorization server that publishes metadata anonymously advertises
+  a single scope.
+http_api:
+  oauth2: false
+  scopes: []
+  note: >-
+    Authorization is role-based, not scope-based. A token inherits the permissions of the account
+    that owns it; many Config operations require an unrestricted service account or membership of
+    a team with the SysAdmin role. Those roles are assigned in the product and are not expressed
+    in the contract, so an agent cannot tell from the OpenAPI which operations its token can call.
+oauth_surfaces:
+- name: WordPress site MCP adapter
+  issuer: https://chronosphere.io
+  metadata: https://chronosphere.io/.well-known/oauth-authorization-server
+  metadata_status: 200
+  authorization_endpoint: https://chronosphere.io/oauth/authorize
+  token_endpoint: https://chronosphere.io/oauth/token
+  revocation_endpoint: https://chronosphere.io/oauth/revoke
+  response_types_supported:
+  - code
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  code_challenge_methods_supported:
+  - S256
+  token_endpoint_auth_methods_supported:
+  - none
+  client_id_metadata_document_supported: true
+  protected_resource: https://chronosphere.io/wp-json/mcp/mcp-oauth-server
+  bearer_methods_supported:
+  - header
+  scopes:
+  - name: mcp
+    description: >-
+      The only scope the authorization server advertises. Granted to an MCP client calling the
+      site's MCP adapter. Chronosphere publishes no description or permission breakdown for it.
+    source: scopes_supported in the RFC 8414 metadata document
+- name: Chronosphere MCP server (product)
+  endpoint: https://{org}.chronosphere.io/api/mcp/mcp
+  oauth2: true
+  scopes: []
+  scopes_note: >-
+    The provider's README documents OAuth as an alternative to a bearer API token and says OAuth
+    support is new and untested with all clients. No authorization-server metadata is reachable
+    without a tenant subdomain, so the scope set could not be enumerated. Recorded as unknown
+    rather than guessed.
+  auth_alternative: 'Authorization: Bearer <chronosphere api token>'
+gaps:
+- >-
+  No permission or scope reference page exists in the Chronosphere documentation. The closest
+  published authorization model is the service-account and team-role documentation, which is prose.
+- >-
+  No operation in any of the six published OpenAPI documents declares 401 or 403, so the contract
+  gives no machine-readable signal about which operations are privileged.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

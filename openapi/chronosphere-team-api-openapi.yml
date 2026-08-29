@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket Team API
   description: '
@@ -254,8 +254,14 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1DeleteTeamResponse:
+    genericError:
       type: object
+      additionalProperties: true
+    configv1UpdateTeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
     configv1Team:
       type: object
       properties:
@@ -283,33 +289,6 @@ components:
         description:
           type: string
           description: Optional short description of the team.
-    configv1ListTeamsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        teams:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1Team'
-    configv1ReadTeamResponse:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
-    configv1UpdateTeamResponse:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
-    configv1CreateTeamRequest:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
-        dry_run:
-          type: boolean
-          description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
     configv1PageResult:
       type: object
       properties:
@@ -320,6 +299,16 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
+    configv1ReadTeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+    configv1CreateTeamResponse:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
     ConfigV1UpdateTeamBody:
       type: object
       properties:
@@ -331,9 +320,25 @@ components:
         dry_run:
           type: boolean
           description: If true, the Team isn't created or updated, and no response Team will be returned. The response will return an error if the given Team is invalid.
-    genericError:
+    configv1DeleteTeamResponse:
       type: object
-      additionalProperties: true
+    configv1CreateTeamRequest:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    configv1ListTeamsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1Team'
     apiError:
       type: object
       properties:
@@ -344,9 +349,4 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    configv1CreateTeamResponse:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
 x-original-swagger-version: '2.0'

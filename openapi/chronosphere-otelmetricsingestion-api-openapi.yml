@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket OtelMetricsIngestion API
+  title: Config V1 Bucket Otel Metrics Ingestion API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -170,47 +170,20 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1ReadOtelMetricsIngestionResponse:
-      type: object
-      properties:
-        otel_metrics_ingestion:
-          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-    configv1OtelMetricsIngestion:
-      type: object
-      properties:
-        created_at:
-          type: string
-          description: Timestamp of when the OtelMetricsIngestion was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          description: Timestamp of when the OtelMetricsIngestion was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        resource_attributes:
-          $ref: '#/components/schemas/OtelMetricsIngestionResourceAttributes'
     ResourceAttributesFlattenMode:
       type: string
       enum:
       - MERGE
       - OVERWRITE
       - IGNORE
-    configv1CreateOtelMetricsIngestionRequest:
+    configv1UpdateOtelMetricsIngestionResponse:
       type: object
       properties:
         otel_metrics_ingestion:
           $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-        dry_run:
-          type: boolean
-          description: If true, the OtelMetricsIngestion isn't created, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
-    configv1CreateOtelMetricsIngestionResponse:
+    genericError:
       type: object
-      properties:
-        otel_metrics_ingestion:
-          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-    configv1DeleteOtelMetricsIngestionResponse:
-      type: object
+      additionalProperties: true
     configv1UpdateOtelMetricsIngestionRequest:
       type: object
       properties:
@@ -222,29 +195,29 @@ components:
         dry_run:
           type: boolean
           description: If true, the OtelMetricsIngestion isn't created or updated, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
+    configv1ReadOtelMetricsIngestionResponse:
+      type: object
+      properties:
+        otel_metrics_ingestion:
+          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
+    configv1CreateOtelMetricsIngestionResponse:
+      type: object
+      properties:
+        otel_metrics_ingestion:
+          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
     ResourceAttributesFilterMode:
       type: string
       enum:
       - APPEND_DEFAULT_EXCLUDE_KEYS
       - CUSTOM_EXCLUDE_KEYS
-    configv1UpdateOtelMetricsIngestionResponse:
+    configv1CreateOtelMetricsIngestionRequest:
       type: object
       properties:
         otel_metrics_ingestion:
           $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-    genericError:
-      type: object
-      additionalProperties: true
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
+        dry_run:
+          type: boolean
+          description: If true, the OtelMetricsIngestion isn't created, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
     OtelMetricsIngestionResourceAttributes:
       type: object
       properties:
@@ -266,4 +239,31 @@ components:
             attributes. The filter_mode and exclude_keys settings apply in the same way as
 
             for the "flatten" operation. The default is false.'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1DeleteOtelMetricsIngestionResponse:
+      type: object
+    configv1OtelMetricsIngestion:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Timestamp of when the OtelMetricsIngestion was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the OtelMetricsIngestion was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        resource_attributes:
+          $ref: '#/components/schemas/OtelMetricsIngestionResourceAttributes'
 x-original-swagger-version: '2.0'

@@ -1,0 +1,59 @@
+generated: '2026-08-29'
+method: probed
+source: https://docs.chronosphere.io/.well-known/agent-card.json
+provider: Chronosphere
+providerId: chronosphere
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.chronosphere.io
+x-evidence:
+  fetched: '2026-08-29'
+  url: https://docs.chronosphere.io/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  served_by: Vercel (Mintlify-hosted documentation site)
+card:
+  name: Chronosphere Documentation
+  url: https://docs.chronosphere.io/
+  version: 1.0.0
+  protocolVersion: '0.3'
+  preferredTransport: HTTP+JSON
+  provider_organization: Chronosphere Documentation
+  documentationUrl: https://docs.chronosphere.io/
+  skills:
+  - id: chronosphere
+    name: Chronosphere
+    url: https://docs.chronosphere.io/.well-known/agent-skills/chronosphere/skill.md
+    description: >-
+      Use when building dashboards, creating monitors and alerts, querying metrics/logs/traces,
+      managing telemetry ingestion, reducing cardinality, configuring SLOs, or automating
+      observability infrastructure with APIs, Terraform, or Chronoctl
+grade: conformant
+grade_basis:
+  capabilities_is_object: true
+  protocolVersion_present: true
+  skills_is_array: true
+  preferredTransport_present: true
+  defaultInputModes_present: true
+  defaultOutputModes_present: true
+deviations:
+- field: skills[].tags
+  detail: The single published skill carries an empty tags[] array, so the card offers no
+    skill-level routing vocabulary for an agent selecting between capabilities.
+- field: capabilities
+  detail: Both advertised capabilities are false (streaming false, pushNotifications false).
+    The card is a discovery and documentation surface, not a task-executing A2A agent.
+- field: url
+  detail: >-
+    url and supportedInterfaces[].url both point at the documentation site root
+    (https://docs.chronosphere.io/) rather than an A2A JSON-RPC endpoint, so the card
+    advertises presence and a linked Agent Skill rather than a callable A2A transport.
+note: >-
+  The card is published by the Chronosphere documentation host and describes the Chronosphere
+  Observability Platform and Telemetry Pipeline. It is served on the canonical A2A 0.3 path.
+  Its skills[0].url resolves to a real published Agent Skill markdown file, saved verbatim to
+  skills/chronosphere-observability-platform.md.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,125 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from the 4xx/5xx and default responses of all 183 operations in the provider's published
+  Config V1 OpenAPI (https://docs.chronosphere.io/openapi/api_v1_config_openapi3_DOCUMENTATION_ONLY.json),
+  plus the Data V1 and State V1 documents, harvested 2026-08-29. Enriched against
+  https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits.
+provider: Chronosphere
+providerId: chronosphere
+format: untyped-json
+rfc9457: false
+media_type: application/json
+envelope:
+  schema: genericError
+  definition: 'type: object, additionalProperties: true'
+  named_fields: []
+  note: >-
+    The error schema is an empty open object. The contract names no code, message, detail, field
+    or trace identifier — the shape of a Chronosphere error body is undeclared. Everything below
+    is therefore keyed on HTTP status and on the human-readable per-operation response
+    descriptions the spec does carry, which are the only machine-adjacent error semantics
+    published.
+coverage:
+  operations: 183
+  with_400: 110
+  with_404: 111
+  with_409: 65
+  with_500: 179
+  with_default: 183
+  with_429: 0
+problem_types:
+- status: 400
+  name: invalid-request
+  title: The request is invalid
+  occurrences: 110
+  spec_description: 'Cannot create/update the <Resource> because the request is invalid.'
+  meaning: >-
+    Schema or semantic validation failed on the submitted resource. Also returned on delete as
+    "Cannot delete the <Resource> because it is in use", i.e. a referential-integrity refusal
+    rather than a malformed body.
+  remediation: >-
+    Re-send with dry_run true to get the same validation without the write, and correct the body
+    against the resource schema before retrying.
+  retryable: false
+- status: 404
+  name: slug-not-found
+  title: The slug does not exist
+  occurrences: 111
+  spec_description: 'Cannot read/update/delete the <Resource> because the slug does not exist.'
+  meaning: >-
+    Resources are addressed by slug. A 404 means no resource of that type carries that slug in
+    this tenant — not that the endpoint is wrong.
+  remediation: >-
+    On update, set create_if_missing true to upsert instead of failing. On read or delete,
+    List<Resource> to confirm the slug.
+  retryable: false
+- status: 409
+  name: slug-conflict
+  title: Conflict with an existing resource
+  occurrences: 65
+  spec_description: >-
+    Cannot create/update the <Resource> because there is a conflict with an existing <Resource>.
+  meaning: >-
+    A resource with that slug already exists, or the change collides with another resource's
+    uniqueness constraint. This is what makes a retried Create safe: it refuses rather than
+    duplicating.
+  remediation: Read the existing resource and Update it, or choose a different slug.
+  retryable: false
+- status: 500
+  name: unexpected-error
+  title: An unexpected error response
+  occurrences: 179
+  spec_description: An unexpected error response.
+  meaning: Server-side failure. The contract gives no sub-classification.
+  remediation: Retry with exponential backoff and jitter. Writes are slug-addressed, so a retry is safe.
+  retryable: true
+- status: default
+  name: undefined-error
+  title: An undefined error response
+  occurrences: 183
+  spec_description: An undefined error response.
+  meaning: >-
+    Catch-all on every operation, returning the same untyped genericError body. Any status not
+    enumerated above lands here.
+  retryable: unknown
+undeclared_but_real:
+- status: 429
+  name: too-many-requests
+  title: Too Many Requests
+  declared_in_spec: false
+  source: https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits
+  meaning: >-
+    Query-side protection. Automated sources exceeding the selectors-per-second or
+    data-reads-per-second limits receive 429, and Observability Platform keeps dropping requests
+    above the limit until demand falls. Log queries have their own concurrency-based rate limit.
+  remediation: >-
+    Reduce selector count per query, lengthen evaluation intervals, or narrow the time range. The
+    selectors-per-second limit cannot be raised.
+  gap: >-
+    429 appears in no operation's responses[] in any of the six published OpenAPI documents, and
+    no Retry-After or RateLimit-* header is documented, so a generated client will treat
+    throttling as an unhandled status.
+- status: 401
+  name: unauthenticated
+  declared_in_spec: false
+  meaning: >-
+    Missing or invalid API-Token. Not declared on any operation despite global
+    security: [{ApiKeyAuth: []}].
+- status: 403
+  name: forbidden
+  declared_in_spec: false
+  meaning: >-
+    Token lacks the required role. Many Config operations, including teams and service accounts,
+    require an unrestricted service account or SysAdmin privileges.
+findings:
+- >-
+  Error handling is the weakest part of an otherwise disciplined contract. 183 operations return
+  an object with no declared properties, and the three statuses an agent most needs to branch on
+  in production — 401, 403 and 429 — are documented nowhere in the machine-readable surface.
+- >-
+  The per-operation response descriptions are genuinely useful prose and are consistently
+  templated per resource, which is what made this catalog derivable at all.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

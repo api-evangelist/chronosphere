@@ -1,0 +1,209 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  Asserted against the provider's own published contracts — Config V1 / Data V1 / State V1 OpenAPI
+  at https://docs.chronosphere.io/openapi/ — plus https://docs.chronosphere.io/tooling/prometheus-api,
+  /tooling/api-info, https://chronosphere.io/security-overview/, https://trust.chronosphere.io/
+  and the OAuth metadata served at https://chronosphere.io/.well-known/, all fetched 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+cross_cutting:
+- id: openapi
+  conforms: true
+  evidence: >-
+    Six machine-readable documents published at https://docs.chronosphere.io/openapi/ — Config,
+    Data and State, each in a v1 and an unstable channel, each in Swagger 2.0 and OpenAPI 3.0.3
+    form. Config V1 openapi3 declares openapi 3.0.3, a templated server and a global security
+    requirement.
+- id: oauth2
+  conforms: partial
+  evidence: >-
+    Not used by the HTTP API, which is API-key only. OAuth 2.0 is real on two agent surfaces: the
+    Chronosphere MCP server accepts OAuth as an alternative to a bearer API token, and
+    chronosphere.io serves RFC 8414 authorization-server metadata (authorization/token/revocation
+    endpoints, PKCE S256, scopes_supported ["mcp"]) for its site MCP adapter.
+- id: rfc8414
+  conforms: true
+  evidence: >-
+    https://chronosphere.io/.well-known/oauth-authorization-server returns 200 with a complete
+    OAuth 2.0 Authorization Server Metadata document.
+- id: rfc9728
+  conforms: true
+  evidence: >-
+    https://chronosphere.io/.well-known/oauth-protected-resource returns 200 with OAuth 2.0
+    Protected Resource Metadata naming
+    https://chronosphere.io/wp-json/mcp/mcp-oauth-server and bearer_methods_supported ["header"].
+- id: oidc
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration returns 404 on both chronosphere.io and
+    docs.chronosphere.io. Customer SSO is Okta-brokered per tenant, not a published OIDC surface.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors are application/json with schema `genericError`, declared as an open object with no
+    named properties. No application/problem+json anywhere in any of the six documents.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Uniform opaque-cursor pagination on every List operation: `page.max_size` and `page.token`
+    query parameters, response envelope `page.next_token` (components.schemas.configv1PageResult).
+- id: idempotency
+  conforms: partial
+  evidence: >-
+    No Idempotency-Key header. Retry safety comes from slug-addressed writes: `create_if_missing`
+    on 37 Update bodies makes PUT an upsert, and a repeated Create against an existing slug
+    returns 409 rather than duplicating. See conventions/chronosphere-conventions.yml.
+- id: dry-run
+  conforms: true
+  evidence: >-
+    A `dry_run` boolean on all 75 Config V1 create/update request schemas plus three delete
+    operations, described in the spec as validating the configuration without writing it.
+- id: rfc8594
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation headers documented; a full-text search of the documentation corpus
+    for "sunset" returns no match; no operation carries `deprecated: true`.
+- id: mcp
+  conforms: true
+  evidence: >-
+    Two live Model Context Protocol servers. https://docs.chronosphere.io/mcp answered a
+    tools/list POST with HTTP 200 and three tools on 2026-08-29; the product server at
+    https://{org}.chronosphere.io/api/mcp/mcp is documented with 38 tools in
+    github.com/chronosphereio/chronosphere-mcp (Apache-2.0, v0.6.0).
+- id: a2a
+  conforms: true
+  grade: conformant
+  evidence: >-
+    https://docs.chronosphere.io/.well-known/agent-card.json returns 200 with an A2A card at
+    protocolVersion 0.3 — capabilities is an object, skills is an array, preferredTransport and
+    both default mode arrays present. See a2a/chronosphere-a2a.yml.
+- id: agent-skills
+  conforms: true
+  evidence: >-
+    A provider-authored Agent Skill is served at
+    https://docs.chronosphere.io/.well-known/agent-skills/chronosphere/skill.md and referenced
+    from the agent card's skills[0].url.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://docs.chronosphere.io/llms.txt returns 200, 132,556 bytes, indexing the full
+    documentation tree with per-page .md URLs.
+- id: json-schema
+  conforms: true
+  evidence: >-
+    A standalone dashboard configuration schema published at
+    https://docs.chronosphere.io/openapi/dashboard_schema.json (OpenAPI 3.1 components.schemas,
+    2020-12 draft semantics), saved to json-schema/chronosphere-dashboard-schema.json.
+- id: grpc
+  conforms: partial
+  evidence: >-
+    The Config, Data and State APIs are grpc-gateway generated — the uniform `page.max_size` /
+    `page.token` shape, the `default` error response on every operation and the resource-oriented
+    operationIds are the signature. No .proto files are published in the chronosphereio GitHub
+    organization — the 84 public repos were listed on 2026-08-29 and the only IDL repository is a
+    fork of jaeger-idl, which is Jaeger's contract rather than Chronosphere's — so the gRPC
+    contract itself is not a public artifact.
+- id: soap
+  conforms: false
+  evidence: >-
+    Probed 2026-08-29: chronosphere.io/?wsdl, chronosphere.io/?singleWsdl and
+    docs.chronosphere.io/?wsdl each return HTTP 200 with the ordinary HTML page — the query string
+    is ignored, so there is no SOAP endpoint. No WSDL is referenced anywhere in the docs.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document published. The event surface is outbound webhook notifiers configured
+    through the Config API, catalogued in asyncapi/chronosphere-webhooks.yml.
+domain_standards:
+  market: observability / telemetry
+  regulatory_regime: none
+  note: >-
+    Observability has no regulator and no regime in scoring.yml, but it has hard de facto
+    standards, and Chronosphere declares four of them inside its own contract rather than only in
+    marketing prose. Each row below points at a specific spec location.
+  standards:
+  - id: opentelemetry
+    conforms: true
+    evidence:
+      spec: Config V1 OpenAPI
+      location: /api/v1/config/otel-metrics-ingestion
+      operationIds:
+      - ReadOtelMetricsIngestion
+      - UpdateOtelMetricsIngestion
+      schema: configv1OtelMetricsIngestion
+    detail: >-
+      OTLP metrics ingestion is a first-class configurable resource in the Config API, not an
+      integration page. Chronosphere is also a maintainer of the OpenTelemetry Collector contrib
+      and demo repositories in its own GitHub organization.
+  - id: prometheus
+    conforms: true
+    evidence:
+      docs: https://docs.chronosphere.io/tooling/prometheus-api
+      path: /data/metrics/api/v1/
+      spec: Config V1 OpenAPI
+      location: /api/v1/config/recording-rules, /api/v1/config/rollup-rules, /api/v1/config/mapping-rules
+    detail: >-
+      Chronosphere exposes Prometheus HTTP API endpoints directly, and PromQL is the query
+      language of recording rules, monitors and the metrics MCP tools, extended with Chronosphere
+      custom functions such as cardinality_estimate. A caller who already speaks the Prometheus
+      HTTP API integrates with no bespoke connector.
+    caveat: >-
+      The Prometheus surface uses `Authorization: Bearer`, while the Config/Data/State APIs use the
+      `API-Token` header. Same host, two auth schemes.
+  - id: jaeger-remote-sampling
+    conforms: true
+    evidence:
+      spec: Config V1 OpenAPI
+      location: /api/v1/config/trace-jaeger-remote-sampling-strategies
+      operationIds:
+      - ListTraceJaegerRemoteSamplingStrategies
+      - ReadTraceJaegerRemoteSamplingStrategy
+      - CreateTraceJaegerRemoteSamplingStrategy
+      - UpdateTraceJaegerRemoteSamplingStrategy
+      - DeleteTraceJaegerRemoteSamplingStrategy
+    detail: >-
+      Sampling strategies are modelled on Jaeger's remote sampling protocol, so an
+      OpenTelemetry or Jaeger SDK already configured for remote sampling can be pointed at
+      Chronosphere without a translation layer.
+  - id: grafana-dashboard-json
+    conforms: true
+    evidence:
+      spec: Config V1 OpenAPI
+      location: /api/v1/config/grafana-dashboards
+      operationIds:
+      - ListGrafanaDashboards
+      - ReadGrafanaDashboard
+      - CreateGrafanaDashboard
+      - UpdateGrafanaDashboard
+      - DeleteGrafanaDashboard
+    detail: >-
+      Grafana dashboard JSON is accepted as a native resource type alongside Chronosphere's own
+      dashboard schema, which is what makes a Grafana-to-Chronosphere migration a data copy.
+  - id: fluent-bit
+    conforms: true
+    evidence:
+      docs: https://docs.chronosphere.io/ingest/pipeline
+      repos: github.com/chronosphereio (calyptia-plugin, calyptia-fluentd, calyptia-cmetrics-go and
+        ~30 further Fluent Bit / Fluentd repositories)
+    detail: >-
+      Telemetry Pipeline is built on Fluent Bit, the CNCF collection standard, which Chronosphere
+      stewards through the Calyptia acquisition.
+compliance:
+  published: true
+  source:
+  - https://trust.chronosphere.io/
+  - https://chronosphere.io/security-overview/
+  certifications:
+  - SOC 2 Type 2
+  - ISO 27001
+  - ISO 27017
+  - ISO 27018
+  gating: >-
+    "Chronosphere is SOC 2 Type 2 and ISO 27001 audited. To request our report, please reach out
+    to your assigned account manager." Vulnerability assessments are also available on request.
+    The certifications are named publicly; the reports are account-gated.
+  details: security/chronosphere-trust-center.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket LogIngestConfig API
+  title: Config V1 Bucket Log Ingest Config API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -170,64 +170,6 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1UpdateLogIngestConfigResponse:
-      type: object
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-    configv1CreateLogIngestConfigRequest:
-      type: object
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-        dry_run:
-          type: boolean
-          description: If true, the LogIngestConfig isn't created, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
-    configv1LogParser:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name is the name of the parser.
-        regex:
-          type: string
-          description: Regex is the Re2 regex parser pattern to apply. Named capturing groups become named fields in the extracted log.
-    configv1CreateLogIngestConfigResponse:
-      type: object
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-    configv1UpdateLogIngestConfigRequest:
-      type: object
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-        create_if_missing:
-          type: boolean
-          description: If true, the LogIngestConfig will be created if it does not already exist. If false, an error will be returned if the LogIngestConfig does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the LogIngestConfig isn't created or updated, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
-    configv1DeleteLogIngestConfigResponse:
-      type: object
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1ReadLogIngestConfigResponse:
-      type: object
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     configv1LogIngestConfig:
       type: object
       properties:
@@ -247,4 +189,62 @@ components:
           items:
             $ref: '#/components/schemas/configv1LogParser'
       description: LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.
+    configv1CreateLogIngestConfigResponse:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ReadLogIngestConfigResponse:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+    configv1DeleteLogIngestConfigResponse:
+      type: object
+    configv1UpdateLogIngestConfigRequest:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogIngestConfig will be created if it does not already exist. If false, an error will be returned if the LogIngestConfig does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created or updated, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
+    configv1UpdateLogIngestConfigResponse:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1LogParser:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name is the name of the parser.
+        regex:
+          type: string
+          description: Regex is the Re2 regex parser pattern to apply. Named capturing groups become named fields in the extracted log.
+    configv1CreateLogIngestConfigRequest:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
 x-original-swagger-version: '2.0'

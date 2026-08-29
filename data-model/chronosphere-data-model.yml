@@ -1,0 +1,258 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from the provider's published Config V1 OpenAPI 3.0.3 (581 component schemas, 183
+  operations) and the Data V1 and State V1 documents, harvested from
+  https://docs.chronosphere.io/openapi/ on 2026-08-29. Relationships are read from real
+  `*_slug` reference fields and their spec descriptions, not inferred from naming alone.
+provider: Chronosphere
+providerId: chronosphere
+identity:
+  scheme: slug
+  description: >-
+    Every addressable Config resource is identified by a `slug` — max 255 characters, letters,
+    numbers, underscores and dashes, case-sensitive. Slugs are server-generated when not supplied
+    and are the join key for every relationship in this model. There are no opaque numeric ids and
+    no type-prefixed ids.
+  implication: >-
+    A caller who chooses its own slugs gets deterministic addressing, safe retries and readable
+    infrastructure-as-code. A caller who lets the server generate them cannot retry a create
+    safely.
+domains:
+- name: Organization
+  entities:
+  - Team
+  - ServiceAccount
+- name: Scoping
+  entities:
+  - Bucket
+  - Collection
+  - Service
+  - Dataset
+- name: Alerting
+  entities:
+  - Monitor
+  - NotificationPolicy
+  - Notifier
+  - MutingRule
+  - SLO
+  - SyntheticTest
+- name: Visualization
+  entities:
+  - Dashboard
+  - ClassicDashboard
+  - GrafanaDashboard
+- name: Metrics shaping and cost control
+  entities:
+  - MappingRule
+  - RollupRule
+  - DropRule
+  - RecordingRule
+  - DerivedMetric
+  - DerivedLabel
+  - ConsumptionBudget
+  - ResourcePools
+- name: Tracing
+  entities:
+  - TraceBehavior
+  - TraceBehaviorConfig
+  - TraceMetricsRule
+  - TraceTailSamplingRules
+  - TraceJaegerRemoteSamplingStrategy
+- name: Ingest and integrations
+  entities:
+  - OtelMetricsIngestion
+  - CloudIntegration
+  - ExternalConnection
+  - GcpMetricsIntegration
+  - AzureMetricsIntegration
+  - LogIngestConfig
+  - LogAllocationConfig
+  - LogControlConfig
+  - LogRetentionConfig
+entity_count:
+  slug_addressed: 30
+  singletons: 9
+  singletons_list:
+  - consumption-config
+  - log-allocation-config
+  - log-control-config
+  - log-ingest-config
+  - otel-metrics-ingestion
+  - resource-pools
+  - service-attributes
+  - trace-behavior-config
+  - trace-tail-sampling-rules
+  singleton_note: >-
+    Nine Config resources have no /{slug} path — they are one-per-tenant configuration objects
+    read and updated in place. Three of them (resource-pools, trace-behavior-config,
+    trace-tail-sampling-rules) are also the only ones whose Delete accepts a `dry_run` query
+    parameter, which is a sensible pairing: deleting a singleton is the destructive case.
+relationships:
+- from: Monitor
+  to: Bucket
+  type: belongs_to
+  via: bucket_slug
+  required: Required if collection_slug is not set.
+- from: Monitor
+  to: Collection
+  type: belongs_to
+  via: collection_slug
+  required: Required if bucket_slug is not set.
+- from: Monitor
+  to: NotificationPolicy
+  type: has_one
+  via: notification_policy_slug
+  note: Routes the alerts the monitor generates.
+- from: NotificationPolicy
+  to: Bucket
+  type: belongs_to
+  via: bucket_slug
+  required: Required if team_slug is not set.
+- from: NotificationPolicy
+  to: Team
+  type: belongs_to
+  via: team_slug
+  required: Required if bucket_slug is not set.
+- from: Bucket
+  to: Team
+  type: belongs_to
+  via: team_slug
+  required: optional
+- from: Bucket
+  to: NotificationPolicy
+  type: has_one
+  via: notification_policy_slug
+  note: Default policy inherited by monitors in the bucket.
+- from: Collection
+  to: Team
+  type: belongs_to
+  via: team_slug
+- from: Collection
+  to: NotificationPolicy
+  type: has_one
+  via: notification_policy_slug
+  note: Default policy inherited by monitors in the collection.
+- from: Service
+  to: Team
+  type: belongs_to
+  via: team_slug
+- from: Service
+  to: NotificationPolicy
+  type: has_one
+  via: notification_policy_slug
+- from: Dashboard
+  to: Collection
+  type: belongs_to
+  via: collection_slug
+  required: optional
+- from: GrafanaDashboard
+  to: Bucket
+  type: belongs_to
+  via: bucket_slug
+  required: Required if collection_slug is not set.
+- from: GrafanaDashboard
+  to: Collection
+  type: belongs_to
+  via: collection_slug
+  required: Required if bucket_slug is not set.
+- from: MappingRule
+  to: Bucket
+  type: belongs_to
+  via: bucket_slug
+- from: RollupRule
+  to: Bucket
+  type: belongs_to
+  via: bucket_slug
+- from: RecordingRule
+  to: Bucket
+  type: belongs_to
+  via: bucket_slug
+  required: Required if execution_group is not set.
+- from: SLO
+  to: NotificationPolicy
+  type: has_one
+  via: notification_policy_slug
+  required: optional
+- from: SyntheticTest
+  to: Collection
+  type: belongs_to
+  via: collection_slug
+  required: Required if an inline collection is not set.
+- from: ConsumptionBudget
+  to: NotificationPolicy
+  type: has_one
+  via: notification_policy_slug
+  required: Required only when an ALERT_WARN or ALERT_* threshold action is used.
+- from: CloudIntegration
+  to: ExternalConnection
+  type: has_one
+  via: external_connection_slug
+  note: Supplies the credentials the integration uses; optional depending on provider_type.
+hubs:
+- entity: Bucket
+  inbound_references: 6
+  note: >-
+    Bucket and Collection are the two scoping hubs. Almost every alerting, shaping and dashboard
+    resource hangs off one or the other, and several require exactly one of the pair — a
+    constraint expressed only in prose descriptions, never as a JSON Schema oneOf, so a generated
+    client will not enforce it.
+- entity: NotificationPolicy
+  inbound_references: 6
+  note: >-
+    The single fan-in point for alert routing. Bucket, Collection, Service, Monitor, SLO and
+    ConsumptionBudget all point at it, and it in turn resolves to Notifiers.
+- entity: Team
+  inbound_references: 4
+  note: Ownership root. Bucket, Collection, Service and NotificationPolicy attribute to a team.
+referential_integrity:
+  enforced: true
+  evidence: >-
+    Delete operations return 400 with "Cannot delete the <Resource> because it is in use", so the
+    graph is enforced server-side rather than left to the caller.
+  implication: >-
+    Teardown must be ordered leaf-first. There is no cascade parameter and no dependency listing
+    operation, so an agent deleting a Bucket has to discover its dependants by listing every
+    resource type that can reference one.
+data_plane:
+  api: Data V1
+  entities:
+  - name: Event
+    operations:
+    - ListEvents
+    - CreateEvent
+    note: Append-only from the API's point of view; no delete.
+  - name: PanelAnnotation
+    operations:
+    - ListPanelAnnotations
+    - CreatePanelAnnotation
+    - PutPanelAnnotation
+    - DeletePanelAnnotation
+  - name: LogRange
+    operations:
+    - QueryLogsRange
+  - name: Trace
+    operations:
+    - ListTraces
+  - name: MetricMetadata
+    operations:
+    - ReadMetricMetadata
+state_plane:
+  api: State V1
+  entities:
+  - MetricUsageByLabelName
+  - MetricUsageByMetricName
+  - RuleEvaluation
+  note: >-
+    Read-only derived state used for cost and health analysis. These are the three operations the
+    MCP metric_usage tools sit on.
+external_schemas:
+- name: Standard Dashboard Configuration
+  file: json-schema/chronosphere-dashboard-schema.json
+  source: https://docs.chronosphere.io/openapi/dashboard_schema.json
+  note: >-
+    The dashboard body is a large nested document published as its own schema rather than being
+    inlined in the Config API. It is the deepest object in the model.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

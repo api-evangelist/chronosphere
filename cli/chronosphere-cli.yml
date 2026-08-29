@@ -1,0 +1,111 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.chronosphere.io/tooling/chronoctl and
+  https://docs.chronosphere.io/tooling/chronoctl/install, fetched 2026-08-29.
+provider: Chronosphere
+providerId: chronosphere
+name: Chronoctl
+description: >-
+  Chronoctl is Chronosphere's first-party command line app for managing Observability Platform
+  resources. It is deliberately shaped like the Config API — the same resource types, the same
+  create/read/update/delete/list verbs, the same slug identifiers — so a command translates
+  one-to-one to an HTTP call.
+binary: chronoctl
+repository: https://github.com/chronosphereio/chronoctl-core
+install:
+- method: direct-download
+  platform: macOS
+  commands:
+  - curl -LO https://storage.googleapis.com/chronosphere-release/latest/chronoctl-darwin-arm64
+  - curl -LO https://storage.googleapis.com/chronosphere-release/latest/chronoctl-darwin-amd64
+  note: chmod +x, then move into PATH as `chronoctl`.
+- method: direct-download
+  platform: Linux
+  commands:
+  - curl -LO https://storage.googleapis.com/chronosphere-release/latest/chronoctl-linux-amd64
+  - curl -LO https://storage.googleapis.com/chronosphere-release/latest/chronoctl-linux-arm64
+unpinned_distribution: true
+unpinned_note: >-
+  Every documented download URL points at `/latest/`. There is no versioned download path and no
+  metadata endpoint, so neither a user nor a tool can tell which build they installed without
+  running `chronoctl version`.
+authentication:
+  env:
+  - CHRONOSPHERE_API_TOKEN
+  - CHRONOSPHERE_ORG_NAME
+  interactive: chronoctl auth
+  requires: >-
+    An API token from a service account or a personal access token. Many commands, including team
+    and account management, require SysAdmin privileges.
+  docs: https://docs.chronosphere.io/tooling/chronoctl/install#authentication
+commands:
+- group: Configuration commands
+  description: >-
+    Applied per resource type — `chronoctl RESOURCE <subcommand>`. The resource list a given build
+    supports is printed by `chronoctl --help` under "Chronosphere Configuration".
+  subcommands:
+  - name: create
+    usage: chronoctl RESOURCE create -f FILE_NAME.yaml
+  - name: delete
+    usage: chronoctl RESOURCE delete SLUG
+  - name: list
+    usage: chronoctl RESOURCE list
+  - name: read
+    usage: chronoctl RESOURCE read SLUG
+  - name: scaffold
+    usage: chronoctl RESOURCE scaffold
+    note: Emits an example resource definition to edit and apply.
+  - name: update
+    usage: chronoctl RESOURCE update -f FILE_NAME.yaml
+- group: Core commands
+  subcommands:
+  - name: apply
+    usage: chronoctl apply -f FILE_NAME.yaml
+    note: The multi-resource path; applies a manifest containing several resources.
+  - name: auth
+    usage: chronoctl auth
+    note: Starts an authenticated session, including for SysAdmin-only operations.
+- group: State commands
+  subcommands:
+  - name: rule-evaluations list
+    note: Backed by the State API ListRuleEvaluations operation.
+- group: Sync commands
+- group: Additional commands
+  subcommands:
+  - name: help
+  - name: version
+flags:
+  common:
+  - flag: -h, --help
+  - flag: --timeout
+    description: Request timeout in seconds; defaults to 30.
+  output:
+  - flag: -o, --output
+    description: 'yaml (default), json, or jsonl.'
+  mutating:
+  - flag: -d, --dry-run
+    description: >-
+      Simulates the manifest or change without applying it and prints the predicted result. The
+      CLI mirror of the `dry_run` field the Config API accepts on every write.
+  - flag: --no-strict
+    description: Accepts manifests containing unknown fields.
+resource_identity:
+  scheme: slug
+  constraints: >-
+    Max 255 characters; letters, numbers, underscores and dashes only; case-sensitive. Generated
+    server-side when not supplied.
+related:
+- type: Terraform
+  url: https://registry.terraform.io/providers/chronosphereio/chronosphere/latest
+  note: >-
+    Resources managed by Terraform can only be modified by Terraform — Chronoctl and the UI are
+    blocked from changing them.
+- type: Pulumi
+  url: https://docs.chronosphere.io/tooling/infrastructure/pulumi
+release_notes: >-
+  Chronoctl product release notes are behind the Observability Platform sign-in (More information
+  > Release Notes > Chronoctl tab), so they could not be captured anonymously.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

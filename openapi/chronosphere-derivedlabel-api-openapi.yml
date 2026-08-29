@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket DerivedLabel API
+  title: Config V1 Bucket Derived Label API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -254,11 +254,42 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1ReadDerivedLabelResponse:
+    configv1CreateDerivedLabelResponse:
       type: object
       properties:
         derived_label:
           $ref: '#/components/schemas/configv1DerivedLabel'
+    configv1DeleteDerivedLabelResponse:
+      type: object
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1DerivedLabelLabelPolicy:
+      type: string
+      enum:
+      - KEEP
+      - OVERRIDE
+    ConfigV1UpdateDerivedLabelBody:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+        create_if_missing:
+          type: boolean
+          description: If true, the DerivedLabel will be created if it does not already exist, identified by slug. If false, an error will be returned if the DerivedLabel does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the DerivedLabel isn't created or updated, and no response DerivedLabel will be returned. The response will return an error if the given DerivedLabel is invalid.
     configv1ListDerivedLabelsResponse:
       type: object
       properties:
@@ -268,14 +299,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/configv1DerivedLabel'
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1CreateDerivedLabelResponse:
+    configv1CreateDerivedLabelRequest:
       type: object
       properties:
         derived_label:
           $ref: '#/components/schemas/configv1DerivedLabel'
+        dry_run:
+          type: boolean
+          description: If true, the DerivedLabel isn't created, and no response DerivedLabel will be returned. The response will return an error if the given DerivedLabel is invalid.
+    MetricLabelConstructedLabel:
+      type: object
+      properties:
+        value_definitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstructedLabelValueDefinition'
+    DerivedLabelMetricLabel:
+      type: object
+      properties:
+        constructed_label:
+          $ref: '#/components/schemas/MetricLabelConstructedLabel'
+        mapping_label:
+          $ref: '#/components/schemas/MetricLabelMappingLabel'
     configv1DerivedLabel:
       type: object
       properties:
@@ -305,13 +350,31 @@ components:
           $ref: '#/components/schemas/DerivedLabelMetricLabel'
         existing_label_policy:
           $ref: '#/components/schemas/configv1DerivedLabelLabelPolicy'
-    MetricLabelConstructedLabel:
+    configv1ReadDerivedLabelResponse:
       type: object
       properties:
-        value_definitions:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+    MappingLabelValueMapping:
+      type: object
+      properties:
+        source_value_globs:
+          type: array
+          description: Defines the source label values that should be mapped into the given target_value.
+          items:
+            type: string
+        target_value:
+          type: string
+          description: "The value that source_value_globs are mapped into.\nFor example, given this mapping:\n```yaml\nvalue_mappings:\n - source_value_globs:\n     - Cat\n     - CAT\n   target_value: cat\n```\nThis indicates that the target value `cat` maps to the source label's values `Cat` and `CAT`."
+    ConstructedLabelValueDefinition:
+      type: object
+      properties:
+        value:
+          type: string
+        filters:
           type: array
           items:
-            $ref: '#/components/schemas/ConstructedLabelValueDefinition'
+            $ref: '#/components/schemas/configv1LabelFilter'
     MappingLabelNameMapping:
       type: object
       properties:
@@ -327,63 +390,6 @@ components:
           description: These value mappings apply to just the name mapping they belong to.
           items:
             $ref: '#/components/schemas/MappingLabelValueMapping'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1DeleteDerivedLabelResponse:
-      type: object
-    configv1UpdateDerivedLabelResponse:
-      type: object
-      properties:
-        derived_label:
-          $ref: '#/components/schemas/configv1DerivedLabel'
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    MappingLabelValueMapping:
-      type: object
-      properties:
-        source_value_globs:
-          type: array
-          description: Defines the source label values that should be mapped into the given target_value.
-          items:
-            type: string
-        target_value:
-          type: string
-          description: "The value that source_value_globs are mapped into.\nFor example, given this mapping:\n```yaml\nvalue_mappings:\n - source_value_globs:\n     - Cat\n     - CAT\n   target_value: cat\n```\nThis indicates that the target value `cat` maps to the source label's values `Cat` and `CAT`."
-    ConfigV1UpdateDerivedLabelBody:
-      type: object
-      properties:
-        derived_label:
-          $ref: '#/components/schemas/configv1DerivedLabel'
-        create_if_missing:
-          type: boolean
-          description: If true, the DerivedLabel will be created if it does not already exist, identified by slug. If false, an error will be returned if the DerivedLabel does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the DerivedLabel isn't created or updated, and no response DerivedLabel will be returned. The response will return an error if the given DerivedLabel is invalid.
-    configv1CreateDerivedLabelRequest:
-      type: object
-      properties:
-        derived_label:
-          $ref: '#/components/schemas/configv1DerivedLabel'
-        dry_run:
-          type: boolean
-          description: If true, the DerivedLabel isn't created, and no response DerivedLabel will be returned. The response will return an error if the given DerivedLabel is invalid.
     configv1LabelFilter:
       type: object
       properties:
@@ -395,27 +401,6 @@ components:
           type: string
           description: Glob value of the label to match.
           example: myservice*
-    configv1DerivedLabelLabelPolicy:
-      type: string
-      enum:
-      - KEEP
-      - OVERRIDE
-    DerivedLabelMetricLabel:
-      type: object
-      properties:
-        constructed_label:
-          $ref: '#/components/schemas/MetricLabelConstructedLabel'
-        mapping_label:
-          $ref: '#/components/schemas/MetricLabelMappingLabel'
-    ConstructedLabelValueDefinition:
-      type: object
-      properties:
-        value:
-          type: string
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1LabelFilter'
     MetricLabelMappingLabel:
       type: object
       properties:
@@ -430,4 +415,19 @@ components:
             If there''s no name_mappings, these value mappings apply to the label that exists on the metric.'
           items:
             $ref: '#/components/schemas/MappingLabelValueMapping'
+    configv1UpdateDerivedLabelResponse:
+      type: object
+      properties:
+        derived_label:
+          $ref: '#/components/schemas/configv1DerivedLabel'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
 x-original-swagger-version: '2.0'

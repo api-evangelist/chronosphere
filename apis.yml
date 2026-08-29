@@ -1,52 +1,82 @@
 aid: chronosphere
 name: Chronosphere
-description: >-
-  Chronosphere is a cloud-native observability platform for managing and controlling observability data at scale.
+description: 'Chronosphere is a cloud-native observability platform for controlling the cost and volume of telemetry
+  data at scale, spanning metrics, logs, traces and change events. It ships an Observability Platform (dashboards,
+  monitors, SLOs, differential diagnosis, PromQL querying and metrics shaping) and a Telemetry Pipeline built on
+  Fluent Bit, acquired with Calyptia. Its APIs are per-tenant HTTP/JSON: a Config API for resources as code, a Data
+  API for events, logs and traces, and a State API for usage and rule health, with Prometheus-compatible query endpoints,
+  an open-source MCP server, a Terraform provider and the Chronoctl CLI. Palo Alto Networks completed its acquisition
+  of Chronosphere in 2026.'
 type: Index
 deliveryModel:
-  model: unknown
+  model: saas
   open_source: false
-  commercial: false
+  commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Hosted service · you call their endpoint
+  confidence: medium
   source:
   - openapi
-  generated: '2026-08-28'
+  - pricing
+  generated: '2026-08-29'
   method: derived
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: enterprise
+  onboarding: sales-gated
   trial: false
   try_now: false
   public: false
-  label: Freemium
-  confidence: medium
+  label: Enterprise · Sales-gated onboarding
+  confidence: high
   source:
   - plans
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-29'
+  method: searched
+  note: 'Corrects a derived value of "Paid · Self-serve signup". Probed 2026-08-29: chronosphere.io/pricing and
+    /pricing/ both return 404, no pricing link exists in the navigation or footer, and the only commercial call
+    to action is https://chronosphere.io/demo-request/ ("Request a Demo"). There is no self-serve signup, no published
+    free tier and no trial; API access requires an existing tenant, which is why the API base is a per-customer
+    subdomain. See plans/chronosphere-plans-pricing.yml.'
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/chronosphere.png
 tags:
-  - AIOps
-  - Observability
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/chronosphere/refs/heads/main/apis.yml
+- Observability
+- AIOps
+- Monitoring
+- Metrics
+- Logging
+- Distributed Tracing
+- Telemetry
+- OpenTelemetry
+- Prometheus
+- Alerting
+- SLO
+- Infrastructure as Code
+- MCP
+- Agent Ready
+url: https://raw.githubusercontent.com/api-evangelist/chronosphere/refs/heads/main/apis.yml
 created: '2026-03-27'
-modified: '2026-03-27'
+modified: '2026-08-29'
 specificationVersion: '0.23'
 apis:
 - aid: chronosphere:chronosphere
   name: Chronosphere
-  description: >-
-    Chronosphere is a cloud-native observability platform for managing and controlling observability data
-    at scale.
+  description: The Chronosphere HTTP/JSON API surface for Observability Platform, served from a per-customer subdomain.
+    The Config V1 API alone carries 183 operations across 39 resource types, every write of which accepts dry_run,
+    and 37 updates of which accept create_if_missing for upsert semantics.
   humanURL: https://chronosphere.io
   tags:
   - AIOps
   properties:
   - type: Documentation
     url: https://docs.chronosphere.io
+  - type: OpenAPI
+    url: openapi/_original/chronosphere-config-v1-openapi3.json
+    name: Chronosphere Config V1 API (master, 183 operations)
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-bucket-api
   name: Chronosphere Bucket API
   description: The Bucket API from Chronosphere — 2 operation(s) for bucket.
@@ -56,6 +86,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-bucket-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-bucket-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-classicdashboard-api
   name: Chronosphere ClassicDashboard API
   description: The ClassicDashboard API from Chronosphere — 2 operation(s) for classicdashboard.
@@ -65,6 +98,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-classicdashboard-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-classicdashboard-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-collection-api
   name: Chronosphere Collection API
   description: The Collection API from Chronosphere — 2 operation(s) for collection.
@@ -74,6 +110,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-collection-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-collection-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-dashboard-api
   name: Chronosphere Dashboard API
   description: The Dashboard API from Chronosphere — 2 operation(s) for dashboard.
@@ -83,6 +122,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-dashboard-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-dashboard-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-dataset-api
   name: Chronosphere Dataset API
   description: The Dataset API from Chronosphere — 2 operation(s) for dataset.
@@ -92,6 +134,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-dataset-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-dataset-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-derivedlabel-api
   name: Chronosphere DerivedLabel API
   description: The DerivedLabel API from Chronosphere — 2 operation(s) for derivedlabel.
@@ -101,6 +146,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-derivedlabel-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-derivedlabel-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-derivedmetric-api
   name: Chronosphere DerivedMetric API
   description: The DerivedMetric API from Chronosphere — 2 operation(s) for derivedmetric.
@@ -110,6 +158,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-derivedmetric-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-derivedmetric-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-droprule-api
   name: Chronosphere DropRule API
   description: The DropRule API from Chronosphere — 2 operation(s) for droprule.
@@ -119,16 +170,21 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-droprule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-droprule-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-gcpmetricsintegration-api
   name: Chronosphere GcpMetricsIntegration API
-  description: >-
-    The GcpMetricsIntegration API from Chronosphere — 2 operation(s) for gcpmetricsintegration.
+  description: The GcpMetricsIntegration API from Chronosphere — 2 operation(s) for gcpmetricsintegration.
   humanURL: https://chronosphere.io
   tags:
   - GcpMetricsIntegration
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-gcpmetricsintegration-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-gcpmetricsintegration-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-grafanadashboard-api
   name: Chronosphere GrafanaDashboard API
   description: The GrafanaDashboard API from Chronosphere — 2 operation(s) for grafanadashboard.
@@ -140,6 +196,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-grafanadashboard-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-grafanadashboard-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-logallocationconfig-api
   name: Chronosphere LogAllocationConfig API
   description: The LogAllocationConfig API from Chronosphere — 1 operation(s) for logallocationconfig.
@@ -149,6 +208,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-logallocationconfig-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logallocationconfig-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-logingestconfig-api
   name: Chronosphere LogIngestConfig API
   description: The LogIngestConfig API from Chronosphere — 1 operation(s) for logingestconfig.
@@ -158,6 +220,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-logingestconfig-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logingestconfig-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-logscaleaction-api
   name: Chronosphere LogScaleAction API
   description: The LogScaleAction API from Chronosphere — 2 operation(s) for logscaleaction.
@@ -167,6 +232,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-logscaleaction-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logscaleaction-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-logscalealert-api
   name: Chronosphere LogScaleAlert API
   description: The LogScaleAlert API from Chronosphere — 2 operation(s) for logscalealert.
@@ -176,6 +244,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-logscalealert-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logscalealert-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-mappingrule-api
   name: Chronosphere MappingRule API
   description: The MappingRule API from Chronosphere — 2 operation(s) for mappingrule.
@@ -185,6 +256,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-mappingrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-mappingrule-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-monitor-api
   name: Chronosphere Monitor API
   description: The Monitor API from Chronosphere — 2 operation(s) for monitor.
@@ -196,6 +270,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-monitor-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-monitor-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-mutingrule-api
   name: Chronosphere MutingRule API
   description: The MutingRule API from Chronosphere — 2 operation(s) for mutingrule.
@@ -205,6 +282,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-mutingrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-mutingrule-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-notificationpolicy-api
   name: Chronosphere NotificationPolicy API
   description: The NotificationPolicy API from Chronosphere — 2 operation(s) for notificationpolicy.
@@ -214,6 +294,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-notificationpolicy-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-notificationpolicy-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-notifier-api
   name: Chronosphere Notifier API
   description: The Notifier API from Chronosphere — 2 operation(s) for notifier.
@@ -223,16 +306,21 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-notifier-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-notifier-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-otelmetricsingestion-api
   name: Chronosphere OtelMetricsIngestion API
-  description: >-
-    The OtelMetricsIngestion API from Chronosphere — 1 operation(s) for otelmetricsingestion.
+  description: The OtelMetricsIngestion API from Chronosphere — 1 operation(s) for otelmetricsingestion.
   humanURL: https://chronosphere.io
   tags:
   - OtelMetricsIngestion
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-otelmetricsingestion-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-otelmetricsingestion-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-recordingrule-api
   name: Chronosphere RecordingRule API
   description: The RecordingRule API from Chronosphere — 2 operation(s) for recordingrule.
@@ -242,6 +330,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-recordingrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-recordingrule-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-resourcepools-api
   name: Chronosphere ResourcePools API
   description: The ResourcePools API from Chronosphere — 1 operation(s) for resourcepools.
@@ -251,6 +342,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-resourcepools-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-resourcepools-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-rolluprule-api
   name: Chronosphere RollupRule API
   description: The RollupRule API from Chronosphere — 2 operation(s) for rolluprule.
@@ -260,6 +354,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-rolluprule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-rolluprule-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-service-api
   name: Chronosphere Service API
   description: The Service API from Chronosphere — 1 operation(s) for service.
@@ -269,6 +366,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-service-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-service-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-serviceaccount-api
   name: Chronosphere ServiceAccount API
   description: The ServiceAccount API from Chronosphere — 2 operation(s) for serviceaccount.
@@ -278,6 +378,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-serviceaccount-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-serviceaccount-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-slo-api
   name: Chronosphere SLO API
   description: The SLO API from Chronosphere — 2 operation(s) for slo.
@@ -287,6 +390,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-slo-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-slo-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-team-api
   name: Chronosphere Team API
   description: The Team API from Chronosphere — 2 operation(s) for team.
@@ -296,6 +402,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-team-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-team-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-tracebehavior-api
   name: Chronosphere TraceBehavior API
   description: The TraceBehavior API from Chronosphere — 2 operation(s) for tracebehavior.
@@ -305,6 +414,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-tracebehavior-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracebehavior-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-tracebehaviorconfig-api
   name: Chronosphere TraceBehaviorConfig API
   description: The TraceBehaviorConfig API from Chronosphere — 1 operation(s) for tracebehaviorconfig.
@@ -314,16 +426,21 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-tracebehaviorconfig-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracebehaviorconfig-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-tracejaegerremotesamplingstrategy-api
   name: Chronosphere TraceJaegerRemoteSamplingStrategy API
-  description: >-
-    The TraceJaegerRemoteSamplingStrategy API from Chronosphere — 2 operation(s) for tracejaegerremotesamplingstrategy.
+  description: The TraceJaegerRemoteSamplingStrategy API from Chronosphere — 2 operation(s) for tracejaegerremotesamplingstrategy.
   humanURL: https://chronosphere.io
   tags:
   - TraceJaegerRemoteSamplingStrategy
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-tracejaegerremotesamplingstrategy-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracejaegerremotesamplingstrategy-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-tracemetricsrule-api
   name: Chronosphere TraceMetricsRule API
   description: The TraceMetricsRule API from Chronosphere — 2 operation(s) for tracemetricsrule.
@@ -333,87 +450,250 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-tracemetricsrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracemetricsrule-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
 - aid: chronosphere:chronosphere-tracetailsamplingrules-api
   name: Chronosphere TraceTailSamplingRules API
-  description: >-
-    The TraceTailSamplingRules API from Chronosphere — 1 operation(s) for tracetailsamplingrules.
+  description: The TraceTailSamplingRules API from Chronosphere — 1 operation(s) for tracetailsamplingrules.
   humanURL: https://chronosphere.io
   tags:
   - TraceTailSamplingRules
   properties:
   - type: OpenAPI
     url: openapi/chronosphere-tracetailsamplingrules-api-openapi.yml
-common:
-  - type: CapabilityMap
-    url: capabilities/chronosphere-capability-edges.yml
-    name: Chronosphere Business Capability Map
-  - type: AgenticAccess
-    url: agentic-access/chronosphere-agentic-access.yml
-  - type: TrustCenter
-    url: security/chronosphere-trust-center.yml
-  - type: DomainSecurity
-    url: security/chronosphere-domain-security.yml
-  - type: GitHubOrganization
-    url: https://github.com/chronosphereio
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/chronosphereio
-  - type: Website
-    url: https://chronosphere.io
+  - type: Overlay
+    url: overlays/chronosphere-tracetailsamplingrules-api-overlay.yaml
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-data-v1-api
+  name: Chronosphere Data V1 API
+  description: 'The Data API from Chronosphere - 9 operations for querying and writing telemetry: change events,
+    log range queries, trace listing, metric metadata and dashboard panel annotations.'
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - Data
+  - Events
+  - Logs
+  - Distributed Tracing
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-data-v1-api-openapi.json
+  - type: Overlay
+    url: overlays/chronosphere-data-v1-api-overlay.yaml
   - type: Documentation
-    url: https://docs.chronosphere.io
-  - type: Integrations
-    url: https://chronosphere.io/integrations/
-  - type: LlmsText
-    url: https://docs.chronosphere.io/llms.txt
-  - url: https://chronosphere.io/blog/
-    type: Blog
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+- aid: chronosphere:chronosphere-state-v1-api
+  name: Chronosphere State V1 API
+  description: 'The State API from Chronosphere - 3 read-only operations exposing derived state: metric usage by
+    metric name, metric usage by label name, and rule evaluation health. The cost and cardinality analysis surface.'
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - State
+  - Metrics
+  - FinOps
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-state-v1-api-openapi.json
+  - type: Overlay
+    url: overlays/chronosphere-state-v1-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+common:
+- type: Authentication
+  url: authentication/chronosphere-authentication.yml
+- type: CapabilityMap
+  url: capabilities/chronosphere-capability-edges.yml
+  name: Chronosphere Business Capability Map
+- type: AgenticAccess
+  url: agentic-access/chronosphere-agentic-access.yml
+- type: TrustCenter
+  url: security/chronosphere-trust-center.yml
+- type: DomainSecurity
+  url: security/chronosphere-domain-security.yml
+- type: GitHubOrganization
+  url: https://github.com/chronosphereio
+- type: LinkedIn
+  url: https://www.linkedin.com/company/chronosphereio
+- type: Website
+  url: https://chronosphere.io
+- type: Documentation
+  url: https://docs.chronosphere.io
+- type: Integrations
+  url: https://chronosphere.io/integrations/
+- type: LlmsText
+  url: https://docs.chronosphere.io/llms.txt
+- type: Blog
+  url: https://chronosphere.io/blog/
+- type: Packages
+  url: packages/chronosphere-packages.yml
+  name: Chronosphere first-party packages and SDK currency
+- type: SDKs
+  url: packages/chronosphere-packages.yml
+- type: CLI
+  url: cli/chronosphere-cli.yml
+  name: Chronoctl
+- type: WellKnown
+  url: well-known/chronosphere-well-known.yml
+- type: MCPServer
+  url: mcp/chronosphere-mcp.yml
+  name: Chronosphere MCP server
+- type: ToolCrosswalk
+  url: mcp/chronosphere-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/chronosphere-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/chronosphere-llms.txt
+- type: Conformance
+  url: conformance/chronosphere-conformance.yml
+- type: Compliance
+  url: security/chronosphere-trust-center.yml
+- type: ErrorCatalog
+  url: errors/chronosphere-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/chronosphere-lifecycle.yml
+- type: StatusPage
+  url: lifecycle/chronosphere-lifecycle.yml
+- type: Conventions
+  url: conventions/chronosphere-conventions.yml
+- type: Idempotency
+  url: conventions/chronosphere-conventions.yml
+- type: Webhooks
+  url: asyncapi/chronosphere-webhooks.yml
+- type: ChangeLog
+  url: changelog/chronosphere-changelog.yml
+- type: DataModel
+  url: data-model/chronosphere-data-model.yml
+- type: JSONSchema
+  url: json-schema/chronosphere-dashboard-schema.json
+  name: Standard Dashboard Configuration schema
+- type: Plans
+  url: plans/chronosphere-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/chronosphere-rate-limits.yml
+- type: APIReference
+  url: https://docs.chronosphere.io/tooling/api-info/definition
+- type: GettingStarted
+  url: https://docs.chronosphere.io/tooling/api-info
+- type: Support
+  url: https://docs.chronosphere.io/support
+- type: PrivacyPolicy
+  url: https://chronosphere.io/privacy/
+- type: Newsroom
+  url: https://chronosphere.io/newsroom/
+- type: Careers
+  url: https://chronosphere.io/careers/
+- type: Partners
+  url: https://chronosphere.io/partners/
+- type: X
+  url: https://x.com/chronosphereio
+- type: YouTube
+  url: https://www.youtube.com/@chronosphere-observability
+- type: OAuthScopes
+  url: scopes/chronosphere-scopes.yml
 integrations:
-  - name: chronosphere
-  - name: Observability Platform
-  - name: Open Source Data Collection
-  - name: Control Plane
-  - name: Scalable and Reliable Data Stores
-  - name: Chronosphere Lens
-  - name: Differential Diagnosis DDx
-  - name: Chronosphere SLOs
-  - name: Telemetry Pipeline
-  - name: Telemetry Pipeline Demo
-  - name: Data Collection
-  - name: By Telemetry Data
-  - name: Metrics
-  - name: Distributed Tracing
-  - name: Chronosphere Logs
-  - name: By Layer
-  - name: Application Observability
-  - name: Business Observability
-  - name: Infrastructure Observability
-  - name: Control Costs
-  - name: Scale Prometheus
-  - name: AI Workload Observability
-  - name: Improve Developer Efficiency
-  - name: Kubernetes Workload Observability Simplified
-  - name: Company
-  - name: Security
-  - name: Newsroom
-  - name: FAQs
-  - name: Availability Commitment
-  - name: Resource Center
-  - name: Customer Stories
-  - name: Whitepapers
-  - name: Webinars
-  - name: Demos on Demand
-  - name: Videos
-  - name: Podcasts
-  - name: Research
-  - name: Briefs
-  - name: Business Value Calculator
-  - name: Migration Timeline Estimator
-  - name: Open Source
-  - name: OpenTelemetry
-  - name: Fluent Bit
-  - name: Prometheus
-  - name: nav-search
-  - name: Search Integrations
+- name: chronosphere
+- name: Observability Platform
+- name: Open Source Data Collection
+- name: Control Plane
+- name: Scalable and Reliable Data Stores
+- name: Chronosphere Lens
+- name: Differential Diagnosis DDx
+- name: Chronosphere SLOs
+- name: Telemetry Pipeline
+- name: Telemetry Pipeline Demo
+- name: Data Collection
+- name: By Telemetry Data
+- name: Metrics
+- name: Distributed Tracing
+- name: Chronosphere Logs
+- name: By Layer
+- name: Application Observability
+- name: Business Observability
+- name: Infrastructure Observability
+- name: Control Costs
+- name: Scale Prometheus
+- name: AI Workload Observability
+- name: Improve Developer Efficiency
+- name: Kubernetes Workload Observability Simplified
+- name: Company
+- name: Security
+- name: Newsroom
+- name: FAQs
+- name: Availability Commitment
+- name: Resource Center
+- name: Customer Stories
+- name: Whitepapers
+- name: Webinars
+- name: Demos on Demand
+- name: Videos
+- name: Podcasts
+- name: Research
+- name: Briefs
+- name: Business Value Calculator
+- name: Migration Timeline Estimator
+- name: Open Source
+- name: OpenTelemetry
+- name: Fluent Bit
+- name: Prometheus
+- name: nav-search
+- name: Search Integrations
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-pointer-check:
+  date: '2026-08-29'
+  method: manual curl with a browser User-Agent, following redirects, one attempt per URL
+  result: every pointer emitted or retained in this file returned a live document
+  removed:
+  - type: HelpCenter
+    url: https://support.chronosphere.io
+    status: 403
+    reason: Cloudflare interstitial ("Just a moment...") on an authenticated support portal; the shared pointer
+      probe grades it soft-404, so it was not retained as a claim.
+  not_emitted:
+  - type: SignUp
+    url: https://chronosphere.io/demo-request/
+    status: 200
+    reason: The page is live but it is a "Request a Demo" sales form, not a self-serve signup. Emitting SignUp for
+      it would assert an onboarding path Chronosphere does not offer, and it made the derived accessModel read "self-serve".
+  - type: Pricing
+    url: https://chronosphere.io/pricing
+    status: 404
+    reason: Chronosphere publishes no pricing page.
+  - type: TermsOfService
+    status: 404
+    reason: No terms page found on chronosphere.io; /terms/, /terms-of-service/, /terms-of-use/, /terms-and-conditions/
+      and /legal/ all 404 and the footer links none.
+  - type: Postman
+    url: https://www.postman.com/chronosphere
+    status: 200
+    reason: 'Soft-200: the page returns the Postman shell with no Chronosphere content, and a nonsense-workspace
+      control returns the same 200. No public collection exists.'
+  - type: Security
+    reason: No vulnerability disclosure program, security.txt or bug bounty found. /.well-known/security.txt returns
+      404 on chronosphere.io and docs.chronosphere.io; the security overview page describes internal scanning and
+      pen testing but names no reporting channel.
+  - type: Deprecation
+    reason: No deprecation policy is published, and no Sunset or Deprecation headers are documented.
+  - type: Roadmap
+    reason: No public roadmap.
+  - type: SecurityTxt
+    reason: 404 on every probed host.
+  - type: AsyncAPI
+    reason: No AsyncAPI document published; the webhook surface is catalogued under type Webhooks instead.
+  - type: Protobuf
+    reason: The APIs are grpc-gateway generated but no .proto is published in the 84 public repos of the chronosphereio
+      organization.
+  - type: WSDL
+    reason: No SOAP surface; ?wsdl and ?singleWsdl return the ordinary HTML page.
+  - type: Sandbox
+    reason: No sandbox, test mode or free trial is published.
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 64
+  pass: local-v1

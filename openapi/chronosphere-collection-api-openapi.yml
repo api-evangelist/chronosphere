@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Config V1 Bucket Collection API
   description: '
@@ -272,19 +272,14 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    ConfigV1UpdateCollectionBody:
+    configv1UpdateCollectionResponse:
       type: object
       properties:
         collection:
           $ref: '#/components/schemas/configv1Collection'
-        create_if_missing:
-          type: boolean
-          description: If true, the Collection will be created if it does not already exist, identified by slug. If false, an error will be returned if the Collection does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Collection isn't created or updated, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
-    configv1DeleteCollectionResponse:
+    genericError:
       type: object
+      additionalProperties: true
     configv1ListCollectionsResponse:
       type: object
       properties:
@@ -294,34 +289,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/configv1Collection'
-    configv1ReadCollectionResponse:
-      type: object
-      properties:
-        collection:
-          $ref: '#/components/schemas/configv1Collection'
-    configv1CreateCollectionRequest:
-      type: object
-      properties:
-        collection:
-          $ref: '#/components/schemas/configv1Collection'
-        dry_run:
-          type: boolean
-          description: If true, the Collection isn't created, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1CreateCollectionResponse:
-      type: object
-      properties:
-        collection:
-          $ref: '#/components/schemas/configv1Collection'
     configv1Collection:
       type: object
       properties:
@@ -354,14 +321,36 @@ components:
             This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
 
             This does not override the policy used when a monitor explicitly references a policy.'
-    genericError:
+    configv1DeleteCollectionResponse:
       type: object
-      additionalProperties: true
-    configv1UpdateCollectionResponse:
+    configv1CreateCollectionResponse:
       type: object
       properties:
         collection:
           $ref: '#/components/schemas/configv1Collection'
+    configv1ReadCollectionResponse:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateCollectionRequest:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+        dry_run:
+          type: boolean
+          description: If true, the Collection isn't created, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
     apiError:
       type: object
       properties:
@@ -372,4 +361,15 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
+    ConfigV1UpdateCollectionBody:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+        create_if_missing:
+          type: boolean
+          description: If true, the Collection will be created if it does not already exist, identified by slug. If false, an error will be returned if the Collection does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Collection isn't created or updated, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
 x-original-swagger-version: '2.0'

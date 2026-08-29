@@ -1,0 +1,127 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.chronosphere.io/tooling/api-info, /docs/status,
+  /tooling/infrastructure/terraform/release-notes,
+  https://chronosphere.io/legal/availability-commitment/ and https://status.chronosphere.io,
+  all fetched 2026-08-29, plus the six published OpenAPI documents at
+  https://docs.chronosphere.io/openapi/.
+provider: Chronosphere
+providerId: chronosphere
+versioning:
+  scheme: url-path
+  current: v1
+  channels:
+  - channel: stable
+    path_prefix: /api/v1/
+    documents:
+    - Config V1 API — 70 paths, 183 operations
+    - Data V1 API — 6 paths, 9 operations
+    - State V1 API — 3 paths, 3 operations
+  - channel: unstable
+    path_prefix: /api/unstable/
+    documents:
+    - Config Unstable API — 25 paths, 62 operations
+    - Data Unstable API — 5 paths, 7 operations
+    - State Unstable API — 2 paths, 2 operations
+    warning: >-
+      Published and downloadable, but explicitly unstable. Real product features depend on it —
+      the MCP server's list_monitor_statuses tool is backed by State Unstable
+      ListMonitorStatuses, so an agent using the supported tool is transitively on the unstable
+      contract.
+  support_statement: >-
+    "Chronosphere supports only publicly documented API endpoints. Undocumented, private, or
+    experimental API endpoints might change without warning."
+    (https://docs.chronosphere.io/tooling/api-info)
+  no_version_header: true
+  note: There is no Accept-version, API-Version or date-pinned version negotiation.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations_in_spec: 0
+  rfc8594: false
+  detail: >-
+    No deprecation policy page, no notice period, and no RFC 8594 Sunset or Deprecation response
+    headers anywhere in the docs — a full-text search of the documentation corpus for "sunset"
+    returns nothing. No operation in any of the six OpenAPI documents carries `deprecated: true`.
+  observed_removals:
+  - resource: LogScaleAlert, LogScaleAction
+    evidence: >-
+      Present in the Config V1 spec archived in this repo (openapi/_original/chronosphere-openapi.yml,
+      /api/v1/config/log-scale-alerts and /log-scale-actions) and absent from the Config V1 spec
+      published on 2026-08-29. The matching Terraform resources
+      chronosphere_logscale_alert and chronosphere_logscale_action were removed as a breaking
+      change in provider v1.35.0 on 2026-08-25.
+    announced_where: Terraform provider release notes only
+    api_notice: none
+    finding: >-
+      Two REST resources disappeared from the public API contract and the only public record of it
+      is a Terraform changelog entry. An HTTP client had no signal at all.
+  field_level:
+    example: sku_group on consumption budget thresholds — deprecated in Terraform provider 1.29.0
+      (2026-06-04), removed in 1.30.0 (2026-06-12), eight days later.
+    finding: >-
+      Where deprecation IS announced, on the Terraform surface, the window can be a single release
+      cycle. Nothing equivalent is published for the HTTP API.
+  proxy_policy:
+    surface: Terraform provider
+    statement: >-
+      Chronosphere supports each 1.x Terraform provider release for one year from its release
+      date and instructs customers to run only supported versions.
+    url: https://docs.chronosphere.io/tooling/infrastructure/terraform/release-notes
+status_page:
+  published: true
+  url: https://status.chronosphere.io
+  vendor: Atlassian Statuspage
+  public: false
+  auth: Okta SSO (chronosphereio.okta.com SAML to chronosphere.statuspage.io)
+  probe:
+    fetched: '2026-08-29'
+    http_status: 200
+    result: >-
+      302 chain terminating at an Okta sign-in page. The status page exists and is real, but it is
+      customer-only — neither a prospect nor a monitoring agent can read current service state.
+  in_product: >-
+    The documented path is in-app: navigation menu > More information > Chronosphere Status, where
+    a customer can also subscribe to incident alerts by email, SMS or webhook.
+  telemetry_pipeline: >-
+    Telemetry Pipeline status is reported separately through the Calyptia service monitoring page.
+sla:
+  published: true
+  url: https://chronosphere.io/legal/availability-commitment/
+  commitment: 99.9% uptime SLA ("three nines")
+  achieved_claim: >-
+    Greater than 99.99% uptime delivered to all customers every month in the prior year, per the
+    provider's own page.
+  credits_published: false
+  note: >-
+    The public page states the commitment and the track record; the remedy, measurement window and
+    service-credit schedule are contractual and not published.
+support:
+  url: https://docs.chronosphere.io/support
+  channels:
+  - email: support@chronosphere.io
+  - portal: https://support.chronosphere.io
+  priorities_published: true
+release_notes:
+  public:
+  - name: Terraform provider release notes
+    url: https://docs.chronosphere.io/tooling/infrastructure/terraform/release-notes
+  - name: Telemetry Pipeline release notes
+    url: https://docs.chronosphere.io/ingest/pipeline/v2/release-notes
+  gated:
+  - name: Observability Platform release notes
+    location: in-app, More information > Release Notes
+  - name: Chronoctl release notes
+    location: in-app, More information > Release Notes > Chronoctl tab
+  details: changelog/chronosphere-changelog.yml
+findings:
+- >-
+  Chronosphere runs a versioned API with a clean stable/unstable split and a published 99.9% SLA,
+  but ships no deprecation policy, no Sunset headers, no API changelog and a status page behind
+  SSO. Everything an operator needs to plan a migration is either in a Terraform changelog or
+  behind the sign-in.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

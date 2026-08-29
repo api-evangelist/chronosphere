@@ -26,12 +26,13 @@
 - [Ingest, filter, and overlay change events](https://docs.chronosphere.io/overview/types/change-events.md): Learn about interacting with change events in Chronosphere Observability Platform.
 
 ### Overview
-- [Authenticate with Observability Platform as a user](https://docs.chronosphere.io/overview/authenticating.md)
+- [Authenticate with Observability Platform as a user](https://docs.chronosphere.io/overview/authenticating.md): Authenticate with Chronosphere Observability Platform by signing in with single sign-on, a password, or a personal access token.
 - [Understanding generative AI features](https://docs.chronosphere.io/overview/generative-ai.md): Learn how Chronosphere Observability Platform provides generative AI features.
 
 ### Case studies
 - [Case studies](https://docs.chronosphere.io/overview/case-studies/case-studies.md): End-to-end workflow case studies demonstrating how teams use Chronosphere Observability Platform to solve real-world problems.
 - [Case study: responding to incidents](https://docs.chronosphere.io/overview/case-studies/respond-to-incidents.md): A narrative walkthrough of an on-call engineer investigating and resolving a production incident using Chronosphere Observability Platform.
+- [Case study: protecting a telemetry data budget](https://docs.chronosphere.io/overview/case-studies/manage-budgets.md): A narrative walkthrough of an administrator investigating a telemetry data spike, repartitioning consumption, and revising budgets in Chronosphere Observability Platform.
 
 ### Guides
 - [Observability Platform guides](https://docs.chronosphere.io/overview/guides.md): Learn about common workflows in Chronosphere Observability Platform.
@@ -47,15 +48,16 @@
 - [Assistant capabilities reference](https://docs.chronosphere.io/navigate/assistant/capabilities.md): Reference for the data the Chronosphere Assistant reads, the skills it uses, and the changes it can make.
 
 ### Navigate
-- [Use notebooks to gather related information](https://docs.chronosphere.io/navigate/notebooks.md)
+- [Search for resources in Observability Platform](https://docs.chronosphere.io/navigate/search.md): Use global search to find dashboards, monitors, services, SLOs, teams, and collections by name, and open the Assistant when you want to describe what you're looking for.
+- [Use notebooks to gather related information](https://docs.chronosphere.io/navigate/notebooks.md): Use notebooks to gather graphs, charts, and other resources from multiple pages into one place while troubleshooting a problem.
 - [Filter across pages using pinned scopes](https://docs.chronosphere.io/navigate/pinned-scopes.md): Learn about Chronosphere Observability Platform cross-page filtering.
-- [Select time ranges](https://docs.chronosphere.io/navigate/time-ranges.md)
+- [Select time ranges](https://docs.chronosphere.io/navigate/time-ranges.md): Use the time range selector to scope queries, charts, tables, and graphs across monitors, dashboards, service pages, and explorers.
 - [Use comments to provide context](https://docs.chronosphere.io/navigate/comments.md): Learn about how to use comments in Chronosphere Observability Platform to identify important data.
-- [Create favorites to find resources quickly](https://docs.chronosphere.io/navigate/favorites.md)
+- [Create favorites to find resources quickly](https://docs.chronosphere.io/navigate/favorites.md): Mark dashboards and monitors as favorites to reach them faster from your personal home page, filtered resource lists, and search results.
 
 ### Observe
 - [Observe your telemetry data](https://docs.chronosphere.io/observe.md): Chronosphere Observability Platform provides scalable, high-performance observability with metrics, tracing, and logging for complex system monitoring.
-- [Personal home page](https://docs.chronosphere.io/observe/personal-homepage.md)
+- [Personal home page](https://docs.chronosphere.io/observe/personal-homepage.md): Customize your personal home page to display panels of recently viewed, recently modified, and favorite resources after you sign in.
 
 ### Dashboards
 - [Visualize data using dashboards](https://docs.chronosphere.io/observe/dashboards.md): Use dashboards to create and organize data visualizations in Chronosphere Observability Platform.
@@ -88,9 +90,9 @@
 - [Annotate standard dashboards](https://docs.chronosphere.io/observe/dashboards/annotations.md): Create, view, edit, and delete manual annotations that mark points in time on Chronosphere standard dashboards.
 
 ### Classic dashboards
-- [Classic dashboards](https://docs.chronosphere.io/observe/dashboards/classic-dashboards.md)
-- [Import Grafana dashboards](https://docs.chronosphere.io/observe/dashboards/classic-dashboards/grafana-import.md)
-- [Visualize dashboard contents with panels](https://docs.chronosphere.io/observe/dashboards/classic-dashboards/classic-panels.md)
+- [Classic dashboards](https://docs.chronosphere.io/observe/dashboards/classic-dashboards.md): Create and manage Grafana-based classic dashboards, and compare them with standard dashboards in Chronosphere Observability Platform.
+- [Import Grafana dashboards](https://docs.chronosphere.io/observe/dashboards/classic-dashboards/grafana-import.md): Import dashboards exported from Grafana 7.5 or earlier into Chronosphere Observability Platform as classic dashboards.
+- [Visualize dashboard contents with panels](https://docs.chronosphere.io/observe/dashboards/classic-dashboards/classic-panels.md): Add and configure chart panels on a classic dashboard to transform, filter, and visualize the results of a query.
 
 ### Dashboards
 - [Standard dashboard config reference](https://docs.chronosphere.io/observe/dashboards/endpoint_schema.md)
@@ -105,7 +107,7 @@
 ### Events
 - [Overlay and enable change events](https://docs.chronosphere.io/observe/enable-events.md): Overlay and enable change events in Observability Platform to understand what changed in your environment.
 - [Use change events](https://docs.chronosphere.io/observe/enable-events/use-events.md): Use change events in Chronosphere Observability Platform to understand what changed in your environment.
-- [Enable change events on dashboards](https://docs.chronosphere.io/observe/enable-events/dashboards.md)
+- [Enable change events on dashboards](https://docs.chronosphere.io/observe/enable-events/dashboards.md): Enable change events as annotations on classic and standard dashboard panels by adding an annotation with a change events query.
 - [Enable change events on service pages](https://docs.chronosphere.io/observe/enable-events/services.md): Learn how to enable and overlay change events on service pages in Observability Platform.
 - [Enable change events on traces](https://docs.chronosphere.io/observe/enable-events/traces.md): Learn how to enable and overlay change events on tracing data in Trace Explorer.
 
@@ -124,7 +126,7 @@
 
 ### Search metrics
 - [Search and query metrics](https://docs.chronosphere.io/investigate/querying/metrics.md): Learn how to search and query metrics in Metrics Explorer.
-- [Metrics Explorer](https://docs.chronosphere.io/investigate/querying/metrics/explorer.md)
+- [Metrics Explorer](https://docs.chronosphere.io/investigate/querying/metrics/explorer.md): Use Metrics Explorer to craft, troubleshoot, and visualize metric queries before adding them to a dashboard or monitor.
 - [Create PromQL queries with the query builder](https://docs.chronosphere.io/investigate/querying/metrics/query-builder.md): Learn how to use the Query Builder to find and analyze data.
 
 ### Derived telemetry
@@ -133,11 +135,11 @@
 - [Derived labels](https://docs.chronosphere.io/investigate/querying/metrics/derived-telemetry/derived-labels.md): Learn about using derived labels to standardize data in Observability Platform.
 
 ### Search metrics
-- [Querying delta temporality metrics](https://docs.chronosphere.io/investigate/querying/metrics/delta-queries.md)
-- [Alert metrics](https://docs.chronosphere.io/investigate/querying/metrics/alert-metrics.md)
+- [Querying delta temporality metrics](https://docs.chronosphere.io/investigate/querying/metrics/delta-queries.md): Query delta temporality metrics in Chronosphere Observability Platform, and learn how they differ from cumulative temporality metrics.
+- [Alert metrics](https://docs.chronosphere.io/investigate/querying/metrics/alert-metrics.md): Query the ALERTS metric with PromQL to inspect triggered and pending alert series.
 - [Fixing slow queries and dashboards](https://docs.chronosphere.io/investigate/querying/metrics/fixing.md): Learn about ways to improve slow queries and dashboards to avoid query truncation.
 - [Troubleshooting missing metrics](https://docs.chronosphere.io/investigate/querying/metrics/troubleshooting.md): Learn about fixing issues when metric data doesn't display as expected in Chronosphere Observability Platform.
-- [Classic Metrics Explorer](https://docs.chronosphere.io/investigate/querying/metrics/explorer-classic.md)
+- [Classic Metrics Explorer](https://docs.chronosphere.io/investigate/querying/metrics/explorer-classic.md): Use the classic Metrics Explorer to craft and inspect metric queries, and learn why moving to Metrics Explorer is recommended.
 - [Create queries with the Query Builder](https://docs.chronosphere.io/investigate/querying/metrics/builder.md): Learn how to use the Query Builder to find and analyze data.
 
 ### Search traces
@@ -150,9 +152,9 @@
 - [Generate queries using natural language](https://docs.chronosphere.io/investigate/querying/natural-language.md): Learn how to generate and refine queries from natural language prompts.
 
 ### Use PromQL
-- [Using PromQL in Observability Platform](https://docs.chronosphere.io/investigate/querying/promql.md)
+- [Using PromQL in Observability Platform](https://docs.chronosphere.io/investigate/querying/promql.md): Learn the PromQL syntax and features for selecting and aggregating time series data in Chronosphere Observability Platform.
 - [Applying PromQL functions](https://docs.chronosphere.io/investigate/querying/promql/apply-functions.md): Learn about how to apply PromQL functions in Observability Platform.
-- [Using custom PromQL functions in Observability Platform](https://docs.chronosphere.io/investigate/querying/promql/custom-functions.md)
+- [Using custom PromQL functions in Observability Platform](https://docs.chronosphere.io/investigate/querying/promql/custom-functions.md): Reference the custom PromQL functions that Chronosphere Observability Platform supports in addition to standard PromQL functions.
 - [Experimental PromQL functions and operators](https://docs.chronosphere.io/investigate/querying/promql/experimental-functions.md): Learn experimental PromQL functions in Observability Platform.
 
 ### Query data
@@ -170,11 +172,11 @@
 - [Identify issues behind suspicious metrics trends](https://docs.chronosphere.io/investigate/analyze/differential-diagnosis/metrics.md): Learn how to use differential diagnosis to identify metrics most closely correlated with suspicious behavior.
 
 ### Analyze data
-- [Analyze live traffic metrics](https://docs.chronosphere.io/investigate/analyze/telemetry-analyzer.md)
+- [Analyze live traffic metrics](https://docs.chronosphere.io/investigate/analyze/telemetry-analyzer.md): Use Live Telemetry Analyzer to view incoming metrics, troubleshoot ingest spikes, and identify metrics to reduce.
 - [Analyze live traffic traces](https://docs.chronosphere.io/investigate/analyze/trace-analyzer.md): Use Trace Analyzer in Chronosphere Observability Platform to view incoming traces.
 - [Analyze metrics usage](https://docs.chronosphere.io/investigate/analyze/usage.md): Learn about viewing metrics in your system to understand which are used most and least.
 - [Analyze logs usage](https://docs.chronosphere.io/investigate/analyze/logs-usage.md): Learn about utility scores and analyzing volume for log data in Observability Platform.
-- [Analyze query load](https://docs.chronosphere.io/investigate/analyze/query-analyzer.md)
+- [Analyze query load](https://docs.chronosphere.io/investigate/analyze/query-analyzer.md): Use Query Analyzer to rank monitor and recording rule queries by relative load and assess which to modify.
 
 ### Configure alerts
 - [Overview of alerting](https://docs.chronosphere.io/investigate/alerts.md): Chronosphere Observability Platform lets you create and manage custom alerts for timely notifications about critical issues.
@@ -205,7 +207,7 @@
 
 ### Notifications
 - [Notification policies](https://docs.chronosphere.io/investigate/alerts/notifications/policies.md): View and create notification policies with Chronosphere Observability Platform, Chronoctl, or Terraform.
-- [External connections](https://docs.chronosphere.io/investigate/alerts/notifications/external-connections.md): Credentials for notification delivery, referenced from notification policies.
+- [Notifier connections](https://docs.chronosphere.io/investigate/alerts/notifications/external-connections.md): Credentials for notification delivery, referenced from notification policies.
 - [Signals](https://docs.chronosphere.io/investigate/alerts/notifications/signals.md): View and create signals with Chronosphere Observability Platform.
 - [Slack unfurling integration](https://docs.chronosphere.io/investigate/alerts/notifications/slack.md): Set up the Slack integration to unfurl Chronosphere monitor graphs directly in your alerting channels.
 
@@ -234,8 +236,8 @@
 - [Shape and sample your data](https://docs.chronosphere.io/control/shaping.md): Learn how to use shaping rules to take control of your telemetry data.
 
 ### Shape metrics
-- [Shape metric data](https://docs.chronosphere.io/control/shaping/shape-metrics.md)
-- [Metric types](https://docs.chronosphere.io/control/shaping/shape-metrics/types.md)
+- [Shape metric data](https://docs.chronosphere.io/control/shaping/shape-metrics.md): Learn how metric shaping rules and downsampling control cardinality, license consumption, and query performance.
+- [Metric types](https://docs.chronosphere.io/control/shaping/shape-metrics/types.md): Learn how counters, gauges, histograms, and other metric types affect aggregation, long-term downsampling, and query results.
 
 ### Shaping rules
 - [Metric shaping rules](https://docs.chronosphere.io/control/shaping/shape-metrics/rules.md): Learn about the ways to use rules in Chronosphere Observability Platform to shape metric data.
@@ -254,11 +256,11 @@
 ### Quotas and pools
 - [Understand metric quotas and pools](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas.md): Learn about metric quotas and pools, and how to give each pool a specific quota of your total persisted writes license.
 - [Define a metric pool](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/define-pools.md): Learn about metric pool concepts and how to apply them to help shape defining a metric pool.
-- [View allocated pools](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/quotas-ui.md)
-- [Manage metric pools](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/manage-pools.md)
+- [View allocated pools](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/quotas-ui.md): View the persisted writes quota allocated to and consumed by each metrics pool to find pools at risk of being limited.
+- [Manage metric pools](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/manage-pools.md): Add, edit, and preview metric pool quota allocations on the Metrics Quotas page in Chronosphere Observability Platform.
 
 ### Shape metrics
-- [Long-term downsampling](https://docs.chronosphere.io/control/shaping/shape-metrics/downsampling.md)
+- [Long-term downsampling](https://docs.chronosphere.io/control/shaping/shape-metrics/downsampling.md): Learn how long-term downsampling compacts persisted metrics and its effect on each metric type.
 
 ### Sample traces
 - [Sample your traces](https://docs.chronosphere.io/control/shaping/sample-traces.md): Use sampling in Chronosphere Observability Platform to help control costs and maximize the usefulness of your tracing data.
@@ -290,11 +292,11 @@
 - [Okta user synchronization](https://docs.chronosphere.io/administer/accounts-teams/okta.md): Configure user synchronization between Okta and Chronosphere Observability Platform.
 
 ### Collections
-- [Collections](https://docs.chronosphere.io/administer/collections.md)
-- [Team and collection home pages](https://docs.chronosphere.io/administer/collections/home.md)
+- [Collections](https://docs.chronosphere.io/administer/collections.md): Learn how collections group dashboards, monitors, and other resources so a team can manage a service at scale.
+- [Team and collection home pages](https://docs.chronosphere.io/administer/collections/home.md): View team and collection home pages to see associated monitors, alert statuses, dashboards, and context.
 
 ### Administer
-- [Audit logs](https://docs.chronosphere.io/administer/audit-logs.md)
+- [Audit logs](https://docs.chronosphere.io/administer/audit-logs.md): View recent system and user actions in the Audit Log, including event details and the accounts and apps that generated them.
 - [Configure pinned scopes](https://docs.chronosphere.io/administer/pinned-scopes.md): Learn how to configure pinned scopes in Observability Platform.
 - [Design service level objectives](https://docs.chronosphere.io/administer/design-slos.md): Learn about fundamental concepts and best practices when designing service level objectives (SLOs) in Chronosphere Observability Platform.
 
@@ -312,11 +314,11 @@
 
 ### Limits
 - [Observability Platform system limits](https://docs.chronosphere.io/administer/limits-licensing/limits.md): Learn about system limits in Chronosphere Observability Platform.
-- [Change event limits](https://docs.chronosphere.io/administer/limits-licensing/limits/event-limits.md)
-- [Log limits](https://docs.chronosphere.io/administer/limits-licensing/limits/log-limits.md)
+- [Change event limits](https://docs.chronosphere.io/administer/limits-licensing/limits/event-limits.md): Reference the ingest rate, request size, and field limits that apply when creating change events with the CreateEvent API.
+- [Log limits](https://docs.chronosphere.io/administer/limits-licensing/limits/log-limits.md): Reference the license, log size, and label length limits that apply to log data in Chronosphere Observability Platform.
 - [Metric limits](https://docs.chronosphere.io/administer/limits-licensing/limits/metric-limits.md): Learn about the limits on metrics data within Chronosphere Observability Platform.
 - [Query limits](https://docs.chronosphere.io/administer/limits-licensing/limits/query-limits.md): Learn about query limits in Observability Platform, what happens when you hit limits, and how to avoid hitting limits.
-- [Tracing ingest limits](https://docs.chronosphere.io/administer/limits-licensing/limits/trace-limits.md)
+- [Tracing ingest limits](https://docs.chronosphere.io/administer/limits-licensing/limits/trace-limits.md): Reference the tag, span, and trace ingest limits for tracing data in Chronosphere Observability Platform.
 
 ### Administer
 - [Manage service configuration](https://docs.chronosphere.io/administer/service-discovery.md): Discover and configure services in Chronosphere Observability Platform.
@@ -342,7 +344,7 @@
 ### Telemetry Pipeline v2
 - [Chronosphere Telemetry Pipeline v2](https://docs.chronosphere.io/ingest/pipeline/v2.md): Learn how to get started with Chronosphere Telemetry Pipeline v2.
 - [Telemetry Pipeline concepts](https://docs.chronosphere.io/ingest/pipeline/v2/concepts.md): Learn more about different components, concepts, and terms in Chronosphere Telemetry Pipeline.
-- [Chronosphere Telemetry Pipeline architecture](https://docs.chronosphere.io/ingest/pipeline/v2/architecture.md)
+- [Chronosphere Telemetry Pipeline architecture](https://docs.chronosphere.io/ingest/pipeline/v2/architecture.md): Learn how Chronosphere Telemetry Pipeline components create and run pipelines in a cluster.
 - [Telemetry Pipeline release notes](https://docs.chronosphere.io/ingest/pipeline/v2/release-notes.md): Information about releases of Chronosphere Telemetry Pipeline and its components.
 - [Telemetry Pipeline component versions](https://docs.chronosphere.io/ingest/pipeline/v2/component-versions.md): Reference the version numbers for individual Chronosphere Telemetry Pipeline components.
 
@@ -571,58 +573,58 @@
 - [Ingest DogStatsD metrics with the OpenTelemetry Collector](https://docs.chronosphere.io/ingest/metrics-traces/otel/ingest-dogstatsd.md): How to use the OpenTelemetry Collector to ingest DogStatsD metrics.
 
 ### Chronosphere Collector
-- [Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector.md)
+- [Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector.md): Learn how the Chronosphere Collector scrapes Prometheus endpoints, receives traces, and sends telemetry data to Observability Platform.
 
 ### Install
-- [Install the Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/install.md)
-- [Kubernetes Collector installation to retrieve metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/kubernetes.md)
-- [Kubernetes Collector installation to receive traces](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/tracing.md)
-- [Standalone Collector installation to retrieve metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/standalone.md)
-- [Upgrade the Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/upgrade.md)
+- [Install the Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/install.md): Compare Chronosphere Collector installation methods for collecting metrics with Kubernetes or a standalone binary and for receiving traces.
+- [Kubernetes Collector installation to retrieve metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/kubernetes.md): Install the Chronosphere Collector as a Kubernetes DaemonSet, Deployment, or sidecar to scrape Prometheus metrics from your cluster.
+- [Kubernetes Collector installation to receive traces](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/tracing.md): Install the Chronosphere Collector as a Kubernetes Deployment to receive OpenTelemetry, Jaeger, or Zipkin trace data from your apps.
+- [Standalone Collector installation to retrieve metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/standalone.md): Run the Chronosphere Collector as a standalone binary to gather metrics from services that Kubernetes doesn't manage.
+- [Upgrade the Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/install/upgrade.md): Upgrade the Chronosphere Collector to a new version.
 
 ### Configure
-- [Configure your Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/configure.md)
-- [Chronosphere Collector optimizations](https://docs.chronosphere.io/ingest/metrics-traces/collector/configure/optimizations.md)
-- [Scrape Prometheus native histograms](https://docs.chronosphere.io/ingest/metrics-traces/collector/configure/native-histograms.md)
+- [Configure your Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/configure.md): Define a Chronosphere Collector manifest that sets the installation method and scrape endpoints, then update it in your cluster.
+- [Chronosphere Collector optimizations](https://docs.chronosphere.io/ingest/metrics-traces/collector/configure/optimizations.md): Apply recommended and optional Chronosphere Collector optimizations, such as ingestion buffering, for Kubernetes and Prometheus.
+- [Scrape Prometheus native histograms](https://docs.chronosphere.io/ingest/metrics-traces/collector/configure/native-histograms.md): Configure the Chronosphere Collector to scrape Prometheus native histograms, and control histogram cost and backward compatibility.
 
 ### Discover
-- [Configure Chronosphere Collector service discovery for Prometheus metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/discover.md)
-- [Discover and scrape Kubernetes resources with Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/discover/monitor-kubernetes.md)
-- [Scrape configuration using Kubernetes](https://docs.chronosphere.io/ingest/metrics-traces/collector/discover/scrape-configuration.md)
+- [Configure Chronosphere Collector service discovery for Prometheus metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/discover.md): Compare Chronosphere Collector service discovery methods, including ServiceMonitors, Kubernetes annotations, and Prometheus discovery.
+- [Discover and scrape Kubernetes resources with Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/discover/monitor-kubernetes.md): Configure the Chronosphere Collector to discover and scrape Kubernetes resources, including kubelet and cAdvisor metrics.
+- [Scrape configuration using Kubernetes](https://docs.chronosphere.io/ingest/metrics-traces/collector/discover/scrape-configuration.md): Set global, annotation, and job-level scrape configurations for the Chronosphere Collector.
 
 ### Verify and monitor
-- [Verify and monitor the Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor.md)
-- [Verify the Collector is scraping metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor/verify-metrics.md)
-- [Verify the Collector is receiving traces](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor/verify-traces.md)
-- [Monitor the Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor/monitor-collector.md)
+- [Verify and monitor the Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor.md): Verify that the Chronosphere Collector is scraping metrics and receiving traces, and monitor Collector health in your clusters.
+- [Verify the Collector is scraping metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor/verify-metrics.md): Verify that the Chronosphere Collector is scraping the metrics you expect by using Live Telemetry Analyzer and Collector statistics.
+- [Verify the Collector is receiving traces](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor/verify-traces.md): Verify that the Chronosphere Collector is receiving trace data by using Trace Analyzer and Trace Explorer.
+- [Monitor the Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/monitor/monitor-collector.md): Create monitors on kube-state-metrics to track Chronosphere Collector health and troubleshoot metric ingestion failures.
 
 ### Mappings
-- [Map data sources to Chronosphere](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings.md)
+- [Map data sources to Chronosphere](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings.md): Map metrics data and query functions from Prometheus, Datadog, SignalFx, and Wavefront to Chronosphere Observability Platform.
 
 ### Datadog
-- [Datadog migration information](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog.md)
-- [Querying DogStatsD formatted metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/dogstatsd.md)
-- [Datadog migration considerations](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/migration-issues.md)
-- [Convert Datadog monitors](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/convert-monitors.md)
+- [Datadog migration information](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog.md): Learn how Chronosphere Observability Platform ingests metrics, and plan a migration from Datadog Agent and DogStatsD.
+- [Querying DogStatsD formatted metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/dogstatsd.md): Translate Datadog query syntax into PromQL to query DogStatsD-formatted metrics in Chronosphere Observability Platform.
+- [Datadog migration considerations](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/migration-issues.md): Review questions about metrics, dashboards, and alerts to plan a migration from Datadog to Chronosphere Observability Platform.
+- [Convert Datadog monitors](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/convert-monitors.md): Convert a Datadog monitor into the equivalent monitor, notification policy, and notifier resources in Chronosphere Observability Platform.
 - [Dashboard widgets](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/datadog/dashboards.md): Map common Datadog dashboard widgets to Chronosphere Observability Platform standard dashboard panels.
 
 ### Prometheus
-- [Prometheus metric naming recommendations](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/prometheus/prometheus-recommendations.md)
-- [Differences between the Prometheus Operator and Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/prometheus/operator-collector.md)
+- [Prometheus metric naming recommendations](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/prometheus/prometheus-recommendations.md): Follow Prometheus conventions for metric names and labels to keep telemetry consistent across teams in your organization.
+- [Differences between the Prometheus Operator and Chronosphere Collector](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/prometheus/operator-collector.md): Compare the Prometheus Operator and Chronosphere Collector for deployment, alerting, service discovery, and long-term storage.
 
 ### Mappings
-- [Migration notes for SignalFx (Splunk) to PromQL](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/signalfx.md)
-- [Migration notes for Tanzu (Wavefront) to PromQL](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/wavefront.md)
+- [Migration notes for SignalFx (Splunk) to PromQL](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/signalfx.md): Learn how to translate SignalFx queries to PromQL for Chronosphere Observability Platform.
+- [Migration notes for Tanzu (Wavefront) to PromQL](https://docs.chronosphere.io/ingest/metrics-traces/collector/mappings/wavefront.md): Learn how to translate Tanzu Observability queries to PromQL for Chronosphere Observability Platform.
 
 ### Additional metrics
-- [Ingest additional metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics.md)
-- [Wavefront](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/wavefront.md)
-- [SignalFx ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/signalfx.md)
+- [Ingest additional metrics](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics.md): Ingest Carbon, StatsD, SignalFx, Wavefront, and other metric formats with the Chronosphere Collector, and enable client-side aggregations.
+- [Wavefront](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/wavefront.md): Configure the Chronosphere Collector to accept metric payloads in Wavefront data format, including histogram distributions.
+- [SignalFx ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/signalfx.md): Configure the Chronosphere Collector to process SignalFx data points from apps instrumented with a SignalFx client library.
 - [DogStatsD ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/dogstatsd.md): Processes and configuration for ingesting DogStatsD metrics into Chronosphere Observability Platform.
 - [Receive and aggregate metrics from StatsD](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/statsd.md): Processes and configuration for receiving StatsD metrics to Chronosphere Observability Platform.
-- [Carbon ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/carbon.md)
+- [Carbon ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/carbon.md): Configure the Chronosphere Collector to ingest Carbon metrics from Graphite clients as pre-aggregated gauge data.
 - [Pushgateway ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/prom-pushgateway.md): Learn how to configure and use the Prometheus Pushgateway to collect metrics.
-- [Prometheus and OpenMetrics ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/prom-openmetrics.md)
+- [Prometheus and OpenMetrics ingestion](https://docs.chronosphere.io/ingest/metrics-traces/collector/addl-metrics/prom-openmetrics.md): Configure the Chronosphere Collector to accept text-exposition payloads in either Prometheus or OpenMetrics format.
 
 ### Chronosphere Collector
 - [Debug endpoints](https://docs.chronosphere.io/ingest/metrics-traces/collector/debugging.md): How to debug Chronosphere Collector issues by using available HTTP endpoints.
@@ -632,7 +634,7 @@
 
 ### Azure
 - [Azure metrics integration](https://docs.chronosphere.io/ingest/metrics-traces/azure.md): Learn how to ingest Azure metrics into Chronosphere Observability Platform.
-- [Azure metrics available in Chronosphere Observability Platform](https://docs.chronosphere.io/ingest/metrics-traces/azure/azure-metrics.md)
+- [Azure metrics available in Chronosphere Observability Platform](https://docs.chronosphere.io/ingest/metrics-traces/azure/azure-metrics.md): Reference the Azure metrics that Chronosphere Observability Platform ingests.
 
 ### Metrics and traces
 - [Ingest Google Cloud metrics](https://docs.chronosphere.io/ingest/metrics-traces/gcp.md): Learn how to ingest Google Cloud metrics into Chronosphere Observability Platform.
@@ -640,14 +642,14 @@
 
 ### Change events
 - [Send third-party events to Chronosphere](https://docs.chronosphere.io/ingest/third-party.md): Learn how to send third-party events to Chronosphere to display as change events.
-- [Send Amazon EventBridge events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/aws-eventbridge.md)
-- [Send Buildkite events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/buildkite.md)
-- [Send CircleCI events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/circleci.md)
+- [Send Amazon EventBridge events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/aws-eventbridge.md): Send Amazon EventBridge events, including AWS Health events, to Chronosphere Observability Platform.
+- [Send Buildkite events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/buildkite.md): Create a Buildkite webhook that sends build and pipeline events to Chronosphere Observability Platform.
+- [Send CircleCI events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/circleci.md): Create a CircleCI webhook that sends pipeline and workflow events to Chronosphere Observability Platform.
 - [Send GitHub events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/github.md): Create a webhook to send your GitHub events to Chronosphere Observability Platform as change events.
-- [Send GitLab events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/gitlab.md)
-- [Send Google Cloud Personalized Service Health events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/google-cloud.md)
-- [Send Harness events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/harness.md)
-- [Send LaunchDarkly events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/launchdarkly.md)
+- [Send GitLab events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/gitlab.md): Create a GitLab webhook that sends project and pipeline events to Chronosphere Observability Platform.
+- [Send Google Cloud Personalized Service Health events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/google-cloud.md): Create a webhook to send Google Cloud Personalized Service Health events to Chronosphere Observability Platform.
+- [Send Harness events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/harness.md): Create a Harness webhook that sends pipeline and deployment events to Chronosphere Observability Platform.
+- [Send LaunchDarkly events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/launchdarkly.md): Configure the Chronosphere Events integration in LaunchDarkly to send feature flag events to Chronosphere Observability Platform.
 - [Send Statsig events to Observability Platform](https://docs.chronosphere.io/ingest/third-party/statsig.md): Create a webhook to send your Statsig feature flag events to Chronosphere Observability Platform as change events.
 
 ### Logs
@@ -670,9 +672,9 @@
 - [Infrastructure-as-code tools](https://docs.chronosphere.io/tooling/infrastructure.md): Use the provided infrastructure-as-code tools for managing your Chronosphere Observability Platform resources.
 
 ### Terraform provider
-- [Chronosphere Terraform provider](https://docs.chronosphere.io/tooling/infrastructure/terraform.md)
-- [Install the Chronosphere Terraform provider](https://docs.chronosphere.io/tooling/infrastructure/terraform/install.md)
-- [Terraform provider release notes](https://docs.chronosphere.io/tooling/infrastructure/terraform/release-notes.md)
+- [Chronosphere Terraform provider](https://docs.chronosphere.io/tooling/infrastructure/terraform.md): Manage Chronosphere Observability Platform resources as infrastructure as code with the Chronosphere Terraform provider.
+- [Install the Chronosphere Terraform provider](https://docs.chronosphere.io/tooling/infrastructure/terraform/install.md): Install the Chronosphere Terraform provider, authenticate to Chronosphere, and bootstrap your Terraform configuration.
+- [Terraform provider release notes](https://docs.chronosphere.io/tooling/infrastructure/terraform/release-notes.md): Review features, fixes, and breaking changes in each released version of the Chronosphere Terraform provider.
 
 ### Infrastructure as code
 - [Chronosphere Pulumi provider](https://docs.chronosphere.io/tooling/infrastructure/pulumi.md): Use the Chronosphere Pulumi provider to create and manage Chronosphere Observability Platform resources.
@@ -716,6 +718,13 @@
 - [CreateClassicDashboard](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateClassicDashboard.md): POST /api/v1/config/classic-dashboards
 - [UpdateClassicDashboard](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateClassicDashboard.md): PUT /api/v1/config/classic-dashboards/{slug}
 - [DeleteClassicDashboard](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteClassicDashboard.md): DELETE /api/v1/config/classic-dashboards/{slug}
+
+### CloudIntegration
+- [ListCloudIntegrations](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListCloudIntegrations.md): GET /api/v1/config/cloud-integrations
+- [ReadCloudIntegration](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadCloudIntegration.md): GET /api/v1/config/cloud-integrations/{slug}
+- [CreateCloudIntegration](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateCloudIntegration.md): POST /api/v1/config/cloud-integrations
+- [UpdateCloudIntegration](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateCloudIntegration.md): PUT /api/v1/config/cloud-integrations/{slug}
+- [DeleteCloudIntegration](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteCloudIntegration.md): DELETE /api/v1/config/cloud-integrations/{slug}
 
 ### Collection
 - [ListCollections](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListCollections.md): GET /api/v1/config/collections
@@ -774,10 +783,10 @@
 
 ### ExternalConnection
 - [ListExternalConnections](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListExternalConnections.md): GET /api/v1/config/external-connections
-- [ReadExternalConnections](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadExternalConnections.md): GET /api/v1/config/external-connections/{slug}
-- [CreateExternalConnections](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateExternalConnections.md): POST /api/v1/config/external-connections
-- [UpdateExternalConnections](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateExternalConnections.md): PUT /api/v1/config/external-connections/{slug}
-- [DeleteExternalConnections](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteExternalConnections.md): DELETE /api/v1/config/external-connections/{slug}
+- [ReadExternalConnection](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadExternalConnection.md): GET /api/v1/config/external-connections/{slug}
+- [CreateExternalConnection](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateExternalConnection.md): POST /api/v1/config/external-connections
+- [UpdateExternalConnection](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateExternalConnection.md): PUT /api/v1/config/external-connections/{slug}
+- [DeleteExternalConnection](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteExternalConnection.md): DELETE /api/v1/config/external-connections/{slug}
 
 ### GcpMetricsIntegration
 - [ListGcpMetricsIntegrations](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListGcpMetricsIntegrations.md): GET /api/v1/config/gcp-metrics-integrations
@@ -792,6 +801,12 @@
 - [CreateGrafanaDashboard](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateGrafanaDashboard.md): POST /api/v1/config/grafana-dashboards
 - [UpdateGrafanaDashboard](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateGrafanaDashboard.md): PUT /api/v1/config/grafana-dashboards/{slug}
 - [DeleteGrafanaDashboard](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteGrafanaDashboard.md): DELETE /api/v1/config/grafana-dashboards/{slug}
+
+### LogAllocationConfig
+- [ReadLogAllocationConfig](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadLogAllocationConfig.md): GET /api/v1/config/log-allocation-config
+- [CreateLogAllocationConfig](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateLogAllocationConfig.md): POST /api/v1/config/log-allocation-config
+- [UpdateLogAllocationConfig](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateLogAllocationConfig.md): PUT /api/v1/config/log-allocation-config
+- [DeleteLogAllocationConfig](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteLogAllocationConfig.md): DELETE /api/v1/config/log-allocation-config
 
 ### LogControlConfig
 - [ReadLogControlConfig](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadLogControlConfig.md): GET /api/v1/config/log-control-config
@@ -879,15 +894,6 @@
 - [CreateServiceAccount](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateServiceAccount.md): POST /api/v1/config/service-accounts
 - [DeleteServiceAccount](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteServiceAccount.md): DELETE /api/v1/config/service-accounts/{slug}
 
-### Services
-- [ReadServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadServiceAttribute.md): GET /api/v1/config/services/{service_slug}/attributes
-- [CreateServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateServiceAttribute.md): POST /api/v1/config/services/{service_slug}/attributes
-- [UpdateServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateServiceAttribute.md): PUT /api/v1/config/services/{service_slug}/attributes
-- [DeleteServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteServiceAttribute.md): DELETE /api/v1/config/services/{service_slug}/attributes
-
-### ServiceAttributes
-- [ListServiceAttributes](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListServiceAttributes.md): GET /api/v1/config/service-attributes
-
 ### Service
 - [ListServices](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListServices.md): GET /api/v1/config/services
 - [ReadService](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadService.md): GET /api/v1/config/services/{slug}
@@ -939,8 +945,15 @@
 - [UpdateTraceTailSamplingRules](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateTraceTailSamplingRules.md): PUT /api/v1/config/trace-tail-sampling-rules
 - [DeleteTraceTailSamplingRules](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteTraceTailSamplingRules.md): DELETE /api/v1/config/trace-tail-sampling-rules
 
+### ServiceAttribute
+- [ListServiceAttributes](https://docs.chronosphere.io/tooling/api-info/definition/operations/ListServiceAttributes.md): GET /api/v1/config/service-attributes
+- [ReadServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/ReadServiceAttribute.md): GET /api/v1/config/services/{service_slug}/attributes
+- [CreateServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/CreateServiceAttribute.md): POST /api/v1/config/services/{service_slug}/attributes
+- [UpdateServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/UpdateServiceAttribute.md): PUT /api/v1/config/services/{service_slug}/attributes
+- [DeleteServiceAttribute](https://docs.chronosphere.io/tooling/api-info/definition/operations/DeleteServiceAttribute.md): DELETE /api/v1/config/services/{service_slug}/attributes
+
 ### Dashboard
-- [Dashboard Configuration Schema](https://docs.chronosphere.io/tooling/api-info/dashboard_schema.md)
+- [Dashboard Configuration Schema](https://docs.chronosphere.io/tooling/api-info/dashboard_schema.md): Reference the fields and types in the standard dashboard configuration schema to create or modify dashboards programmatically.
 
 ## Data API
 
@@ -958,9 +971,9 @@
 - [ReadMetricMetadata](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/ReadMetricMetadata.md): GET /api/v1/data/metrics:metadata/{metric_name}
 
 ### PanelAnnotation
-- [PutPanelAnnotation](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/PutPanelAnnotation.md): PUT /api/v1/data/panel_annotations/{id}
-- [ListPanelAnnotation](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/ListPanelAnnotation.md): GET /api/v1/data/panel_annotations
+- [ListPanelAnnotations](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/ListPanelAnnotations.md): GET /api/v1/data/panel_annotations
 - [CreatePanelAnnotation](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/CreatePanelAnnotation.md): POST /api/v1/data/panel_annotations
+- [PutPanelAnnotation](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/PutPanelAnnotation.md): PUT /api/v1/data/panel_annotations/{id}
 - [DeletePanelAnnotation](https://docs.chronosphere.io/tooling/api-info/data_definition/operations/DeletePanelAnnotation.md): DELETE /api/v1/data/panel_annotations/{id}
 
 ### Traces

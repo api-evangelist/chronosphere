@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket ClassicDashboard API
+  title: Config V1 Bucket Classic Dashboard API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -279,9 +279,30 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    configv1DeleteClassicDashboardResponse:
+    ConfigV1UpdateClassicDashboardBody:
       type: object
-    configv1UpdateClassicDashboardResponse:
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+        create_if_missing:
+          type: boolean
+          description: If true, the GrafanaDashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the GrafanaDashboard does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1ListClassicDashboardsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        classic_dashboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1GrafanaDashboard'
+    configv1ReadClassicDashboardResponse:
       type: object
       properties:
         classic_dashboard:
@@ -294,17 +315,18 @@ components:
         dry_run:
           type: boolean
           description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
-    configv1ReadClassicDashboardResponse:
+    configv1CollectionReference:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
+          type: string
+    configv1UpdateClassicDashboardResponse:
       type: object
       properties:
         classic_dashboard:
           $ref: '#/components/schemas/configv1GrafanaDashboard'
-    configv1CollectionReferenceType:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
     configv1GrafanaDashboard:
       type: object
       properties:
@@ -339,6 +361,11 @@ components:
         dashboard_json:
           type: string
           description: Required raw JSON of the Grafana dashboard.
+    configv1CreateClassicDashboardResponse:
+      type: object
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
     configv1PageResult:
       type: object
       properties:
@@ -349,25 +376,8 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    configv1CollectionReference:
+    configv1DeleteClassicDashboardResponse:
       type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-        slug:
-          type: string
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1ListClassicDashboardsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        classic_dashboards:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1GrafanaDashboard'
     apiError:
       type: object
       properties:
@@ -378,20 +388,10 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    ConfigV1UpdateClassicDashboardBody:
-      type: object
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-        create_if_missing:
-          type: boolean
-          description: If true, the GrafanaDashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the GrafanaDashboard does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
-    configv1CreateClassicDashboardResponse:
-      type: object
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
+    configv1CollectionReferenceType:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
 x-original-swagger-version: '2.0'

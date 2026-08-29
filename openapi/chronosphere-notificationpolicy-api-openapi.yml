@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Config V1 Bucket NotificationPolicy API
+  title: Config V1 Bucket Notification Policy API
   description: '
 
     The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
@@ -272,43 +272,6 @@ paths:
                 $ref: '#/components/schemas/genericError'
 components:
   schemas:
-    NotificationPolicyRoutesGroupBy:
-      type: object
-      properties:
-        label_names:
-          type: array
-          description: 'Set of label names used to group alerts.
-
-            For example, if label_names is ["service", "code"] then all alerts including labels {service="foo",code="404"}
-
-            will be grouped together.'
-          items:
-            type: string
-    configv1CreateNotificationPolicyResponse:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
-    configv1ListNotificationPoliciesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        notification_policies:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1NotificationPolicy'
-    ConfigV1UpdateNotificationPolicyBody:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
-        create_if_missing:
-          type: boolean
-          description: If true, the NotificationPolicy will be created if it does not already exist, identified by slug. If false, an error will be returned if the NotificationPolicy does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the NotificationPolicy isn't created or updated, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
     configv1NotificationPolicy:
       type: object
       properties:
@@ -340,11 +303,105 @@ components:
             bucket_slug is not set.'
         routes:
           $ref: '#/components/schemas/NotificationPolicyRoutes'
+    ConfigV1UpdateNotificationPolicyBody:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
+        create_if_missing:
+          type: boolean
+          description: If true, the NotificationPolicy will be created if it does not already exist, identified by slug. If false, an error will be returned if the NotificationPolicy does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the NotificationPolicy isn't created or updated, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
+    NotificationPolicyRoutesOverride:
+      type: object
+      properties:
+        alert_label_matchers:
+          type: array
+          description: 'Set of matchers on an alert''s labels.
+
+            If all labels match then the override notifiers apply.'
+          items:
+            $ref: '#/components/schemas/configv1LabelMatcher'
+        notifiers:
+          $ref: '#/components/schemas/RoutesSeverityNotifiers'
     configv1LabelMatcherMatcherType:
       type: string
       enum:
       - EXACT
       - REGEX
+    genericError:
+      type: object
+      additionalProperties: true
+    configv1DeleteNotificationPolicyResponse:
+      type: object
+    configv1ReadNotificationPolicyResponse:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
+    configv1UpdateNotificationPolicyResponse:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
+    configv1CreateNotificationPolicyRequest:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
+        dry_run:
+          type: boolean
+          description: If true, the NotificationPolicy isn't created, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
+    NotificationPolicyRoutesGroupBy:
+      type: object
+      properties:
+        label_names:
+          type: array
+          description: 'Set of label names used to group alerts.
+
+            For example, if label_names is ["service", "code"] then all alerts including labels {service="foo",code="404"}
+
+            will be grouped together.'
+          items:
+            type: string
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateNotificationPolicyResponse:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1LabelMatcher:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
     RoutesNotifierList:
       type: object
       properties:
@@ -359,16 +416,22 @@ components:
           format: int32
         group_by:
           $ref: '#/components/schemas/NotificationPolicyRoutesGroupBy'
-    configv1PageResult:
+    RoutesSeverityNotifiers:
       type: object
       properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
+        warn:
+          $ref: '#/components/schemas/RoutesNotifierList'
+        critical:
+          $ref: '#/components/schemas/RoutesNotifierList'
+    configv1ListNotificationPoliciesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        notification_policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1NotificationPolicy'
     NotificationPolicyRoutes:
       type: object
       properties:
@@ -385,67 +448,4 @@ components:
             override are used instead of the defaults.'
           items:
             $ref: '#/components/schemas/NotificationPolicyRoutesOverride'
-    configv1ReadNotificationPolicyResponse:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
-    configv1UpdateNotificationPolicyResponse:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
-    RoutesSeverityNotifiers:
-      type: object
-      properties:
-        warn:
-          $ref: '#/components/schemas/RoutesNotifierList'
-        critical:
-          $ref: '#/components/schemas/RoutesNotifierList'
-    NotificationPolicyRoutesOverride:
-      type: object
-      properties:
-        alert_label_matchers:
-          type: array
-          description: 'Set of matchers on an alert''s labels.
-
-            If all labels match then the override notifiers apply.'
-          items:
-            $ref: '#/components/schemas/configv1LabelMatcher'
-        notifiers:
-          $ref: '#/components/schemas/RoutesSeverityNotifiers'
-    genericError:
-      type: object
-      additionalProperties: true
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1CreateNotificationPolicyRequest:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
-        dry_run:
-          type: boolean
-          description: If true, the NotificationPolicy isn't created, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
-    configv1LabelMatcher:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
-        name:
-          type: string
-          description: name always matches against an exact label name.
-        value:
-          type: string
-          description: value matches against a label value based on the configured type.
-    configv1DeleteNotificationPolicyResponse:
-      type: object
 x-original-swagger-version: '2.0'
