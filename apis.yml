@@ -344,6 +344,9 @@ apis:
   - type: OpenAPI
     url: openapi/chronosphere-tracetailsamplingrules-api-openapi.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/chronosphere-capability-edges.yml
+    name: Chronosphere Business Capability Map
   - type: AgenticAccess
     url: agentic-access/chronosphere-agentic-access.yml
   - type: TrustCenter

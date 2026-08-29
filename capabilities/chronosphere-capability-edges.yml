@@ -1,0 +1,220 @@
+slug: chronosphere
+provider: Chronosphere
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 22
+edges:
+- tag: SLO
+  spec_file: chronosphere-slo-api-openapi.yml
+  capability_id: BC-4220.10
+  capability_id_l1: BC-4220
+  capability_name: Service Reliability Engineering
+  confidence: 0.9
+  evidence: POST /api/v1/config/slos  CreateSLO; schemas configv1SLI, DefinitionBurnRateDefinition, DefinitionTimeWindow
+  reason: CRUD over service-level objectives with SLIs and burn-rate/error-budget definitions — the definition
+    and stewardship of SLIs/SLOs is Service Reliability Engineering.
+- tag: TraceTailSamplingRules
+  spec_file: chronosphere-tracetailsamplingrules-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.85
+  evidence: POST /api/v1/config/trace-tail-sampling-rules  CreateTraceTailSamplingRules; schemas configv1DefaultSampleRate,
+    configv1TraceSearchFilter
+  reason: Configuration of tail-based sampling rules for distributed traces on an observability platform
+    — this is stewardship of trace telemetry for the running service, i.e. Observability Management. Not
+    a business-domain 'rule' engine.
+- tag: TraceJaegerRemoteSamplingStrategy
+  spec_file: chronosphere-tracejaegerremotesamplingstrategy-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.82
+  evidence: CreateTraceJaegerRemoteSamplingStrategy; TraceJaegerRemoteSamplingStrategyProbabilisticStrategy,
+    RateLimitingSamplingStrategy
+  reason: Jaeger remote sampling strategies control how traces are captured from instrumented services
+    — trace telemetry management within observability.
+- tag: GrafanaDashboard
+  spec_file: chronosphere-grafanadashboard-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: ListGrafanaDashboards, CreateGrafanaDashboard, configv1GrafanaDashboard
+  reason: Management of Grafana monitoring dashboards on an observability platform makes the running service
+    understandable in production; this is Observability Management rather than BI/analytics reporting
+    for business users.
+- tag: LogIngestConfig
+  spec_file: chronosphere-logingestconfig-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: UpdateLogIngestConfig, configv1LogParser
+  reason: Log ingestion and parser configuration is squarely logs management within Observability Management.
+- tag: OtelMetricsIngestion
+  spec_file: chronosphere-otelmetricsingestion-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: POST /api/v1/config/otel-metrics-ingestion  CreateOtelMetricsIngestion; schema OtelMetricsIngestionResourceAttributes
+  reason: Configures ingestion of OpenTelemetry metrics into the observability platform — squarely logs/metrics/traces
+    instrumentation of the running service (Observability Management).
+- tag: RollupRule
+  spec_file: chronosphere-rolluprule-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: POST /api/v1/config/rollup-rules  CreateRollupRule; configv1AggregationType, configv1RollupRuleStoragePolicy
+  reason: Metric aggregation and storage-policy rules for telemetry data; this is metrics management within
+    observability, not a business capability.
+- tag: TraceBehavior
+  spec_file: chronosphere-tracebehavior-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: POST /api/v1/config/trace-behaviors  CreateTraceBehavior; TraceBehaviorSamplingType, TraceBehaviorErrorSampleOptions
+  reason: Defines distributed-trace sampling behaviour, which is configuration of tracing telemetry —
+    Observability Management.
+- tag: TraceMetricsRule
+  spec_file: chronosphere-tracemetricsrule-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: POST /api/v1/config/trace-metrics-rules  CreateTraceMetricsRule; configv1TraceSearchFilter,
+    configv1TraceMetricsRuleGroupBy
+  reason: Rules deriving metrics from trace data with filters and group-by keys; metrics/traces engineering
+    for the running service, i.e. Observability Management.
+- tag: GcpMetricsIntegration
+  spec_file: chronosphere-gcpmetricsintegration-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.78
+  evidence: CreateGcpMetricsIntegration, GcpMetricsIntegrationMetricGroup, configv1GcpMetricsIntegrationServiceAccount
+  reason: Configures ingestion of GCP cloud metrics into the observability platform — metrics collection,
+    i.e. Observability Management.
+- tag: Notifier
+  spec_file: chronosphere-notifier-api-openapi.yml
+  capability_id: BC-4220.30
+  capability_id_l1: BC-4220
+  capability_name: Incident Response Management
+  confidence: 0.78
+  evidence: NotifierOpsGenieConfig, OpsGenieConfigResponder, PagerdutyConfigLink, NotifierEmailConfig
+  reason: Notifier targets are paging/on-call destinations (OpsGenie, PagerDuty, Slack) used when production
+    alerts fire — incident detection and on-call response.
+- tag: TraceBehaviorConfig
+  spec_file: chronosphere-tracebehaviorconfig-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.78
+  evidence: PUT /api/v1/config/trace-behavior-config  UpdateTraceBehaviorConfig; TraceBehaviorConfigMainBehaviorAssignment
+  reason: Assigns main/override trace behaviours across the platform; tracing configuration for production
+    observability.
+- tag: Monitor
+  spec_file: chronosphere-monitor-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.75
+  evidence: CreateMonitor, MonitorSeriesConditions, SeriesConditionsSeverityConditions, MonitorSchedule
+  reason: Monitors define alerting conditions over metric series with severities and schedules — production
+    monitoring configuration on an observability platform.
+- tag: NotificationPolicy
+  spec_file: chronosphere-notificationpolicy-api-openapi.yml
+  capability_id: BC-4220.30
+  capability_id_l1: BC-4220
+  capability_name: Incident Response Management
+  confidence: 0.75
+  evidence: CreateNotificationPolicy, NotificationPolicyRoutes, RoutesSeverityNotifiers, RoutesNotifierList
+  reason: Severity-based routing of alerts to notifiers is on-call alert routing — Incident Response Management,
+    not marketing or customer communications.
+- tag: RecordingRule
+  spec_file: chronosphere-recordingrule-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.75
+  evidence: POST /api/v1/config/recording-rules  CreateRecordingRule; configv1RecordingRuleLabelPolicy
+  reason: Prometheus-style recording rules that pre-compute metric series; part of managing metrics telemetry
+    for production observability rather than any business process.
+- tag: LogAllocationConfig
+  spec_file: chronosphere-logallocationconfig-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.74
+  evidence: UpdateLogAllocationConfig, LogAllocationConfigDatasetAllocation, LogAllocationConfigHighLowPriorities,
+    configv1LogSearchFilter
+  reason: Configuration of how log data is allocated across datasets/priorities in the observability platform
+    — log pipeline stewardship under Observability Management.
+- tag: DropRule
+  spec_file: chronosphere-droprule-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.72
+  evidence: CreateDropRule, DropRuleValueBasedDrop, DropRuleConditionalRateBasedDrop, configv1LabelFilter
+  reason: Rules that drop incoming observability telemetry (label-filtered, rate-based) are part of managing
+    the logs/metrics pipeline of the running service — Observability Management, not any business-domain
+    rule engine.
+- tag: MappingRule
+  spec_file: chronosphere-mappingrule-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.72
+  evidence: MappingRuleAggregationPolicy, configv1MappingRuleStoragePolicy, configv1AggregationType
+  reason: Rules controlling metric aggregation and storage policy in the telemetry pipeline — Observability
+    Management, not data governance for business data.
+- tag: ClassicDashboard
+  spec_file: chronosphere-classicdashboard-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: CreateClassicDashboard / schema configv1GrafanaDashboard, from 'cloud-native observability
+    platform'
+  reason: Grafana-style dashboards on an observability platform are monitoring visualisation surfaces,
+    supporting Observability Management rather than business BI reporting.
+- tag: Dashboard
+  spec_file: chronosphere-dashboard-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: POST /api/v1/config/dashboards  CreateDashboard on a 'cloud-native observability platform'
+  reason: Dashboard configuration in an observability product is monitoring visualisation, part of Observability
+    Management, not business management reporting.
+- tag: DerivedMetric
+  spec_file: chronosphere-derivedmetric-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: CreateDerivedMetric; schemas DerivedMetricQuery, DerivedMetricSelectorQuery
+  reason: Defining derived metrics and their queries is metrics management on an observability platform,
+    squarely Observability Management.
+- tag: LogScaleAction
+  spec_file: chronosphere-logscaleaction-api-openapi.yml
+  capability_id: BC-4220.30
+  capability_id_l1: BC-4220
+  capability_name: Incident Response Management
+  confidence: 0.7
+  evidence: LogScaleActionPagerDutyAction, LogScaleActionOpsGenieAction, LogScaleActionSlackAction, LogScaleActionVictorOpsAction
+  reason: Actions fired from log alerts route to on-call/paging tools (PagerDuty, OpsGenie, VictorOps),
+    which is incident detection and on-call response coordination.
