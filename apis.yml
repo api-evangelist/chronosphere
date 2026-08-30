@@ -190,7 +190,7 @@ apis:
   description: The GrafanaDashboard API from Chronosphere — 2 operation(s) for grafanadashboard.
   humanURL: https://chronosphere.io
   tags:
-  - Grafana Dashboard
+  - GrafanaDashboard
   tags_raw:
   - GrafanaDashboard
   properties:
@@ -473,6 +473,11 @@ apis:
   baseURL: https://{tenant}.chronosphere.io
   tags:
   - Data
+  - Event
+  - Logs
+  - Distributed Tracing
+  tags_raw:
+  - Data
   - Events
   - Logs
   - Distributed Tracing
@@ -490,6 +495,10 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
+  - States
+  - Metrics
+  - FinOps
+  tags_raw:
   - State
   - Metrics
   - FinOps
