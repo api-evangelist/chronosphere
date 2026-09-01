@@ -190,7 +190,7 @@ apis:
   description: The GrafanaDashboard API from Chronosphere — 2 operation(s) for grafanadashboard.
   humanURL: https://chronosphere.io
   tags:
-  - GrafanaDashboard
+  - Grafana Dashboard
   tags_raw:
   - GrafanaDashboard
   properties:
