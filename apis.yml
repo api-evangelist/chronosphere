@@ -603,6 +603,8 @@ common:
   url: https://www.youtube.com/@chronosphere-observability
 - type: OAuthScopes
   url: scopes/chronosphere-scopes.yml
+- type: Contact
+  url: mailto:support@chronosphere.io
 integrations:
 - name: chronosphere
 - name: Observability Platform
