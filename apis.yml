@@ -99,6 +99,8 @@ apis:
   description: The Dashboard API from Chronosphere — 2 operation(s) for dashboard.
   humanURL: https://chronosphere.io
   tags:
+  - Dashboards
+  tags_raw:
   - Dashboard
   properties:
   - type: OpenAPI
@@ -111,6 +113,8 @@ apis:
   description: The Dataset API from Chronosphere — 2 operation(s) for dataset.
   humanURL: https://chronosphere.io
   tags:
+  - Datasets
+  tags_raw:
   - Dataset
   properties:
   - type: OpenAPI
@@ -307,6 +311,8 @@ apis:
   description: The Service API from Chronosphere — 1 operation(s) for service.
   humanURL: https://chronosphere.io
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
@@ -669,6 +675,8 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
+  - Notebooks
+  tags_raw:
   - Notebook
   properties:
   - type: OpenAPI
@@ -949,6 +957,8 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
+  - ResourcePools
+  tags_raw:
   - Resource Pools
   properties:
   - type: OpenAPI
@@ -969,6 +979,8 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
+  - ServiceAccount
+  tags_raw:
   - Service Account
   properties:
   - type: OpenAPI
