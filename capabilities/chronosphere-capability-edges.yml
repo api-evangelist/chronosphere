@@ -44,7 +44,8 @@ edges:
   reason: Jaeger remote sampling strategies control how traces are captured from instrumented services
     — trace telemetry management within observability.
 - tag: GrafanaDashboard
-  spec_file: chronosphere-grafanadashboard-api-openapi.yml
+  spec_file: chronosphere-grafana-dashboard-api-openapi.yml
+  reanchored_from: chronosphere-grafanadashboard-api-openapi.yml
   capability_id: BC-4220.20
   capability_id_l1: BC-4220
   capability_name: Observability Management
@@ -135,7 +136,8 @@ edges:
   reason: Monitors define alerting conditions over metric series with severities and schedules — production
     monitoring configuration on an observability platform.
 - tag: NotificationPolicy
-  spec_file: chronosphere-notificationpolicy-api-openapi.yml
+  spec_file: chronosphere-notification-policy-api-openapi.yml
+  reanchored_from: chronosphere-notificationpolicy-api-openapi.yml
   capability_id: BC-4220.30
   capability_id_l1: BC-4220
   capability_name: Incident Response Management
