@@ -1,87 +1,79 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Trace Behavior API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
+  title: Chronosphere Trace Behavior API
   version: v1
+  description: 'Operations tagged TraceBehavior across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
 - url: /
 tags:
 - name: TraceBehavior
 paths:
   /api/v1/config/trace-behaviors:
     get:
-      tags:
-      - TraceBehavior
       operationId: ListTraceBehaviors
       parameters:
-      - name: page.max_size
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
         in: query
-        description: 'Page size preference (i.e. how many items are returned in the next
-
-          page). If zero, the server will use a default. Regardless of what size
-
-          is given, clients must never assume how many items will be returned.'
+        name: page.max_size
         schema:
-          type: integer
           format: int64
-      - name: page.token
-        in: query
-        description: 'Opaque page token identifying which page to request. An empty token
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
 
-          identifies the first page.'
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
         schema:
           type: string
-      - name: slugs
+      - description: Filters results by slug, where any TraceBehavior with a matching slug in the given list (and matches all other filters) will be returned.
         in: query
-        description: Filters results by slug, where any TraceBehavior with a matching slug in the given list (and matches all other filters) is returned.
-        style: form
-        explode: true
+        name: slugs
         schema:
-          type: array
           items:
             type: string
-      - name: names
-        in: query
-        description: Filters results by name, where any TraceBehavior with a matching name in the given list (and matches all other filters) is returned.
-        style: form
-        explode: true
-        schema:
           type: array
+      - description: Filters results by name, where any TraceBehavior with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        schema:
           items:
             type: string
+          type: array
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1ListTraceBehaviorsResponse'
+          description: A successful response.
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    post:
+          description: An undefined error response.
       tags:
       - TraceBehavior
+      security:
+      - ApiKeyAuth: []
+      summary: List trace behaviors
+      x-summary-source: derived
+    post:
       operationId: CreateTraceBehavior
       requestBody:
         content:
@@ -89,81 +81,140 @@ paths:
             schema:
               $ref: '#/components/schemas/configv1CreateTraceBehaviorRequest'
         required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response containing the created TraceBehavior.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1CreateTraceBehaviorResponse'
+          description: A successful response containing the created TraceBehavior.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the TraceBehavior because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the TraceBehavior because there is a conflict with an existing TraceBehavior.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-  /api/v1/config/trace-behaviors/{slug}:
-    get:
+          description: An undefined error response.
       tags:
       - TraceBehavior
-      operationId: ReadTraceBehavior
+      security:
+      - ApiKeyAuth: []
+      summary: Create trace behavior
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
+  /api/v1/config/trace-behaviors/{slug}:
+    delete:
+      operationId: DeleteTraceBehavior
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
       responses:
         '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteTraceBehaviorResponse'
           description: A successful response.
+        '400':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ReadTraceBehaviorResponse'
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the TraceBehavior because it is in use.
         '404':
-          description: Cannot read the TraceBehavior because the slug does not exist.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: Cannot delete the TraceBehavior because the slug does not exist.
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    put:
+          description: An undefined error response.
       tags:
       - TraceBehavior
+      security:
+      - ApiKeyAuth: []
+      summary: Delete trace behavior
+      x-summary-source: derived
+    get:
+      operationId: ReadTraceBehavior
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadTraceBehaviorResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot read the TraceBehavior because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - TraceBehavior
+      security:
+      - ApiKeyAuth: []
+      summary: Read trace behavior
+      x-summary-source: derived
+    put:
       operationId: UpdateTraceBehavior
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
@@ -173,137 +224,298 @@ paths:
             schema:
               $ref: '#/components/schemas/ConfigV1UpdateTraceBehaviorBody'
         required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response containing the updated TraceBehavior.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1UpdateTraceBehaviorResponse'
+          description: A successful response containing the updated TraceBehavior.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot update the TraceBehavior because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot update the TraceBehavior because the slug does not exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot update the TraceBehavior because there is a conflict with an existing TraceBehavior.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-    delete:
+          description: An undefined error response.
       tags:
       - TraceBehavior
-      operationId: DeleteTraceBehavior
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/configv1DeleteTraceBehaviorResponse'
-        '400':
-          description: Cannot delete the TraceBehavior because it is in use.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '404':
-          description: Cannot delete the TraceBehavior because the slug does not exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '500':
-          description: An unexpected error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        default:
-          description: An undefined error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/genericError'
+      security:
+      - ApiKeyAuth: []
+      summary: Update trace behavior
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1CreateTraceBehaviorRequest:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-        dry_run:
-          type: boolean
-          description: If true, the TraceBehavior isn't created, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
-    ConfigV1UpdateTraceBehaviorBody:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-        create_if_missing:
-          type: boolean
-          description: If true, the TraceBehavior will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceBehavior does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the TraceBehavior isn't created or updated, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
-    TraceBehaviorSlowSampleOptions:
-      type: object
-      properties:
-        min_duration_seconds:
-          type: number
-          description: 'Duration in seconds over which traces are sampled
-
-            according to the given sample rate.'
-          format: double
-        sample_rate:
-          type: number
-          description: Sample rate.
-          format: double
-        sampling_type:
-          $ref: '#/components/schemas/TraceBehaviorSamplingType'
-        enabled:
-          type: boolean
-          description: Whether or not to use these options.
-    TraceBehaviorErrorSampleOptions:
-      type: object
-      properties:
-        sample_rate:
-          type: number
-          description: Sample rate for traces with errors.
-          format: double
-        sampling_type:
-          $ref: '#/components/schemas/TraceBehaviorSamplingType'
-        enabled:
-          type: boolean
-          description: Whether or not to use these options.
     TraceBehaviorFastSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for fast traces.
+          type: boolean
+        max_duration_seconds:
+          description: 'Duration in seconds under which traces are sampled according to the given
+
+            sample rate.'
+          format: double
+          type: number
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+      type: object
+    configv1ReadTraceBehaviorResponse:
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior'
+      type: object
+    configv1ListTraceBehaviorsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_behaviors:
+          items:
+            $ref: '#/components/schemas/configv1TraceBehavior'
+          type: array
+      type: object
+    configv1CreateTraceBehaviorRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the TraceBehavior. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehavior. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        trace_behavior:
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceBehavior'
+          description: The TraceBehavior to create.
+      type: object
+    TraceBehaviorSlowSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for slow traces.
+          type: boolean
+        min_duration_seconds:
+          description: 'Duration in seconds under which traces are sampled according to the given
+
+            sample rate.'
+          format: double
+          type: number
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+      type: object
+    TraceBehaviorLargeTraceSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for large traces.
+          type: boolean
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+        span_count_threshold:
+          description: 'Defines the sampling rate for large traces. If the number of spans in the
+
+            trace is grater than or equal to (`>=`) the `span_count_threshold`, the trace
+
+            is sampled according to the given sample rate.'
+          format: int64
+          type: integer
+      type: object
+    configv1CreateTraceBehaviorResponse:
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior'
+      type: object
+    TraceBehaviorSamplingType:
+      description: " - LOW_VALUE: Match indicates a low value trace. With multiple low value matches sample at the lowest rate.\n - HIGH_VALUE: Match indicates a high value trace. With multiple high value matches sample at the highest rate."
+      enum:
+      - LOW_VALUE
+      - HIGH_VALUE
+      type: string
+    TraceBehaviorErrorSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for error traces.
+          type: boolean
+        sample_rate:
+          description: Specifies the sample rate for traces with errors.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+      type: object
+    configv1TraceBehavior:
+      properties:
+        base_head_sample_rate:
+          description: 'Specifies the sample rate for head sampling. This rate applies to all root spans
+
+            that are enrolled in head sampling, but don''t have a specific rule defined for
+
+            their service.'
+          format: double
+          type: number
+        base_tail_sample_rate:
+          description: 'Specifies the base sample rate for fully assembled traces that don''t apply to
+
+            the `error_sample_options`, `fast_sample_options`, `slow_sample_options`,
+
+            `large_trace_sample_options`, or `small_trace_sample_options` sampling options.'
+          format: double
+          type: number
+        created_at:
+          description: Timestamp of when the TraceBehavior was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          type: string
+        error_sample_options:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorErrorSampleOptions'
+          description: Optional. Specifies sampling options for traces whose root span is an error.
+        fast_sample_options:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorFastSampleOptions'
+          description: 'Optional. Specifies sampling options for traces whose root span duration is less
+
+            than the specified threshold.'
+        large_trace_sample_options:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorLargeTraceSampleOptions'
+          description: 'Optional. Specifies sampling options for traces with spans greater than or equal
+
+            to the specified threshold.'
+        name:
+          description: The name of the TraceBehavior. You can modify this value after the TraceBehavior is created.
+          type: string
+        slow_sample_options:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSlowSampleOptions'
+          description: 'Optional. Specifies sampling options for traces whose root span duration is
+
+            greater than the specified threshold.'
+        slug:
+          description: The unique identifier of the TraceBehavior. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the TraceBehavior is created.
+          type: string
+        small_trace_sample_options:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSmallTraceSampleOptions'
+          description: 'Optional. Specifies sampling options for traces with spans less than or equal to
+
+            the specified threshold.'
+        updated_at:
+          description: Timestamp of when the TraceBehavior was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - name
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    TraceBehaviorSmallTraceSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for small traces.
+          type: boolean
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+        span_count_threshold:
+          description: 'Defines the sampling rate for small traces. If the number of spans in the
+
+            trace is less than or equal to (`<=`) the `span_count_threshold`, the trace is
+
+            sampled according to the given sample rate.'
+          format: int64
+          type: integer
+      type: object
+    configv1UpdateTraceBehaviorResponse:
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ConfigV1UpdateTraceBehaviorBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the TraceBehavior will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the TraceBehavior does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the TraceBehavior. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehavior. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        trace_behavior:
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceBehavior'
+          description: The TraceBehavior to update.
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1DeleteTraceBehaviorResponse:
+      type: object
+    TraceBehaviorFastSampleOptions_2:
       type: object
       properties:
         max_duration_seconds:
@@ -321,15 +533,23 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
-    TraceBehaviorSmallTraceSampleOptions:
+    configv1CreateTraceBehaviorRequest_2:
       type: object
       properties:
-        span_count_threshold:
-          type: integer
-          description: 'For N = number of spans in the trace, if N <= span_count_threshold, the trace is sampled according to the
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior_2'
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehavior isn't created, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
+    TraceBehaviorSlowSampleOptions_2:
+      type: object
+      properties:
+        min_duration_seconds:
+          type: number
+          description: 'Duration in seconds over which traces are sampled
 
-            given sample rate.'
-          format: int64
+            according to the given sample rate.'
+          format: double
         sample_rate:
           type: number
           description: Sample rate.
@@ -339,60 +559,7 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
-    genericError:
-      type: object
-      additionalProperties: true
-    TraceBehaviorSamplingType:
-      type: string
-      description: " - LOW_VALUE: Match indicates a low value trace. With multiple low value matches sample at the lowest rate.\n - HIGH_VALUE: Match indicates a high value trace. With multiple high value matches sample at the highest rate."
-      enum:
-      - LOW_VALUE
-      - HIGH_VALUE
-    configv1CreateTraceBehaviorResponse:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1ListTraceBehaviorsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        trace_behaviors:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1TraceBehavior'
-    configv1UpdateTraceBehaviorResponse:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-    configv1ReadTraceBehaviorResponse:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    TraceBehaviorLargeTraceSampleOptions:
+    TraceBehaviorLargeTraceSampleOptions_2:
       type: object
       properties:
         span_count_threshold:
@@ -410,7 +577,19 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
-    configv1TraceBehavior:
+    TraceBehaviorErrorSampleOptions_2:
+      type: object
+      properties:
+        sample_rate:
+          type: number
+          description: Sample rate for traces with errors.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    configv1TraceBehavior_2:
       type: object
       properties:
         name:
@@ -442,15 +621,70 @@ components:
             but do not have a specific rule defined for their service.'
           format: double
         error_sample_options:
-          $ref: '#/components/schemas/TraceBehaviorErrorSampleOptions'
+          $ref: '#/components/schemas/TraceBehaviorErrorSampleOptions_2'
         fast_sample_options:
-          $ref: '#/components/schemas/TraceBehaviorFastSampleOptions'
+          $ref: '#/components/schemas/TraceBehaviorFastSampleOptions_2'
         slow_sample_options:
-          $ref: '#/components/schemas/TraceBehaviorSlowSampleOptions'
+          $ref: '#/components/schemas/TraceBehaviorSlowSampleOptions_2'
         large_trace_sample_options:
-          $ref: '#/components/schemas/TraceBehaviorLargeTraceSampleOptions'
+          $ref: '#/components/schemas/TraceBehaviorLargeTraceSampleOptions_2'
         small_trace_sample_options:
-          $ref: '#/components/schemas/TraceBehaviorSmallTraceSampleOptions'
-    configv1DeleteTraceBehaviorResponse:
+          $ref: '#/components/schemas/TraceBehaviorSmallTraceSampleOptions_2'
+    TraceBehaviorSmallTraceSampleOptions_2:
       type: object
-x-original-swagger-version: '2.0'
+      properties:
+        span_count_threshold:
+          type: integer
+          description: 'For N = number of spans in the trace, if N <= span_count_threshold, the trace is sampled according to the
+
+            given sample rate.'
+          format: int64
+        sample_rate:
+          type: number
+          description: Sample rate.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    ConfigV1UpdateTraceBehaviorBody_2:
+      type: object
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceBehavior will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceBehavior does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehavior isn't created or updated, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey
+x-refined-from:
+- chronosphere-config-v1-openapi3.json
+- chronosphere-openapi.yml

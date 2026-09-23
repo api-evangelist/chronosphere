@@ -1,8 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Chronosphere Classic Dashboard API
+  title: Chronosphere Grafana Dashboard API
   version: v1
-  description: 'Operations tagged ClassicDashboard across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged GrafanaDashboard across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -11,11 +11,11 @@ servers:
       description: tenant ID assigned by the service provider
 - url: /
 tags:
-- name: ClassicDashboard
+- name: Grafana Dashboard
 paths:
-  /api/v1/config/classic-dashboards:
+  /api/v1/config/grafana-dashboards:
     get:
-      operationId: ListClassicDashboards
+      operationId: ListGrafanaDashboards
       parameters:
       - description: 'Sets the preferred number of items to return per page. If set to `0`, the
 
@@ -34,28 +34,28 @@ paths:
         name: page.token
         schema:
           type: string
-      - description: Filters results by slug, where any ClassicDashboard with a matching slug in the given list (and matches all other filters) will be returned.
+      - description: Filters results by slug, where any GrafanaDashboard with a matching slug in the given list (and matches all other filters) will be returned.
         in: query
         name: slugs
         schema:
           items:
             type: string
           type: array
-      - description: Filters results by bucket_slug, where any ClassicDashboard with a matching bucket_slug in the given list (and matches all other filters) will be returned.
+      - description: Filters results by bucket_slug, where any GrafanaDashboard with a matching bucket_slug in the given list (and matches all other filters) will be returned.
         in: query
         name: bucket_slugs
         schema:
           items:
             type: string
           type: array
-      - description: Filters results by collection_slug, where any ClassicDashboard with a matching collection_slug in the given list (and matches all other filters) will be returned.
+      - description: Filters results by collection_slug, where any GrafanaDashboard with a matching collection_slug in the given list (and matches all other filters) will be returned.
         in: query
         name: collection_slugs
         schema:
           items:
             type: string
           type: array
-      - description: Filters results by name, where any ClassicDashboard with a matching name in the given list (and matches all other filters) will be returned.
+      - description: Filters results by name, where any GrafanaDashboard with a matching name in the given list (and matches all other filters) will be returned.
         in: query
         name: names
         schema:
@@ -74,7 +74,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ListClassicDashboardsResponse'
+                $ref: '#/components/schemas/configv1ListGrafanaDashboardsResponse'
           description: A successful response.
         '500':
           content:
@@ -89,18 +89,18 @@ paths:
                 $ref: '#/components/schemas/genericError'
           description: An undefined error response.
       tags:
-      - ClassicDashboard
+      - Grafana Dashboard
       security:
       - ApiKeyAuth: []
-      summary: List classic dashboards
+      summary: List grafana dashboards
       x-summary-source: derived
     post:
-      operationId: CreateClassicDashboard
+      operationId: CreateGrafanaDashboard
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/configv1CreateClassicDashboardRequest'
+              $ref: '#/components/schemas/configv1CreateGrafanaDashboardRequest'
         required: true
         x-originalParamName: body
       responses:
@@ -108,7 +108,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1CreateClassicDashboardResponse'
+                $ref: '#/components/schemas/configv1CreateGrafanaDashboardResponse'
           description: A successful response containing the created GrafanaDashboard.
         '400':
           content:
@@ -135,10 +135,10 @@ paths:
                 $ref: '#/components/schemas/genericError'
           description: An undefined error response.
       tags:
-      - ClassicDashboard
+      - Grafana Dashboard
       security:
       - ApiKeyAuth: []
-      summary: Create classic dashboard
+      summary: Create grafana dashboard
       x-summary-source: derived
     servers:
     - url: https://{tenant}.chronosphere.io
@@ -146,9 +146,9 @@ paths:
         tenant:
           default: tenant
           description: tenant ID assigned by the service provider
-  /api/v1/config/classic-dashboards/{slug}:
+  /api/v1/config/grafana-dashboards/{slug}:
     delete:
-      operationId: DeleteClassicDashboard
+      operationId: DeleteGrafanaDashboard
       parameters:
       - in: path
         name: slug
@@ -160,7 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1DeleteClassicDashboardResponse'
+                $ref: '#/components/schemas/configv1DeleteGrafanaDashboardResponse'
           description: A successful response.
         '400':
           content:
@@ -187,13 +187,13 @@ paths:
                 $ref: '#/components/schemas/genericError'
           description: An undefined error response.
       tags:
-      - ClassicDashboard
+      - Grafana Dashboard
       security:
       - ApiKeyAuth: []
-      summary: Delete classic dashboard
+      summary: Delete grafana dashboard
       x-summary-source: derived
     get:
-      operationId: ReadClassicDashboard
+      operationId: ReadGrafanaDashboard
       parameters:
       - in: path
         name: slug
@@ -205,7 +205,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ReadClassicDashboardResponse'
+                $ref: '#/components/schemas/configv1ReadGrafanaDashboardResponse'
           description: A successful response.
         '404':
           content:
@@ -226,13 +226,13 @@ paths:
                 $ref: '#/components/schemas/genericError'
           description: An undefined error response.
       tags:
-      - ClassicDashboard
+      - Grafana Dashboard
       security:
       - ApiKeyAuth: []
-      summary: Read classic dashboard
+      summary: Read grafana dashboard
       x-summary-source: derived
     put:
-      operationId: UpdateClassicDashboard
+      operationId: UpdateGrafanaDashboard
       parameters:
       - in: path
         name: slug
@@ -243,7 +243,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConfigV1UpdateClassicDashboardBody'
+              $ref: '#/components/schemas/ConfigV1UpdateGrafanaDashboardBody'
         required: true
         x-originalParamName: body
       responses:
@@ -251,7 +251,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1UpdateClassicDashboardResponse'
+                $ref: '#/components/schemas/configv1UpdateGrafanaDashboardResponse'
           description: A successful response containing the updated GrafanaDashboard.
         '400':
           content:
@@ -284,10 +284,10 @@ paths:
                 $ref: '#/components/schemas/genericError'
           description: An undefined error response.
       tags:
-      - ClassicDashboard
+      - Grafana Dashboard
       security:
       - ApiKeyAuth: []
-      summary: Update classic dashboard
+      summary: Update grafana dashboard
       x-summary-source: derived
     servers:
     - url: https://{tenant}.chronosphere.io
@@ -297,35 +297,6 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1ReadClassicDashboardResponse:
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-      type: object
-    configv1CreateClassicDashboardRequest:
-      properties:
-        classic_dashboard:
-          allOf:
-          - $ref: '#/components/schemas/configv1GrafanaDashboard'
-          description: The GrafanaDashboard to create.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configv1UpdateClassicDashboardResponse:
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-      type: object
-    configv1ListClassicDashboardsResponse:
-      properties:
-        classic_dashboards:
-          items:
-            $ref: '#/components/schemas/configv1GrafanaDashboard'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
     configv1GrafanaDashboard:
       properties:
         bucket_slug:
@@ -366,13 +337,27 @@ components:
       required:
       - name
       type: object
-    configv1CreateClassicDashboardResponse:
+    configv1ListGrafanaDashboardsResponse:
       properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
+        grafana_dashboards:
+          items:
+            $ref: '#/components/schemas/configv1GrafanaDashboard'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
     genericError:
       additionalProperties: true
+      type: object
+    configv1UpdateGrafanaDashboardResponse:
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
+    configv1CreateGrafanaDashboardResponse:
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
       type: object
     configv1CollectionReference:
       properties:
@@ -381,32 +366,47 @@ components:
         type:
           $ref: '#/components/schemas/configv1CollectionReferenceType'
       type: object
-    configv1DeleteClassicDashboardResponse:
-      type: object
     configv1CollectionReferenceType:
       enum:
       - SIMPLE
       - SERVICE
       title: Type values must match entitiespb.Collection.CollectionType.
       type: string
+    configv1DeleteGrafanaDashboardResponse:
+      type: object
+    configv1CreateGrafanaDashboardRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        grafana_dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1GrafanaDashboard'
+          description: The GrafanaDashboard to create.
+      type: object
+    configv1ReadGrafanaDashboardResponse:
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
     apiError:
       properties:
         message:
           description: An error message describing what went wrong.
           type: string
       type: object
-    ConfigV1UpdateClassicDashboardBody:
+    ConfigV1UpdateGrafanaDashboardBody:
       properties:
-        classic_dashboard:
-          allOf:
-          - $ref: '#/components/schemas/configv1GrafanaDashboard'
-          description: The GrafanaDashboard to update.
         create_if_missing:
           description: If `true`, the GrafanaDashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the GrafanaDashboard does not already exist.
           type: boolean
         dry_run:
           description: If `true`, validates the specified configuration without creating or updating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
+        grafana_dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1GrafanaDashboard'
+          description: The GrafanaDashboard to update.
       type: object
     configv1PageResult:
       properties:
@@ -418,14 +418,6 @@ components:
             more items to return.'
           type: string
       type: object
-    configv1CreateClassicDashboardRequest_2:
-      type: object
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard_2'
-        dry_run:
-          type: boolean
-          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
     configv1GrafanaDashboard_2:
       type: object
       properties:
@@ -466,6 +458,14 @@ components:
       enum:
       - SIMPLE
       - SERVICE
+    configv1CreateGrafanaDashboardRequest_2:
+      type: object
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard_2'
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
     apiError_2:
       type: object
       properties:
@@ -476,10 +476,10 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    ConfigV1UpdateClassicDashboardBody_2:
+    ConfigV1UpdateGrafanaDashboardBody_2:
       type: object
       properties:
-        classic_dashboard:
+        grafana_dashboard:
           $ref: '#/components/schemas/configv1GrafanaDashboard_2'
         create_if_missing:
           type: boolean

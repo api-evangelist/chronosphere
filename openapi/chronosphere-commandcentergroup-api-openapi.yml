@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  description: 'WARNING: This API is unstable and is meant for experimentation only. Do not
+
+    use this API in production. The endpoints and schemas referenced in this
+
+    documentation will be changed or removed without notice and without any
+
+    backwards compatibility guarantee. Note that even though this API is unstable,
+
+    it is still connected to production data, so use with caution.'
+  title: Config Unstable Command Center Group API
+  version: UNSTABLE
+tags:
+- name: CommandCenterGroup
+paths:
+  /api/unstable/config/command-center-groups:
+    get:
+      operationId: ListCommandCenterGroups
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          type: integer
+          format: int64
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any CommandCenterGroup with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by name, where any CommandCenterGroup with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableListCommandCenterGroupsResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - CommandCenterGroup
+      summary: List command center groups
+      x-summary-source: derived
+    post:
+      operationId: CreateCommandCenterGroup
+      responses:
+        '200':
+          description: A successful response containing the created CommandCenterGroup.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableCreateCommandCenterGroupResponse'
+        '400':
+          description: Cannot create the CommandCenterGroup because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the CommandCenterGroup because there is a conflict with an existing CommandCenterGroup.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - CommandCenterGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateCommandCenterGroupRequest'
+        required: true
+      summary: Create command center group
+      x-summary-source: derived
+  /api/unstable/config/command-center-groups/{slug}:
+    delete:
+      operationId: DeleteCommandCenterGroup
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableDeleteCommandCenterGroupResponse'
+        '400':
+          description: Cannot delete the CommandCenterGroup because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the CommandCenterGroup because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - CommandCenterGroup
+      summary: Delete command center group
+      x-summary-source: derived
+    get:
+      operationId: ReadCommandCenterGroup
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableReadCommandCenterGroupResponse'
+        '404':
+          description: Cannot read the CommandCenterGroup because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - CommandCenterGroup
+      summary: Read command center group
+      x-summary-source: derived
+    put:
+      operationId: UpdateCommandCenterGroup
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response containing the updated CommandCenterGroup.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableUpdateCommandCenterGroupResponse'
+        '400':
+          description: Cannot update the CommandCenterGroup because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the CommandCenterGroup because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the CommandCenterGroup because there is a conflict with an existing CommandCenterGroup.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - CommandCenterGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUnstableUpdateCommandCenterGroupBody'
+        required: true
+      summary: Update command center group
+      x-summary-source: derived
+components:
+  schemas:
+    configunstableCreateCommandCenterGroupRequest:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableDeleteCommandCenterGroupResponse:
+      type: object
+    ConfigUnstableUpdateCommandCenterGroupBody:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+        create_if_missing:
+          description: If `true`, the CommandCenterGroup will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the CommandCenterGroup does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableUpdateCommandCenterGroupResponse:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+      type: object
+    configunstableReadCommandCenterGroupResponse:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableCommandCenterGroup:
+      description: CommandCenterGroup is a group of signals tracked in the command center.
+      properties:
+        slug:
+          description: Unique slug identifying the CommandCenterGroup.
+          type: string
+        name:
+          description: Unique name of the CommandCenterGroup.
+          type: string
+        created_at:
+          description: Timestamp of when the CommandCenterGroup was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the CommandCenterGroup was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        group_slo_reference:
+          $ref: '#/components/schemas/configunstableSloReference'
+      type: object
+    configunstableSloReference:
+      description: SloReference references an SLO by slug.
+      properties:
+        slug:
+          description: Slug of the referenced SLO.
+          type: string
+      type: object
+    configunstableListCommandCenterGroupsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        command_center_groups:
+          items:
+            $ref: '#/components/schemas/configunstableCommandCenterGroup'
+          type: array
+      type: object
+    configunstableCreateCommandCenterGroupResponse:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object

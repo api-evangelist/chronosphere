@@ -1,0 +1,414 @@
+openapi: 3.2.0
+info:
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/config/swagger.json'
+  title: Config V1 Azure Metrics Integration API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: AzureMetricsIntegration
+paths:
+  /api/v1/config/azure-metrics-integrations:
+    get:
+      operationId: ListAzureMetricsIntegrations
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any AzureMetricsIntegration with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by name, where any AzureMetricsIntegration with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListAzureMetricsIntegrationsResponse'
+          description: A successful response.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - AzureMetricsIntegration
+      summary: List azure metrics integrations
+      x-summary-source: derived
+    post:
+      operationId: CreateAzureMetricsIntegration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateAzureMetricsIntegrationRequest'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateAzureMetricsIntegrationResponse'
+          description: A successful response containing the created AzureMetricsIntegration.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the AzureMetricsIntegration because the request is invalid.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the AzureMetricsIntegration because there is a conflict with an existing AzureMetricsIntegration.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - AzureMetricsIntegration
+      summary: Create azure metrics integration
+      x-summary-source: derived
+  /api/v1/config/azure-metrics-integrations/{slug}:
+    delete:
+      operationId: DeleteAzureMetricsIntegration
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteAzureMetricsIntegrationResponse'
+          description: A successful response.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the AzureMetricsIntegration because it is in use.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the AzureMetricsIntegration because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - AzureMetricsIntegration
+      summary: Delete azure metrics integration
+      x-summary-source: derived
+    get:
+      operationId: ReadAzureMetricsIntegration
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadAzureMetricsIntegrationResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot read the AzureMetricsIntegration because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - AzureMetricsIntegration
+      summary: Read azure metrics integration
+      x-summary-source: derived
+    put:
+      operationId: UpdateAzureMetricsIntegration
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateAzureMetricsIntegrationBody'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateAzureMetricsIntegrationResponse'
+          description: A successful response containing the updated AzureMetricsIntegration.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the AzureMetricsIntegration because the request is invalid.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the AzureMetricsIntegration because the slug does not exist.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the AzureMetricsIntegration because there is a conflict with an existing AzureMetricsIntegration.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - AzureMetricsIntegration
+      summary: Update azure metrics integration
+      x-summary-source: derived
+components:
+  schemas:
+    configv1UpdateAzureMetricsIntegrationResponse:
+      properties:
+        azure_metrics_integration:
+          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+      type: object
+    configv1CreateAzureMetricsIntegrationRequest:
+      properties:
+        azure_metrics_integration:
+          allOf:
+          - $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+          description: The AzureMetricsIntegration to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the AzureMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the AzureMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configv1AzureMetricsIntegration:
+      properties:
+        count_metrics_enabled:
+          description: Enables Azure count metrics for the configured resources.
+          type: boolean
+        created_at:
+          description: Timestamp of when the AzureMetricsIntegration was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        name:
+          description: The name of the AzureMetricsIntegration. You can modify this value after the AzureMetricsIntegration is created.
+          type: string
+        principal:
+          allOf:
+          - $ref: '#/components/schemas/AzureMetricsIntegrationAzurePrincipal'
+          description: The Azure principal that should be used for this config.
+        propagate_tags:
+          description: Specifies whether Azure resource, group, and subscription tags should be propagated as metric labels.
+          type: boolean
+        scrape_config:
+          allOf:
+          - $ref: '#/components/schemas/AzureMetricsIntegrationAzureScrapeConfig'
+          description: Specifies the scrape config for this integration.
+        slug:
+          description: The unique identifier of the AzureMetricsIntegration. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the AzureMetricsIntegration is created.
+          type: string
+        updated_at:
+          description: Timestamp of when the AzureMetricsIntegration was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        usage_metrics_enabled:
+          description: Enables collection of azure usage metrics under this principal (Microsoft.Compute, Microsoft.Network, Microsoft.Storage).
+          type: boolean
+      required:
+      - name
+      type: object
+    configv1DeleteAzureMetricsIntegrationResponse:
+      type: object
+    AzureMetricsIntegrationAzureResourceType:
+      properties:
+        metric_names:
+          description: List of metric names to be targeted (these apply to this resource type; use empty for all metrics).
+          items:
+            type: string
+          type: array
+        name:
+          description: Name of the resource type.
+          type: string
+      type: object
+    AzureMetricsIntegrationAzurePrincipal:
+      properties:
+        client_id:
+          description: Specifies the OAuth2 client ID of the managed identity principal.
+          type: string
+        tenant_id:
+          description: Specifies the ID of the Azure tenant that hosts the managed identity principal.
+          type: string
+      type: object
+    configv1ReadAzureMetricsIntegrationResponse:
+      properties:
+        azure_metrics_integration:
+          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1ListAzureMetricsIntegrationsResponse:
+      properties:
+        azure_metrics_integrations:
+          items:
+            $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    ConfigV1UpdateAzureMetricsIntegrationBody:
+      properties:
+        azure_metrics_integration:
+          allOf:
+          - $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+          description: The AzureMetricsIntegration to update.
+        create_if_missing:
+          description: If `true`, the AzureMetricsIntegration will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the AzureMetricsIntegration does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the AzureMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the AzureMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    AzureMetricsIntegrationAzureScrapeConfig:
+      properties:
+        locations:
+          description: Locations to be ingested for this integration (these apply to all subscriptions; use empty for all locations).
+          items:
+            type: string
+          type: array
+        resource_types:
+          description: Metric groups to be ingested for this integration.
+          items:
+            $ref: '#/components/schemas/AzureMetricsIntegrationAzureResourceType'
+          type: array
+        subscription_ids:
+          description: Subscriptions to be targeted for this integration (use empty for all subscriptions).
+          items:
+            type: string
+          type: array
+      type: object
+    configv1CreateAzureMetricsIntegrationResponse:
+      properties:
+        azure_metrics_integration:
+          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

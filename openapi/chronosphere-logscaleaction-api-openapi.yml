@@ -1,18 +1,14 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Log Scale Action API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+  title: Config V1 Log Scale Action API
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
 
     updating, deleting, and listing configurable Chronosphere resources.
 
 
     Use this link to download the raw Swagger specification:
 
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
+    /api/v1/config/swagger.json'
   version: v1
 servers:
 - url: /
@@ -79,6 +75,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      summary: List log scale actions
+      x-summary-source: derived
     post:
       tags:
       - LogScaleAction
@@ -121,6 +119,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/genericError'
       x-codegen-request-body-name: body
+      summary: Create log scale action
+      x-summary-source: derived
   /api/v1/config/log-scale-actions/{slug}:
     get:
       tags:
@@ -157,6 +157,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      summary: Read log scale action
+      x-summary-source: derived
     put:
       tags:
       - LogScaleAction
@@ -211,6 +213,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/genericError'
       x-codegen-request-body-name: body
+      summary: Update log scale action
+      x-summary-source: derived
     delete:
       tags:
       - LogScaleAction
@@ -252,33 +256,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      summary: Delete log scale action
+      x-summary-source: derived
 components:
   schemas:
+    LogScaleActionSlackAction:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Slack webhook URL to send the request to.
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+          description: Fields to include within the Slack message. Can be templated with values from the query result.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    configv1CreateLogScaleActionRequest:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAction isn't created, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
+    ConfigV1UpdateLogScaleActionBody:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogScaleAction will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAction does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAction isn't created or updated, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
     genericError:
       type: object
       additionalProperties: true
-    LogScaleActionUploadFileAction:
-      type: object
-      properties:
-        file_name:
-          type: string
-          description: File name for the uploaded file.
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    LogScaleActionHumioRepoAction:
-      type: object
-      properties:
-        ingest_token:
-          type: string
-          description: Ingest token for the repository that the action should ingest into.
     LogScaleActionEmailAction:
       type: object
       properties:
@@ -299,8 +316,6 @@ components:
         use_proxy:
           type: boolean
           description: Defines whether the action should use the configured proxy to make web requests.
-    configv1DeleteLogScaleActionResponse:
-      type: object
     LogScaleActionWebhookAction:
       type: object
       properties:
@@ -323,43 +338,14 @@ components:
         use_proxy:
           type: boolean
           description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionSlackAction:
+    LogScaleActionHumioRepoAction:
       type: object
       properties:
-        url:
+        ingest_token:
           type: string
-          description: Slack webhook URL to send the request to.
-        fields:
-          type: object
-          additionalProperties:
-            type: string
-          description: Fields to include within the Slack message. Can be templated with values from the query result.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionOpsGenieAction:
+          description: Ingest token for the repository that the action should ingest into.
+    configv1DeleteLogScaleActionResponse:
       type: object
-      properties:
-        api_url:
-          type: string
-          description: OpsGenie webhook URL to send the request to.
-        ops_genie_key:
-          type: string
-          description: Key to authenticate with OpsGenie.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    ConfigV1UpdateLogScaleActionBody:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-        create_if_missing:
-          type: boolean
-          description: If true, the LogScaleAction will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAction does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the LogScaleAction isn't created or updated, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
     LogScaleActionVictorOpsAction:
       type: object
       properties:
@@ -372,39 +358,12 @@ components:
         use_proxy:
           type: boolean
           description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionPagerDutyAction:
+    LogScaleActionUploadFileAction:
       type: object
       properties:
-        severity:
-          $ref: '#/components/schemas/PagerDutyActionSeverity'
-        routing_key:
+        file_name:
           type: string
-          description: Routing key to authenticate with PagerDuty.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    configv1CreateLogScaleActionRequest:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-        dry_run:
-          type: boolean
-          description: If true, the LogScaleAction isn't created, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
-    configv1ReadLogScaleActionResponse:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-    configv1ListLogScaleActionsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        log_scale_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1LogScaleAction'
+          description: File name for the uploaded file.
     WebhookActionHTTPMethod:
       type: string
       enum:
@@ -415,30 +374,11 @@ components:
       - DELETE
       - HEAD
       - OPTIONS
-    configv1CreateLogScaleActionResponse:
+    configv1ReadLogScaleActionResponse:
       type: object
       properties:
         log_scale_action:
           $ref: '#/components/schemas/configv1LogScaleAction'
-    LogScaleActionSlackPostMessageAction:
-      type: object
-      properties:
-        api_token:
-          type: string
-          description: API token to authenticate with Slack.
-        channels:
-          type: array
-          description: List of Slack channels to message.
-          items:
-            type: string
-        fields:
-          type: object
-          additionalProperties:
-            type: string
-          description: Fields to include within the Slack message. Can be templated with values from the query result.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
     LogScaleActionActionType:
       type: string
       enum:
@@ -451,18 +391,17 @@ components:
       - VICTOR_OPS
       - WEBHOOK
       - UPLOAD_FILE
-    configv1UpdateLogScaleActionResponse:
+    LogScaleActionPagerDutyAction:
       type: object
       properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-    PagerDutyActionSeverity:
-      type: string
-      enum:
-      - CRITICAL
-      - ERROR
-      - WARNING
-      - INFO
+        severity:
+          $ref: '#/components/schemas/PagerDutyActionSeverity'
+        routing_key:
+          type: string
+          description: Routing key to authenticate with PagerDuty.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
     apiError:
       type: object
       properties:
@@ -515,4 +454,71 @@ components:
           $ref: '#/components/schemas/LogScaleActionWebhookAction'
         upload_file_action:
           $ref: '#/components/schemas/LogScaleActionUploadFileAction'
+    LogScaleActionSlackPostMessageAction:
+      type: object
+      properties:
+        api_token:
+          type: string
+          description: API token to authenticate with Slack.
+        channels:
+          type: array
+          description: List of Slack channels to message.
+          items:
+            type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+          description: Fields to include within the Slack message. Can be templated with values from the query result.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    LogScaleActionOpsGenieAction:
+      type: object
+      properties:
+        api_url:
+          type: string
+          description: OpsGenie webhook URL to send the request to.
+        ops_genie_key:
+          type: string
+          description: Key to authenticate with OpsGenie.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    configv1UpdateLogScaleActionResponse:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+    configv1ListLogScaleActionsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_scale_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LogScaleAction'
+    configv1CreateLogScaleActionResponse:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+    PagerDutyActionSeverity:
+      type: string
+      enum:
+      - CRITICAL
+      - ERROR
+      - WARNING
+      - INFO
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
 x-original-swagger-version: '2.0'

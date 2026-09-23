@@ -1,0 +1,194 @@
+openapi: 3.2.0
+info:
+  description: 'The State API provides HTTP/JSON REST endpoints for accessing the runtime state
+
+    of the Chronosphere system.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/state/swagger.json'
+  title: State V1 Metric Usages By Label Name API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: MetricUsagesByLabelName
+paths:
+  /api/v1/state/metric-usages-by-label-name:
+    get:
+      operationId: ListMetricUsagesByLabelName
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - in: query
+        name: order.ascending
+        schema:
+          type: boolean
+      - in: query
+        name: order.by
+        schema:
+          enum:
+          - VALUABLE
+          - DPPS
+          - UTILITY
+          - REFERENCES
+          - EXECUTIONS
+          - UNIQUE_VALUES
+          - UNIQUE_USERS
+          type: string
+      - description: Controls the time range over which query executions are included in usages. Defaults to `2592000` (30 days).
+        in: query
+        name: lookback_secs
+        schema:
+          format: int32
+          type: integer
+      - description: Glob match string for filtering results by label name.
+        in: query
+        name: label_name_glob
+        schema:
+          type: string
+      - description: If `true`, responses include the fields `reference_counts_by_type` and `query_execution_counts_by_type`. If `false`, these fields are returned empty.
+        in: query
+        name: include_counts_by_type
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statev1ListMetricUsagesByLabelNameResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+      tags:
+      - MetricUsagesByLabelName
+      summary: List metric usages by label name
+      x-summary-source: derived
+components:
+  schemas:
+    MetricUsageReferenceCountsByType:
+      properties:
+        aggregation_rules:
+          format: int32
+          type: integer
+        dashboards:
+          format: int32
+          type: integer
+        drop_rules:
+          format: int32
+          type: integer
+        monitors:
+          format: int32
+          type: integer
+        recording_rules:
+          format: int32
+          type: integer
+      type: object
+    statev1MetricUsage:
+      properties:
+        query_execution_counts_by_type:
+          $ref: '#/components/schemas/MetricUsageQueryExecutionCountsByType'
+        reference_counts_by_type:
+          $ref: '#/components/schemas/MetricUsageReferenceCountsByType'
+        total_query_executions:
+          format: int32
+          type: integer
+        total_references:
+          format: int32
+          type: integer
+        total_unique_users:
+          format: int32
+          type: integer
+        utility_score:
+          format: double
+          type: number
+      type: object
+    statev1ListMetricUsagesByLabelNameResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        usages:
+          items:
+            $ref: '#/components/schemas/statev1MetricUsageByLabelName'
+          type: array
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    MetricUsageQueryExecutionCountsByType:
+      properties:
+        dashboard:
+          format: int32
+          type: integer
+        explorer:
+          format: int32
+          type: integer
+        external:
+          format: int32
+          type: integer
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    statev1MetricUsageByLabelName:
+      properties:
+        dpps:
+          format: double
+          type: number
+        label_name:
+          type: string
+        percent_of_series_with_label_name:
+          description: 'Percent of persisted series observed to have the label name.
+
+            Returns in format: [0.0, 100.0]'
+          format: double
+          type: number
+        total_unique_values:
+          format: int32
+          type: integer
+        usage:
+          $ref: '#/components/schemas/statev1MetricUsage'
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

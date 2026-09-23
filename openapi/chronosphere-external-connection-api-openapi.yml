@@ -1,0 +1,504 @@
+openapi: 3.2.0
+info:
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/config/swagger.json'
+  title: Config V1 External Connection API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: External Connection
+paths:
+  /api/v1/config/external-connections:
+    get:
+      operationId: ListExternalConnections
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any ExternalConnection with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by name, where any ExternalConnection with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        schema:
+          items:
+            type: string
+          type: array
+      - in: query
+        name: connection_types
+        schema:
+          items:
+            enum:
+            - SLACK
+            - PAGERDUTY
+            - WEBHOOK
+            - VICTOROPS
+            - OPSGENIE
+            - CLOUDFLARE
+            - MONGODB_ATLAS
+            - SENDGRID
+            - DATADOG
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListExternalConnectionsResponse'
+          description: A successful response.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - External Connection
+      summary: List external connections
+      x-summary-source: derived
+    post:
+      operationId: CreateExternalConnection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateExternalConnectionRequest'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateExternalConnectionResponse'
+          description: A successful response containing the created ExternalConnection.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the ExternalConnection because the request is invalid.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the ExternalConnection because there is a conflict with an existing ExternalConnection.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - External Connection
+      summary: Create external connection
+      x-summary-source: derived
+  /api/v1/config/external-connections/{slug}:
+    delete:
+      operationId: DeleteExternalConnection
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteExternalConnectionResponse'
+          description: A successful response.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the ExternalConnection because it is in use.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the ExternalConnection because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - External Connection
+      summary: Delete external connection
+      x-summary-source: derived
+    get:
+      operationId: ReadExternalConnection
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadExternalConnectionResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot read the ExternalConnection because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - External Connection
+      summary: Read external connection
+      x-summary-source: derived
+    put:
+      operationId: UpdateExternalConnection
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateExternalConnectionBody'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateExternalConnectionResponse'
+          description: A successful response containing the updated ExternalConnection.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ExternalConnection because the request is invalid.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ExternalConnection because the slug does not exist.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ExternalConnection because there is a conflict with an existing ExternalConnection.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - External Connection
+      summary: Update external connection
+      x-summary-source: derived
+components:
+  schemas:
+    configv1UpdateExternalConnectionResponse:
+      properties:
+        external_connection:
+          $ref: '#/components/schemas/configv1ExternalConnection'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1ExternalConnectionPagerdutyConfig:
+      properties:
+        events:
+          allOf:
+          - $ref: '#/components/schemas/PagerdutyConfigPagerdutyEventsConfig'
+          description: PagerDuty Events API configuration for outbound alert delivery.
+        rest:
+          allOf:
+          - $ref: '#/components/schemas/PagerdutyConfigPagerdutyRESTConfig'
+          description: PagerDuty REST API configuration for inbound incident/note polling.
+      type: object
+    PagerdutyConfigPagerdutyRESTConfig:
+      properties:
+        api_key:
+          description: The PagerDuty REST API token used to authenticate note polling.
+          type: string
+      type: object
+    ExternalConnectionSendgridConfig:
+      properties:
+        api_key:
+          description: SendGrid API key (Bearer token).
+          type: string
+      type: object
+    configv1DeleteExternalConnectionResponse:
+      type: object
+    configv1PagerdutyEventsVersion:
+      description: "PagerdutyEventsVersion selects the PagerDuty Events API version.\nThe version determines which PagerDuty Events API payload format is used\nwhen delivering alerts through this external connection.\n\n - PAGERDUTY_EVENTS_VERSION_V1: V1 is the legacy PagerDuty Events API version.\n - PAGERDUTY_EVENTS_VERSION_V2: V2 is the default and recommended version."
+      enum:
+      - PAGERDUTY_EVENTS_VERSION_V1
+      - PAGERDUTY_EVENTS_VERSION_V2
+      type: string
+    configv1ExternalConnectionHTTPConfig:
+      properties:
+        basic_auth:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfigBasicAuth'
+        bearer_token:
+          type: string
+        tls_config:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfigTLSConfig'
+      type: object
+    configv1ExternalConnectionSlackConfig:
+      properties:
+        api_url:
+          type: string
+        token:
+          type: string
+      type: object
+    configv1ExternalConnectionVictorOpsConfig:
+      properties:
+        api_key:
+          type: string
+        api_url:
+          type: string
+      type: object
+    configv1ExternalConnectionHTTPConfigBasicAuth:
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+      type: object
+    configv1ExternalConnection:
+      properties:
+        cloudflare:
+          $ref: '#/components/schemas/ExternalConnectionCloudflareConfig'
+        created_at:
+          description: Timestamp of when the ExternalConnection was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        mongodb_atlas:
+          $ref: '#/components/schemas/ExternalConnectionMongoDbAtlasConfig'
+        name:
+          description: The name of the ExternalConnection. You can modify this value after the ExternalConnection is created.
+          type: string
+        ops_genie:
+          $ref: '#/components/schemas/configv1ExternalConnectionOpsGenieConfig'
+        pagerduty:
+          $ref: '#/components/schemas/configv1ExternalConnectionPagerdutyConfig'
+        sendgrid:
+          $ref: '#/components/schemas/ExternalConnectionSendgridConfig'
+        slack:
+          $ref: '#/components/schemas/configv1ExternalConnectionSlackConfig'
+        slug:
+          description: The unique identifier of the ExternalConnection. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the ExternalConnection is created.
+          type: string
+        updated_at:
+          description: Timestamp of when the ExternalConnection was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        victor_ops:
+          $ref: '#/components/schemas/configv1ExternalConnectionVictorOpsConfig'
+        webhook:
+          $ref: '#/components/schemas/configv1ExternalConnectionWebhookConfig'
+      required:
+      - name
+      type: object
+    configv1CreateExternalConnectionResponse:
+      properties:
+        external_connection:
+          $ref: '#/components/schemas/configv1ExternalConnection'
+      type: object
+    configv1ListExternalConnectionsResponse:
+      properties:
+        external_connections:
+          items:
+            $ref: '#/components/schemas/configv1ExternalConnection'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1ReadExternalConnectionResponse:
+      properties:
+        external_connection:
+          $ref: '#/components/schemas/configv1ExternalConnection'
+      type: object
+    configv1ExternalConnectionOpsGenieConfig:
+      properties:
+        api_key:
+          type: string
+        api_url:
+          type: string
+        http_config:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfig'
+      type: object
+    PagerdutyConfigPagerdutyEventsConfig:
+      properties:
+        api_key:
+          description: 'The PagerDuty integration key used to authenticate with the Events API.
+
+            PagerDuty calls this the "routing key" in Events v2 and the
+
+            "service key" in Events v1.'
+          type: string
+        version:
+          allOf:
+          - $ref: '#/components/schemas/configv1PagerdutyEventsVersion'
+          description: 'The PagerDuty Events API version to use. Defaults to V2 if unset.
+
+            V2 is recommended for new integrations.'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ConfigV1UpdateExternalConnectionBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the ExternalConnection will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ExternalConnection does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the ExternalConnection. If the specified configuration is valid, the endpoint returns a partial response without the ExternalConnection. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        external_connection:
+          allOf:
+          - $ref: '#/components/schemas/configv1ExternalConnection'
+          description: The ExternalConnection to update.
+      type: object
+    ExternalConnectionCloudflareConfig:
+      properties:
+        api_token:
+          description: 'Cloudflare API Token. Accepts User API Tokens (cfut_ prefix) and
+
+            Account API Tokens (cfat_ prefix).'
+          type: string
+      type: object
+    ExternalConnectionMongoDbAtlasConfig:
+      properties:
+        client_id:
+          description: Service Account client ID.
+          type: string
+        client_secret:
+          description: Service Account client secret.
+          type: string
+      type: object
+    configv1ExternalConnectionWebhookConfig:
+      properties:
+        http_config:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfig'
+        url:
+          type: string
+      type: object
+    configv1ExternalConnectionHTTPConfigTLSConfig:
+      properties:
+        insecure_skip_verify:
+          type: boolean
+      type: object
+    configv1CreateExternalConnectionRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the ExternalConnection. If the specified configuration is valid, the endpoint returns a partial response without the ExternalConnection. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        external_connection:
+          allOf:
+          - $ref: '#/components/schemas/configv1ExternalConnection'
+          description: The ExternalConnection to create.
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

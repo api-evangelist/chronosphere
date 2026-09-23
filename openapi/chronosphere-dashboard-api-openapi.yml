@@ -1,79 +1,71 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Dashboard API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
-  version: v1
+  title: Chronosphere Dashboard API
+  version: '1.0'
+  description: 'Operations tagged Dashboard across 3 of this provider''s published API definitions: chronosphere-config-unstable-swagger.json, chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
 - url: /
 tags:
 - name: Dashboard
 paths:
-  /api/v1/config/dashboards:
+  /api/unstable/config/dashboards:
     get:
-      tags:
-      - Dashboard
       operationId: ListDashboards
       parameters:
-      - name: page.max_size
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
         in: query
-        description: 'Page size preference (i.e. how many items are returned in the next
-
-          page). If zero, the server will use a default. Regardless of what size
-
-          is given, clients must never assume how many items will be returned.'
+        name: page.max_size
         schema:
           type: integer
           format: int64
-      - name: page.token
-        in: query
-        description: 'Opaque page token identifying which page to request. An empty token
+      - description: 'An opaque page token that identifies which page the client should request.
 
-          identifies the first page.'
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
         schema:
           type: string
-      - name: slugs
+      - description: Filters results by slug, where any Dashboard with a matching slug in the given list (and matches all other filters) will be returned.
         in: query
-        description: Filters results by slug, where any Dashboard with a matching slug in the given list (and matches all other filters) is returned.
+        name: slugs
         style: form
         explode: true
         schema:
           type: array
           items:
             type: string
-      - name: collection_slugs
+      - description: Filters results by collection_slug, where any Dashboard with a matching collection_slug in the given list (and matches all other filters) will be returned.
         in: query
-        description: Filters results by collection_slug, where any Dashboard with a matching collection_slug in the given list (and matches all other filters) is returned.
+        name: collection_slugs
         style: form
         explode: true
         schema:
           type: array
           items:
             type: string
-      - name: names
+      - description: Filters results by name, where any Dashboard with a matching name in the given list (and matches all other filters) will be returned.
         in: query
-        description: Filters results by name, where any Dashboard with a matching name in the given list (and matches all other filters) is returned.
+        name: names
         style: form
         explode: true
         schema:
           type: array
           items:
             type: string
-      - name: include_dashboard_json
-        in: query
-        description: 'Optional. Flag to populate the `dashboard_json` field of the returned
+      - description: 'Optional flag to populate the dashboard_json of the returned dashboards.
 
-          dashboards. By default, `dashboard_json` is empty.'
+          By default, dashboard_json will be left empty.'
+        in: query
+        name: include_dashboard_json
         schema:
           type: boolean
       responses:
@@ -82,7 +74,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ListDashboardsResponse'
+                $ref: '#/components/schemas/configunstableListDashboardsResponse'
         '500':
           description: An unexpected error response.
           content:
@@ -95,23 +87,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    post:
       tags:
       - Dashboard
+      summary: List dashboards
+      x-summary-source: derived
+    post:
       operationId: CreateDashboard
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configv1CreateDashboardRequest'
-        required: true
       responses:
         '200':
           description: A successful response containing the created Dashboard.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1CreateDashboardResponse'
+                $ref: '#/components/schemas/configunstableCreateDashboardResponse'
         '400':
           description: Cannot create the Dashboard because the request is invalid.
           content:
@@ -136,15 +124,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-  /api/v1/config/dashboards/{slug}:
-    get:
       tags:
       - Dashboard
-      operationId: ReadDashboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateDashboardRequest'
+        required: true
+      summary: Create dashboard
+      x-summary-source: derived
+  /api/unstable/config/dashboards/{slug}:
+    delete:
+      operationId: DeleteDashboard
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
@@ -154,7 +149,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ReadDashboardResponse'
+                $ref: '#/components/schemas/configunstableDeleteDashboardResponse'
+        '400':
+          description: Cannot delete the Dashboard because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Dashboard because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Dashboard
+      summary: Delete dashboard
+      x-summary-source: derived
+    get:
+      operationId: ReadDashboard
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableReadDashboardResponse'
         '404':
           description: Cannot read the Dashboard because the slug does not exist.
           content:
@@ -173,29 +211,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    put:
       tags:
       - Dashboard
+      summary: Read dashboard
+      x-summary-source: derived
+    put:
       operationId: UpdateDashboard
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ConfigV1UpdateDashboardBody'
-        required: true
       responses:
         '200':
           description: A successful response containing the updated Dashboard.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1UpdateDashboardResponse'
+                $ref: '#/components/schemas/configunstableUpdateDashboardResponse'
         '400':
           description: Cannot update the Dashboard because the request is invalid.
           content:
@@ -226,51 +260,487 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-    delete:
       tags:
       - Dashboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUnstableUpdateDashboardBody'
+        required: true
+      summary: Update dashboard
+      x-summary-source: derived
+  /api/v1/config/dashboards:
+    get:
+      operationId: ListDashboards
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any Dashboard with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by collection_slug, where any Dashboard with a matching collection_slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: collection_slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by name, where any Dashboard with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        schema:
+          items:
+            type: string
+          type: array
+      - description: 'Optional. Flag to populate the `dashboard_json` field of the returned
+
+          dashboards. By default, `dashboard_json` is empty.'
+        in: query
+        name: include_dashboard_json
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListDashboardsResponse'
+          description: A successful response.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Dashboard
+      security:
+      - ApiKeyAuth: []
+      summary: List dashboards
+      x-summary-source: derived
+    post:
+      operationId: CreateDashboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateDashboardRequest'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateDashboardResponse'
+          description: A successful response containing the created Dashboard.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot create the Dashboard because the request is invalid.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot create the Dashboard because there is a conflict with an existing Dashboard.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Dashboard
+      security:
+      - ApiKeyAuth: []
+      summary: Create dashboard
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
+  /api/v1/config/dashboards/{slug}:
+    delete:
       operationId: DeleteDashboard
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1DeleteDashboardResponse'
+          description: A successful response.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
           description: Cannot delete the Dashboard because it is in use.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
           description: Cannot delete the Dashboard because the slug does not exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/apiError'
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Dashboard
+      security:
+      - ApiKeyAuth: []
+      summary: Delete dashboard
+      x-summary-source: derived
+    get:
+      operationId: ReadDashboard
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadDashboardResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot read the Dashboard because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Dashboard
+      security:
+      - ApiKeyAuth: []
+      summary: Read dashboard
+      x-summary-source: derived
+    put:
+      operationId: UpdateDashboard
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateDashboardBody'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateDashboardResponse'
+          description: A successful response containing the updated Dashboard.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot update the Dashboard because the request is invalid.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot update the Dashboard because the slug does not exist.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot update the Dashboard because there is a conflict with an existing Dashboard.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Dashboard
+      security:
+      - ApiKeyAuth: []
+      summary: Update dashboard
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
 components:
   schemas:
+    configunstableReadDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+      type: object
+    configunstableListDashboardsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        dashboards:
+          items:
+            $ref: '#/components/schemas/configunstableDashboard'
+          type: array
+      type: object
+    configunstableCreateDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+      type: object
+    configunstableCreateDashboardRequest:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+      type: object
+    configunstableDashboard:
+      properties:
+        slug:
+          description: The unique identifier of the Dashboard. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Dashboard is created.
+          type: string
+        name:
+          description: The name of the Dashboard. You can modify this value after the Dashboard is created.
+          type: string
+        created_at:
+          description: Timestamp of when the Dashboard was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the Dashboard was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        collection_slug:
+          description: Required slug of the collection the dashboard belongs to.
+          type: string
+        dashboard_json:
+          description: Required raw JSON of the dashboard.
+          type: string
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configunstableDeleteDashboardResponse:
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableUpdateDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+      type: object
+    ConfigUnstableUpdateDashboardBody:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+        create_if_missing:
+          description: If `true`, the Dashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Dashboard does not already exist.
+          type: boolean
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     configv1Dashboard:
+      properties:
+        collection:
+          allOf:
+          - $ref: '#/components/schemas/configv1CollectionReference'
+          description: 'Collection that the dashboard belongs to. Required if `collection_slug` is not
+
+            set.'
+        collection_slug:
+          description: Optional. Slug of the collection the dashboard belongs to.
+          type: string
+        created_at:
+          description: Timestamp of when the Dashboard was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        dashboard_json:
+          description: Raw JSON representation that defines the structure of the dashboard.
+          type: string
+        labels:
+          additionalProperties:
+            type: string
+          description: Optional. Defines tags that add metadata about the dashboard.
+          type: object
+        name:
+          description: The name of the Dashboard. You can modify this value after the Dashboard is created.
+          type: string
+        slug:
+          description: The unique identifier of the Dashboard. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Dashboard is created.
+          type: string
+        updated_at:
+          description: Timestamp of when the Dashboard was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - name
+      type: object
+    configv1ListDashboardsResponse:
+      properties:
+        dashboards:
+          items:
+            $ref: '#/components/schemas/configv1Dashboard'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1CreateDashboardRequest:
+      properties:
+        dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1Dashboard'
+          description: The Dashboard to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Dashboard. If the specified configuration is valid, the endpoint returns a partial response without the Dashboard. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configv1CollectionReference:
+      properties:
+        slug:
+          type: string
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
+    configv1UpdateDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
+      type: object
+    configv1DeleteDashboardResponse:
+      type: object
+    apiError_2:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1ReadDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
+      type: object
+    ConfigV1UpdateDashboardBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the Dashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Dashboard does not already exist.
+          type: boolean
+        dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1Dashboard'
+          description: The Dashboard to update.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Dashboard. If the specified configuration is valid, the endpoint returns a partial response without the Dashboard. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configv1CreateDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
+      type: object
+    configv1Dashboard_2:
       type: object
       properties:
         slug:
@@ -302,38 +772,21 @@ components:
           additionalProperties:
             type: string
           description: Optional. Defines tags that add metadata about the dashboard.
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1DeleteDashboardResponse:
-      type: object
-    configv1CreateDashboardRequest:
+    configv1CreateDashboardRequest_2:
       type: object
       properties:
         dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
+          $ref: '#/components/schemas/configv1Dashboard_2'
         dry_run:
           type: boolean
           description: If true, the Dashboard isn't created, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
-    configv1CollectionReference:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-        slug:
-          type: string
-    ConfigV1UpdateDashboardBody:
-      type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-        create_if_missing:
-          type: boolean
-          description: If true, the Dashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dashboard does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Dashboard isn't created or updated, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
-    configv1PageResult:
+    configv1CollectionReferenceType_2:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    configv1PageResult_2:
       type: object
       properties:
         next_token:
@@ -343,44 +796,24 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    configv1ReadDashboardResponse:
+    ConfigV1UpdateDashboardBody_2:
       type: object
       properties:
         dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-    configv1CreateDashboardResponse:
-      type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-    configv1ListDashboardsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        dashboards:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1Dashboard'
-    configv1UpdateDashboardResponse:
-      type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1CollectionReferenceType:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-x-original-swagger-version: '2.0'
+          $ref: '#/components/schemas/configv1Dashboard_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the Dashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dashboard does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Dashboard isn't created or updated, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey
+x-refined-from:
+- chronosphere-config-unstable-swagger.json
+- chronosphere-config-v1-openapi3.json
+- chronosphere-openapi.yml

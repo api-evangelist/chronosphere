@@ -1,0 +1,139 @@
+openapi: 3.2.0
+info:
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/config/swagger.json'
+  title: Config V1 Service Attribute API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: ServiceAttribute
+paths:
+  /api/v1/config/service-attributes:
+    get:
+      operationId: ListServiceAttributes
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - in: query
+        name: slugs
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListServiceAttributesResponse'
+          description: A successful response.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ServiceAttribute
+      summary: List service attributes
+      x-summary-source: derived
+components:
+  schemas:
+    configv1ListServiceAttributesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        service_attributes:
+          items:
+            $ref: '#/components/schemas/configv1ServiceAttribute'
+          type: array
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1ServiceAttribute:
+      properties:
+        created_at:
+          description: Timestamp of when the service attributes were created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: A description of the service.
+          type: string
+        name:
+          description: 'The name of the service. You can modify this value after the service
+
+            attributes are created.'
+          type: string
+        notification_policy_slug:
+          description: The slug of the notification policy for the associated service.
+          type: string
+        service_slug:
+          description: The slug of the service.
+          type: string
+        team_slug:
+          description: The slug of the team that the associated service belongs to.
+          type: string
+        updated_at:
+          description: Timestamp of when the service attributes were updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

@@ -1,99 +1,97 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Trace Behavior Config API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
+  title: Chronosphere Trace Behavior Config API
   version: v1
+  description: 'Operations tagged TraceBehaviorConfig across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
 - url: /
 tags:
 - name: TraceBehaviorConfig
 paths:
   /api/v1/config/trace-behavior-config:
-    get:
+    delete:
+      operationId: DeleteTraceBehaviorConfig
+      parameters:
+      - in: query
+        name: dry_run
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteTraceBehaviorConfigResponse'
+          description: A successful response.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the TraceBehaviorConfig because it is in use.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the TraceBehaviorConfig because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
       tags:
       - TraceBehaviorConfig
+      security:
+      - ApiKeyAuth: []
+      summary: Delete trace behavior config
+      x-summary-source: derived
+    get:
       operationId: ReadTraceBehaviorConfig
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1ReadTraceBehaviorConfigResponse'
+          description: A successful response.
         '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot read the TraceBehaviorConfig because TraceBehaviorConfig has not been created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    put:
+          description: An undefined error response.
       tags:
       - TraceBehaviorConfig
-      operationId: UpdateTraceBehaviorConfig
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configv1UpdateTraceBehaviorConfigRequest'
-        required: true
-      responses:
-        '200':
-          description: A successful response containing the updated TraceBehaviorConfig.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/configv1UpdateTraceBehaviorConfigResponse'
-        '400':
-          description: Cannot update the TraceBehaviorConfig because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '404':
-          description: Cannot update the TraceBehaviorConfig because TraceBehaviorConfig has not been created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '500':
-          description: An unexpected error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        default:
-          description: An undefined error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
+      security:
+      - ApiKeyAuth: []
+      summary: Read trace behavior config
+      x-summary-source: derived
     post:
-      tags:
-      - TraceBehaviorConfig
       operationId: CreateTraceBehaviorConfig
       requestBody:
         content:
@@ -101,145 +99,272 @@ paths:
             schema:
               $ref: '#/components/schemas/configv1CreateTraceBehaviorConfigRequest'
         required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response containing the created TraceBehaviorConfig.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1CreateTraceBehaviorConfigResponse'
+          description: A successful response containing the created TraceBehaviorConfig.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the TraceBehaviorConfig because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the TraceBehaviorConfig because there is a conflict with an existing TraceBehaviorConfig.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-    delete:
+          description: An undefined error response.
       tags:
       - TraceBehaviorConfig
-      operationId: DeleteTraceBehaviorConfig
-      parameters:
-      - name: dry_run
-        in: query
-        schema:
-          type: boolean
+      security:
+      - ApiKeyAuth: []
+      summary: Create trace behavior config
+      x-summary-source: derived
+    put:
+      operationId: UpdateTraceBehaviorConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1UpdateTraceBehaviorConfigRequest'
+        required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1DeleteTraceBehaviorConfigResponse'
+                $ref: '#/components/schemas/configv1UpdateTraceBehaviorConfigResponse'
+          description: A successful response containing the updated TraceBehaviorConfig.
         '400':
-          description: Cannot delete the TraceBehaviorConfig because it is in use.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: Cannot update the TraceBehaviorConfig because the request is invalid.
         '404':
-          description: Cannot delete the TraceBehaviorConfig because the slug does not exist.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: Cannot update the TraceBehaviorConfig because TraceBehaviorConfig has not been created.
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - TraceBehaviorConfig
+      security:
+      - ApiKeyAuth: []
+      summary: Update trace behavior config
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1UpdateTraceBehaviorConfigResponse:
-      type: object
-      properties:
-        trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1DeleteTraceBehaviorConfigResponse:
-      type: object
     TraceBehaviorConfigMainBehaviorAssignment:
-      type: object
       properties:
-        created_at:
+        behavior_slug:
+          description: The slug reference of a trace behavior.
           type: string
+        created_at:
           description: The timestamp of when the trace behavior was created.
           format: date-time
-        updated_at:
           type: string
+        created_by:
+          description: The author or creator of the behavior assignment.
+          type: string
+        dataset_slug:
+          description: The slug reference of a trace dataset.
+          type: string
+        description:
+          description: A description of the behavior assignment.
+          type: string
+        updated_at:
           description: The timestamp of when the trace behavior was updated.
           format: date-time
-        dataset_slug:
           type: string
-          description: The slug reference of a trace dataset.
-        behavior_slug:
-          type: string
-          description: The slug reference of a trace behavior.
-        created_by:
-          type: string
-          description: The author or creator of the behavior assignment.
-        description:
-          type: string
-          description: A description of the behavior assignment.
-    configv1ReadTraceBehaviorConfigResponse:
       type: object
-      properties:
-        trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
     configv1UpdateTraceBehaviorConfigRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the TraceBehaviorConfig will be created if it does not already exist. If `false`, an error will be returned if the TraceBehaviorConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the TraceBehaviorConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehaviorConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        trace_behavior_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+          description: The TraceBehaviorConfig to update.
       type: object
+    configv1TraceBehaviorConfig:
+      description: 'TraceBehaviorConfig is a singleton configuration object that specifies the
+
+        configuration for trace behaviors.'
+      properties:
+        baseline_behavior_slug:
+          description: The baseline behavior to use for behavior assignments and base head sampling rates.
+          type: string
+        created_at:
+          description: Timestamp of when the TraceBehaviorConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        dataset_priorities:
+          description: "List of dataset priorities. This list specifies the order in which datasets are\nconsidered when determining the behavior to follow for a trace. Dataset\npriorities are used to break ties when a trace matches more than one dataset\nwith an active behavior.\n* Each entry in this list must refer to the slug of an existing dataset.\n* The order of the list is the order in which the datasets are considered.\n* The list must contain all datasets referenced in either\n  `main_behavior_assignments` or `override_behavior_assignments`.\n* The list can contain datasets that are not referenced in either of these\n  assignments."
+          items:
+            type: string
+          type: array
+        main_behavior_assignments:
+          description: 'List of assignments for the main behavior. The referenced datasets will be
+
+            enrolled in behaviors. The referenced behaviors are the active behaviors for the
+
+            dataset when there is no active override. Only one main behavior can be assigned
+
+            to a dataset. See the documentation for
+
+            [customizing your sampling
+
+            strategy](https://docs.chronosphere.io/control/shaping/sample-traces/behaviors#customize-your-sampling-strategy)
+
+            for more information.'
+          items:
+            $ref: '#/components/schemas/TraceBehaviorConfigMainBehaviorAssignment'
+          type: array
+        override_behavior_assignments:
+          description: 'List of assignments for the override behavior. These assignments specify the
+
+            active behavior for a dataset over a specific time range. Only one override
+
+            behavior can be assigned to a dataset.'
+          items:
+            $ref: '#/components/schemas/TraceBehaviorConfigOverrideBehaviorAssignment'
+          type: array
+        preview_behavior_assignments:
+          description: 'List of assignments for the preview behavior. The referenced behaviors are in
+
+            preview mode for the assigned dataset. You can assign only one preview behavior
+
+            to a dataset.'
+          items:
+            $ref: '#/components/schemas/TraceBehaviorConfigOverrideBehaviorAssignment'
+          type: array
+        updated_at:
+          description: Timestamp of when the TraceBehaviorConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    configv1UpdateTraceBehaviorConfigResponse:
       properties:
         trace_behavior_config:
           $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CreateTraceBehaviorConfigResponse:
+      properties:
+        trace_behavior_config:
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+      type: object
+    configv1CreateTraceBehaviorConfigRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the TraceBehaviorConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehaviorConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        trace_behavior_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+          description: The TraceBehaviorConfig to create.
+      type: object
+    configv1DeleteTraceBehaviorConfigResponse:
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    TraceBehaviorConfigOverrideBehaviorAssignment:
+      properties:
+        behavior_slug:
+          description: The slug reference of a trace behavior.
+          type: string
+        created_at:
+          description: The timestamp of when the override behavior assignment was created.
+          format: date-time
+          type: string
+        created_by:
+          description: The author or creator of the override.
+          type: string
+        dataset_slug:
+          description: The slug reference of a trace dataset.
+          type: string
+        description:
+          description: A description of the override.
+          type: string
+        end_time:
+          description: The ending time of the override.
+          format: date-time
+          type: string
+        start_time:
+          description: The starting time of the override.
+          format: date-time
+          type: string
+        updated_at:
+          description: The timestamp of when the override behavior assignment was updated.
+          format: date-time
+          type: string
+      type: object
+    configv1ReadTraceBehaviorConfigResponse:
+      properties:
+        trace_behavior_config:
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+      type: object
+    configv1UpdateTraceBehaviorConfigRequest_2:
+      type: object
+      properties:
+        trace_behavior_config:
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig_2'
         create_if_missing:
           type: boolean
           description: If true, the TraceBehaviorConfig will be created if it does not already exist. If false, an error will be returned if the TraceBehaviorConfig does not already exist.
         dry_run:
           type: boolean
           description: If true, the TraceBehaviorConfig isn't created or updated, and no response TraceBehaviorConfig will be returned. The response will return an error if the given TraceBehaviorConfig is invalid.
-    configv1CreateTraceBehaviorConfigResponse:
-      type: object
-      properties:
-        trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1TraceBehaviorConfig:
+    configv1TraceBehaviorConfig_2:
       type: object
       properties:
         created_at:
@@ -298,43 +423,30 @@ components:
       description: 'TraceBehaviorConfig is a singleton configuration object that specifies the
 
         configuration for trace behaviors.'
-    configv1CreateTraceBehaviorConfigRequest:
+    configv1CreateTraceBehaviorConfigRequest_2:
       type: object
       properties:
         trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig_2'
         dry_run:
           type: boolean
           description: If true, the TraceBehaviorConfig isn't created, and no response TraceBehaviorConfig will be returned. The response will return an error if the given TraceBehaviorConfig is invalid.
-    TraceBehaviorConfigOverrideBehaviorAssignment:
+    apiError_2:
       type: object
       properties:
-        created_at:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
           type: string
-          description: The timestamp of when the override behavior assignment was created.
-          format: date-time
-        updated_at:
-          type: string
-          description: The timestamp of when the override behavior assignment was updated.
-          format: date-time
-        dataset_slug:
-          type: string
-          description: The slug reference of a trace dataset.
-        behavior_slug:
-          type: string
-          description: The slug reference of a trace behavior.
-        start_time:
-          type: string
-          description: The starting time of the override.
-          format: date-time
-        end_time:
-          type: string
-          description: The ending time of the override.
-          format: date-time
-        created_by:
-          type: string
-          description: The author or creator of the override.
-        description:
-          type: string
-          description: A description of the override.
-x-original-swagger-version: '2.0'
+          description: An error message describing what went wrong.
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey
+x-refined-from:
+- chronosphere-config-v1-openapi3.json
+- chronosphere-openapi.yml

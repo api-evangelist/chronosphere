@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  description: 'WARNING: This API is unstable and is meant for experimentation only. Do not
+
+    use this API in production. The endpoints and schemas referenced in this
+
+    documentation will be changed or removed without notice and without any
+
+    backwards compatibility guarantee. Note that even though this API is unstable,
+
+    it is still connected to production data, so use with caution.'
+  title: Config Unstable Sync Prometheus API
+  version: UNSTABLE
+tags:
+- name: SyncPrometheus
+paths:
+  /api/unstable/config/sync-prometheus:
+    post:
+      description: '***
+
+        Sync Prometheus Configuration
+
+        ***'
+      operationId: SyncPrometheus
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableSyncPrometheusResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+      tags:
+      - SyncPrometheus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableSyncPrometheusRequest'
+        required: true
+      summary: Sync prometheus
+      x-summary-source: derived
+components:
+  schemas:
+    SyncPrometheusChronoConfig:
+      properties:
+        use_collections:
+          $ref: '#/components/schemas/SyncPrometheusContainerType'
+        collections_config:
+          $ref: '#/components/schemas/ChronoConfigCollectionsConfig'
+        severity_mappings:
+          items:
+            $ref: '#/components/schemas/ChronoConfigSeverityMapping'
+          type: array
+        severity_label_name:
+          description: 'Customer-specific name of alert rule label used to determine severity.
+
+            If omitted, the Chronosphere default of "severity" is used.'
+          type: string
+        assign_monitor_slugs:
+          description: 'TODO: before configv1 - is this still required? does chronoctl set it?'
+          type: boolean
+        monitor_signal_per_series:
+          description: If true, each monitor will not group alert notifications.
+          type: boolean
+        infer_monitor_signals:
+          description: Controls whether we try to infer monitor signals from the alertmanager route tree.
+          type: boolean
+        group_across_severities:
+          description: "If true, we set the the group_across_severities flag on notification policies to\ntrue, so that warn and critical notifications are grouped together.\n\nTODO:  i don't think we export this on notification policies in the public API,\n       we may need to figure out a better solution here (do we need to expose\n       in both, or do we need to update the comment to stop referring to the\n       option on the policy?)"
+          type: boolean
+        exists_op_supported:
+          description: 'If true, alert rule expressions that are not in the form of "expr op number" (e.g. "sum(stuff) > 5")
+
+            will be executed as-is.
+
+            Without this set, expressions will be converted to binary expressions (e.g. "x > y" as "(x - y) > 0").
+
+
+            TODO: before configv1 - is this still required? does chronoctl set it?'
+          type: boolean
+      type: object
+    SyncPrometheusContainerType:
+      enum:
+      - COLLECTIONS
+      - BUCKETS
+      title: 'TODO: confirm naming with InfoModel team'
+      type: string
+    ChronoConfigSeverityMapping:
+      properties:
+        severity:
+          type: string
+        chronosphere_severity:
+          $ref: '#/components/schemas/SeverityMappingSeverity'
+      type: object
+    configunstableSyncPrometheusRequest:
+      properties:
+        rules_yaml:
+          type: string
+        rules_yaml_gzip:
+          format: byte
+          type: string
+        alertmanager_yaml:
+          type: string
+        alertmanager_yaml_gzip:
+          format: byte
+          type: string
+        chrono_config:
+          $ref: '#/components/schemas/SyncPrometheusChronoConfig'
+        dry_run:
+          type: boolean
+      type: object
+    SeverityMappingSeverity:
+      enum:
+      - CRITICAL
+      type: string
+    ChronoConfigCollectionsConfig:
+      properties:
+        group_teams:
+          description: 'Ordered map of prometheus group regexes to chronosphere team slug. This is used to
+
+            determine which team will own the collection created for each prometheus group..'
+          items:
+            $ref: '#/components/schemas/CollectionsConfigGroupTeam'
+          type: array
+        notification_policy_team_slug:
+          description: The team that will own the generated notification policy
+          type: string
+      title: Configuration for when ContainerType == COLLECTIONS or DEFAULT is collections
+      type: object
+    CollectionsConfigGroupTeam:
+      properties:
+        group_regex:
+          type: string
+        team_slug:
+          type: string
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    SyncPrometheusChangeLog:
+      properties:
+        type:
+          $ref: '#/components/schemas/SyncPrometheusChangeLogType'
+        diff:
+          description: 'TODO: do we want to keep diff in the public API?'
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+      type: object
+    SyncPrometheusChangeLogType:
+      enum:
+      - CREATED_NOTIFIER
+      - UPDATED_NOTIFIER
+      - DELETED_NOTIFIER
+      - CREATED_BUCKET
+      - UPDATED_BUCKET
+      - DELETED_BUCKET
+      - CREATED_COLLECTION
+      - UPDATED_COLLECTION
+      - DELETED_COLLECTION
+      - CREATED_NOTIFICATION_POLICY
+      - UPDATED_NOTIFICATION_POLICY
+      - DELETED_NOTIFICATION_POLICY
+      - CREATED_MONITOR
+      - UPDATED_MONITOR
+      - DELETED_MONITOR
+      - CREATED_RECORDING_RULE
+      - UPDATED_RECORDING_RULE
+      - DELETED_RECORDING_RULE
+      type: string
+    configunstableSyncPrometheusResponse:
+      properties:
+        changes:
+          items:
+            $ref: '#/components/schemas/SyncPrometheusChangeLog'
+          type: array
+      type: object

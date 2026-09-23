@@ -1,0 +1,141 @@
+openapi: 3.2.0
+info:
+  description: 'The State API provides HTTP/JSON REST endpoints for accessing the runtime state
+
+    of the Chronosphere system.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/state/swagger.json'
+  title: State V1 Rule Evaluations API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: RuleEvaluations
+paths:
+  /api/v1/state/rule-evaluations:
+    get:
+      operationId: ListRuleEvaluations
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: When false (default), only failures are returned. Set true to also include non-fatal warnings.
+        in: query
+        name: include_warnings
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statev1ListRuleEvaluationsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+      tags:
+      - RuleEvaluations
+      summary: List rule evaluations
+      x-summary-source: derived
+components:
+  schemas:
+    RuleEvaluationRuleType:
+      enum:
+      - MONITOR
+      - RECORDING
+      type: string
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    RuleEvaluationSeverity:
+      description: "Severity of the rule evaluation issue.\n\n - SEVERITY_ERROR: A hard evaluation failure.\n - SEVERITY_WARNING: A non-fatal warning; the evaluation succeeded but something needs attention."
+      enum:
+      - SEVERITY_ERROR
+      - SEVERITY_WARNING
+      type: string
+    statev1ListRuleEvaluationsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        rule_evaluations:
+          items:
+            $ref: '#/components/schemas/statev1RuleEvaluation'
+          type: array
+      type: object
+    statev1RuleEvaluation:
+      properties:
+        count:
+          description: The number of rule evaluation issues occurred over last 5 minutes.
+          format: int32
+          type: integer
+        detected_at:
+          description: 'Timestamp when the rule evaluation issues are detected.
+
+            Rule evaluations issues are aggregated over last 5 minute leading up to detected_at.'
+          format: date-time
+          type: string
+        message:
+          description: Detailed message related to rule evaluation issue. See "Admin > Evaluation failures" in the Chronosphere documentation for more information.
+          type: string
+        rule_slug:
+          description: Unique identifier of the rule.
+          type: string
+        rule_type:
+          allOf:
+          - $ref: '#/components/schemas/RuleEvaluationRuleType'
+          description: Type of the rule.
+          example: MONITOR
+        severity:
+          allOf:
+          - $ref: '#/components/schemas/RuleEvaluationSeverity'
+          description: 'Severity of the rule evaluation issue. WARNING-severity issues are only returned when
+
+            include_warnings is set on the request.'
+          example: SEVERITY_ERROR
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

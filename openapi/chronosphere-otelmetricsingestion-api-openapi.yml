@@ -1,99 +1,92 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Otel Metrics Ingestion API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
+  title: Chronosphere Otel Metrics Ingestion API
   version: v1
+  description: 'Operations tagged OtelMetricsIngestion across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
 - url: /
 tags:
 - name: OtelMetricsIngestion
 paths:
   /api/v1/config/otel-metrics-ingestion:
-    get:
+    delete:
+      operationId: DeleteOtelMetricsIngestion
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteOtelMetricsIngestionResponse'
+          description: A successful response.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the OtelMetricsIngestion because it is in use.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the OtelMetricsIngestion because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
       tags:
       - OtelMetricsIngestion
+      security:
+      - ApiKeyAuth: []
+      summary: Delete otel metrics ingestion
+      x-summary-source: derived
+    get:
       operationId: ReadOtelMetricsIngestion
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1ReadOtelMetricsIngestionResponse'
+          description: A successful response.
         '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot read the OtelMetricsIngestion because OtelMetricsIngestion has not been created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    put:
+          description: An undefined error response.
       tags:
       - OtelMetricsIngestion
-      operationId: UpdateOtelMetricsIngestion
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configv1UpdateOtelMetricsIngestionRequest'
-        required: true
-      responses:
-        '200':
-          description: A successful response containing the updated OtelMetricsIngestion.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/configv1UpdateOtelMetricsIngestionResponse'
-        '400':
-          description: Cannot update the OtelMetricsIngestion because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '404':
-          description: Cannot update the OtelMetricsIngestion because OtelMetricsIngestion has not been created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '500':
-          description: An unexpected error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        default:
-          description: An undefined error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
+      security:
+      - ApiKeyAuth: []
+      summary: Read otel metrics ingestion
+      x-summary-source: derived
     post:
-      tags:
-      - OtelMetricsIngestion
       operationId: CreateOtelMetricsIngestion
       requestBody:
         content:
@@ -101,124 +94,233 @@ paths:
             schema:
               $ref: '#/components/schemas/configv1CreateOtelMetricsIngestionRequest'
         required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response containing the created OtelMetricsIngestion.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1CreateOtelMetricsIngestionResponse'
+          description: A successful response containing the created OtelMetricsIngestion.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the OtelMetricsIngestion because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the OtelMetricsIngestion because there is a conflict with an existing OtelMetricsIngestion.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-    delete:
+          description: An undefined error response.
       tags:
       - OtelMetricsIngestion
-      operationId: DeleteOtelMetricsIngestion
+      security:
+      - ApiKeyAuth: []
+      summary: Create otel metrics ingestion
+      x-summary-source: derived
+    put:
+      operationId: UpdateOtelMetricsIngestion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1UpdateOtelMetricsIngestionRequest'
+        required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1DeleteOtelMetricsIngestionResponse'
+                $ref: '#/components/schemas/configv1UpdateOtelMetricsIngestionResponse'
+          description: A successful response containing the updated OtelMetricsIngestion.
         '400':
-          description: Cannot delete the OtelMetricsIngestion because it is in use.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: Cannot update the OtelMetricsIngestion because the request is invalid.
         '404':
-          description: Cannot delete the OtelMetricsIngestion because the slug does not exist.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: Cannot update the OtelMetricsIngestion because OtelMetricsIngestion has not been created.
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - OtelMetricsIngestion
+      security:
+      - ApiKeyAuth: []
+      summary: Update otel metrics ingestion
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
 components:
   schemas:
+    OtelMetricsIngestionResourceAttributes:
+      properties:
+        exclude_keys:
+          description: 'Specifies resource attributes to exclude. If a resource attribute''s key
+
+            matches any of the strings in this array, that resource attribute is
+
+            excluded.'
+          items:
+            type: string
+          type: array
+        filter_mode:
+          allOf:
+          - $ref: '#/components/schemas/ResourceAttributesFilterMode'
+          description: 'Specifies which filter mode to use for copying resource attributes into
+
+            the label set. The `APPEND_DEFAULT_EXCLUDE_KEYS` mode copies all resource
+
+            attributes, excluding any that match either the user-supplied
+
+            `exclude_keys` list or a Chronosphere-managed list of suggested
+
+            exclusions. The `CUSTOM_EXCLUDE_KEYS` mode copies all resource
+
+            attributes, excluding any that match the user-supplied `exclude_keys`
+
+            list, but is not affected by the Chronosphere-managed list of exclusions.
+
+            Default: `APPEND_DEFAULT_EXCLUDE_KEYS`.'
+        flatten_mode:
+          allOf:
+          - $ref: '#/components/schemas/ResourceAttributesFlattenMode'
+          description: 'Specifies how to combine hierarchical OpenTelemetry attributes into a
+
+            single set of of labels for a given time series. The `MERGE` mode copies
+
+            resource attributes only if there is no conflicting attribute on the
+
+            individual data point. The `OVERWRITE` mode gives resource attributes
+
+            precedence over data point attributes. The `IGNORE` mode doesn''t copy any
+
+            resource attributes into the time series label set. Default: `MERGE`.'
+        generate_target_info:
+          description: 'If `true`, generates a `target_info` time series with labels derived from
+
+            resource attributes. The `filter_mode` and `exclude_keys` settings apply
+
+            in the same manner that they apply to the `flatten` operation. Default:
+
+            `false`.'
+          type: boolean
+      type: object
+    configv1ReadOtelMetricsIngestionResponse:
+      properties:
+        otel_metrics_ingestion:
+          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
+      type: object
     ResourceAttributesFlattenMode:
-      type: string
       enum:
       - MERGE
       - OVERWRITE
       - IGNORE
-    configv1UpdateOtelMetricsIngestionResponse:
-      type: object
-      properties:
-        otel_metrics_ingestion:
-          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1UpdateOtelMetricsIngestionRequest:
-      type: object
-      properties:
-        otel_metrics_ingestion:
-          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-        create_if_missing:
-          type: boolean
-          description: If true, the OtelMetricsIngestion will be created if it does not already exist. If false, an error will be returned if the OtelMetricsIngestion does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the OtelMetricsIngestion isn't created or updated, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
-    configv1ReadOtelMetricsIngestionResponse:
-      type: object
-      properties:
-        otel_metrics_ingestion:
-          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-    configv1CreateOtelMetricsIngestionResponse:
-      type: object
-      properties:
-        otel_metrics_ingestion:
-          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-    ResourceAttributesFilterMode:
       type: string
+    configv1UpdateOtelMetricsIngestionResponse:
+      properties:
+        otel_metrics_ingestion:
+          $ref: '#/components/schemas/configv1OtelMetricsIngestion'
+      type: object
+    configv1CreateOtelMetricsIngestionRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the OtelMetricsIngestion. If the specified configuration is valid, the endpoint returns a partial response without the OtelMetricsIngestion. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        otel_metrics_ingestion:
+          allOf:
+          - $ref: '#/components/schemas/configv1OtelMetricsIngestion'
+          description: The OtelMetricsIngestion to create.
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1OtelMetricsIngestion:
+      properties:
+        created_at:
+          description: Timestamp of when the OtelMetricsIngestion was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        resource_attributes:
+          allOf:
+          - $ref: '#/components/schemas/OtelMetricsIngestionResourceAttributes'
+          description: 'Specifies how to ingest OpenTelemetry resource attributes. These attributes
+
+            have no direct equivalent in the internal data model of Chronosphere
+
+            Observability Platform.'
+        updated_at:
+          description: Timestamp of when the OtelMetricsIngestion was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    configv1DeleteOtelMetricsIngestionResponse:
+      type: object
+    configv1UpdateOtelMetricsIngestionRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the OtelMetricsIngestion will be created if it does not already exist. If `false`, an error will be returned if the OtelMetricsIngestion does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the OtelMetricsIngestion. If the specified configuration is valid, the endpoint returns a partial response without the OtelMetricsIngestion. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        otel_metrics_ingestion:
+          allOf:
+          - $ref: '#/components/schemas/configv1OtelMetricsIngestion'
+          description: The OtelMetricsIngestion to update.
+      type: object
+    ResourceAttributesFilterMode:
       enum:
       - APPEND_DEFAULT_EXCLUDE_KEYS
       - CUSTOM_EXCLUDE_KEYS
-    configv1CreateOtelMetricsIngestionRequest:
-      type: object
+      type: string
+    configv1CreateOtelMetricsIngestionResponse:
       properties:
         otel_metrics_ingestion:
           $ref: '#/components/schemas/configv1OtelMetricsIngestion'
-        dry_run:
-          type: boolean
-          description: If true, the OtelMetricsIngestion isn't created, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
-    OtelMetricsIngestionResourceAttributes:
+      type: object
+    OtelMetricsIngestionResourceAttributes_2:
       type: object
       properties:
         flatten_mode:
@@ -239,7 +341,15 @@ components:
             attributes. The filter_mode and exclude_keys settings apply in the same way as
 
             for the "flatten" operation. The default is false.'
-    apiError:
+    configv1CreateOtelMetricsIngestionRequest_2:
+      type: object
+      properties:
+        otel_metrics_ingestion:
+          $ref: '#/components/schemas/configv1OtelMetricsIngestion_2'
+        dry_run:
+          type: boolean
+          description: If true, the OtelMetricsIngestion isn't created, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
+    apiError_2:
       type: object
       properties:
         code:
@@ -249,9 +359,7 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    configv1DeleteOtelMetricsIngestionResponse:
-      type: object
-    configv1OtelMetricsIngestion:
+    configv1OtelMetricsIngestion_2:
       type: object
       properties:
         created_at:
@@ -265,5 +373,24 @@ components:
           format: date-time
           readOnly: true
         resource_attributes:
-          $ref: '#/components/schemas/OtelMetricsIngestionResourceAttributes'
-x-original-swagger-version: '2.0'
+          $ref: '#/components/schemas/OtelMetricsIngestionResourceAttributes_2'
+    configv1UpdateOtelMetricsIngestionRequest_2:
+      type: object
+      properties:
+        otel_metrics_ingestion:
+          $ref: '#/components/schemas/configv1OtelMetricsIngestion_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the OtelMetricsIngestion will be created if it does not already exist. If false, an error will be returned if the OtelMetricsIngestion does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the OtelMetricsIngestion isn't created or updated, and no response OtelMetricsIngestion will be returned. The response will return an error if the given OtelMetricsIngestion is invalid.
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey
+x-refined-from:
+- chronosphere-config-v1-openapi3.json
+- chronosphere-openapi.yml

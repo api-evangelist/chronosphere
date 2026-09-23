@@ -1,87 +1,79 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Notifier API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
+  title: Chronosphere Notifier API
   version: v1
+  description: 'Operations tagged Notifier across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
 - url: /
 tags:
 - name: Notifier
 paths:
   /api/v1/config/notifiers:
     get:
-      tags:
-      - Notifier
       operationId: ListNotifiers
       parameters:
-      - name: page.max_size
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
         in: query
-        description: 'Page size preference (i.e. how many items are returned in the next
-
-          page). If zero, the server will use a default. Regardless of what size
-
-          is given, clients must never assume how many items will be returned.'
+        name: page.max_size
         schema:
-          type: integer
           format: int64
-      - name: page.token
-        in: query
-        description: 'Opaque page token identifying which page to request. An empty token
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
 
-          identifies the first page.'
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
         schema:
           type: string
-      - name: slugs
+      - description: Filters results by slug, where any Notifier with a matching slug in the given list (and matches all other filters) will be returned.
         in: query
-        description: Filters results by slug, where any Notifier with a matching slug in the given list (and matches all other filters) is returned.
-        style: form
-        explode: true
+        name: slugs
         schema:
-          type: array
           items:
             type: string
-      - name: names
-        in: query
-        description: Filters results by name, where any Notifier with a matching name in the given list (and matches all other filters) is returned.
-        style: form
-        explode: true
-        schema:
           type: array
+      - description: Filters results by name, where any Notifier with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        schema:
           items:
             type: string
+          type: array
       responses:
         '200':
-          description: A successful response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1ListNotifiersResponse'
+          description: A successful response.
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    post:
+          description: An undefined error response.
       tags:
       - Notifier
+      security:
+      - ApiKeyAuth: []
+      summary: List notifiers
+      x-summary-source: derived
+    post:
       operationId: CreateNotifier
       requestBody:
         content:
@@ -89,81 +81,140 @@ paths:
             schema:
               $ref: '#/components/schemas/configv1CreateNotifierRequest'
         required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response containing the created Notifier.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1CreateNotifierResponse'
+          description: A successful response containing the created Notifier.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the Notifier because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot create the Notifier because there is a conflict with an existing Notifier.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-  /api/v1/config/notifiers/{slug}:
-    get:
+          description: An undefined error response.
       tags:
       - Notifier
-      operationId: ReadNotifier
+      security:
+      - ApiKeyAuth: []
+      summary: Create notifier
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
+  /api/v1/config/notifiers/{slug}:
+    delete:
+      operationId: DeleteNotifier
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
       responses:
         '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteNotifierResponse'
           description: A successful response.
+        '400':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ReadNotifierResponse'
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the Notifier because it is in use.
         '404':
-          description: Cannot read the Notifier because the slug does not exist.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: Cannot delete the Notifier because the slug does not exist.
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-    put:
+          description: An undefined error response.
       tags:
       - Notifier
+      security:
+      - ApiKeyAuth: []
+      summary: Delete notifier
+      x-summary-source: derived
+    get:
+      operationId: ReadNotifier
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadNotifierResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot read the Notifier because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Notifier
+      security:
+      - ApiKeyAuth: []
+      summary: Read notifier
+      x-summary-source: derived
+    put:
       operationId: UpdateNotifier
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
@@ -173,90 +224,543 @@ paths:
             schema:
               $ref: '#/components/schemas/ConfigV1UpdateNotifierBody'
         required: true
+        x-originalParamName: body
       responses:
         '200':
-          description: A successful response containing the updated Notifier.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/configv1UpdateNotifierResponse'
+          description: A successful response containing the updated Notifier.
         '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot update the Notifier because the request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot update the Notifier because the slug does not exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
           description: Cannot update the Notifier because there is a conflict with an existing Notifier.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
         '500':
-          description: An unexpected error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
         default:
-          description: An undefined error response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
-      x-codegen-request-body-name: body
-    delete:
+          description: An undefined error response.
       tags:
       - Notifier
-      operationId: DeleteNotifier
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/configv1DeleteNotifierResponse'
-        '400':
-          description: Cannot delete the Notifier because it is in use.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '404':
-          description: Cannot delete the Notifier because the slug does not exist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        '500':
-          description: An unexpected error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/apiError'
-        default:
-          description: An undefined error response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/genericError'
+      security:
+      - ApiKeyAuth: []
+      summary: Update notifier
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
 components:
   schemas:
-    genericError:
+    configv1NotifierWebhookConfig:
+      properties:
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        url:
+          description: 'Your webhook URL. This URL will be called as a `POST` request. Required
+
+            if including a `webhook` object in your request body.'
+          type: string
       type: object
+    configv1NotifierHTTPConfig:
+      properties:
+        basic_auth:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfigBasicAuth'
+          description: 'If an object is specified, sets an `Authorization` header with the
+
+            values of `password` and `username`. Cannot be set if `bearer_token` is
+
+            set.'
+        bearer_token:
+          description: Sets a token for bearer authentication. Cannot be set if `basic_auth` is set.
+          type: string
+        proxy_url:
+          description: 'Your proxy URL. (This parameter is deprecated, and custom proxies are
+
+            unsupported.)'
+          type: string
+        tls_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfigTLSConfig'
+          description: Your TLS configuration.
+      type: object
+    genericError:
       additionalProperties: true
+      type: object
+    configv1CreateNotifierResponse:
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier'
+      type: object
+    SlackConfigField:
+      properties:
+        short:
+          type: boolean
+        title:
+          type: string
+        value:
+          type: string
+      type: object
+    configv1ReadNotifierResponse:
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier'
+      type: object
+    NotifierEmailConfig:
+      properties:
+        html:
+          description: The body of the email to send, in HTML format.
+          type: string
+        text:
+          description: The body of the email to send, in plain text format.
+          type: string
+        to:
+          description: 'The email address to send notifications to. Required if including an
+
+            `email` object in your request body.'
+          type: string
+      type: object
+    ConfigV1UpdateNotifierBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the Notifier will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Notifier does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Notifier. If the specified configuration is valid, the endpoint returns a partial response without the Notifier. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        notifier:
+          allOf:
+          - $ref: '#/components/schemas/configv1Notifier'
+          description: The Notifier to update.
+      type: object
+    PagerdutyConfigImage:
+      properties:
+        alt:
+          type: string
+        href:
+          type: string
+        src:
+          type: string
+      type: object
+    configv1NotifierSlackConfig:
+      properties:
+        actions:
+          items:
+            $ref: '#/components/schemas/NotifierSlackConfigAction'
+          type: array
+        api_url:
+          description: 'Your Slack webhook API URL. Required if including a `slack` object in
+
+            your request body.'
+          type: string
+        callback_id:
+          type: string
+        channel:
+          description: The channel to send notifications to.
+          type: string
+        color:
+          type: string
+        fallback:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/SlackConfigField'
+          type: array
+        footer:
+          type: string
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        icon_emoji:
+          type: string
+        icon_url:
+          type: string
+        image_url:
+          type: string
+        link_names:
+          type: boolean
+        mrkdwn_in:
+          items:
+            type: string
+          type: array
+        pretext:
+          type: string
+        short_fields:
+          type: boolean
+        text:
+          type: string
+        thumb_url:
+          type: string
+        title:
+          type: string
+        title_link:
+          type: string
+        username:
+          description: The user to send notifications to.
+          type: string
+      type: object
+    configv1DeleteNotifierResponse:
+      type: object
+    OpsGenieConfigResponder:
+      properties:
+        id:
+          description: The ID of the responder. Cannot be set if `name` or `username` are set.
+          type: string
+        name:
+          description: The name of the responder. Cannot be set if `id` or `username` are set.
+          type: string
+        responder_type:
+          allOf:
+          - $ref: '#/components/schemas/ResponderResponderType'
+          description: The type of the responder.
+        username:
+          description: The username of the responder. Cannot be set if `id` or `name` are set.
+          type: string
+      type: object
+    configv1NotifierHTTPConfigTLSConfig:
+      properties:
+        insecure_skip_verify:
+          description: If `true`, disables validation of the server certificate.
+          type: boolean
+      type: object
+    PagerdutyConfigLink:
+      properties:
+        href:
+          type: string
+        text:
+          type: string
+      type: object
+    configv1CreateNotifierRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Notifier. If the specified configuration is valid, the endpoint returns a partial response without the Notifier. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        notifier:
+          allOf:
+          - $ref: '#/components/schemas/configv1Notifier'
+          description: The Notifier to create.
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ResponderResponderType:
+      enum:
+      - TEAM
+      - USER
+      - ESCALATION
+      - SCHEDULE
+      type: string
+    NotifierSlackConfigAction:
+      properties:
+        confirm_field:
+          $ref: '#/components/schemas/SlackConfigConfirmationField'
+        name:
+          type: string
+        style:
+          type: string
+        text:
+          type: string
+        type:
+          type: string
+        url:
+          type: string
+        value:
+          type: string
+      type: object
+    configv1NotifierPagerdutyConfig:
+      properties:
+        class:
+          description: The class of the event.
+          type: string
+        client:
+          description: The client identification of the notification sender.
+          type: string
+        client_url:
+          description: A backlink to the sender of the notification.
+          type: string
+        component:
+          description: The part or component of the affected system that is broken.
+          type: string
+        description:
+          description: A description of the incident.
+          type: string
+        details:
+          additionalProperties:
+            type: string
+          description: 'A set of key/value pairs with additional information about the incident. These
+
+            key/value pairs can include any arbitrary data.'
+          type: object
+        group:
+          description: A cluster or grouping of services.
+          type: string
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        images:
+          description: Images to attach to the incident.
+          items:
+            $ref: '#/components/schemas/PagerdutyConfigImage'
+          type: array
+        links:
+          description: Links to attach to the incident.
+          items:
+            $ref: '#/components/schemas/PagerdutyConfigLink'
+          type: array
+        routing_key:
+          description: 'Your PagerDuty integration key, if using the PagerDuty integration type
+
+            `Events API v2`. Cannot be set if `service_key` is set.'
+          type: string
+        service_key:
+          description: 'Your PagerDuty integration key, if using the PagerDuty integration type
+
+            `Prometheus`. Cannot be set if `routing_key` is set.'
+          type: string
+        severity:
+          description: 'The severity of the incident. Possible values: `critical`, `error`,
+
+            `warning`, or `info`.'
+          type: string
+        url:
+          description: The Pagerduty URL to send API requests to.
+          type: string
+      type: object
+    configv1Notifier:
+      properties:
+        created_at:
+          description: Timestamp of when the Notifier was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        discard:
+          description: 'If `true`, enables the `discard` integration, which discards all
+
+            notifications. Cannot be set if another integration is set.'
+          type: boolean
+        email:
+          allOf:
+          - $ref: '#/components/schemas/NotifierEmailConfig'
+          description: 'If an object is specified, sends notifications through an email integration.
+
+            Cannot be set if another integration is set.'
+        name:
+          description: The name of the Notifier. You can modify this value after the Notifier is created.
+          type: string
+        ops_genie:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierOpsGenieConfig'
+          description: 'If an object is specified, sends notifications through an Opsgenie integration.
+
+            Cannot be set if another integration is set.'
+        pagerduty:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierPagerdutyConfig'
+          description: 'If an object is specified, sends notifications through a PagerDuty integration.
+
+            Cannot be set if another integration is set.'
+        skip_resolved:
+          description: 'If `true`, disables notifications for resolved alerts. Cannot be set if
+
+            `discard` equals `true`.'
+          type: boolean
+        slack:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierSlackConfig'
+          description: 'If an object is specified, sends notifications through a Slack integration.
+
+            Cannot be set if another integration is set.'
+        slug:
+          description: The unique identifier of the Notifier. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Notifier is created.
+          type: string
+        updated_at:
+          description: Timestamp of when the Notifier was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        victor_ops:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierVictorOpsConfig'
+          description: 'If an object is specified, sends notifications through a VictorOps integration.
+
+            Cannot be set if another integration is set.'
+        webhook:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierWebhookConfig'
+          description: 'If an object is specified, sends notifications through a webhook integration.
+
+            Cannot be set if another integration is set.'
+      required:
+      - name
+      type: object
+    SlackConfigConfirmationField:
+      properties:
+        dismiss_text:
+          type: string
+        ok_text:
+          type: string
+        text:
+          type: string
+        title:
+          type: string
+      type: object
+    configv1NotifierOpsGenieConfig:
+      properties:
+        api_key:
+          description: 'Your Opsgenie API key. Required if including an `ops_genie` object in your
+
+            request body.'
+          type: string
+        api_url:
+          description: 'The Opsgenie API URL to send requests to. Required if including an
+
+            `ops_genie` object in your request body.'
+          example: https://api.opsgenie.com/
+          type: string
+        description:
+          description: A description of the alert.
+          type: string
+        details:
+          additionalProperties:
+            type: string
+          description: 'A set of key/value pairs with additional information about the alert. These
+
+            key/value pairs can include any arbitrary data.'
+          type: object
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        message:
+          description: The alert text.
+          type: string
+        note:
+          description: A note about the alert.
+          type: string
+        priority:
+          description: The priority level of alert. Possible values are `P1`, `P2`, `P3`, `P4`, and `P5`.
+          type: string
+        responders:
+          description: List of responders responsible for notifications.
+          items:
+            $ref: '#/components/schemas/OpsGenieConfigResponder'
+          type: array
+        source:
+          description: A backlink to the sender of the notification.
+          type: string
+        tags:
+          description: A comma-separated list of tags attached to the notifications.
+          type: string
+      type: object
+    configv1NotifierHTTPConfigBasicAuth:
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+      type: object
+    configv1UpdateNotifierResponse:
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier'
+      type: object
+    configv1ListNotifiersResponse:
+      properties:
+        notifiers:
+          items:
+            $ref: '#/components/schemas/configv1Notifier'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1NotifierVictorOpsConfig:
+      properties:
+        api_key:
+          description: 'Your VictorOps API key. Required if including a `victor_ops` object in
+
+            your request body.'
+          type: string
+        api_url:
+          description: 'The VictorOps API URL. Required if including a `victor_ops` object in your
+
+            request body.'
+          type: string
+        custom_fields:
+          additionalProperties:
+            type: string
+          type: object
+        entity_display_name:
+          description: A summary of the alerted problem.
+          type: string
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        message_type:
+          description: 'The behavior of the alert. Possible values are `CRITICAL`, `WARNING`, and
+
+            `INFO`.'
+          type: string
+        monitoring_tool:
+          description: The monitoring tool from which the state message originated.
+          type: string
+        routing_key:
+          description: 'Your VictorOps routing key. Required if including a `victor_ops` object in
+
+            your request body.'
+          type: string
+        state_message:
+          description: A detailed explanation of the alerted problem.
+          type: string
+      type: object
+    HTTPConfigTLSConfig:
+      type: object
+      properties:
+        insecure_skip_verify:
+          type: boolean
+          description: Disables validation of the server certificate.
     NotifierOpsGenieConfig:
       type: object
       properties:
@@ -290,7 +794,7 @@ components:
           type: array
           description: List of responders responsible for notifications.
           items:
-            $ref: '#/components/schemas/OpsGenieConfigResponder'
+            $ref: '#/components/schemas/OpsGenieConfigResponder_2'
         tags:
           type: string
           description: Comma separated list of tags attached to the notifications.
@@ -300,254 +804,6 @@ components:
         priority:
           type: string
           description: Priority level of alert. Possible values are P1, P2, P3, P4, and P5.
-    OpsGenieConfigResponder:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the responder. Cannot be set if name or username are set.
-        name:
-          type: string
-          description: Name of the responder. Cannot be set if id or username are set.
-        username:
-          type: string
-          description: Username of the responder. Cannot be set if id or name are set.
-        responder_type:
-          $ref: '#/components/schemas/ResponderResponderType'
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1Notifier:
-      type: object
-      properties:
-        slug:
-          type: string
-          description: Unique identifier of the Notifier. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Notifier is created.
-        name:
-          type: string
-          description: Required. Name of the Notifier. You can modify this value after the Notifier is created.
-        created_at:
-          type: string
-          description: Timestamp of when the Notifier was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          description: Timestamp of when the Notifier was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        skip_resolved:
-          type: boolean
-          description: If true, do not notify on resolved alerts. Cannot set if discard is set.
-        webhook:
-          $ref: '#/components/schemas/NotifierWebhookConfig'
-        slack:
-          $ref: '#/components/schemas/NotifierSlackConfig'
-        pagerduty:
-          $ref: '#/components/schemas/NotifierPagerdutyConfig'
-        email:
-          $ref: '#/components/schemas/NotifierEmailConfig'
-        ops_genie:
-          $ref: '#/components/schemas/NotifierOpsGenieConfig'
-        victor_ops:
-          $ref: '#/components/schemas/NotifierVictorOpsConfig'
-        discard:
-          type: boolean
-          description: 'If set, enables the "discard" integration which simply discards all
-
-            notifications. Cannot set if another integration is set.'
-    HTTPConfigBasicAuth:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-    NotifierEmailConfig:
-      type: object
-      properties:
-        to:
-          type: string
-          description: Required email address to send notifications to.
-        html:
-          type: string
-          description: Optional HTML body of the email.
-        text:
-          type: string
-          description: Optional text body of the email.
-    configv1ReadNotifierResponse:
-      type: object
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-    configv1ListNotifiersResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        notifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1Notifier'
-    configv1CreateNotifierRequest:
-      type: object
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-        dry_run:
-          type: boolean
-          description: If true, the Notifier isn't created, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
-    PagerdutyConfigLink:
-      type: object
-      properties:
-        href:
-          type: string
-        text:
-          type: string
-    ResponderResponderType:
-      type: string
-      enum:
-      - TEAM
-      - USER
-      - ESCALATION
-      - SCHEDULE
-    HTTPConfigTLSConfig:
-      type: object
-      properties:
-        insecure_skip_verify:
-          type: boolean
-          description: Disables validation of the server certificate.
-    ConfigV1UpdateNotifierBody:
-      type: object
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-        create_if_missing:
-          type: boolean
-          description: If true, the Notifier will be created if it does not already exist, identified by slug. If false, an error will be returned if the Notifier does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Notifier isn't created or updated, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
-    PagerdutyConfigImage:
-      type: object
-      properties:
-        src:
-          type: string
-        alt:
-          type: string
-        href:
-          type: string
-    NotifierWebhookConfig:
-      type: object
-      properties:
-        http_config:
-          $ref: '#/components/schemas/NotifierHTTPConfig'
-        url:
-          type: string
-          description: Required webhook URL (will be called as a POST request).
-    SlackConfigConfirmationField:
-      type: object
-      properties:
-        text:
-          type: string
-        title:
-          type: string
-        ok_text:
-          type: string
-        dismiss_text:
-          type: string
-    configv1DeleteNotifierResponse:
-      type: object
-    NotifierHTTPConfig:
-      type: object
-      properties:
-        basic_auth:
-          $ref: '#/components/schemas/HTTPConfigBasicAuth'
-        bearer_token:
-          type: string
-          description: Bearer token authentication. Cannot be set if basic_auth is set.
-        proxy_url:
-          type: string
-          description: 'Optional proxy URL.
-
-            DEPRECATED: Custom proxies are unsupported.'
-        tls_config:
-          $ref: '#/components/schemas/HTTPConfigTLSConfig'
-    SlackConfigField:
-      type: object
-      properties:
-        title:
-          type: string
-        value:
-          type: string
-        short:
-          type: boolean
-    configv1CreateNotifierResponse:
-      type: object
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-    NotifierSlackConfig:
-      type: object
-      properties:
-        http_config:
-          $ref: '#/components/schemas/NotifierHTTPConfig'
-        api_url:
-          type: string
-          description: Required Slack webhook API URL.
-        channel:
-          type: string
-          description: The channel to send notifications to.
-        username:
-          type: string
-          description: The user to send notifications to.
-        color:
-          type: string
-        title:
-          type: string
-        title_link:
-          type: string
-        pretext:
-          type: string
-        text:
-          type: string
-        footer:
-          type: string
-        fallback:
-          type: string
-        callback_id:
-          type: string
-        icon_emoji:
-          type: string
-        icon_url:
-          type: string
-        image_url:
-          type: string
-        thumb_url:
-          type: string
-        short_fields:
-          type: boolean
-        link_names:
-          type: boolean
-        mrkdwn_in:
-          type: array
-          items:
-            type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/SlackConfigField'
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotifierSlackConfigAction'
     NotifierPagerdutyConfig:
       type: object
       properties:
@@ -606,6 +862,145 @@ components:
           description: 'The PagerDuty integration key (when using PagerDuty integration type
 
             "Events API v2"). Cannot be set if service_key is set.'
+    HTTPConfigBasicAuth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    NotifierEmailConfig_2:
+      type: object
+      properties:
+        to:
+          type: string
+          description: Required email address to send notifications to.
+        html:
+          type: string
+          description: Optional HTML body of the email.
+        text:
+          type: string
+          description: Optional text body of the email.
+    ConfigV1UpdateNotifierBody_2:
+      type: object
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the Notifier will be created if it does not already exist, identified by slug. If false, an error will be returned if the Notifier does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Notifier isn't created or updated, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+    OpsGenieConfigResponder_2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the responder. Cannot be set if name or username are set.
+        name:
+          type: string
+          description: Name of the responder. Cannot be set if id or username are set.
+        username:
+          type: string
+          description: Username of the responder. Cannot be set if id or name are set.
+        responder_type:
+          $ref: '#/components/schemas/ResponderResponderType'
+    NotifierWebhookConfig:
+      type: object
+      properties:
+        http_config:
+          $ref: '#/components/schemas/NotifierHTTPConfig'
+        url:
+          type: string
+          description: Required webhook URL (will be called as a POST request).
+    configv1CreateNotifierRequest_2:
+      type: object
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier_2'
+        dry_run:
+          type: boolean
+          description: If true, the Notifier isn't created, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    NotifierHTTPConfig:
+      type: object
+      properties:
+        basic_auth:
+          $ref: '#/components/schemas/HTTPConfigBasicAuth'
+        bearer_token:
+          type: string
+          description: Bearer token authentication. Cannot be set if basic_auth is set.
+        proxy_url:
+          type: string
+          description: 'Optional proxy URL.
+
+            DEPRECATED: Custom proxies are unsupported.'
+        tls_config:
+          $ref: '#/components/schemas/HTTPConfigTLSConfig'
+    NotifierSlackConfig:
+      type: object
+      properties:
+        http_config:
+          $ref: '#/components/schemas/NotifierHTTPConfig'
+        api_url:
+          type: string
+          description: Required Slack webhook API URL.
+        channel:
+          type: string
+          description: The channel to send notifications to.
+        username:
+          type: string
+          description: The user to send notifications to.
+        color:
+          type: string
+        title:
+          type: string
+        title_link:
+          type: string
+        pretext:
+          type: string
+        text:
+          type: string
+        footer:
+          type: string
+        fallback:
+          type: string
+        callback_id:
+          type: string
+        icon_emoji:
+          type: string
+        icon_url:
+          type: string
+        image_url:
+          type: string
+        thumb_url:
+          type: string
+        short_fields:
+          type: boolean
+        link_names:
+          type: boolean
+        mrkdwn_in:
+          type: array
+          items:
+            type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SlackConfigField'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotifierSlackConfigAction'
     NotifierVictorOpsConfig:
       type: object
       properties:
@@ -636,36 +1031,61 @@ components:
           type: object
           additionalProperties:
             type: string
-    NotifierSlackConfigAction:
+    configv1Notifier_2:
       type: object
       properties:
-        type:
+        slug:
           type: string
-        text:
-          type: string
-        url:
-          type: string
-        style:
-          type: string
+          description: Unique identifier of the Notifier. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Notifier is created.
         name:
           type: string
-        value:
+          description: Required. Name of the Notifier. You can modify this value after the Notifier is created.
+        created_at:
           type: string
-        confirm_field:
-          $ref: '#/components/schemas/SlackConfigConfirmationField'
-    configv1UpdateNotifierResponse:
+          description: Timestamp of when the Notifier was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Notifier was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        skip_resolved:
+          type: boolean
+          description: If true, do not notify on resolved alerts. Cannot set if discard is set.
+        webhook:
+          $ref: '#/components/schemas/NotifierWebhookConfig'
+        slack:
+          $ref: '#/components/schemas/NotifierSlackConfig'
+        pagerduty:
+          $ref: '#/components/schemas/NotifierPagerdutyConfig'
+        email:
+          $ref: '#/components/schemas/NotifierEmailConfig_2'
+        ops_genie:
+          $ref: '#/components/schemas/NotifierOpsGenieConfig'
+        victor_ops:
+          $ref: '#/components/schemas/NotifierVictorOpsConfig'
+        discard:
+          type: boolean
+          description: 'If set, enables the "discard" integration which simply discards all
+
+            notifications. Cannot set if another integration is set.'
+    configv1PageResult_2:
       type: object
       properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
+        next_token:
           type: string
-          description: An error message describing what went wrong.
-x-original-swagger-version: '2.0'
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey
+x-refined-from:
+- chronosphere-config-v1-openapi3.json
+- chronosphere-openapi.yml

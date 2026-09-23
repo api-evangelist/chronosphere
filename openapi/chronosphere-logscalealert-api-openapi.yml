@@ -1,18 +1,14 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Log Scale Alert API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+  title: Config V1 Log Scale Alert API
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
 
     updating, deleting, and listing configurable Chronosphere resources.
 
 
     Use this link to download the raw Swagger specification:
 
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
+    /api/v1/config/swagger.json'
   version: v1
 servers:
 - url: /
@@ -79,6 +75,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      summary: List log scale alerts
+      x-summary-source: derived
     post:
       tags:
       - LogScaleAlert
@@ -121,6 +119,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/genericError'
       x-codegen-request-body-name: body
+      summary: Create log scale alert
+      x-summary-source: derived
   /api/v1/config/log-scale-alerts/{slug}:
     get:
       tags:
@@ -157,6 +157,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      summary: Read log scale alert
+      x-summary-source: derived
     put:
       tags:
       - LogScaleAlert
@@ -211,6 +213,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/genericError'
       x-codegen-request-body-name: body
+      summary: Update log scale alert
+      x-summary-source: derived
     delete:
       tags:
       - LogScaleAlert
@@ -252,8 +256,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      summary: Delete log scale alert
+      x-summary-source: derived
 components:
   schemas:
+    configv1CreateLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1ListLogScaleAlertsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_scale_alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1CreateLogScaleAlertRequest:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAlert isn't created, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
+    ConfigV1UpdateLogScaleAlertBody:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogScaleAlert will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAlert does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAlert isn't created or updated, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
+    genericError:
+      type: object
+      additionalProperties: true
+    LogScaleAlertAlertType:
+      type: string
+      enum:
+      - STANDARD
+      - FILTER
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ReadLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1UpdateLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1DeleteLogScaleAlertResponse:
+      type: object
     configv1LogScaleAlert:
       type: object
       properties:
@@ -317,77 +396,4 @@ components:
           description: Email of the user that the alert runs on behalf of. Required.
         alert_type:
           $ref: '#/components/schemas/LogScaleAlertAlertType'
-    configv1ReadLogScaleAlertResponse:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1CreateLogScaleAlertRequest:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
-        dry_run:
-          type: boolean
-          description: If true, the LogScaleAlert isn't created, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
-    configv1UpdateLogScaleAlertResponse:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
-    ConfigV1UpdateLogScaleAlertBody:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
-        create_if_missing:
-          type: boolean
-          description: If true, the LogScaleAlert will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAlert does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the LogScaleAlert isn't created or updated, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
-    LogScaleAlertAlertType:
-      type: string
-      enum:
-      - STANDARD
-      - FILTER
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1DeleteLogScaleAlertResponse:
-      type: object
-    configv1CreateLogScaleAlertResponse:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1ListLogScaleAlertsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        log_scale_alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1LogScaleAlert'
 x-original-swagger-version: '2.0'

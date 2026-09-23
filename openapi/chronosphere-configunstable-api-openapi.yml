@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  description: 'WARNING: This API is unstable and is meant for experimentation only. Do not
+
+    use this API in production. The endpoints and schemas referenced in this
+
+    documentation will be changed or removed without notice and without any
+
+    backwards compatibility guarantee. Note that even though this API is unstable,
+
+    it is still connected to production data, so use with caution.'
+  title: Config Unstable API
+  version: UNSTABLE
+tags:
+- name: ConfigUnstable
+paths:
+  /api/unstable/config/dashboards:createFromClassic:
+    post:
+      description: 'Converts raw classic (Grafana) dashboard JSON to the standard dashboard
+
+        format and creates it as a standard Dashboard entity in one call.
+
+        Conversion is delegated to cloud-ui-gateway; when that service is
+
+        unavailable this endpoint fails closed with SERVICE_UNAVAILABLE.'
+      operationId: CreateDashboardFromClassic
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableCreateDashboardFromClassicResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+      tags:
+      - ConfigUnstable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateDashboardFromClassicRequest'
+        description: 'CreateDashboardFromClassicRequest converts raw classic (Grafana) dashboard
+
+          JSON into the standard dashboard format and creates the result as a standard
+
+          Dashboard entity in one call. Unlike CreateClassicDashboard, this does NOT
+
+          create a classic dashboard entity - the result is a standard Dashboard,
+
+          indistinguishable from one created via CreateDashboard.'
+        required: true
+      summary: Create dashboard from classic
+      x-summary-source: derived
+components:
+  schemas:
+    CreateDashboardFromClassicResponseUnsupportedFeature:
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        level:
+          description: 'The converter''s feature level (''supported'' | ''unsupported''); empty when
+
+            the converter didn''t set one.'
+          type: string
+        panel_key:
+          type: string
+        panel_name:
+          type: string
+      type: object
+    configunstableDashboard:
+      properties:
+        slug:
+          description: The unique identifier of the Dashboard. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Dashboard is created.
+          type: string
+        name:
+          description: The name of the Dashboard. You can modify this value after the Dashboard is created.
+          type: string
+        created_at:
+          description: Timestamp of when the Dashboard was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the Dashboard was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        collection_slug:
+          description: Required slug of the collection the dashboard belongs to.
+          type: string
+        dashboard_json:
+          description: Required raw JSON of the dashboard.
+          type: string
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableCreateDashboardFromClassicRequest:
+      description: 'CreateDashboardFromClassicRequest converts raw classic (Grafana) dashboard
+
+        JSON into the standard dashboard format and creates the result as a standard
+
+        Dashboard entity in one call. Unlike CreateClassicDashboard, this does NOT
+
+        create a classic dashboard entity - the result is a standard Dashboard,
+
+        indistinguishable from one created via CreateDashboard.'
+      properties:
+        classic_dashboard_json:
+          description: Required raw classic (Grafana) dashboard JSON to convert.
+          type: string
+        collection_slug:
+          description: Required slug of the collection the new dashboard will belong to.
+          type: string
+        name:
+          description: 'Optional name for the new dashboard. Defaults to the classic dashboard''s
+
+            `title` when unset.'
+          type: string
+        slug:
+          description: 'Optional slug for the new dashboard. When unset, a slug is generated from
+
+            the name (same behavior as CreateDashboard).'
+          type: string
+        dry_run:
+          description: When true, converts and validates the dashboard without persisting it.
+          type: boolean
+      type: object
+    configunstableCreateDashboardFromClassicResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+        unsupported_features:
+          description: 'Classic dashboard features encountered during conversion that were dropped,
+
+            only approximated, or otherwise noteworthy. Populated on dry-run as well.'
+          items:
+            $ref: '#/components/schemas/CreateDashboardFromClassicResponseUnsupportedFeature'
+          type: array
+      type: object

@@ -1,0 +1,516 @@
+openapi: 3.2.0
+info:
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/config/swagger.json'
+  title: Config V1 Consumption Config API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: ConsumptionConfig
+paths:
+  /api/v1/config/consumption-config:
+    delete:
+      operationId: DeleteConsumptionConfig
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteConsumptionConfigResponse'
+          description: A successful response.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the ConsumptionConfig because it is in use.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the ConsumptionConfig because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionConfig
+      summary: Delete consumption config
+      x-summary-source: derived
+    get:
+      operationId: ReadConsumptionConfig
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadConsumptionConfigResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot read the ConsumptionConfig because ConsumptionConfig has not been created.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionConfig
+      summary: Read consumption config
+      x-summary-source: derived
+    post:
+      operationId: CreateConsumptionConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateConsumptionConfigRequest'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateConsumptionConfigResponse'
+          description: A successful response containing the created ConsumptionConfig.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the ConsumptionConfig because the request is invalid.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the ConsumptionConfig because there is a conflict with an existing ConsumptionConfig.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionConfig
+      summary: Create consumption config
+      x-summary-source: derived
+    put:
+      operationId: UpdateConsumptionConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1UpdateConsumptionConfigRequest'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateConsumptionConfigResponse'
+          description: A successful response containing the updated ConsumptionConfig.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ConsumptionConfig because the request is invalid.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ConsumptionConfig because ConsumptionConfig has not been created.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionConfig
+      summary: Update consumption config
+      x-summary-source: derived
+components:
+  schemas:
+    ConsumptionConfigPartitionFilter:
+      properties:
+        conditions:
+          description: Conditions for the query to match.
+          items:
+            $ref: '#/components/schemas/PartitionFilterCondition'
+          type: array
+        operator:
+          allOf:
+          - $ref: '#/components/schemas/PartitionFilterOperator'
+          description: 'Specifies the match operator for the request:
+
+            - `IN`: the request must match at least one of the conditions.
+
+            - `NOT_IN`: the request must not match any of the conditions.'
+      required:
+      - operator
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    TraceSearchFilterNumericFilter:
+      properties:
+        comparison:
+          allOf:
+          - $ref: '#/components/schemas/NumericFilterComparisonType'
+          description: The comparison operation to apply to an input against the given query value.
+        value:
+          description: The filter value used in comparison against match candidates.
+          format: double
+          type: number
+      type: object
+    configv1ReadConsumptionConfigResponse:
+      properties:
+        consumption_config:
+          $ref: '#/components/schemas/configv1ConsumptionConfig'
+      type: object
+    ConsumptionConfigPartition:
+      properties:
+        filters:
+          description: 'Criteria that defines which data matches the `partition`. Filters are
+
+            concatenated together as implied `AND` operators. A request must match every
+
+            filter to match the `partition`. At most one `IN` filter and one `NOT_IN`
+
+            filter is allowed, since multiple filters of the same operator type are
+
+            always reducible to a single filter.'
+          items:
+            $ref: '#/components/schemas/ConsumptionConfigPartitionFilter'
+          type: array
+        name:
+          description: 'Name of the partition. Must be unique within the parent partition. You can
+
+            modify this value after the partition is created.'
+          type: string
+        partitions:
+          description: 'Optional. Child partitions of this partition. If set, requests that match the
+
+            current partition are allocated to the first child partition that matches.
+
+            Requests that don''t match any child partition are assigned to an implicit `default`
+
+            child partition.'
+          items:
+            $ref: '#/components/schemas/ConsumptionConfigPartition'
+          type: array
+        slug:
+          description: 'Immutable identifier of the partition. Must be unique within the parent
+
+            partition. You can''t modify this value after the partition is created.'
+          type: string
+      required:
+      - filters
+      type: object
+    configv1LogSearchFilter:
+      properties:
+        query:
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
+          type: string
+      type: object
+    configv1ConsumptionConfig:
+      properties:
+        created_at:
+          description: Timestamp of when the ConsumptionConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        partitions:
+          description: 'Partitions define non-overlapping groupings of telemetry data. Partitions are
+
+            defined in order of precedence, where incoming requests are allocated to the
+
+            first partition that matches. Requests that don''t match any partition use an
+
+            implicit `default` partition.'
+          items:
+            $ref: '#/components/schemas/ConsumptionConfigPartition'
+          type: array
+        updated_at:
+          description: Timestamp of when the ConsumptionConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    configv1DeleteConsumptionConfigResponse:
+      type: object
+    configv1ConsumptionSpanFilter:
+      properties:
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+          description: 'Matches the duration of the candidate span. An omitted or zero bound
+
+            is unbounded on that side.'
+        error:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+          description: Matches the error status of the candidate span.
+        is_root_span:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+          description: 'Matches on whether the candidate span is the root span of its trace,
+
+            which is the span with no parent span.'
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+          description: Matches the operation of the candidate span.
+        parent_operation:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+          description: 'Matches the operation of the candidate span''s parent span. Spans without
+
+            a parent span, including root spans, don''t match.'
+        parent_service:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+          description: 'Matches the service of the candidate span''s parent span. Spans without
+
+            a parent span, including root spans, don''t match.'
+        service:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+          description: Matches the service of the candidate span.
+        tags:
+          description: 'Matches the tags of the candidate span. A numeric matcher also
+
+            compares numeric-looking string tag values. To match alternatives,
+
+            use separate conditions.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterTagFilter'
+          type: array
+      type: object
+    configv1CreateConsumptionConfigRequest:
+      properties:
+        consumption_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1ConsumptionConfig'
+          description: The ConsumptionConfig to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the ConsumptionConfig. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    StringFilterStringFilterMatchType:
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+      type: string
+    NumericFilterComparisonType:
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      type: string
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1UpdateConsumptionConfigRequest:
+      properties:
+        consumption_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1ConsumptionConfig'
+          description: The ConsumptionConfig to update.
+        create_if_missing:
+          description: If `true`, the ConsumptionConfig will be created if it does not already exist. If `false`, an error will be returned if the ConsumptionConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the ConsumptionConfig. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configv1CreateConsumptionConfigResponse:
+      properties:
+        consumption_config:
+          $ref: '#/components/schemas/configv1ConsumptionConfig'
+      type: object
+    TraceSearchFilterBoolFilter:
+      properties:
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: boolean
+      type: object
+    PartitionFilterOperator:
+      enum:
+      - IN
+      - NOT_IN
+      type: string
+    PartitionFilterCondition:
+      properties:
+        dataset_slug:
+          description: Deprecated. Use `log_filter`, `metric_filters`, or `trace_span_filters` instead.
+          type: string
+        log_filter:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogSearchFilter'
+          description: 'If set, matches incoming log data by log query.
+
+
+            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
+        metric_filters:
+          description: 'If set, matches incoming metric data by label. If multiple label
+
+            filters are specified, an incoming metric must match every label
+
+            filter to match the condition. Label values support glob patterns,
+
+            including matching multiple patterns with an `OR`, such as
+
+            `service:{svc1,svc2}`.
+
+
+            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+          type: array
+        trace_span_filters:
+          description: 'If set, matches incoming trace data at the span level: a span
+
+            matches the condition only if it satisfies every span filter.
+
+            Match alternatives with an `IN` string filter or with separate
+
+            conditions.
+
+
+            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
+          items:
+            $ref: '#/components/schemas/configv1ConsumptionSpanFilter'
+          type: array
+      type: object
+    configv1UpdateConsumptionConfigResponse:
+      properties:
+        consumption_config:
+          $ref: '#/components/schemas/configv1ConsumptionConfig'
+      type: object
+    configv1LabelFilter:
+      properties:
+        name:
+          description: The name of the label to match.
+          example: job
+          type: string
+        value_glob:
+          description: The glob value of the label to match.
+          example: myservice*
+          type: string
+      type: object
+    TraceSearchFilterStringFilter:
+      properties:
+        in_values:
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+          type: array
+        match:
+          allOf:
+          - $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+          description: 'Specifies the comparison operator for the query. If `EXACT`, compared strings
+
+            must have the exact value of the query value.'
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: string
+      type: object
+    TraceSearchFilterTagFilter:
+      properties:
+        key:
+          description: The key or name of the span tag that this filter inspects.
+          type: string
+        numeric_value:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+          description: 'If the query matches the tag with the specified key, and the value type is
+
+            `numeric`, specifies the matcher used to evaluate the span tag value.'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+          description: 'If the query matches the tag with the specified key, and the value type is a
+
+            `string`, specifies the matcher used to evaluate the span tag value.'
+      type: object
+    TraceSearchFilterDurationFilter:
+      properties:
+        max_secs:
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+        min_secs:
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

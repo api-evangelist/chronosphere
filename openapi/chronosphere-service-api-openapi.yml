@@ -1,32 +1,147 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Bucket Service API
-  description: '
-
-    The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    <a href="/api/v1/config/swagger.json">/api/v1/config/swagger.json</a>
-
-    '
-  version: v1
+  title: Chronosphere Service API
+  version: '1.0'
+  description: 'Operations tagged Service across 3 of this provider''s published API definitions: chronosphere-config-unstable-swagger.json, chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
 - url: /
 tags:
 - name: Service
 paths:
-  /api/v1/config/services/{slug}:
+  /api/unstable/config/services:
     get:
+      operationId: ListServices
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          type: integer
+          format: int64
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any Service with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by team_slug, where any Service with a matching team_slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: team_slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by name, where any Service with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Get services that directly reference notifications policies by the referenced policy slugs.
+        in: query
+        name: notification_policy_slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableListServicesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
       tags:
       - Service
-      operationId: ReadService
+      summary: List services
+      x-summary-source: derived
+    post:
+      operationId: CreateService
+      responses:
+        '200':
+          description: A successful response containing the created Service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableCreateServiceResponse'
+        '400':
+          description: Cannot create the Service because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Service because there is a conflict with an existing Service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateServiceRequest'
+        required: true
+      summary: Create service
+      x-summary-source: derived
+  /api/unstable/config/services/{slug}:
+    delete:
+      operationId: DeleteService
       parameters:
-      - name: slug
-        in: path
+      - in: path
+        name: slug
         required: true
         schema:
           type: string
@@ -36,7 +151,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/configv1ReadServiceResponse'
+                $ref: '#/components/schemas/configunstableDeleteServiceResponse'
+        '400':
+          description: Cannot delete the Service because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Service because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Service
+      summary: Delete service
+      x-summary-source: derived
+    get:
+      operationId: ReadService
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableReadServiceResponse'
         '404':
           description: Cannot read the Service because the slug does not exist.
           content:
@@ -55,9 +213,366 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericError'
+      tags:
+      - Service
+      summary: Read service
+      x-summary-source: derived
+    put:
+      operationId: UpdateService
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response containing the updated Service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableUpdateServiceResponse'
+        '400':
+          description: Cannot update the Service because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Service because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Service because there is a conflict with an existing Service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUnstableUpdateServiceBody'
+        required: true
+      summary: Update service
+      x-summary-source: derived
+  /api/v1/config/services:
+    get:
+      operationId: ListServices
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: 'Filters results by slug, where any Service with a matching slug in the given
+
+          list that matches all other filters is returned.'
+        in: query
+        name: slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: 'Filters results by `team_slug`, where any Service with a matching `team_slug` in
+
+          the given list that matches all other filters is returned.'
+        in: query
+        name: team_slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: 'Filters results by `name`, where any Service with a matching `name` in the given
+
+          list that matches all other filters is returned.'
+        in: query
+        name: names
+        schema:
+          items:
+            type: string
+          type: array
+      - description: 'Filters results by `notification_policy_slug`, where any Service with a matching
+
+          `notification_policy_slug` in the given list that matches all other filters is
+
+          returned.'
+        in: query
+        name: notification_policy_slugs
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListServicesResponse'
+          description: A successful response.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Service
+      security:
+      - ApiKeyAuth: []
+      summary: List services
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
+  /api/v1/config/services/{slug}:
+    get:
+      operationId: ReadService
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadServiceResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: Cannot read the Service because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError_2'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - Service
+      security:
+      - ApiKeyAuth: []
+      summary: Read service
+      x-summary-source: derived
+    servers:
+    - url: https://{tenant}.chronosphere.io
+      variables:
+        tenant:
+          default: tenant
+          description: tenant ID assigned by the service provider
 components:
   schemas:
+    ConfigUnstableUpdateServiceBody:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+        create_if_missing:
+          description: If `true`, the Service will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Service does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableListServicesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        services:
+          items:
+            $ref: '#/components/schemas/configunstableService'
+          type: array
+      type: object
+    configunstableDeleteServiceResponse:
+      type: object
+    configunstableCreateServiceRequest:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configunstableReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableCreateServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+      type: object
+    configunstableService:
+      properties:
+        slug:
+          description: The unique identifier of the Service. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Service is created.
+          type: string
+        name:
+          description: The name of the Service. You can modify this value after the Service is created.
+          type: string
+        created_at:
+          description: Timestamp of when the Service was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the Service was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        derived_name:
+          description: Required telemetry name of the service.
+          type: string
+        team_slug:
+          description: Required slug of the team the service collection belongs to.
+          type: string
+        description:
+          description: Optional description of the service collection.
+          type: string
+        notification_policy_slug:
+          description: 'Slug of the notification policy used by default for monitors in this service collection.
+
+            This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
+
+            This does not override the policy used when a monitor explicitly references a policy.'
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configunstableUpdateServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+      type: object
     configv1Service:
+      properties:
+        created_at:
+          description: Timestamp of when the Service was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Optional. Description of the service collection.
+          type: string
+        name:
+          description: The name of the Service. You can modify this value after the Service is created.
+          type: string
+        notification_policy_slug:
+          description: 'Slug of the notification policy used by default for monitors in this service
+
+            collection. This parameter is optional if the collection doesn''t contain
+
+            monitors, or if all of its monitors explicitly reference a policy. This
+
+            parameter doesn''t override the policy used if a monitor explicitly references
+
+            a policy.'
+          type: string
+        slug:
+          description: The unique identifier of the Service. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Service is created.
+          type: string
+        team_slug:
+          description: Slug of the team the service collection belongs to.
+          type: string
+        updated_at:
+          description: Timestamp of when the Service was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - name
+      - team_slug
+      type: object
+    configv1ListServicesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        services:
+          items:
+            $ref: '#/components/schemas/configv1Service'
+          type: array
+      type: object
+    apiError_2:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1ReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configv1Service'
+      type: object
+    configv1Service_2:
       type: object
       properties:
         slug:
@@ -89,22 +604,13 @@ components:
             This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
 
             This does not override the policy used when a monitor explicitly references a policy.'
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    genericError:
-      type: object
-      additionalProperties: true
-    configv1ReadServiceResponse:
-      type: object
-      properties:
-        service:
-          $ref: '#/components/schemas/configv1Service'
-x-original-swagger-version: '2.0'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey
+x-refined-from:
+- chronosphere-config-unstable-swagger.json
+- chronosphere-config-v1-openapi3.json
+- chronosphere-openapi.yml

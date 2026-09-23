@@ -1,0 +1,385 @@
+openapi: 3.2.0
+info:
+  description: 'WARNING: This API is unstable and is meant for experimentation only. Do not
+
+    use this API in production. The endpoints and schemas referenced in this
+
+    documentation will be changed or removed without notice and without any
+
+    backwards compatibility guarantee. Note that even though this API is unstable,
+
+    it is still connected to production data, so use with caution.'
+  title: Config Unstable Notebook API
+  version: UNSTABLE
+tags:
+- name: Notebook
+paths:
+  /api/unstable/config/notebooks:
+    get:
+      operationId: ListNotebooks
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          type: integer
+          format: int64
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any Notebook with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by collection_slug, where any Notebook with a matching collection_slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: collection_slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by name, where any Notebook with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: 'Optional flag to populate the notebook_json of the returned notebooks.
+
+          By default, notebook_json will be left empty.'
+        in: query
+        name: include_notebook_json
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableListNotebooksResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Notebook
+      summary: List notebooks
+      x-summary-source: derived
+    post:
+      operationId: CreateNotebook
+      responses:
+        '200':
+          description: A successful response containing the created Notebook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableCreateNotebookResponse'
+        '400':
+          description: Cannot create the Notebook because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the Notebook because there is a conflict with an existing Notebook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Notebook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateNotebookRequest'
+        required: true
+      summary: Create notebook
+      x-summary-source: derived
+  /api/unstable/config/notebooks/{slug}:
+    delete:
+      operationId: DeleteNotebook
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableDeleteNotebookResponse'
+        '400':
+          description: Cannot delete the Notebook because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the Notebook because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Notebook
+      summary: Delete notebook
+      x-summary-source: derived
+    get:
+      operationId: ReadNotebook
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableReadNotebookResponse'
+        '404':
+          description: Cannot read the Notebook because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Notebook
+      summary: Read notebook
+      x-summary-source: derived
+    put:
+      operationId: UpdateNotebook
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response containing the updated Notebook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableUpdateNotebookResponse'
+        '400':
+          description: Cannot update the Notebook because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the Notebook because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the Notebook because there is a conflict with an existing Notebook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - Notebook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUnstableUpdateNotebookBody'
+        required: true
+      summary: Update notebook
+      x-summary-source: derived
+components:
+  schemas:
+    configunstableNotebook:
+      properties:
+        slug:
+          description: The unique identifier of the Notebook. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Notebook is created.
+          type: string
+        name:
+          description: The name of the Notebook. You can modify this value after the Notebook is created.
+          type: string
+        created_at:
+          description: Timestamp of when the Notebook was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the Notebook was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        collection_slug:
+          description: 'Slug of the collection the notebook belongs to. Required if `collection`
+
+            isn''t set.'
+          type: string
+        notebook_json:
+          description: Required raw JSON of the notebook.
+          type: string
+        collection:
+          $ref: '#/components/schemas/configv1CollectionReference'
+      type: object
+    configunstableCreateNotebookResponse:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+      type: object
+    configunstableListNotebooksResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        notebooks:
+          items:
+            $ref: '#/components/schemas/configunstableNotebook'
+          type: array
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CollectionReference:
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+        slug:
+          type: string
+      type: object
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
+    configunstableUpdateNotebookResponse:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+      type: object
+    configunstableReadNotebookResponse:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableDeleteNotebookResponse:
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configunstableCreateNotebookRequest:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Notebook. If the specified configuration is valid, the endpoint returns a partial response without the Notebook. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    ConfigUnstableUpdateNotebookBody:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+        create_if_missing:
+          description: If `true`, the Notebook will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Notebook does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Notebook. If the specified configuration is valid, the endpoint returns a partial response without the Notebook. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object

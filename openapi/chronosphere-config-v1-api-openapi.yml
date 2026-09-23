@@ -1,0 +1,221 @@
+openapi: 3.2.0
+info:
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/config/swagger.json'
+  title: Config V1 API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: Config (v1)
+paths:
+  /api/v1/config/services/{service_slug}/attributes:
+    delete:
+      operationId: DeleteServiceAttribute
+      parameters:
+      - in: path
+        name: service_slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteServiceAttributeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+      tags:
+      - Config (v1)
+      summary: Delete service attribute
+      x-summary-source: derived
+    get:
+      operationId: ReadServiceAttribute
+      parameters:
+      - in: path
+        name: service_slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadServiceAttributeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+      tags:
+      - Config (v1)
+      summary: Read service attribute
+      x-summary-source: derived
+    post:
+      operationId: CreateServiceAttribute
+      parameters:
+      - in: path
+        name: service_slug
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1CreateServiceAttributeBody'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateServiceAttributeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+      tags:
+      - Config (v1)
+      summary: Create service attribute
+      x-summary-source: derived
+    put:
+      operationId: UpdateServiceAttribute
+      parameters:
+      - in: path
+        name: service_slug
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateServiceAttributeBody'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateServiceAttributeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+      tags:
+      - Config (v1)
+      summary: Update service attribute
+      x-summary-source: derived
+components:
+  schemas:
+    configv1UpdateServiceAttributeResponse:
+      properties:
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+        service_slug:
+          type: string
+      type: object
+    ConfigV1CreateServiceAttributeBody:
+      properties:
+        dry_run:
+          type: boolean
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+      type: object
+    configv1DeleteServiceAttributeResponse:
+      type: object
+    configv1CreateServiceAttributeResponse:
+      properties:
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+        service_slug:
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ConfigV1UpdateServiceAttributeBody:
+      properties:
+        create_if_missing:
+          type: boolean
+        dry_run:
+          type: boolean
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+      type: object
+    configv1ServiceAttribute:
+      properties:
+        created_at:
+          description: Timestamp of when the service attributes were created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: A description of the service.
+          type: string
+        name:
+          description: 'The name of the service. You can modify this value after the service
+
+            attributes are created.'
+          type: string
+        notification_policy_slug:
+          description: The slug of the notification policy for the associated service.
+          type: string
+        service_slug:
+          description: The slug of the service.
+          type: string
+        team_slug:
+          description: The slug of the team that the associated service belongs to.
+          type: string
+        updated_at:
+          description: Timestamp of when the service attributes were updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    configv1ReadServiceAttributeResponse:
+      properties:
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+        service_slug:
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

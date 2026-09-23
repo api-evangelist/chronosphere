@@ -1,0 +1,597 @@
+openapi: 3.2.0
+info:
+  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
+
+    updating, deleting, and listing configurable Chronosphere resources.
+
+
+    Use this link to download the raw Swagger specification:
+
+    /api/v1/config/swagger.json'
+  title: Config V1 Consumption Budget API
+  version: v1
+servers:
+- url: https://{tenant}.chronosphere.io
+  variables:
+    tenant:
+      default: tenant
+      description: tenant ID assigned by the service provider
+security:
+- ApiKeyAuth: []
+tags:
+- name: ConsumptionBudget
+paths:
+  /api/v1/config/consumption-budgets:
+    get:
+      operationId: ListConsumptionBudgets
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          format: int64
+          type: integer
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any ConsumptionBudget with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by name, where any ConsumptionBudget with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by partition_slug_path, where any ConsumptionBudget with a matching partition_slug_path in the given list (and matches all other filters) will be returned.
+        in: query
+        name: partition_slug_paths
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filters results by resource, where any ConsumptionBudget with a matching resource in the given list (and matches all other filters) will be returned.
+        in: query
+        name: resources
+        schema:
+          items:
+            enum:
+            - LOG_PERSISTED_BYTES
+            - LOG_PROCESSED_BYTES
+            - METRIC_PERSISTED_SERIES
+            - METRIC_ALL
+            - LOG_ALL
+            - TRACE_PROCESSED_BYTES
+            - TRACE_PERSISTED_BYTES
+            - TRACE_ALL
+            - ALL
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ListConsumptionBudgetsResponse'
+          description: A successful response.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionBudget
+      summary: List consumption budgets
+      x-summary-source: derived
+    post:
+      operationId: CreateConsumptionBudget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configv1CreateConsumptionBudgetRequest'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1CreateConsumptionBudgetResponse'
+          description: A successful response containing the created ConsumptionBudget.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the ConsumptionBudget because the request is invalid.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot create the ConsumptionBudget because there is a conflict with an existing ConsumptionBudget.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionBudget
+      summary: Create consumption budget
+      x-summary-source: derived
+  /api/v1/config/consumption-budgets/{slug}:
+    delete:
+      operationId: DeleteConsumptionBudget
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1DeleteConsumptionBudgetResponse'
+          description: A successful response.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the ConsumptionBudget because it is in use.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot delete the ConsumptionBudget because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionBudget
+      summary: Delete consumption budget
+      x-summary-source: derived
+    get:
+      operationId: ReadConsumptionBudget
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1ReadConsumptionBudgetResponse'
+          description: A successful response.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot read the ConsumptionBudget because the slug does not exist.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionBudget
+      summary: Read consumption budget
+      x-summary-source: derived
+    put:
+      operationId: UpdateConsumptionBudget
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigV1UpdateConsumptionBudgetBody'
+        required: true
+        x-originalParamName: body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configv1UpdateConsumptionBudgetResponse'
+          description: A successful response containing the updated ConsumptionBudget.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ConsumptionBudget because the request is invalid.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ConsumptionBudget because the slug does not exist.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: Cannot update the ConsumptionBudget because there is a conflict with an existing ConsumptionBudget.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+          description: An unexpected error response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: An undefined error response.
+      tags:
+      - ConsumptionBudget
+      summary: Update consumption budget
+      x-summary-source: derived
+components:
+  schemas:
+    ConsumptionBudgetAlertActionConfig:
+      properties:
+        annotations:
+          additionalProperties:
+            type: string
+          description: 'Additional annotations to set on the generated monitor. By default, the
+
+            monitors already contain "description", "dashboard", "resource",
+
+            "consumption_budget_slug", "threshold_type", and "partition" annotations.
+
+            Setting any of these annotations will override its default value.'
+          type: object
+        instant_rate_sustain_secs:
+          description: 'How long instant rate consumption must sustain above the threshold in
+
+            order to fire an alert. By default, the sustain is 0: any consumption
+
+            over the threshold will fire an alert.'
+          format: int32
+          type: integer
+        labels:
+          additionalProperties:
+            type: string
+          description: 'Additional labels to set on the generated monitor, which can be used for
+
+            notification routing. The following labels are reserved and cannot be
+
+            override: "resource", "partition", and "threshold_type".'
+          type: object
+      type: object
+    configv1UpdateConsumptionBudgetResponse:
+      properties:
+        consumption_budget:
+          $ref: '#/components/schemas/configv1ConsumptionBudget'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CreateConsumptionBudgetRequest:
+      properties:
+        consumption_budget:
+          allOf:
+          - $ref: '#/components/schemas/configv1ConsumptionBudget'
+          description: The ConsumptionBudget to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the ConsumptionBudget. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionBudget. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    ThresholdInstantRate:
+      properties:
+        fixed_value_per_sec:
+          description: Value of the fixed rate threshold.
+          format: int64
+          type: string
+      required:
+      - fixed_value_per_sec
+      type: object
+    ConsumptionBudgetThresholdType:
+      enum:
+      - DAILY_VOLUME
+      - INSTANT_RATE
+      - WEEKLY_VOLUME
+      - MONTHLY_VOLUME
+      - HOURLY_VOLUME
+      - ROLLING_1_HOUR_VOLUME
+      - ROLLING_3_HOUR_VOLUME
+      - ROLLING_1_DAY_VOLUME
+      - ROLLING_7_DAY_VOLUME
+      - ROLLING_30_MINUTE_VOLUME
+      type: string
+    configv1ListConsumptionBudgetsResponse:
+      properties:
+        consumption_budgets:
+          items:
+            $ref: '#/components/schemas/configv1ConsumptionBudget'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    ConsumptionBudgetPriorityFilter:
+      properties:
+        dataset_slug:
+          description: Deprecated. Use `log_filter` instead.
+          type: string
+        log_filter:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogSearchFilter'
+          description: If set, matches incoming log data by log query.
+      type: object
+    ConsumptionBudgetPriority:
+      properties:
+        filters:
+          description: 'Criteria that defines which data matches the `priority`. Filters are
+
+            concatenated together as implied `AND` operators. A request must match every
+
+            filter to match the `priority`.'
+          items:
+            $ref: '#/components/schemas/ConsumptionBudgetPriorityFilter'
+          type: array
+        priority:
+          description: 'Priority order that determines when to drop data. A priority of `10` is
+
+            dropped first, and a priority of `1` is dropped last.'
+          format: int32
+          type: integer
+      required:
+      - filters
+      - priority
+      type: object
+    configv1ConsumptionBudget:
+      properties:
+        alert_action_config:
+          allOf:
+          - $ref: '#/components/schemas/ConsumptionBudgetAlertActionConfig'
+          description: Optional. Configures all `ALERT_WARN` & `ALERT_CRITICAL` actions for this budget.
+        created_at:
+          description: Timestamp of when the ConsumptionBudget was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        default_priority:
+          description: 'Optional. The default priority for requests that don''t match any priority in the
+
+            `priorities` list. If not set, then `priority=10` (dropped first) is used as the
+
+            default.'
+          format: int32
+          type: integer
+        name:
+          description: The name of the ConsumptionBudget. You can modify this value after the ConsumptionBudget is created.
+          type: string
+        notification_policy_slug:
+          description: 'Notification policy slug for routing alerts. Required only if `ALERT_WARN` or
+
+            `ALERT_CRITICAL` actions are configured.'
+          type: string
+        partition_slug_path:
+          description: 'Path of the budget''s partition, delimited by forward slashes (`/`), in the
+
+            format `global/SLUG1/SLUG2`, where `SLUG1` is a top-level partition, and `SLUG2`
+
+            is a child partition of `SLUG1`.
+
+
+            A well-formed partition path always starts with the `global` partition slug, and
+
+            has no leading or trailing forward slashes.'
+          type: string
+        priorities:
+          description: 'Optional. Controls the order in which data is dropped when a drop action is
+
+            applied. For example, a priority of 10 is dropped first, and a priority of 1 is
+
+            dropped last. Priorities are evaluated in match order, and the first priority to
+
+            match is applied. All other priorities are ignored. If a request does not match
+
+            any priority, then it is assigned the `default_priority`.'
+          items:
+            $ref: '#/components/schemas/ConsumptionBudgetPriority'
+          type: array
+        resource:
+          allOf:
+          - $ref: '#/components/schemas/ConsumptionBudgetResourceGroup'
+          description: 'Resource of the budget.
+
+            Deprecated: use thresholds.resource_group and unit instead.'
+        slug:
+          description: The unique identifier of the ConsumptionBudget. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the ConsumptionBudget is created.
+          type: string
+        thresholds:
+          description: Optional. Defines which actions to take when a threshold is exceeded.
+          items:
+            $ref: '#/components/schemas/configv1ConsumptionBudgetThreshold'
+          type: array
+        updated_at:
+          description: Timestamp of when the ConsumptionBudget was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - name
+      - partition_slug_path
+      type: object
+    ConfigV1UpdateConsumptionBudgetBody:
+      properties:
+        consumption_budget:
+          allOf:
+          - $ref: '#/components/schemas/configv1ConsumptionBudget'
+          description: The ConsumptionBudget to update.
+        create_if_missing:
+          description: If `true`, the ConsumptionBudget will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ConsumptionBudget does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the ConsumptionBudget. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionBudget. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    ConsumptionBudgetResourceGroup:
+      enum:
+      - LOG_PERSISTED_BYTES
+      - LOG_PROCESSED_BYTES
+      - METRIC_PERSISTED_SERIES
+      - METRIC_ALL
+      - LOG_ALL
+      - TRACE_PROCESSED_BYTES
+      - TRACE_PERSISTED_BYTES
+      - TRACE_ALL
+      - ALL
+      type: string
+    ThresholdVolume:
+      properties:
+        fixed_value:
+          description: Value of the volume threshold.
+          format: int64
+          type: string
+      required:
+      - fixed_value
+      type: object
+    configv1LogSearchFilter:
+      properties:
+        query:
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
+          type: string
+      type: object
+    ConsumptionBudgetUnit:
+      enum:
+      - NATIVE
+      - CREDITS
+      type: string
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1DeleteConsumptionBudgetResponse:
+      type: object
+    configv1ReadConsumptionBudgetResponse:
+      properties:
+        consumption_budget:
+          $ref: '#/components/schemas/configv1ConsumptionBudget'
+      type: object
+    configv1ConsumptionBudgetThreshold:
+      properties:
+        action:
+          allOf:
+          - $ref: '#/components/schemas/ConsumptionBudgetThresholdAction'
+          description: The specified action to take when the threshold is exceeded.
+        instant_rate:
+          allOf:
+          - $ref: '#/components/schemas/ThresholdInstantRate'
+          description: Configures the `INSTANT_RATE` threshold type.
+        resource_group:
+          allOf:
+          - $ref: '#/components/schemas/ConsumptionBudgetResourceGroup'
+          description: Specifies which resource group this threshold applies to.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ConsumptionBudgetThresholdType'
+          description: "Specifies the threshold type, which can be one of the following values.\n\n`INSTANT_RATE` sets an instantaneous rate threshold. The configured action\ntriggers when consumption exceeds the configured rate threshold, defined by\nthe `instant_rate` field. The `DROP` action accepts requests up to the\nthreshold, and drops any data over the threshold in priority order.\n\n`ROLLING_30_MINUTE_VOLUME`, `ROLLING_1_HOUR_VOLUME`,\n`ROLLING_3_HOUR_VOLUME`, `ROLLING_1_DAY_VOLUME`, and\n`ROLLING_7_DAY_VOLUME` set a volume threshold over a rolling time\nperiod. The configured action triggers when consumption over the last\ntime period (30 minutes, 1 hour, 3 hours, 1 day, or 7 days) exceeds\nthe configured threshold, defined by the `volume` field.\n\n`HOURLY_VOLUME`, `DAILY_VOLUME`, `WEEKLY_VOLUME`, and `MONTHLY_VOLUME` set a volume threshold\nover a fixed, non-overlapping time period. The configured action triggers when consumption\nover the specified time period (hourly, daily, weekly, or monthly) exceeds the\nconfigured threshold, defined by the `volume` field. Volumes reset\nto zero at the start of each time period. The `DROP` action drops all requests\nwhen a volume threshold is exceeded, regardless of priority.\n\n- `HOURLY_VOLUME` sums the consumption volume from `00:00:00` UTC` to `00:59:59` UTC\n  every hour.\n- `DAILY_VOLUME` sums the consumption volume from `00:00:00` UTC to `23:59:59` UTC\n  every day.\n- `WEEKLY_VOLUME` sums the consumption volume from `00:00:00` UTC Monday morning\n  to `23:59:59` UTC Sunday night.\n- `MONTHLY_VOLUME` sums the consumption volume from `00:00:00` UTC on the first\n  day of the month to `23:59:59` UTC on the last day of the month. For example,\n  `Jan 1 00:00:00` to `Jan 31 23:59:59`. Month thresholds are evaluated equally,\n  regardless of how many days are in the month. For example, thresholds for\n  January and February are the same, even though February has fewer days."
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/ConsumptionBudgetUnit'
+          description: 'Specifies the unit of the threshold value. `NATIVE` uses the native
+
+            unit of the resource group, e.g. bytes for `LOG_PERSISTED_BYTES`. `CREDITS`
+
+            uses the credits cost of the resource group, if available.'
+        volume:
+          allOf:
+          - $ref: '#/components/schemas/ThresholdVolume'
+          description: Configures the `VOLUME` threshold type.
+      required:
+      - action
+      - type
+      type: object
+    ConsumptionBudgetThresholdAction:
+      enum:
+      - ALERT_WARN
+      - ALERT_CRITICAL
+      - DROP
+      type: string
+    configv1CreateConsumptionBudgetResponse:
+      properties:
+        consumption_budget:
+          $ref: '#/components/schemas/configv1ConsumptionBudget'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: Chronosphere API token
+      in: header
+      name: API-Token
+      type: apiKey

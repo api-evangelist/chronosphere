@@ -1,0 +1,546 @@
+openapi: 3.2.0
+info:
+  description: 'WARNING: This API is unstable and is meant for experimentation only. Do not
+
+    use this API in production. The endpoints and schemas referenced in this
+
+    documentation will be changed or removed without notice and without any
+
+    backwards compatibility guarantee. Note that even though this API is unstable,
+
+    it is still connected to production data, so use with caution.'
+  title: Config Unstable Saved Trace Search API
+  version: UNSTABLE
+tags:
+- name: SavedTraceSearch
+paths:
+  /api/unstable/config/saved-trace-searches:
+    get:
+      operationId: ListSavedTraceSearches
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          type: integer
+          format: int64
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any SavedTraceSearch with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by name, where any SavedTraceSearch with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: 'Optional filter: creator email address.'
+        in: query
+        name: created_by
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableListSavedTraceSearchesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - SavedTraceSearch
+      summary: List saved trace searches
+      x-summary-source: derived
+    post:
+      description: '***
+
+        Saved Trace Searches
+
+        ***'
+      operationId: CreateSavedTraceSearch
+      responses:
+        '200':
+          description: A successful response containing the created SavedTraceSearch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableCreateSavedTraceSearchResponse'
+        '400':
+          description: Cannot create the SavedTraceSearch because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the SavedTraceSearch because there is a conflict with an existing SavedTraceSearch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - SavedTraceSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateSavedTraceSearchRequest'
+        required: true
+      summary: Create saved trace search
+      x-summary-source: derived
+  /api/unstable/config/saved-trace-searches/{slug}:
+    delete:
+      operationId: DeleteSavedTraceSearch
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableDeleteSavedTraceSearchResponse'
+        '400':
+          description: Cannot delete the SavedTraceSearch because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the SavedTraceSearch because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - SavedTraceSearch
+      summary: Delete saved trace search
+      x-summary-source: derived
+    get:
+      operationId: ReadSavedTraceSearch
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableReadSavedTraceSearchResponse'
+        '404':
+          description: Cannot read the SavedTraceSearch because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - SavedTraceSearch
+      summary: Read saved trace search
+      x-summary-source: derived
+    put:
+      operationId: UpdateSavedTraceSearch
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response containing the updated SavedTraceSearch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableUpdateSavedTraceSearchResponse'
+        '400':
+          description: Cannot update the SavedTraceSearch because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the SavedTraceSearch because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the SavedTraceSearch because there is a conflict with an existing SavedTraceSearch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - SavedTraceSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUnstableUpdateSavedTraceSearchBody'
+        required: true
+      summary: Update saved trace search
+      x-summary-source: derived
+components:
+  schemas:
+    configunstableCreateSavedTraceSearchRequest:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    SavedTraceSearchTraceSearch:
+      properties:
+        criteria:
+          $ref: '#/components/schemas/configv1TraceSearchFilter'
+        time:
+          $ref: '#/components/schemas/SavedTraceSearchTimeFilter'
+      type: object
+    configunstableReadSavedTraceSearchResponse:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1TraceSearchFilter:
+      properties:
+        trace:
+          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
+        span:
+          description: 'Specifies the span conditions to match on. All conditions must be true in a
+
+            single span for the span to be considered a match. If `span_count` is specified,
+
+            the number of spans within the trace that match span conditions must be within
+
+            `[min, max]`. You can specify multiple span conditions, and each can be
+
+            satisfied by any number of spans within the trace.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+          type: array
+        scope_filter:
+          $ref: '#/components/schemas/TraceSearchFilterScopeFilter'
+      type: object
+    TraceSearchFilterNumericFilter:
+      properties:
+        comparison:
+          $ref: '#/components/schemas/NumericFilterComparisonType'
+        value:
+          description: The filter value used in comparison against match candidates.
+          format: double
+          type: number
+      type: object
+    configunstableListSavedTraceSearchesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        saved_trace_searches:
+          description: Found saved trace searches.
+          items:
+            $ref: '#/components/schemas/configunstableSavedTraceSearch'
+          type: array
+      type: object
+    SpanFilterSpanFilterMatchType:
+      enum:
+      - INCLUDE
+      - EXCLUDE
+      type: string
+    configunstableDeleteSavedTraceSearchResponse:
+      type: object
+    SavedTraceSearchRelativeTimeFilter:
+      properties:
+        start_relative_offset_secs:
+          description: The duration, in seconds, from now to the beginning of the search interval.
+          format: int32
+          type: integer
+        end_relative_offset_secs:
+          description: The duration, in seconds, from now to the end of the search interval.
+          format: int32
+          type: integer
+      type: object
+    SavedTraceSearchBetweenTimeFilter:
+      properties:
+        min_time:
+          description: Start time of the search interval.
+          format: date-time
+          type: string
+        max_time:
+          description: End time of the search interval.
+          format: date-time
+          type: string
+      type: object
+    configunstableCreateSavedTraceSearchResponse:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    StringFilterStringFilterMatchType:
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+      type: string
+    NumericFilterComparisonType:
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      type: string
+    SavedTraceSearchTimeFilter:
+      properties:
+        close_to:
+          $ref: '#/components/schemas/SavedTraceSearchCloseToTimeFilter'
+        between:
+          $ref: '#/components/schemas/SavedTraceSearchBetweenTimeFilter'
+        relative:
+          $ref: '#/components/schemas/SavedTraceSearchRelativeTimeFilter'
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ConfigUnstableUpdateSavedTraceSearchBody:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+        create_if_missing:
+          description: If `true`, the SavedTraceSearch will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the SavedTraceSearch does not already exist.
+          type: boolean
+      type: object
+    TraceSearchFilterBoolFilter:
+      properties:
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: boolean
+      type: object
+    TraceSearchFilterScopeFilter:
+      properties:
+        span_scopes:
+          description: 'Specifies the span filters that define which spans contribute to the metrics calculation.
+
+            Only spans matching these filters will be included in the metrics aggregation.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+          type: array
+      type: object
+    TraceSearchFilterTraceFilter:
+      properties:
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+      type: object
+    TraceSearchFilterCountFilter:
+      properties:
+        min:
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+          type: integer
+        max:
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
+          type: integer
+      type: object
+    TraceSearchFilterTagFilter:
+      properties:
+        key:
+          description: The key or name of the span tag that this filter inspects.
+          type: string
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+      type: object
+    TraceSearchFilterStringFilter:
+      properties:
+        match:
+          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: string
+        in_values:
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+          type: array
+      type: object
+    configunstableUpdateSavedTraceSearchResponse:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    SavedTraceSearchCloseToTimeFilter:
+      properties:
+        time:
+          description: Time around which the search will performed.
+          format: date-time
+          type: string
+      type: object
+    TraceSearchFilterDurationFilter:
+      properties:
+        min_secs:
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+        max_secs:
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+      type: object
+    configunstableSavedTraceSearch:
+      properties:
+        name:
+          description: The name of the SavedTraceSearch. You can modify this value after the SavedTraceSearch is created.
+          type: string
+        slug:
+          description: The unique identifier of the SavedTraceSearch. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the SavedTraceSearch is created.
+          type: string
+        created_at:
+          description: Timestamp of when the SavedTraceSearch was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the SavedTraceSearch was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        search:
+          $ref: '#/components/schemas/SavedTraceSearchTraceSearch'
+        comparison:
+          $ref: '#/components/schemas/SavedTraceSearchTraceSearch'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    TraceSearchFilterSpanFilter:
+      properties:
+        match_type:
+          $ref: '#/components/schemas/SpanFilterSpanFilterMatchType'
+        service:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        operation:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        parent_service:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        parent_operation:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+        tags:
+          description: Matches the tags of the candidate span.
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterTagFilter'
+          type: array
+        span_count:
+          $ref: '#/components/schemas/TraceSearchFilterCountFilter'
+        is_root_span:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+      type: object

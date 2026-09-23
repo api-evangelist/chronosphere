@@ -1,0 +1,361 @@
+openapi: 3.2.0
+info:
+  description: 'WARNING: This API is unstable and is meant for experimentation only. Do not
+
+    use this API in production. The endpoints and schemas referenced in this
+
+    documentation will be changed or removed without notice and without any
+
+    backwards compatibility guarantee. Note that even though this API is unstable,
+
+    it is still connected to production data, so use with caution.'
+  title: Config Unstable Link Template API
+  version: UNSTABLE
+tags:
+- name: LinkTemplate
+paths:
+  /api/unstable/config/link-templates:
+    get:
+      operationId: ListLinkTemplates
+      parameters:
+      - description: 'Sets the preferred number of items to return per page. If set to `0`, the
+
+          server will use its default value. Regardless of the value specified, clients
+
+          must never assume how many items will be returned.'
+        in: query
+        name: page.max_size
+        schema:
+          type: integer
+          format: int64
+      - description: 'An opaque page token that identifies which page the client should request.
+
+          An empty value indicates the first page.'
+        in: query
+        name: page.token
+        schema:
+          type: string
+      - description: Filters results by slug, where any LinkTemplate with a matching slug in the given list (and matches all other filters) will be returned.
+        in: query
+        name: slugs
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by name, where any LinkTemplate with a matching name in the given list (and matches all other filters) will be returned.
+        in: query
+        name: names
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filters results by ui_component, where any LinkTemplate with a matching ui_component in the given list (and matches all other filters) will be returned.
+        in: query
+        name: ui_components
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableListLinkTemplatesResponse'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - LinkTemplate
+      summary: List link templates
+      x-summary-source: derived
+    post:
+      operationId: CreateLinkTemplate
+      responses:
+        '200':
+          description: A successful response containing the created LinkTemplate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableCreateLinkTemplateResponse'
+        '400':
+          description: Cannot create the LinkTemplate because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot create the LinkTemplate because there is a conflict with an existing LinkTemplate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - LinkTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configunstableCreateLinkTemplateRequest'
+        required: true
+      summary: Create link template
+      x-summary-source: derived
+  /api/unstable/config/link-templates/{slug}:
+    delete:
+      operationId: DeleteLinkTemplate
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableDeleteLinkTemplateResponse'
+        '400':
+          description: Cannot delete the LinkTemplate because it is in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot delete the LinkTemplate because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - LinkTemplate
+      summary: Delete link template
+      x-summary-source: derived
+    get:
+      operationId: ReadLinkTemplate
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableReadLinkTemplateResponse'
+        '404':
+          description: Cannot read the LinkTemplate because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - LinkTemplate
+      summary: Read link template
+      x-summary-source: derived
+    put:
+      operationId: UpdateLinkTemplate
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful response containing the updated LinkTemplate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/configunstableUpdateLinkTemplateResponse'
+        '400':
+          description: Cannot update the LinkTemplate because the request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '404':
+          description: Cannot update the LinkTemplate because the slug does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '409':
+          description: Cannot update the LinkTemplate because there is a conflict with an existing LinkTemplate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        '500':
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiError'
+        default:
+          description: An undefined error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+      tags:
+      - LinkTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUnstableUpdateLinkTemplateBody'
+        required: true
+      summary: Update link template
+      x-summary-source: derived
+components:
+  schemas:
+    configunstableLinkTemplate:
+      properties:
+        slug:
+          description: Unique slug identifying the LinkTemplate.
+          type: string
+        name:
+          description: Unique name of the LinkTemplate. Used as the link text.
+          type: string
+        created_at:
+          description: Timestamp of when the LinkTemplate was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the LinkTemplate was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        url_template:
+          description: URL template.
+          type: string
+        ui_component:
+          description: Link template is scoped to the specified string representing a UI component here.
+          type: string
+      type: object
+    ConfigUnstableUpdateLinkTemplateBody:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+        create_if_missing:
+          description: If `true`, the LinkTemplate will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the LinkTemplate does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the LinkTemplate. If the specified configuration is valid, the endpoint returns a partial response without the LinkTemplate. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableCreateLinkTemplateResponse:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+      type: object
+    configunstableCreateLinkTemplateRequest:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LinkTemplate. If the specified configuration is valid, the endpoint returns a partial response without the LinkTemplate. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableUpdateLinkTemplateResponse:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+      type: object
+    configunstableListLinkTemplatesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        link_templates:
+          items:
+            $ref: '#/components/schemas/configunstableLinkTemplate'
+          type: array
+      type: object
+    configunstableDeleteLinkTemplateResponse:
+      type: object
+    configunstableReadLinkTemplateResponse:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
