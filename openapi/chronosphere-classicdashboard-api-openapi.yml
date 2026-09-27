@@ -297,6 +297,13 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    configv1CollectionReference:
+      properties:
+        slug:
+          type: string
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
     configv1ReadClassicDashboardResponse:
       properties:
         classic_dashboard:
@@ -311,11 +318,6 @@ components:
         dry_run:
           description: If `true`, validates the specified configuration without creating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-      type: object
-    configv1UpdateClassicDashboardResponse:
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
       type: object
     configv1ListClassicDashboardsResponse:
       properties:
@@ -366,35 +368,6 @@ components:
       required:
       - name
       type: object
-    configv1CreateClassicDashboardResponse:
-      properties:
-        classic_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1CollectionReference:
-      properties:
-        slug:
-          type: string
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-      type: object
-    configv1DeleteClassicDashboardResponse:
-      type: object
-    configv1CollectionReferenceType:
-      enum:
-      - SIMPLE
-      - SERVICE
-      title: Type values must match entitiespb.Collection.CollectionType.
-      type: string
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
     ConfigV1UpdateClassicDashboardBody:
       properties:
         classic_dashboard:
@@ -417,6 +390,33 @@ components:
 
             more items to return.'
           type: string
+      type: object
+    configv1UpdateClassicDashboardResponse:
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1CreateClassicDashboardResponse:
+      properties:
+        classic_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
+    configv1DeleteClassicDashboardResponse:
+      type: object
+    genericError:
+      additionalProperties: true
       type: object
     configv1CreateClassicDashboardRequest_2:
       type: object
@@ -460,22 +460,6 @@ components:
         dashboard_json:
           type: string
           description: Required raw JSON of the Grafana dashboard.
-    configv1CollectionReferenceType_2:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     ConfigV1UpdateClassicDashboardBody_2:
       type: object
       properties:
@@ -497,6 +481,22 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CollectionReferenceType_2:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

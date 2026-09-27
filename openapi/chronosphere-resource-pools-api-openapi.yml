@@ -192,32 +192,6 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1ResourcePools:
-      properties:
-        created_at:
-          description: Timestamp of when the ResourcePools was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-        default_pool:
-          allOf:
-          - $ref: '#/components/schemas/ResourcePoolsDefaultPool'
-          description: 'Defines the default pool. Metrics that don''t match any of the configured pools
-
-            map to the default pool.'
-        pools:
-          description: Optional. Defines additional pools, which can't exceed 20 pools.
-          items:
-            $ref: '#/components/schemas/ResourcePoolsPool'
-          type: array
-        updated_at:
-          description: Timestamp of when the ResourcePools was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-      required:
-      - default_pool
-      type: object
     AllocationFixedValue:
       properties:
         license:
@@ -226,14 +200,45 @@ components:
           format: int64
           type: string
       type: object
-    ResourcePoolsDefaultPool:
+    configv1UpdateResourcePoolsResponse:
+      properties:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools'
+      type: object
+    configv1UpdateResourcePoolsRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the ResourcePools will be created if it does not already exist. If `false`, an error will be returned if the ResourcePools does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the ResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the ResourcePools. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        resource_pools:
+          allOf:
+          - $ref: '#/components/schemas/configv1ResourcePools'
+          description: The ResourcePools to update.
+      type: object
+    configv1CreateResourcePoolsResponse:
+      properties:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools'
+      type: object
+    ResourcePoolsPool:
       properties:
         allocation:
           allOf:
           - $ref: '#/components/schemas/configv1ResourcePoolsAllocation'
-          description: '**DEPRECATED**. The default pool receives any remaining allocation after
+          description: Defines the allocation of the pool.
+        filters:
+          description: 'Filters that define which metrics map to this pool, where any metric that
 
-            accounting for the sum total allocation across pools.'
+            matches at least one filter will map to the pool.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+          type: array
+        name:
+          description: Name of the pool, which must be unique.
+          type: string
         priorities:
           allOf:
           - $ref: '#/components/schemas/ResourcePoolsPriorities'
@@ -245,24 +250,11 @@ components:
 
             `low_priority_filters` or `high_priority_filters` is considered default
 
-            priority, where it is dropped after low but before high.
-
-            See the [product documentation](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/define-pools#configure-priority)
-
-            for more information.'
-        priority_thresholds:
-          description: 'Optional. For supported licenses, defines thresholds with strict limits for
-
-            when to drop new consumption of the license for a pool. Only
-
-            `PERSISTED_CARDINALITY_STANDARD` and `PERSISTED_CARDINALITY_HISTOGRAM` are
-
-            supported. See the [product documentation](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/define-pools#pool-thresholds)
-
-            for more information.'
-          items:
-            $ref: '#/components/schemas/AllocationThresholds'
-          type: array
+            priority, where it is dropped after low but before high.'
+      required:
+      - allocation
+      - filters
+      - name
       type: object
     ResourcePoolsLicense:
       enum:
@@ -294,20 +286,20 @@ components:
           format: double
           type: number
       type: object
-    configv1CreateResourcePoolsResponse:
+    configv1CreateResourcePoolsRequest:
       properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the ResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the ResourcePools. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
         resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools'
+          allOf:
+          - $ref: '#/components/schemas/configv1ResourcePools'
+          description: The ResourcePools to create.
       type: object
-    configv1LabelFilter:
+    apiError:
       properties:
-        name:
-          description: The name of the label to match.
-          example: job
-          type: string
-        value_glob:
-          description: The glob value of the label to match.
-          example: myservice*
+        message:
+          description: An error message describing what went wrong.
           type: string
       type: object
     configv1ResourcePoolsAllocation:
@@ -393,29 +385,90 @@ components:
 
             lesser than other priority fields.'
       type: object
-    configv1UpdateResourcePoolsRequest:
-      properties:
-        create_if_missing:
-          description: If `true`, the ResourcePools will be created if it does not already exist. If `false`, an error will be returned if the ResourcePools does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the ResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the ResourcePools. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        resource_pools:
-          allOf:
-          - $ref: '#/components/schemas/configv1ResourcePools'
-          description: The ResourcePools to update.
+    configv1DeleteResourcePoolsResponse:
       type: object
     configv1ReadResourcePoolsResponse:
       properties:
         resource_pools:
           $ref: '#/components/schemas/configv1ResourcePools'
       type: object
-    apiError:
+    configv1LabelFilter:
       properties:
-        message:
-          description: An error message describing what went wrong.
+        name:
+          description: The name of the label to match.
+          example: job
           type: string
+        value_glob:
+          description: The glob value of the label to match.
+          example: myservice*
+          type: string
+      type: object
+    ResourcePoolsDefaultPool:
+      properties:
+        allocation:
+          allOf:
+          - $ref: '#/components/schemas/configv1ResourcePoolsAllocation'
+          description: '**DEPRECATED**. The default pool receives any remaining allocation after
+
+            accounting for the sum total allocation across pools.'
+        priorities:
+          allOf:
+          - $ref: '#/components/schemas/ResourcePoolsPriorities'
+          description: 'Optional. Sets priorities that define which metrics within the default pool
+
+            should be dropped first (low priority) and dropped last (high priority) when
+
+            the license limit is exceeded. Any metric not matched by either
+
+            `low_priority_filters` or `high_priority_filters` is considered default
+
+            priority, where it is dropped after low but before high.
+
+            See the [product documentation](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/define-pools#configure-priority)
+
+            for more information.'
+        priority_thresholds:
+          description: 'Optional. For supported licenses, defines thresholds with strict limits for
+
+            when to drop new consumption of the license for a pool. Only
+
+            `PERSISTED_CARDINALITY_STANDARD` and `PERSISTED_CARDINALITY_HISTOGRAM` are
+
+            supported. See the [product documentation](https://docs.chronosphere.io/control/shaping/shape-metrics/quotas/define-pools#pool-thresholds)
+
+            for more information.'
+          items:
+            $ref: '#/components/schemas/AllocationThresholds'
+          type: array
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1ResourcePools:
+      properties:
+        created_at:
+          description: Timestamp of when the ResourcePools was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        default_pool:
+          allOf:
+          - $ref: '#/components/schemas/ResourcePoolsDefaultPool'
+          description: 'Defines the default pool. Metrics that don''t match any of the configured pools
+
+            map to the default pool.'
+        pools:
+          description: Optional. Defines additional pools, which can't exceed 20 pools.
+          items:
+            $ref: '#/components/schemas/ResourcePoolsPool'
+          type: array
+        updated_at:
+          description: Timestamp of when the ResourcePools was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - default_pool
       type: object
     ResourcePoolsPriorities:
       properties:
@@ -438,59 +491,6 @@ components:
             $ref: '#/components/schemas/configv1LabelFilter'
           type: array
       type: object
-    configv1CreateResourcePoolsRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the ResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the ResourcePools. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        resource_pools:
-          allOf:
-          - $ref: '#/components/schemas/configv1ResourcePools'
-          description: The ResourcePools to create.
-      type: object
-    configv1DeleteResourcePoolsResponse:
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1UpdateResourcePoolsResponse:
-      properties:
-        resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools'
-      type: object
-    ResourcePoolsPool:
-      properties:
-        allocation:
-          allOf:
-          - $ref: '#/components/schemas/configv1ResourcePoolsAllocation'
-          description: Defines the allocation of the pool.
-        filters:
-          description: 'Filters that define which metrics map to this pool, where any metric that
-
-            matches at least one filter will map to the pool.'
-          items:
-            $ref: '#/components/schemas/configv1LabelFilter'
-          type: array
-        name:
-          description: Name of the pool, which must be unique.
-          type: string
-        priorities:
-          allOf:
-          - $ref: '#/components/schemas/ResourcePoolsPriorities'
-          description: 'Optional. Sets priorities that define which metrics within the default pool
-
-            should be dropped first (low priority) and dropped last (high priority) when
-
-            the license limit is exceeded. Any metric not matched by either
-
-            `low_priority_filters` or `high_priority_filters` is considered default
-
-            priority, where it is dropped after low but before high.'
-      required:
-      - allocation
-      - filters
-      - name
-      type: object
     AllocationThreshold:
       type: object
       properties:
@@ -512,55 +512,52 @@ components:
           type: string
           description: Threshold expressed as a fixed value of the license.
           format: int64
-    configv1ResourcePools_2:
+    configv1UpdateResourcePoolsRequest_2:
       type: object
       properties:
-        created_at:
-          type: string
-          description: Timestamp of when the ResourcePools was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          description: Timestamp of when the ResourcePools was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        default_pool:
-          $ref: '#/components/schemas/ResourcePoolsDefaultPool_2'
-        pools:
-          type: array
-          description: Optional pools. Cannot set more than 20 pools.
-          items:
-            $ref: '#/components/schemas/ResourcePoolsPool_2'
-    ResourcePoolsDefaultPool_2:
-      type: object
-      properties:
-        allocation:
-          $ref: '#/components/schemas/configv1ResourcePoolsAllocation_2'
-        priorities:
-          $ref: '#/components/schemas/ResourcePoolsPriorities_2'
-        priority_thresholds:
-          type: array
-          description: 'Optional. For supported licenses, defines thresholds with strict limits for
-
-            when to drop new consumption of the license for a pool. Currently, only
-
-            `PERSISTED_CARDINALITY_STANDARD` and `PERSISTED_CARDINALITY_HISTOGRAM` are
-
-            supported.'
-          items:
-            $ref: '#/components/schemas/AllocationThresholds_2'
-    configv1LabelFilter_2:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the ResourcePools will be created if it does not already exist. If false, an error will be returned if the ResourcePools does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the ResourcePools isn't created or updated, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
+    ResourcePoolsPool_2:
       type: object
       properties:
         name:
           type: string
-          description: Name of the label to match.
-          example: job
-        value_glob:
+          description: Required name of the pool. Must be unique.
+        allocation:
+          $ref: '#/components/schemas/configv1ResourcePoolsAllocation_2'
+        filters:
+          type: array
+          description: 'Required filters which define which metrics map to this pool, where any
+
+            metric which matches at least one filter will map to the pool.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter_2'
+        priorities:
+          $ref: '#/components/schemas/ResourcePoolsPriorities_2'
+    configv1CreateResourcePoolsRequest_2:
+      type: object
+      properties:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools_2'
+        dry_run:
+          type: boolean
+          description: If true, the ResourcePools isn't created, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
           type: string
-          description: Glob value of the label to match.
-          example: myservice*
+          description: An error message describing what went wrong.
     configv1ResourcePoolsAllocation_2:
       type: object
       properties:
@@ -614,17 +611,55 @@ components:
           $ref: '#/components/schemas/AllocationThreshold'
         low_priority:
           $ref: '#/components/schemas/AllocationThreshold'
-    configv1UpdateResourcePoolsRequest_2:
+    configv1LabelFilter_2:
       type: object
       properties:
-        resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the ResourcePools will be created if it does not already exist. If false, an error will be returned if the ResourcePools does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the ResourcePools isn't created or updated, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
+    ResourcePoolsDefaultPool_2:
+      type: object
+      properties:
+        allocation:
+          $ref: '#/components/schemas/configv1ResourcePoolsAllocation_2'
+        priorities:
+          $ref: '#/components/schemas/ResourcePoolsPriorities_2'
+        priority_thresholds:
+          type: array
+          description: 'Optional. For supported licenses, defines thresholds with strict limits for
+
+            when to drop new consumption of the license for a pool. Currently, only
+
+            `PERSISTED_CARDINALITY_STANDARD` and `PERSISTED_CARDINALITY_HISTOGRAM` are
+
+            supported.'
+          items:
+            $ref: '#/components/schemas/AllocationThresholds_2'
+    configv1ResourcePools_2:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Timestamp of when the ResourcePools was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the ResourcePools was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        default_pool:
+          $ref: '#/components/schemas/ResourcePoolsDefaultPool_2'
+        pools:
+          type: array
+          description: Optional pools. Cannot set more than 20 pools.
+          items:
+            $ref: '#/components/schemas/ResourcePoolsPool_2'
     ResourcePoolsPriorities_2:
       type: object
       properties:
@@ -646,41 +681,6 @@ components:
             priority metrics are dropped first when the license limit is exceeded.'
           items:
             $ref: '#/components/schemas/configv1LabelFilter_2'
-    configv1CreateResourcePoolsRequest_2:
-      type: object
-      properties:
-        resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools_2'
-        dry_run:
-          type: boolean
-          description: If true, the ResourcePools isn't created, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    ResourcePoolsPool_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Required name of the pool. Must be unique.
-        allocation:
-          $ref: '#/components/schemas/configv1ResourcePoolsAllocation_2'
-        filters:
-          type: array
-          description: 'Required filters which define which metrics map to this pool, where any
-
-            metric which matches at least one filter will map to the pool.'
-          items:
-            $ref: '#/components/schemas/configv1LabelFilter_2'
-        priorities:
-          $ref: '#/components/schemas/ResourcePoolsPriorities_2'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

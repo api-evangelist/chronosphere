@@ -290,18 +290,23 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    DestinationEmailTarget:
+    WebhookTargetQueryParameter:
       properties:
-        addresses:
-          description: The email addresses to send notifications to.
+        key:
+          type: string
+        value:
+          type: string
+      type: object
+    DestinationSlackTarget:
+      properties:
+        channels:
+          description: The Slack channels to send notifications to.
           items:
             type: string
           type: array
-      type: object
-    configv1CreateNotificationPolicyResponse:
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
+        external_connection_slug:
+          description: The slug of the ExternalConnection that holds Slack credentials.
+          type: string
       type: object
     configv1LabelMatcher:
       properties:
@@ -324,37 +329,21 @@ components:
             parameter is treated as a regular expression for parsing label values.'
           type: string
       type: object
-    NotificationPolicyRoutesOverride:
+    configv1ReadNotificationPolicyResponse:
       properties:
-        alert_label_matchers:
-          description: 'The alert labels to match against. If an alert matches all of these labels,
-
-            the override notifier is applied to that alert.'
-          items:
-            $ref: '#/components/schemas/configv1LabelMatcher'
-          type: array
-        notifiers:
-          allOf:
-          - $ref: '#/components/schemas/RoutesSeverityNotifiers'
-          description: The notifiers that will receive the alerts matched by overrides.
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    DestinationPagerdutyTarget:
+    DestinationOpsGenieTarget:
       properties:
         external_connection_slug:
-          description: The slug of the ExternalConnection that holds PagerDuty credentials.
+          description: The slug of the ExternalConnection that holds OpsGenie credentials.
           type: string
       type: object
-    configv1ListNotificationPoliciesResponse:
+    configv1UpdateNotificationPolicyResponse:
       properties:
-        notification_policies:
-          items:
-            $ref: '#/components/schemas/configv1NotificationPolicy'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy'
       type: object
     NotificationPolicyRoutes:
       properties:
@@ -378,12 +367,33 @@ components:
       required:
       - defaults
       type: object
-    WebhookTargetQueryParameter:
+    configv1LabelMatcherMatcherType:
+      enum:
+      - EXACT
+      - REGEX
+      type: string
+    DestinationEmailTarget:
       properties:
-        key:
-          type: string
-        value:
-          type: string
+        addresses:
+          description: The email addresses to send notifications to.
+          items:
+            type: string
+          type: array
+      type: object
+    ConfigV1UpdateNotificationPolicyBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the NotificationPolicy will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the NotificationPolicy does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the NotificationPolicy. If the specified configuration is valid, the endpoint returns a partial response without the NotificationPolicy. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        notification_policy:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotificationPolicy'
+          description: The NotificationPolicy to update.
+      type: object
+    configv1DeleteNotificationPolicyResponse:
       type: object
     configv1CreateNotificationPolicyRequest:
       properties:
@@ -394,6 +404,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/configv1NotificationPolicy'
           description: The NotificationPolicy to create.
+      type: object
+    DestinationPagerdutyTarget:
+      properties:
+        external_connection_slug:
+          description: The slug of the ExternalConnection that holds PagerDuty credentials.
+          type: string
       type: object
     RoutesNotifierList:
       properties:
@@ -419,37 +435,64 @@ components:
           format: int32
           type: integer
       type: object
-    ConfigV1UpdateNotificationPolicyBody:
+    RoutesDestination:
       properties:
-        create_if_missing:
-          description: If `true`, the NotificationPolicy will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the NotificationPolicy does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the NotificationPolicy. If the specified configuration is valid, the endpoint returns a partial response without the NotificationPolicy. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        notification_policy:
-          allOf:
-          - $ref: '#/components/schemas/configv1NotificationPolicy'
-          description: The NotificationPolicy to update.
-      type: object
-    DestinationWebhookTarget:
-      properties:
-        external_connection_slug:
-          description: The slug of the ExternalConnection that holds webhook credentials.
-          type: string
-        query_parameters:
-          description: 'Query parameters to add to the webhook URL.
+        disable_resolves:
+          description: 'If true, do not send notifications when alerts resolve.
 
-            If the webhook URL already contains parameters, these will be appended.'
-          items:
-            $ref: '#/components/schemas/WebhookTargetQueryParameter'
-          type: array
+            Defaults to false (resolve notifications are sent).'
+          type: boolean
+        email:
+          $ref: '#/components/schemas/DestinationEmailTarget'
+        ops_genie:
+          $ref: '#/components/schemas/DestinationOpsGenieTarget'
+        pagerduty:
+          $ref: '#/components/schemas/DestinationPagerdutyTarget'
+        slack:
+          $ref: '#/components/schemas/DestinationSlackTarget'
+        victor_ops:
+          $ref: '#/components/schemas/DestinationVictorOpsTarget'
+        webhook:
+          $ref: '#/components/schemas/DestinationWebhookTarget'
       type: object
-    configv1LabelMatcherMatcherType:
-      enum:
-      - EXACT
-      - REGEX
-      type: string
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    NotificationPolicyRoutesOverride:
+      properties:
+        alert_label_matchers:
+          description: 'The alert labels to match against. If an alert matches all of these labels,
+
+            the override notifier is applied to that alert.'
+          items:
+            $ref: '#/components/schemas/configv1LabelMatcher'
+          type: array
+        notifiers:
+          allOf:
+          - $ref: '#/components/schemas/RoutesSeverityNotifiers'
+          description: The notifiers that will receive the alerts matched by overrides.
+      type: object
+    RoutesSeverityNotifiers:
+      properties:
+        critical:
+          allOf:
+          - $ref: '#/components/schemas/RoutesNotifierList'
+          description: The notifiers that will receive `critical` alerts.
+        warn:
+          allOf:
+          - $ref: '#/components/schemas/RoutesNotifierList'
+          description: The notifiers that will receive `warn` alerts.
+      type: object
     configv1NotificationPolicy:
       properties:
         bucket_slug:
@@ -485,36 +528,6 @@ components:
       required:
       - name
       type: object
-    configv1DeleteNotificationPolicyResponse:
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    DestinationSlackTarget:
-      properties:
-        channels:
-          description: The Slack channels to send notifications to.
-          items:
-            type: string
-          type: array
-        external_connection_slug:
-          description: The slug of the ExternalConnection that holds Slack credentials.
-          type: string
-      type: object
-    RoutesSeverityNotifiers:
-      properties:
-        critical:
-          allOf:
-          - $ref: '#/components/schemas/RoutesNotifierList'
-          description: The notifiers that will receive `critical` alerts.
-        warn:
-          allOf:
-          - $ref: '#/components/schemas/RoutesNotifierList'
-          description: The notifiers that will receive `warn` alerts.
-      type: object
     DestinationVictorOpsTarget:
       properties:
         external_connection_slug:
@@ -528,75 +541,39 @@ components:
             type: string
           type: array
       type: object
-    configv1UpdateNotificationPolicyResponse:
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy'
-      type: object
-    RoutesDestination:
-      properties:
-        disable_resolves:
-          description: 'If true, do not send notifications when alerts resolve.
-
-            Defaults to false (resolve notifications are sent).'
-          type: boolean
-        email:
-          $ref: '#/components/schemas/DestinationEmailTarget'
-        ops_genie:
-          $ref: '#/components/schemas/DestinationOpsGenieTarget'
-        pagerduty:
-          $ref: '#/components/schemas/DestinationPagerdutyTarget'
-        slack:
-          $ref: '#/components/schemas/DestinationSlackTarget'
-        victor_ops:
-          $ref: '#/components/schemas/DestinationVictorOpsTarget'
-        webhook:
-          $ref: '#/components/schemas/DestinationWebhookTarget'
-      type: object
-    DestinationOpsGenieTarget:
+    DestinationWebhookTarget:
       properties:
         external_connection_slug:
-          description: The slug of the ExternalConnection that holds OpsGenie credentials.
+          description: The slug of the ExternalConnection that holds webhook credentials.
           type: string
+        query_parameters:
+          description: 'Query parameters to add to the webhook URL.
+
+            If the webhook URL already contains parameters, these will be appended.'
+          items:
+            $ref: '#/components/schemas/WebhookTargetQueryParameter'
+          type: array
       type: object
-    configv1ReadNotificationPolicyResponse:
+    configv1CreateNotificationPolicyResponse:
       properties:
         notification_policy:
           $ref: '#/components/schemas/configv1NotificationPolicy'
       type: object
-    configv1PageResult:
+    apiError:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        message:
+          description: An error message describing what went wrong.
           type: string
       type: object
-    NotificationPolicyRoutesGroupBy:
-      type: object
+    configv1ListNotificationPoliciesResponse:
       properties:
-        label_names:
-          type: array
-          description: 'Set of label names used to group alerts.
-
-            For example, if label_names is ["service", "code"] then all alerts including labels {service="foo",code="404"}
-
-            will be grouped together.'
+        notification_policies:
           items:
-            type: string
-    configv1LabelMatcher_2:
+            $ref: '#/components/schemas/configv1NotificationPolicy'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
-        name:
-          type: string
-          description: name always matches against an exact label name.
-        value:
-          type: string
-          description: value matches against a label value based on the configured type.
     NotificationPolicyRoutesOverride_2:
       type: object
       properties:
@@ -609,6 +586,75 @@ components:
             $ref: '#/components/schemas/configv1LabelMatcher_2'
         notifiers:
           $ref: '#/components/schemas/RoutesSeverityNotifiers_2'
+    configv1LabelMatcher_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
+    ConfigV1UpdateNotificationPolicyBody_2:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the NotificationPolicy will be created if it does not already exist, identified by slug. If false, an error will be returned if the NotificationPolicy does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the NotificationPolicy isn't created or updated, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
+    NotificationPolicyRoutesGroupBy:
+      type: object
+      properties:
+        label_names:
+          type: array
+          description: 'Set of label names used to group alerts.
+
+            For example, if label_names is ["service", "code"] then all alerts including labels {service="foo",code="404"}
+
+            will be grouped together.'
+          items:
+            type: string
+    RoutesSeverityNotifiers_2:
+      type: object
+      properties:
+        warn:
+          $ref: '#/components/schemas/RoutesNotifierList_2'
+        critical:
+          $ref: '#/components/schemas/RoutesNotifierList_2'
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateNotificationPolicyRequest_2:
+      type: object
+      properties:
+        notification_policy:
+          $ref: '#/components/schemas/configv1NotificationPolicy_2'
+        dry_run:
+          type: boolean
+          description: If true, the NotificationPolicy isn't created, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
     configv1NotificationPolicy_2:
       type: object
       properties:
@@ -640,35 +686,6 @@ components:
             bucket_slug is not set.'
         routes:
           $ref: '#/components/schemas/NotificationPolicyRoutes_2'
-    configv1CreateNotificationPolicyRequest_2:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy_2'
-        dry_run:
-          type: boolean
-          description: If true, the NotificationPolicy isn't created, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    ConfigV1UpdateNotificationPolicyBody_2:
-      type: object
-      properties:
-        notification_policy:
-          $ref: '#/components/schemas/configv1NotificationPolicy_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the NotificationPolicy will be created if it does not already exist, identified by slug. If false, an error will be returned if the NotificationPolicy does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the NotificationPolicy isn't created or updated, and no response NotificationPolicy will be returned. The response will return an error if the given NotificationPolicy is invalid.
     RoutesNotifierList_2:
       type: object
       properties:
@@ -683,23 +700,6 @@ components:
           format: int32
         group_by:
           $ref: '#/components/schemas/NotificationPolicyRoutesGroupBy'
-    RoutesSeverityNotifiers_2:
-      type: object
-      properties:
-        warn:
-          $ref: '#/components/schemas/RoutesNotifierList_2'
-        critical:
-          $ref: '#/components/schemas/RoutesNotifierList_2'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
     NotificationPolicyRoutes_2:
       type: object
       properties:

@@ -274,7 +274,7 @@ paths:
       x-summary-source: derived
   /api/v1/config/services:
     get:
-      operationId: ListServices
+      operationId: getApiV1ConfigServices
       parameters:
       - description: 'Sets the preferred number of items to return per page. If set to `0`, the
 
@@ -356,6 +356,8 @@ paths:
       - ApiKeyAuth: []
       summary: List services
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: ListServices
     servers:
     - url: https://{tenant}.chronosphere.io
       variables:
@@ -364,7 +366,7 @@ paths:
           description: tenant ID assigned by the service provider
   /api/v1/config/services/{slug}:
     get:
-      operationId: ReadService
+      operationId: getApiV1ConfigServicesBySlug
       parameters:
       - in: path
         name: slug
@@ -402,6 +404,8 @@ paths:
       - ApiKeyAuth: []
       summary: Read service
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: ReadService
     servers:
     - url: https://{tenant}.chronosphere.io
       variables:
@@ -410,15 +414,12 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    ConfigUnstableUpdateServiceBody:
+    configunstableCreateServiceRequest:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
-        create_if_missing:
-          description: If `true`, the Service will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Service does not already exist.
-          type: boolean
         dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
     configunstableListServicesResponse:
@@ -430,35 +431,28 @@ components:
             $ref: '#/components/schemas/configunstableService'
           type: array
       type: object
-    configunstableDeleteServiceResponse:
-      type: object
-    configunstableCreateServiceRequest:
+    ConfigUnstableUpdateServiceBody:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
+        create_if_missing:
+          description: If `true`, the Service will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Service does not already exist.
+          type: boolean
         dry_run:
-          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          description: If `true`, validates the specified configuration without creating or updating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableReadServiceResponse:
+    configv1PageResult:
       properties:
-        service:
-          $ref: '#/components/schemas/configunstableService'
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
           type: string
       type: object
-    configunstableCreateServiceResponse:
+    configunstableReadServiceResponse:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
@@ -498,20 +492,50 @@ components:
             This does not override the policy used when a monitor explicitly references a policy.'
           type: string
       type: object
-    configv1PageResult:
+    apiError:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
           type: string
+      type: object
+    configunstableDeleteServiceResponse:
       type: object
     configunstableUpdateServiceResponse:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
+      type: object
+    configunstableCreateServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1ListServicesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        services:
+          items:
+            $ref: '#/components/schemas/configv1Service'
+          type: array
+      type: object
+    configv1ReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configv1Service'
+      type: object
+    apiError_2:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configv1Service:
       properties:
@@ -551,26 +575,6 @@ components:
       required:
       - name
       - team_slug
-      type: object
-    configv1ListServicesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        services:
-          items:
-            $ref: '#/components/schemas/configv1Service'
-          type: array
-      type: object
-    apiError_2:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1ReadServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configv1Service'
       type: object
     configv1Service_2:
       type: object

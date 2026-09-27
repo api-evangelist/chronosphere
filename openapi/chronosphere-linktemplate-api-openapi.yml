@@ -266,6 +266,56 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    configunstableUpdateLinkTemplateResponse:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+      type: object
+    ConfigUnstableUpdateLinkTemplateBody:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+        create_if_missing:
+          description: If `true`, the LinkTemplate will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the LinkTemplate does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the LinkTemplate. If the specified configuration is valid, the endpoint returns a partial response without the LinkTemplate. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableDeleteLinkTemplateResponse:
+      type: object
+    configunstableReadLinkTemplateResponse:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configunstableListLinkTemplatesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        link_templates:
+          items:
+            $ref: '#/components/schemas/configunstableLinkTemplate'
+          type: array
+      type: object
+    configunstableCreateLinkTemplateRequest:
+      properties:
+        link_template:
+          $ref: '#/components/schemas/configunstableLinkTemplate'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LinkTemplate. If the specified configuration is valid, the endpoint returns a partial response without the LinkTemplate. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
     configunstableLinkTemplate:
       properties:
         slug:
@@ -291,33 +341,6 @@ components:
           description: Link template is scoped to the specified string representing a UI component here.
           type: string
       type: object
-    ConfigUnstableUpdateLinkTemplateBody:
-      properties:
-        link_template:
-          $ref: '#/components/schemas/configunstableLinkTemplate'
-        create_if_missing:
-          description: If `true`, the LinkTemplate will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the LinkTemplate does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the LinkTemplate. If the specified configuration is valid, the endpoint returns a partial response without the LinkTemplate. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configunstableCreateLinkTemplateResponse:
-      properties:
-        link_template:
-          $ref: '#/components/schemas/configunstableLinkTemplate'
-      type: object
-    configunstableCreateLinkTemplateRequest:
-      properties:
-        link_template:
-          $ref: '#/components/schemas/configunstableLinkTemplate'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LinkTemplate. If the specified configuration is valid, the endpoint returns a partial response without the LinkTemplate. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
     apiError:
       properties:
         code:
@@ -328,34 +351,11 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    configunstableUpdateLinkTemplateResponse:
+    configunstableCreateLinkTemplateResponse:
       properties:
         link_template:
           $ref: '#/components/schemas/configunstableLinkTemplate'
       type: object
-    configunstableListLinkTemplatesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        link_templates:
-          items:
-            $ref: '#/components/schemas/configunstableLinkTemplate'
-          type: array
-      type: object
-    configunstableDeleteLinkTemplateResponse:
-      type: object
-    configunstableReadLinkTemplateResponse:
-      properties:
-        link_template:
-          $ref: '#/components/schemas/configunstableLinkTemplate'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+    genericError:
+      additionalProperties: true
       type: object

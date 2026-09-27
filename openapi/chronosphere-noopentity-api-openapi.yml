@@ -196,21 +196,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableReadNoopEntityResponse:
+    configunstableDeleteNoopEntityResponse:
       properties:
-        noop_entity:
-          $ref: '#/components/schemas/configunstableNoopEntity'
+        not_hidden:
+          type: boolean
       type: object
-    configunstableCreateNoopEntityResponse:
-      properties:
-        noop_entity:
-          $ref: '#/components/schemas/configunstableNoopEntity'
-      type: object
-    configunstableCreateNoopEntityRequest:
-      properties:
-        noop_entity:
-          $ref: '#/components/schemas/configunstableNoopEntity'
-      type: object
+    NoopEntityNestedEnum:
+      enum:
+      - ENABLED
+      type: string
     configunstableUpdateNoopEntityResponse:
       properties:
         noop_entity:
@@ -239,6 +233,31 @@ components:
         enum:
           $ref: '#/components/schemas/configunstableNoopEnum'
       type: object
+    configunstableCreateNoopEntityResponse:
+      properties:
+        noop_entity:
+          $ref: '#/components/schemas/configunstableNoopEntity'
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableReadNoopEntityResponse:
+      properties:
+        noop_entity:
+          $ref: '#/components/schemas/configunstableNoopEntity'
+      type: object
+    configunstableCreateNoopEntityRequest:
+      properties:
+        noop_entity:
+          $ref: '#/components/schemas/configunstableNoopEntity'
+      type: object
     ConfigUnstableUpdateNoopEntityBody:
       properties:
         noop_entity:
@@ -250,26 +269,7 @@ components:
     genericError:
       additionalProperties: true
       type: object
-    NoopEntityNestedEnum:
-      enum:
-      - ENABLED
-      type: string
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
     configunstableNoopEnum:
       enum:
       - ACTIVE
       type: string
-    configunstableDeleteNoopEntityResponse:
-      properties:
-        not_hidden:
-          type: boolean
-      type: object

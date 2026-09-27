@@ -276,6 +276,25 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    configv1CreateDerivedMetricResponse:
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+      type: object
+    configv1ListDerivedMetricsResponse:
+      properties:
+        derived_metrics:
+          items:
+            $ref: '#/components/schemas/configv1DerivedMetric'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1UpdateDerivedMetricResponse:
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+      type: object
     configv1CreateDerivedMetricRequest:
       properties:
         derived_metric:
@@ -285,44 +304,6 @@ components:
         dry_run:
           description: If `true`, validates the specified configuration without creating the DerivedMetric. If the specified configuration is valid, the endpoint returns a partial response without the DerivedMetric. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-      type: object
-    configv1DerivedMetricLabelMatcher:
-      properties:
-        name:
-          description: name always matches against an exact label name.
-          type: string
-        type:
-          allOf:
-          - $ref: '#/components/schemas/configv1DerivedMetricLabelMatcherMatcherType'
-          description: type determines how the label value is matched.
-        value:
-          description: value matches against a label value based on the configured type.
-          type: string
-      type: object
-    DerivedMetricQuery:
-      properties:
-        prometheus_expr:
-          description: 'PromQL expression the derived metric executes. The expression should
-
-            include all configured variables.'
-          example: cpu_usage{$service, $instance} / sum(cpu_usage{$service})
-          type: string
-        variables:
-          description: 'Optional. Specifies the variables that can be used in the derived metric as
-
-            label selectors.'
-          items:
-            $ref: '#/components/schemas/DerivedMetricVariable'
-          type: array
-      required:
-      - prometheus_expr
-      type: object
-    configv1DeleteDerivedMetricResponse:
-      type: object
-    configv1ReadDerivedMetricResponse:
-      properties:
-        derived_metric:
-          $ref: '#/components/schemas/configv1DerivedMetric'
       type: object
     configv1DerivedMetric:
       properties:
@@ -359,53 +340,14 @@ components:
       - name
       - queries
       type: object
-    configv1DerivedMetricLabelMatcherMatcherType:
-      enum:
-      - EXACT
-      type: string
-    ConfigV1UpdateDerivedMetricBody:
+    configv1PageResult:
       properties:
-        create_if_missing:
-          description: If `true`, the DerivedMetric will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the DerivedMetric does not already exist.
-          type: boolean
-        derived_metric:
-          allOf:
-          - $ref: '#/components/schemas/configv1DerivedMetric'
-          description: The DerivedMetric to update.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the DerivedMetric. If the specified configuration is valid, the endpoint returns a partial response without the DerivedMetric. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    DerivedMetricVariable:
-      properties:
-        default_prometheus_selector:
-          description: 'PromQL label selector, which must match the given variable name. If the
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
 
-            variable is not specified in the derived metric usage, then the default
+            client should request. An empty value indicates that there are no
 
-            selector is used.'
-          example: service=~".*"
-          type: string
-        name:
-          description: Name of the variable.
-          example: service
-          type: string
-      required:
-      - default_prometheus_selector
-      - name
-      type: object
-    configv1CreateDerivedMetricResponse:
-      properties:
-        derived_metric:
-          $ref: '#/components/schemas/configv1DerivedMetric'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
+            more items to return.'
           type: string
       type: object
     DerivedMetricSelectorQuery:
@@ -427,6 +369,63 @@ components:
       required:
       - query
       type: object
+    ConfigV1UpdateDerivedMetricBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the DerivedMetric will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the DerivedMetric does not already exist.
+          type: boolean
+        derived_metric:
+          allOf:
+          - $ref: '#/components/schemas/configv1DerivedMetric'
+          description: The DerivedMetric to update.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the DerivedMetric. If the specified configuration is valid, the endpoint returns a partial response without the DerivedMetric. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1DerivedMetricLabelMatcher:
+      properties:
+        name:
+          description: name always matches against an exact label name.
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/configv1DerivedMetricLabelMatcherMatcherType'
+          description: type determines how the label value is matched.
+        value:
+          description: value matches against a label value based on the configured type.
+          type: string
+      type: object
+    DerivedMetricQuery:
+      properties:
+        prometheus_expr:
+          description: 'PromQL expression the derived metric executes. The expression should
+
+            include all configured variables.'
+          example: cpu_usage{$service, $instance} / sum(cpu_usage{$service})
+          type: string
+        variables:
+          description: 'Optional. Specifies the variables that can be used in the derived metric as
+
+            label selectors.'
+          items:
+            $ref: '#/components/schemas/DerivedMetricVariable'
+          type: array
+      required:
+      - prometheus_expr
+      type: object
+    configv1ReadDerivedMetricResponse:
+      properties:
+        derived_metric:
+          $ref: '#/components/schemas/configv1DerivedMetric'
+      type: object
+    configv1DeleteDerivedMetricResponse:
+      type: object
     DerivedMetricSelector:
       properties:
         labels:
@@ -435,29 +434,30 @@ components:
             $ref: '#/components/schemas/configv1DerivedMetricLabelMatcher'
           type: array
       type: object
-    configv1UpdateDerivedMetricResponse:
+    configv1DerivedMetricLabelMatcherMatcherType:
+      enum:
+      - EXACT
+      type: string
+    DerivedMetricVariable:
       properties:
-        derived_metric:
-          $ref: '#/components/schemas/configv1DerivedMetric'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
+        default_prometheus_selector:
+          description: 'PromQL label selector, which must match the given variable name. If the
 
-            client should request. An empty value indicates that there are no
+            variable is not specified in the derived metric usage, then the default
 
-            more items to return.'
+            selector is used.'
+          example: service=~".*"
           type: string
+        name:
+          description: Name of the variable.
+          example: service
+          type: string
+      required:
+      - default_prometheus_selector
+      - name
       type: object
-    configv1ListDerivedMetricsResponse:
-      properties:
-        derived_metrics:
-          items:
-            $ref: '#/components/schemas/configv1DerivedMetric'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+    genericError:
+      additionalProperties: true
       type: object
     configv1CreateDerivedMetricRequest_2:
       type: object
@@ -467,33 +467,6 @@ components:
         dry_run:
           type: boolean
           description: If true, the DerivedMetric isn't created, and no response DerivedMetric will be returned. The response will return an error if the given DerivedMetric is invalid.
-    configv1DerivedMetricLabelMatcher_2:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1DerivedMetricLabelMatcherMatcherType'
-        name:
-          type: string
-          description: name always matches against an exact label name.
-        value:
-          type: string
-          description: value matches against a label value based on the configured type.
-    DerivedMetricQuery_2:
-      type: object
-      properties:
-        prometheus_expr:
-          type: string
-          description: 'Required PromQL expression which the derived metric executes. Should
-
-            include all configured variables.'
-          example: cpu_usage{$service, $instance} / sum(cpu_usage{$service})
-        variables:
-          type: array
-          description: 'Optional variables which may be used in the derived metric as label
-
-            selectors.'
-          items:
-            $ref: '#/components/schemas/DerivedMetricVariable_2'
     configv1DerivedMetric_2:
       type: object
       properties:
@@ -525,6 +498,23 @@ components:
           description: Required queries that the derived metric can map to.
           items:
             $ref: '#/components/schemas/DerivedMetricSelectorQuery_2'
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    DerivedMetricSelectorQuery_2:
+      type: object
+      properties:
+        selector:
+          $ref: '#/components/schemas/DerivedMetricSelector_2'
+        query:
+          $ref: '#/components/schemas/DerivedMetricQuery_2'
     ConfigV1UpdateDerivedMetricBody_2:
       type: object
       properties:
@@ -536,6 +526,53 @@ components:
         dry_run:
           type: boolean
           description: If true, the DerivedMetric isn't created or updated, and no response DerivedMetric will be returned. The response will return an error if the given DerivedMetric is invalid.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1DerivedMetricLabelMatcher_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1DerivedMetricLabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
+    DerivedMetricQuery_2:
+      type: object
+      properties:
+        prometheus_expr:
+          type: string
+          description: 'Required PromQL expression which the derived metric executes. Should
+
+            include all configured variables.'
+          example: cpu_usage{$service, $instance} / sum(cpu_usage{$service})
+        variables:
+          type: array
+          description: 'Optional variables which may be used in the derived metric as label
+
+            selectors.'
+          items:
+            $ref: '#/components/schemas/DerivedMetricVariable_2'
+    DerivedMetricSelector_2:
+      type: object
+      properties:
+        labels:
+          type: array
+          description: 'Labels which must match in the derived metric usage for the selector to
+
+            match.'
+          items:
+            $ref: '#/components/schemas/configv1DerivedMetricLabelMatcher_2'
     DerivedMetricVariable_2:
       type: object
       properties:
@@ -551,43 +588,6 @@ components:
 
             default selector is used.'
           example: service=~".*"
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    DerivedMetricSelectorQuery_2:
-      type: object
-      properties:
-        selector:
-          $ref: '#/components/schemas/DerivedMetricSelector_2'
-        query:
-          $ref: '#/components/schemas/DerivedMetricQuery_2'
-    DerivedMetricSelector_2:
-      type: object
-      properties:
-        labels:
-          type: array
-          description: 'Labels which must match in the derived metric usage for the selector to
-
-            match.'
-          items:
-            $ref: '#/components/schemas/configv1DerivedMetricLabelMatcher_2'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

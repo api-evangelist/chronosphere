@@ -257,50 +257,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableCreateCommandCenterGroupRequest:
-      properties:
-        command_center_group:
-          $ref: '#/components/schemas/configunstableCommandCenterGroup'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configunstableDeleteCommandCenterGroupResponse:
-      type: object
-    ConfigUnstableUpdateCommandCenterGroupBody:
-      properties:
-        command_center_group:
-          $ref: '#/components/schemas/configunstableCommandCenterGroup'
-        create_if_missing:
-          description: If `true`, the CommandCenterGroup will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the CommandCenterGroup does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configunstableUpdateCommandCenterGroupResponse:
-      properties:
-        command_center_group:
-          $ref: '#/components/schemas/configunstableCommandCenterGroup'
-      type: object
-    configunstableReadCommandCenterGroupResponse:
-      properties:
-        command_center_group:
-          $ref: '#/components/schemas/configunstableCommandCenterGroup'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
     configunstableCommandCenterGroup:
       description: CommandCenterGroup is a group of signals tracked in the command center.
       properties:
@@ -323,11 +279,34 @@ components:
         group_slo_reference:
           $ref: '#/components/schemas/configunstableSloReference'
       type: object
+    configunstableCreateCommandCenterGroupResponse:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+      type: object
+    configunstableCreateCommandCenterGroupRequest:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
     configunstableSloReference:
       description: SloReference references an SLO by slug.
       properties:
         slug:
           description: Slug of the referenced SLO.
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
           type: string
       type: object
     configunstableListCommandCenterGroupsResponse:
@@ -339,18 +318,39 @@ components:
             $ref: '#/components/schemas/configunstableCommandCenterGroup'
           type: array
       type: object
-    configunstableCreateCommandCenterGroupResponse:
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableReadCommandCenterGroupResponse:
       properties:
         command_center_group:
           $ref: '#/components/schemas/configunstableCommandCenterGroup'
       type: object
-    configv1PageResult:
+    configunstableUpdateCommandCenterGroupResponse:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+      type: object
+    ConfigUnstableUpdateCommandCenterGroupBody:
+      properties:
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+        create_if_missing:
+          description: If `true`, the CommandCenterGroup will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the CommandCenterGroup does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableDeleteCommandCenterGroupResponse:
+      type: object
+    genericError:
+      additionalProperties: true
       type: object

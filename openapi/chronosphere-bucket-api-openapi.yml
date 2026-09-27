@@ -283,58 +283,6 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    ResourceChangeAction:
-      enum:
-      - CREATED
-      - UPDATED
-      - DELETED
-      - NOOP
-      type: string
-    ResourceChange:
-      properties:
-        action:
-          $ref: '#/components/schemas/ResourceChangeAction'
-        resource:
-          $ref: '#/components/schemas/configv1ResourceType'
-        slug:
-          type: string
-      type: object
-    configv1ResourceType:
-      enum:
-      - BUCKET
-      - DASHBOARD
-      - GRAFANA_DASHBOARD
-      - MONITOR
-      - NOTIFICATION_POLICY
-      - RECORDING_RULE
-      - MAPPING_RULE
-      - ROLLUP_RULE
-      type: string
-    configv1DeleteBucketResponse:
-      properties:
-        changes:
-          description: 'Changes contains what resources are deleted. The bucket being deleted will
-
-            always be included. When force_delete is used, the changelog will include
-
-            all resources that reference the bucket that were deleted.'
-          items:
-            $ref: '#/components/schemas/ResourceChange'
-          type: array
-      type: object
-    ConfigV1UpdateBucketBody:
-      properties:
-        bucket:
-          allOf:
-          - $ref: '#/components/schemas/configv1Bucket'
-          description: The Bucket to update.
-        create_if_missing:
-          description: If `true`, the Bucket will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Bucket does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Bucket. If the specified configuration is valid, the endpoint returns a partial response without the Bucket. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
     configv1Bucket:
       properties:
         created_at:
@@ -376,33 +324,18 @@ components:
       required:
       - name
       type: object
-    configv1CreateBucketResponse:
+    ConfigV1UpdateBucketBody:
       properties:
         bucket:
-          $ref: '#/components/schemas/configv1Bucket'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1UpdateBucketResponse:
-      properties:
-        bucket:
-          $ref: '#/components/schemas/configv1Bucket'
-      type: object
-    configv1ListBucketsResponse:
-      properties:
-        buckets:
-          items:
-            $ref: '#/components/schemas/configv1Bucket'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
+          allOf:
+          - $ref: '#/components/schemas/configv1Bucket'
+          description: The Bucket to update.
+        create_if_missing:
+          description: If `true`, the Bucket will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Bucket does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Bucket. If the specified configuration is valid, the endpoint returns a partial response without the Bucket. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     configv1CreateBucketRequest:
       properties:
@@ -424,22 +357,78 @@ components:
             more items to return.'
           type: string
       type: object
+    configv1ListBucketsResponse:
+      properties:
+        buckets:
+          items:
+            $ref: '#/components/schemas/configv1Bucket'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1ResourceType:
+      enum:
+      - BUCKET
+      - DASHBOARD
+      - GRAFANA_DASHBOARD
+      - MONITOR
+      - NOTIFICATION_POLICY
+      - RECORDING_RULE
+      - MAPPING_RULE
+      - ROLLUP_RULE
+      type: string
     configv1ReadBucketResponse:
       properties:
         bucket:
           $ref: '#/components/schemas/configv1Bucket'
       type: object
-    ConfigV1UpdateBucketBody_2:
-      type: object
+    configv1UpdateBucketResponse:
       properties:
         bucket:
-          $ref: '#/components/schemas/configv1Bucket_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the Bucket will be created if it does not already exist, identified by slug. If false, an error will be returned if the Bucket does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Bucket isn't created or updated, and no response Bucket will be returned. The response will return an error if the given Bucket is invalid.
+          $ref: '#/components/schemas/configv1Bucket'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1CreateBucketResponse:
+      properties:
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket'
+      type: object
+    configv1DeleteBucketResponse:
+      properties:
+        changes:
+          description: 'Changes contains what resources are deleted. The bucket being deleted will
+
+            always be included. When force_delete is used, the changelog will include
+
+            all resources that reference the bucket that were deleted.'
+          items:
+            $ref: '#/components/schemas/ResourceChange'
+          type: array
+      type: object
+    ResourceChangeAction:
+      enum:
+      - CREATED
+      - UPDATED
+      - DELETED
+      - NOOP
+      type: string
+    genericError:
+      additionalProperties: true
+      type: object
+    ResourceChange:
+      properties:
+        action:
+          $ref: '#/components/schemas/ResourceChangeAction'
+        resource:
+          $ref: '#/components/schemas/configv1ResourceType'
+        slug:
+          type: string
+      type: object
     configv1Bucket_2:
       type: object
       properties:
@@ -479,16 +468,17 @@ components:
             This policy takes precedence over a bucket-owned notification policy.
 
             This does not override the policy used when a monitor explicitly references a policy.'
-    apiError_2:
+    ConfigV1UpdateBucketBody_2:
       type: object
       properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
+        bucket:
+          $ref: '#/components/schemas/configv1Bucket_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the Bucket will be created if it does not already exist, identified by slug. If false, an error will be returned if the Bucket does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Bucket isn't created or updated, and no response Bucket will be returned. The response will return an error if the given Bucket is invalid.
     configv1CreateBucketRequest_2:
       type: object
       properties:
@@ -507,6 +497,16 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

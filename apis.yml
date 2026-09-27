@@ -57,6 +57,7 @@ tags:
 - Infrastructure as Code
 - MCP
 - Agent Ready
+- A2A
 url: https://raw.githubusercontent.com/api-evangelist/chronosphere/refs/heads/main/apis.yml
 created: '2026-03-27'
 modified: '2026-08-29'
@@ -961,8 +962,6 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
-  - ResourcePools
-  tags_raw:
   - Resource Pools
   properties:
   - type: OpenAPI
@@ -983,8 +982,6 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
-  - ServiceAccount
-  tags_raw:
   - Service Account
   properties:
   - type: OpenAPI
@@ -1210,3 +1207,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 64
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.chronosphere.io/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

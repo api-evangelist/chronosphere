@@ -289,21 +289,10 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1MutingRuleLabelMatcherMatcherType:
-      enum:
-      - EXACT
-      - REGEX
-      - NOT_EXACT
-      - NOT_REGEXP
-      type: string
-    configv1ListMutingRulesResponse:
+    configv1ReadMutingRuleResponse:
       properties:
-        muting_rules:
-          items:
-            $ref: '#/components/schemas/configv1MutingRule'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
       type: object
     configv1CreateMutingRuleRequest:
       properties:
@@ -314,8 +303,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/configv1MutingRule'
           description: The MutingRule to create.
-      type: object
-    configv1DeleteMutingRuleResponse:
       type: object
     configv1MutingRuleLabelMatcher:
       properties:
@@ -373,15 +360,19 @@ components:
       required:
       - name
       type: object
+    configv1DeleteMutingRuleResponse:
+      type: object
+    configv1MutingRuleLabelMatcherMatcherType:
+      enum:
+      - EXACT
+      - REGEX
+      - NOT_EXACT
+      - NOT_REGEXP
+      type: string
     genericError:
       additionalProperties: true
       type: object
-    configv1ReadMutingRuleResponse:
-      properties:
-        muting_rule:
-          $ref: '#/components/schemas/configv1MutingRule'
-      type: object
-    configv1CreateMutingRuleResponse:
+    configv1UpdateMutingRuleResponse:
       properties:
         muting_rule:
           $ref: '#/components/schemas/configv1MutingRule'
@@ -392,7 +383,7 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    configv1UpdateMutingRuleResponse:
+    configv1CreateMutingRuleResponse:
       properties:
         muting_rule:
           $ref: '#/components/schemas/configv1MutingRule'
@@ -409,6 +400,15 @@ components:
           allOf:
           - $ref: '#/components/schemas/configv1MutingRule'
           description: The MutingRule to update.
+      type: object
+    configv1ListMutingRulesResponse:
+      properties:
+        muting_rules:
+          items:
+            $ref: '#/components/schemas/configv1MutingRule'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
     configv1PageResult:
       properties:

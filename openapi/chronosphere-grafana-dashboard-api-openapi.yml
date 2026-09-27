@@ -297,6 +297,36 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    ConfigV1UpdateGrafanaDashboardBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the GrafanaDashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the GrafanaDashboard does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        grafana_dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1GrafanaDashboard'
+          description: The GrafanaDashboard to update.
+      type: object
+    configv1CollectionReference:
+      properties:
+        slug:
+          type: string
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
+    configv1CreateGrafanaDashboardRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        grafana_dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1GrafanaDashboard'
+          description: The GrafanaDashboard to create.
+      type: object
     configv1GrafanaDashboard:
       properties:
         bucket_slug:
@@ -337,54 +367,15 @@ components:
       required:
       - name
       type: object
-    configv1ListGrafanaDashboardsResponse:
-      properties:
-        grafana_dashboards:
-          items:
-            $ref: '#/components/schemas/configv1GrafanaDashboard'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
     configv1UpdateGrafanaDashboardResponse:
       properties:
         grafana_dashboard:
           $ref: '#/components/schemas/configv1GrafanaDashboard'
       type: object
+    genericError:
+      additionalProperties: true
+      type: object
     configv1CreateGrafanaDashboardResponse:
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-      type: object
-    configv1CollectionReference:
-      properties:
-        slug:
-          type: string
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-      type: object
-    configv1CollectionReferenceType:
-      enum:
-      - SIMPLE
-      - SERVICE
-      title: Type values must match entitiespb.Collection.CollectionType.
-      type: string
-    configv1DeleteGrafanaDashboardResponse:
-      type: object
-    configv1CreateGrafanaDashboardRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        grafana_dashboard:
-          allOf:
-          - $ref: '#/components/schemas/configv1GrafanaDashboard'
-          description: The GrafanaDashboard to create.
-      type: object
-    configv1ReadGrafanaDashboardResponse:
       properties:
         grafana_dashboard:
           $ref: '#/components/schemas/configv1GrafanaDashboard'
@@ -395,18 +386,27 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    ConfigV1UpdateGrafanaDashboardBody:
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
+    configv1ReadGrafanaDashboardResponse:
       properties:
-        create_if_missing:
-          description: If `true`, the GrafanaDashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the GrafanaDashboard does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the GrafanaDashboard. If the specified configuration is valid, the endpoint returns a partial response without the GrafanaDashboard. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
         grafana_dashboard:
-          allOf:
-          - $ref: '#/components/schemas/configv1GrafanaDashboard'
-          description: The GrafanaDashboard to update.
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
+    configv1DeleteGrafanaDashboardResponse:
+      type: object
+    configv1ListGrafanaDashboardsResponse:
+      properties:
+        grafana_dashboards:
+          items:
+            $ref: '#/components/schemas/configv1GrafanaDashboard'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
     configv1PageResult:
       properties:
@@ -418,6 +418,25 @@ components:
             more items to return.'
           type: string
       type: object
+    ConfigV1UpdateGrafanaDashboardBody_2:
+      type: object
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the GrafanaDashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the GrafanaDashboard does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    configv1CreateGrafanaDashboardRequest_2:
+      type: object
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard_2'
+        dry_run:
+          type: boolean
+          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
     configv1GrafanaDashboard_2:
       type: object
       properties:
@@ -452,20 +471,6 @@ components:
         dashboard_json:
           type: string
           description: Required raw JSON of the Grafana dashboard.
-    configv1CollectionReferenceType_2:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-    configv1CreateGrafanaDashboardRequest_2:
-      type: object
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard_2'
-        dry_run:
-          type: boolean
-          description: If true, the GrafanaDashboard isn't created, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
     apiError_2:
       type: object
       properties:
@@ -476,17 +481,12 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    ConfigV1UpdateGrafanaDashboardBody_2:
-      type: object
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the GrafanaDashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the GrafanaDashboard does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    configv1CollectionReferenceType_2:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
     configv1PageResult_2:
       type: object
       properties:

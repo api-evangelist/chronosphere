@@ -58,22 +58,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateDashboardFromClassicResponseUnsupportedFeature:
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-        level:
-          description: 'The converter''s feature level (''supported'' | ''unsupported''); empty when
-
-            the converter didn''t set one.'
-          type: string
-        panel_key:
-          type: string
-        panel_name:
-          type: string
-      type: object
     configunstableDashboard:
       properties:
         slug:
@@ -99,6 +83,18 @@ components:
           description: Required raw JSON of the dashboard.
           type: string
       type: object
+    configunstableCreateDashboardFromClassicResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
+        unsupported_features:
+          description: 'Classic dashboard features encountered during conversion that were dropped,
+
+            only approximated, or otherwise noteworthy. Populated on dry-run as well.'
+          items:
+            $ref: '#/components/schemas/CreateDashboardFromClassicResponseUnsupportedFeature'
+          type: array
+      type: object
     apiError:
       properties:
         code:
@@ -107,6 +103,22 @@ components:
           type: integer
         message:
           description: An error message describing what went wrong.
+          type: string
+      type: object
+    CreateDashboardFromClassicResponseUnsupportedFeature:
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        level:
+          description: 'The converter''s feature level (''supported'' | ''unsupported''); empty when
+
+            the converter didn''t set one.'
+          type: string
+        panel_key:
+          type: string
+        panel_name:
           type: string
       type: object
     configunstableCreateDashboardFromClassicRequest:
@@ -139,16 +151,4 @@ components:
         dry_run:
           description: When true, converts and validates the dashboard without persisting it.
           type: boolean
-      type: object
-    configunstableCreateDashboardFromClassicResponse:
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configunstableDashboard'
-        unsupported_features:
-          description: 'Classic dashboard features encountered during conversion that were dropped,
-
-            only approximated, or otherwise noteworthy. Populated on dry-run as well.'
-          items:
-            $ref: '#/components/schemas/CreateDashboardFromClassicResponseUnsupportedFeature'
-          type: array
       type: object

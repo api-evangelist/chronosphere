@@ -278,74 +278,44 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1UpdateExternalConnectionResponse:
-      properties:
-        external_connection:
-          $ref: '#/components/schemas/configv1ExternalConnection'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1ExternalConnectionPagerdutyConfig:
-      properties:
-        events:
-          allOf:
-          - $ref: '#/components/schemas/PagerdutyConfigPagerdutyEventsConfig'
-          description: PagerDuty Events API configuration for outbound alert delivery.
-        rest:
-          allOf:
-          - $ref: '#/components/schemas/PagerdutyConfigPagerdutyRESTConfig'
-          description: PagerDuty REST API configuration for inbound incident/note polling.
-      type: object
-    PagerdutyConfigPagerdutyRESTConfig:
-      properties:
-        api_key:
-          description: The PagerDuty REST API token used to authenticate note polling.
-          type: string
-      type: object
     ExternalConnectionSendgridConfig:
       properties:
         api_key:
           description: SendGrid API key (Bearer token).
           type: string
       type: object
-    configv1DeleteExternalConnectionResponse:
-      type: object
-    configv1PagerdutyEventsVersion:
-      description: "PagerdutyEventsVersion selects the PagerDuty Events API version.\nThe version determines which PagerDuty Events API payload format is used\nwhen delivering alerts through this external connection.\n\n - PAGERDUTY_EVENTS_VERSION_V1: V1 is the legacy PagerDuty Events API version.\n - PAGERDUTY_EVENTS_VERSION_V2: V2 is the default and recommended version."
-      enum:
-      - PAGERDUTY_EVENTS_VERSION_V1
-      - PAGERDUTY_EVENTS_VERSION_V2
-      type: string
-    configv1ExternalConnectionHTTPConfig:
+    ExternalConnectionCloudflareConfig:
       properties:
-        basic_auth:
-          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfigBasicAuth'
-        bearer_token:
-          type: string
-        tls_config:
-          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfigTLSConfig'
-      type: object
-    configv1ExternalConnectionSlackConfig:
-      properties:
-        api_url:
-          type: string
-        token:
+        api_token:
+          description: 'Cloudflare API Token. Accepts User API Tokens (cfut_ prefix) and
+
+            Account API Tokens (cfat_ prefix).'
           type: string
       type: object
-    configv1ExternalConnectionVictorOpsConfig:
+    configv1ExternalConnectionOpsGenieConfig:
       properties:
         api_key:
           type: string
         api_url:
           type: string
+        http_config:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfig'
       type: object
-    configv1ExternalConnectionHTTPConfigBasicAuth:
+    PagerdutyConfigPagerdutyEventsConfig:
       properties:
-        password:
+        api_key:
+          description: 'The PagerDuty integration key used to authenticate with the Events API.
+
+            PagerDuty calls this the "routing key" in Events v2 and the
+
+            "service key" in Events v1.'
           type: string
-        username:
-          type: string
+        version:
+          allOf:
+          - $ref: '#/components/schemas/configv1PagerdutyEventsVersion'
+          description: 'The PagerDuty Events API version to use. Defaults to V2 if unset.
+
+            V2 is recommended for new integrations.'
       type: object
     configv1ExternalConnection:
       properties:
@@ -384,10 +354,49 @@ components:
       required:
       - name
       type: object
-    configv1CreateExternalConnectionResponse:
+    configv1ReadExternalConnectionResponse:
       properties:
         external_connection:
           $ref: '#/components/schemas/configv1ExternalConnection'
+      type: object
+    configv1ExternalConnectionHTTPConfigBasicAuth:
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+      type: object
+    configv1ExternalConnectionHTTPConfig:
+      properties:
+        basic_auth:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfigBasicAuth'
+        bearer_token:
+          type: string
+        tls_config:
+          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfigTLSConfig'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1CreateExternalConnectionRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the ExternalConnection. If the specified configuration is valid, the endpoint returns a partial response without the ExternalConnection. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        external_connection:
+          allOf:
+          - $ref: '#/components/schemas/configv1ExternalConnection'
+          description: The ExternalConnection to create.
       type: object
     configv1ListExternalConnectionsResponse:
       properties:
@@ -398,40 +407,73 @@ components:
         page:
           $ref: '#/components/schemas/configv1PageResult'
       type: object
-    configv1ReadExternalConnectionResponse:
+    configv1PagerdutyEventsVersion:
+      description: "PagerdutyEventsVersion selects the PagerDuty Events API version.\nThe version determines which PagerDuty Events API payload format is used\nwhen delivering alerts through this external connection.\n\n - PAGERDUTY_EVENTS_VERSION_V1: V1 is the legacy PagerDuty Events API version.\n - PAGERDUTY_EVENTS_VERSION_V2: V2 is the default and recommended version."
+      enum:
+      - PAGERDUTY_EVENTS_VERSION_V1
+      - PAGERDUTY_EVENTS_VERSION_V2
+      type: string
+    ExternalConnectionMongoDbAtlasConfig:
+      properties:
+        client_id:
+          description: Service Account client ID.
+          type: string
+        client_secret:
+          description: Service Account client secret.
+          type: string
+      type: object
+    PagerdutyConfigPagerdutyRESTConfig:
+      properties:
+        api_key:
+          description: The PagerDuty REST API token used to authenticate note polling.
+          type: string
+      type: object
+    configv1ExternalConnectionHTTPConfigTLSConfig:
+      properties:
+        insecure_skip_verify:
+          type: boolean
+      type: object
+    configv1UpdateExternalConnectionResponse:
       properties:
         external_connection:
           $ref: '#/components/schemas/configv1ExternalConnection'
       type: object
-    configv1ExternalConnectionOpsGenieConfig:
+    configv1ExternalConnectionWebhookConfig:
       properties:
-        api_key:
-          type: string
-        api_url:
-          type: string
         http_config:
           $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfig'
-      type: object
-    PagerdutyConfigPagerdutyEventsConfig:
-      properties:
-        api_key:
-          description: 'The PagerDuty integration key used to authenticate with the Events API.
-
-            PagerDuty calls this the "routing key" in Events v2 and the
-
-            "service key" in Events v1.'
+        url:
           type: string
-        version:
-          allOf:
-          - $ref: '#/components/schemas/configv1PagerdutyEventsVersion'
-          description: 'The PagerDuty Events API version to use. Defaults to V2 if unset.
-
-            V2 is recommended for new integrations.'
+      type: object
+    configv1CreateExternalConnectionResponse:
+      properties:
+        external_connection:
+          $ref: '#/components/schemas/configv1ExternalConnection'
       type: object
     apiError:
       properties:
         message:
           description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1ExternalConnectionPagerdutyConfig:
+      properties:
+        events:
+          allOf:
+          - $ref: '#/components/schemas/PagerdutyConfigPagerdutyEventsConfig'
+          description: PagerDuty Events API configuration for outbound alert delivery.
+        rest:
+          allOf:
+          - $ref: '#/components/schemas/PagerdutyConfigPagerdutyRESTConfig'
+          description: PagerDuty REST API configuration for inbound incident/note polling.
+      type: object
+    configv1DeleteExternalConnectionResponse:
+      type: object
+    configv1ExternalConnectionVictorOpsConfig:
+      properties:
+        api_key:
+          type: string
+        api_url:
           type: string
       type: object
     ConfigV1UpdateExternalConnectionBody:
@@ -447,53 +489,11 @@ components:
           - $ref: '#/components/schemas/configv1ExternalConnection'
           description: The ExternalConnection to update.
       type: object
-    ExternalConnectionCloudflareConfig:
+    configv1ExternalConnectionSlackConfig:
       properties:
-        api_token:
-          description: 'Cloudflare API Token. Accepts User API Tokens (cfut_ prefix) and
-
-            Account API Tokens (cfat_ prefix).'
+        api_url:
           type: string
-      type: object
-    ExternalConnectionMongoDbAtlasConfig:
-      properties:
-        client_id:
-          description: Service Account client ID.
-          type: string
-        client_secret:
-          description: Service Account client secret.
-          type: string
-      type: object
-    configv1ExternalConnectionWebhookConfig:
-      properties:
-        http_config:
-          $ref: '#/components/schemas/configv1ExternalConnectionHTTPConfig'
-        url:
-          type: string
-      type: object
-    configv1ExternalConnectionHTTPConfigTLSConfig:
-      properties:
-        insecure_skip_verify:
-          type: boolean
-      type: object
-    configv1CreateExternalConnectionRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the ExternalConnection. If the specified configuration is valid, the endpoint returns a partial response without the ExternalConnection. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        external_connection:
-          allOf:
-          - $ref: '#/components/schemas/configv1ExternalConnection'
-          description: The ExternalConnection to create.
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        token:
           type: string
       type: object
   securitySchemes:

@@ -262,22 +262,9 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1CreateLogRetentionConfigRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LogRetentionConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogRetentionConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_retention_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogRetentionConfig'
-          description: The LogRetentionConfig to create.
+    configv1DeleteLogRetentionConfigResponse:
       type: object
     configv1UpdateLogRetentionConfigResponse:
-      properties:
-        log_retention_config:
-          $ref: '#/components/schemas/configv1LogRetentionConfig'
-      type: object
-    configv1CreateLogRetentionConfigResponse:
       properties:
         log_retention_config:
           $ref: '#/components/schemas/configv1LogRetentionConfig'
@@ -287,11 +274,6 @@ components:
         log_retention_config:
           $ref: '#/components/schemas/configv1LogRetentionConfig'
       type: object
-    configv1LogRetentionConfigMode:
-      enum:
-      - ENABLED
-      - DISABLED
-      type: string
     ConfigV1UpdateLogRetentionConfigBody:
       properties:
         create_if_missing:
@@ -305,8 +287,36 @@ components:
           - $ref: '#/components/schemas/configv1LogRetentionConfig'
           description: The LogRetentionConfig to update.
       type: object
-    genericError:
-      additionalProperties: true
+    configv1LogRetentionConfigMode:
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    configv1CreateLogRetentionConfigRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LogRetentionConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogRetentionConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_retention_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogRetentionConfig'
+          description: The LogRetentionConfig to create.
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configv1LogRetentionConfig:
       description: 'LogRetentionConfig configures long-term retention policies for log data.
@@ -355,24 +365,6 @@ components:
       - retention_days
       - slug
       type: object
-    configv1DeleteLogRetentionConfigResponse:
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
     configv1ListLogRetentionConfigsResponse:
       properties:
         log_retention_configs:
@@ -381,6 +373,14 @@ components:
           type: array
         page:
           $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CreateLogRetentionConfigResponse:
+      properties:
+        log_retention_config:
+          $ref: '#/components/schemas/configv1LogRetentionConfig'
       type: object
   securitySchemes:
     ApiKeyAuth:

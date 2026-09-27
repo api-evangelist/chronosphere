@@ -267,257 +267,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableCreateSavedTraceSearchRequest:
-      properties:
-        saved_trace_search:
-          $ref: '#/components/schemas/configunstableSavedTraceSearch'
-      type: object
-    SavedTraceSearchTraceSearch:
-      properties:
-        criteria:
-          $ref: '#/components/schemas/configv1TraceSearchFilter'
-        time:
-          $ref: '#/components/schemas/SavedTraceSearchTimeFilter'
-      type: object
-    configunstableReadSavedTraceSearchResponse:
-      properties:
-        saved_trace_search:
-          $ref: '#/components/schemas/configunstableSavedTraceSearch'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1TraceSearchFilter:
-      properties:
-        trace:
-          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
-        span:
-          description: 'Specifies the span conditions to match on. All conditions must be true in a
-
-            single span for the span to be considered a match. If `span_count` is specified,
-
-            the number of spans within the trace that match span conditions must be within
-
-            `[min, max]`. You can specify multiple span conditions, and each can be
-
-            satisfied by any number of spans within the trace.'
-          items:
-            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
-          type: array
-        scope_filter:
-          $ref: '#/components/schemas/TraceSearchFilterScopeFilter'
-      type: object
-    TraceSearchFilterNumericFilter:
-      properties:
-        comparison:
-          $ref: '#/components/schemas/NumericFilterComparisonType'
-        value:
-          description: The filter value used in comparison against match candidates.
-          format: double
-          type: number
-      type: object
-    configunstableListSavedTraceSearchesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        saved_trace_searches:
-          description: Found saved trace searches.
-          items:
-            $ref: '#/components/schemas/configunstableSavedTraceSearch'
-          type: array
-      type: object
-    SpanFilterSpanFilterMatchType:
-      enum:
-      - INCLUDE
-      - EXCLUDE
-      type: string
-    configunstableDeleteSavedTraceSearchResponse:
-      type: object
-    SavedTraceSearchRelativeTimeFilter:
-      properties:
-        start_relative_offset_secs:
-          description: The duration, in seconds, from now to the beginning of the search interval.
-          format: int32
-          type: integer
-        end_relative_offset_secs:
-          description: The duration, in seconds, from now to the end of the search interval.
-          format: int32
-          type: integer
-      type: object
-    SavedTraceSearchBetweenTimeFilter:
-      properties:
-        min_time:
-          description: Start time of the search interval.
-          format: date-time
-          type: string
-        max_time:
-          description: End time of the search interval.
-          format: date-time
-          type: string
-      type: object
-    configunstableCreateSavedTraceSearchResponse:
-      properties:
-        saved_trace_search:
-          $ref: '#/components/schemas/configunstableSavedTraceSearch'
-      type: object
-    StringFilterStringFilterMatchType:
-      enum:
-      - EXACT
-      - REGEX
-      - EXACT_NEGATION
-      - REGEX_NEGATION
-      - IN
-      - NOT_IN
-      type: string
-    NumericFilterComparisonType:
-      enum:
-      - EQUAL
-      - NOT_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-      type: string
-    SavedTraceSearchTimeFilter:
-      properties:
-        close_to:
-          $ref: '#/components/schemas/SavedTraceSearchCloseToTimeFilter'
-        between:
-          $ref: '#/components/schemas/SavedTraceSearchBetweenTimeFilter'
-        relative:
-          $ref: '#/components/schemas/SavedTraceSearchRelativeTimeFilter'
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    ConfigUnstableUpdateSavedTraceSearchBody:
-      properties:
-        saved_trace_search:
-          $ref: '#/components/schemas/configunstableSavedTraceSearch'
-        create_if_missing:
-          description: If `true`, the SavedTraceSearch will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the SavedTraceSearch does not already exist.
-          type: boolean
-      type: object
-    TraceSearchFilterBoolFilter:
-      properties:
-        value:
-          description: The value of the filter compared to the target trace or span field.
-          type: boolean
-      type: object
-    TraceSearchFilterScopeFilter:
-      properties:
-        span_scopes:
-          description: 'Specifies the span filters that define which spans contribute to the metrics calculation.
-
-            Only spans matching these filters will be included in the metrics aggregation.'
-          items:
-            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
-          type: array
-      type: object
-    TraceSearchFilterTraceFilter:
-      properties:
-        duration:
-          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
-        error:
-          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
-      type: object
-    TraceSearchFilterCountFilter:
-      properties:
-        min:
-          description: Minimum number of spans that must match a span query, inclusive.
-          format: int32
-          type: integer
-        max:
-          description: Maximum number of spans that must match a span query, inclusive.
-          format: int32
-          type: integer
-      type: object
-    TraceSearchFilterTagFilter:
-      properties:
-        key:
-          description: The key or name of the span tag that this filter inspects.
-          type: string
-        value:
-          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
-        numeric_value:
-          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
-      type: object
-    TraceSearchFilterStringFilter:
-      properties:
-        match:
-          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
-        value:
-          description: The value of the filter compared to the target trace or span field.
-          type: string
-        in_values:
-          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
-          items:
-            type: string
-          type: array
-      type: object
-    configunstableUpdateSavedTraceSearchResponse:
-      properties:
-        saved_trace_search:
-          $ref: '#/components/schemas/configunstableSavedTraceSearch'
-      type: object
-    SavedTraceSearchCloseToTimeFilter:
-      properties:
-        time:
-          description: Time around which the search will performed.
-          format: date-time
-          type: string
-      type: object
-    TraceSearchFilterDurationFilter:
-      properties:
-        min_secs:
-          description: Minimum duration, in seconds, required for a span or trace to match.
-          format: double
-          type: number
-        max_secs:
-          description: Maximum duration, in seconds, required for a span or trace to match.
-          format: double
-          type: number
-      type: object
-    configunstableSavedTraceSearch:
-      properties:
-        name:
-          description: The name of the SavedTraceSearch. You can modify this value after the SavedTraceSearch is created.
-          type: string
-        slug:
-          description: The unique identifier of the SavedTraceSearch. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the SavedTraceSearch is created.
-          type: string
-        created_at:
-          description: Timestamp of when the SavedTraceSearch was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-        updated_at:
-          description: Timestamp of when the SavedTraceSearch was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-        search:
-          $ref: '#/components/schemas/SavedTraceSearchTraceSearch'
-        comparison:
-          $ref: '#/components/schemas/SavedTraceSearchTraceSearch'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
     TraceSearchFilterSpanFilter:
       properties:
         match_type:
@@ -543,4 +292,255 @@ components:
           $ref: '#/components/schemas/TraceSearchFilterCountFilter'
         is_root_span:
           $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+      type: object
+    SavedTraceSearchBetweenTimeFilter:
+      properties:
+        min_time:
+          description: Start time of the search interval.
+          format: date-time
+          type: string
+        max_time:
+          description: End time of the search interval.
+          format: date-time
+          type: string
+      type: object
+    ConfigUnstableUpdateSavedTraceSearchBody:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+        create_if_missing:
+          description: If `true`, the SavedTraceSearch will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the SavedTraceSearch does not already exist.
+          type: boolean
+      type: object
+    configv1TraceSearchFilter:
+      properties:
+        trace:
+          $ref: '#/components/schemas/TraceSearchFilterTraceFilter'
+        span:
+          description: 'Specifies the span conditions to match on. All conditions must be true in a
+
+            single span for the span to be considered a match. If `span_count` is specified,
+
+            the number of spans within the trace that match span conditions must be within
+
+            `[min, max]`. You can specify multiple span conditions, and each can be
+
+            satisfied by any number of spans within the trace.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+          type: array
+        scope_filter:
+          $ref: '#/components/schemas/TraceSearchFilterScopeFilter'
+      type: object
+    TraceSearchFilterCountFilter:
+      properties:
+        min:
+          description: Minimum number of spans that must match a span query, inclusive.
+          format: int32
+          type: integer
+        max:
+          description: Maximum number of spans that must match a span query, inclusive.
+          format: int32
+          type: integer
+      type: object
+    configunstableListSavedTraceSearchesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        saved_trace_searches:
+          description: Found saved trace searches.
+          items:
+            $ref: '#/components/schemas/configunstableSavedTraceSearch'
+          type: array
+      type: object
+    TraceSearchFilterScopeFilter:
+      properties:
+        span_scopes:
+          description: 'Specifies the span filters that define which spans contribute to the metrics calculation.
+
+            Only spans matching these filters will be included in the metrics aggregation.'
+          items:
+            $ref: '#/components/schemas/TraceSearchFilterSpanFilter'
+          type: array
+      type: object
+    SpanFilterSpanFilterMatchType:
+      enum:
+      - INCLUDE
+      - EXCLUDE
+      type: string
+    configunstableSavedTraceSearch:
+      properties:
+        name:
+          description: The name of the SavedTraceSearch. You can modify this value after the SavedTraceSearch is created.
+          type: string
+        slug:
+          description: The unique identifier of the SavedTraceSearch. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the SavedTraceSearch is created.
+          type: string
+        created_at:
+          description: Timestamp of when the SavedTraceSearch was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Timestamp of when the SavedTraceSearch was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        search:
+          $ref: '#/components/schemas/SavedTraceSearchTraceSearch'
+        comparison:
+          $ref: '#/components/schemas/SavedTraceSearchTraceSearch'
+      type: object
+    NumericFilterComparisonType:
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      type: string
+    configunstableReadSavedTraceSearchResponse:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    TraceSearchFilterTagFilter:
+      properties:
+        key:
+          description: The key or name of the span tag that this filter inspects.
+          type: string
+        value:
+          $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+        numeric_value:
+          $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+      type: object
+    TraceSearchFilterStringFilter:
+      properties:
+        match:
+          $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: string
+        in_values:
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+          type: array
+      type: object
+    SavedTraceSearchCloseToTimeFilter:
+      properties:
+        time:
+          description: Time around which the search will performed.
+          format: date-time
+          type: string
+      type: object
+    SavedTraceSearchTimeFilter:
+      properties:
+        close_to:
+          $ref: '#/components/schemas/SavedTraceSearchCloseToTimeFilter'
+        between:
+          $ref: '#/components/schemas/SavedTraceSearchBetweenTimeFilter'
+        relative:
+          $ref: '#/components/schemas/SavedTraceSearchRelativeTimeFilter'
+      type: object
+    StringFilterStringFilterMatchType:
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+      type: string
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    SavedTraceSearchTraceSearch:
+      properties:
+        criteria:
+          $ref: '#/components/schemas/configv1TraceSearchFilter'
+        time:
+          $ref: '#/components/schemas/SavedTraceSearchTimeFilter'
+      type: object
+    TraceSearchFilterBoolFilter:
+      properties:
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: boolean
+      type: object
+    configunstableCreateSavedTraceSearchRequest:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    TraceSearchFilterTraceFilter:
+      properties:
+        duration:
+          $ref: '#/components/schemas/TraceSearchFilterDurationFilter'
+        error:
+          $ref: '#/components/schemas/TraceSearchFilterBoolFilter'
+      type: object
+    TraceSearchFilterNumericFilter:
+      properties:
+        comparison:
+          $ref: '#/components/schemas/NumericFilterComparisonType'
+        value:
+          description: The filter value used in comparison against match candidates.
+          format: double
+          type: number
+      type: object
+    SavedTraceSearchRelativeTimeFilter:
+      properties:
+        start_relative_offset_secs:
+          description: The duration, in seconds, from now to the beginning of the search interval.
+          format: int32
+          type: integer
+        end_relative_offset_secs:
+          description: The duration, in seconds, from now to the end of the search interval.
+          format: int32
+          type: integer
+      type: object
+    configunstableCreateSavedTraceSearchResponse:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
+      type: object
+    TraceSearchFilterDurationFilter:
+      properties:
+        min_secs:
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+        max_secs:
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableDeleteSavedTraceSearchResponse:
+      type: object
+    configunstableUpdateSavedTraceSearchResponse:
+      properties:
+        saved_trace_search:
+          $ref: '#/components/schemas/configunstableSavedTraceSearch'
       type: object

@@ -93,24 +93,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MetricUsageReferenceCountsByType:
-      properties:
-        aggregation_rules:
-          format: int32
-          type: integer
-        dashboards:
-          format: int32
-          type: integer
-        drop_rules:
-          format: int32
-          type: integer
-        monitors:
-          format: int32
-          type: integer
-        recording_rules:
-          format: int32
-          type: integer
-      type: object
     statev1MetricUsage:
       properties:
         query_execution_counts_by_type:
@@ -130,21 +112,6 @@ components:
           format: double
           type: number
       type: object
-    statev1ListMetricUsagesByLabelNameResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        usages:
-          items:
-            $ref: '#/components/schemas/statev1MetricUsageByLabelName'
-          type: array
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
     MetricUsageQueryExecutionCountsByType:
       properties:
         dashboard:
@@ -157,15 +124,38 @@ components:
           format: int32
           type: integer
       type: object
-    configv1PageResult:
+    MetricUsageReferenceCountsByType:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        aggregation_rules:
+          format: int32
+          type: integer
+        dashboards:
+          format: int32
+          type: integer
+        drop_rules:
+          format: int32
+          type: integer
+        monitors:
+          format: int32
+          type: integer
+        recording_rules:
+          format: int32
+          type: integer
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
           type: string
+      type: object
+    statev1ListMetricUsagesByLabelNameResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        usages:
+          items:
+            $ref: '#/components/schemas/statev1MetricUsageByLabelName'
+          type: array
       type: object
     statev1MetricUsageByLabelName:
       properties:
@@ -185,6 +175,16 @@ components:
           type: integer
         usage:
           $ref: '#/components/schemas/statev1MetricUsage'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

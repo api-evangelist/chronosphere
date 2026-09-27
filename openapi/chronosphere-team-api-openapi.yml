@@ -276,24 +276,38 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1DeleteTeamResponse:
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1ListTeamsResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        teams:
-          items:
-            $ref: '#/components/schemas/configv1Team'
-          type: array
-      type: object
-    configv1ReadTeamResponse:
+    configv1UpdateTeamResponse:
       properties:
         team:
           $ref: '#/components/schemas/configv1Team'
+      type: object
+    configv1CreateTeamRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        team:
+          allOf:
+          - $ref: '#/components/schemas/configv1Team'
+          description: The Team to create.
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1DeleteTeamResponse:
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     ConfigV1UpdateTeamBody:
       properties:
@@ -307,27 +321,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/configv1Team'
           description: The Team to update.
-      type: object
-    configv1CreateTeamResponse:
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
       type: object
     configv1Team:
       properties:
@@ -358,21 +351,56 @@ components:
       required:
       - name
       type: object
-    configv1UpdateTeamResponse:
+    configv1ListTeamsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        teams:
+          items:
+            $ref: '#/components/schemas/configv1Team'
+          type: array
+      type: object
+    configv1CreateTeamResponse:
       properties:
         team:
           $ref: '#/components/schemas/configv1Team'
       type: object
-    configv1CreateTeamRequest:
+    configv1ReadTeamResponse:
       properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
         team:
-          allOf:
-          - $ref: '#/components/schemas/configv1Team'
-          description: The Team to create.
+          $ref: '#/components/schemas/configv1Team'
       type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CreateTeamRequest_2:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team_2'
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     ConfigV1UpdateTeamBody_2:
       type: object
       properties:
@@ -384,26 +412,6 @@ components:
         dry_run:
           type: boolean
           description: If true, the Team isn't created or updated, and no response Team will be returned. The response will return an error if the given Team is invalid.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
     configv1Team_2:
       type: object
       properties:
@@ -431,14 +439,6 @@ components:
         description:
           type: string
           description: Optional short description of the team.
-    configv1CreateTeamRequest_2:
-      type: object
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team_2'
-        dry_run:
-          type: boolean
-          description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

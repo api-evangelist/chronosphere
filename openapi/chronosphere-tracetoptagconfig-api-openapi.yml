@@ -176,56 +176,10 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableUpdateTraceTopTagConfigResponse:
-      properties:
-        trace_top_tag_config:
-          $ref: '#/components/schemas/configunstableTraceTopTagConfig'
-      type: object
-    configunstableUpdateTraceTopTagConfigRequest:
-      properties:
-        trace_top_tag_config:
-          $ref: '#/components/schemas/configunstableTraceTopTagConfig'
-        create_if_missing:
-          description: If `true`, the TraceTopTagConfig will be created if it does not already exist. If `false`, an error will be returned if the TraceTopTagConfig does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the TraceTopTagConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceTopTagConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
     configunstableCreateTraceTopTagConfigResponse:
       properties:
         trace_top_tag_config:
           $ref: '#/components/schemas/configunstableTraceTopTagConfig'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableCreateTraceTopTagConfigRequest:
-      properties:
-        trace_top_tag_config:
-          $ref: '#/components/schemas/configunstableTraceTopTagConfig'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the TraceTopTagConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceTopTagConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    TraceTopTagConfigTraceTopTag:
-      properties:
-        tag_name:
-          description: Tag name that uniquely identifies a tag.
-          type: string
-        description:
-          description: Human readable description of the tag.
-          type: string
       type: object
     configunstableTraceTopTagConfig:
       description: 'TraceTopTagConfig is a singleton configuration object that specifies the
@@ -252,10 +206,56 @@ components:
             $ref: '#/components/schemas/TraceTopTagConfigTraceTopTag'
           type: array
       type: object
-    configunstableReadTraceTopTagConfigResponse:
+    configunstableUpdateTraceTopTagConfigResponse:
       properties:
         trace_top_tag_config:
           $ref: '#/components/schemas/configunstableTraceTopTagConfig'
       type: object
     configunstableDeleteTraceTopTagConfigResponse:
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableReadTraceTopTagConfigResponse:
+      properties:
+        trace_top_tag_config:
+          $ref: '#/components/schemas/configunstableTraceTopTagConfig'
+      type: object
+    TraceTopTagConfigTraceTopTag:
+      properties:
+        tag_name:
+          description: Tag name that uniquely identifies a tag.
+          type: string
+        description:
+          description: Human readable description of the tag.
+          type: string
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configunstableCreateTraceTopTagConfigRequest:
+      properties:
+        trace_top_tag_config:
+          $ref: '#/components/schemas/configunstableTraceTopTagConfig'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the TraceTopTagConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceTopTagConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configunstableUpdateTraceTopTagConfigRequest:
+      properties:
+        trace_top_tag_config:
+          $ref: '#/components/schemas/configunstableTraceTopTagConfig'
+        create_if_missing:
+          description: If `true`, the TraceTopTagConfig will be created if it does not already exist. If `false`, an error will be returned if the TraceTopTagConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the TraceTopTagConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceTopTagConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object

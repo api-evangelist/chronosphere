@@ -239,21 +239,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ObjectDiscoveryRuleMetricRule:
-      properties:
-        expr:
-          type: string
-        objectLabels:
-          items:
-            type: string
-          type: array
-        objectMappingLabel:
-          type: string
+    configunstableDeleteObjectDiscoveryRuleResponse:
       type: object
-    configunstableUpdateObjectDiscoveryRuleResponse:
+    ConfigUnstableUpdateObjectDiscoveryRuleBody:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+        create_if_missing:
+          description: If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.
+          type: boolean
       type: object
     configunstableObjectDiscoveryRule:
       properties:
@@ -266,40 +260,30 @@ components:
         metric:
           $ref: '#/components/schemas/ObjectDiscoveryRuleMetricRule'
       type: object
+    configunstableUpdateObjectDiscoveryRuleResponse:
+      properties:
+        object_discovery_rule:
+          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+      type: object
     configunstableCreateObjectDiscoveryRuleRequest:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
       type: object
-    configunstableReadObjectDiscoveryRuleResponse:
+    configv1PageResult:
       properties:
-        object_discovery_rule:
-          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableListObjectDiscoveryRulesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        object_discovery_rules:
-          items:
-            $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-          type: array
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
       type: object
     configunstableCreateObjectDiscoveryRuleResponse:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-      type: object
-    ConfigUnstableUpdateObjectDiscoveryRuleBody:
-      properties:
-        object_discovery_rule:
-          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-        create_if_missing:
-          description: If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.
-          type: boolean
       type: object
     apiError:
       properties:
@@ -311,15 +295,31 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    configunstableDeleteObjectDiscoveryRuleResponse:
-      type: object
-    configv1PageResult:
+    configunstableListObjectDiscoveryRulesResponse:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        object_discovery_rules:
+          items:
+            $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+          type: array
+      type: object
+    configunstableReadObjectDiscoveryRuleResponse:
+      properties:
+        object_discovery_rule:
+          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+      type: object
+    ObjectDiscoveryRuleMetricRule:
+      properties:
+        expr:
           type: string
+        objectLabels:
+          items:
+            type: string
+          type: array
+        objectMappingLabel:
+          type: string
+      type: object
+    genericError:
+      additionalProperties: true
       type: object

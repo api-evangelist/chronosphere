@@ -297,17 +297,121 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ResponseTimeAssertionScope:
+    SyntheticTestConnectionAssertion:
+      description: 'Asserts on the outcome of the TCP connection attempt. Only the `EQUALS`
+
+        operator is supported, for example a target of `ESTABLISHED`.'
+      properties:
+        operator:
+          $ref: '#/components/schemas/SyntheticTestConnectionAssertionOperator'
+        target:
+          $ref: '#/components/schemas/ConnectionAssertionConnectionStatus'
+      type: object
+    SyntheticTestTlsTestConfig:
+      properties:
+        accept_self_signed:
+          description: 'If `true`, a self-signed certificate passes verification. If `false`, a
+
+            self-signed certificate fails the test. Default: `false`.'
+          type: boolean
+        assertions:
+          description: 'Conditions the handshake and certificate must satisfy for the test to
+
+            pass.'
+          items:
+            $ref: '#/components/schemas/SyntheticTestTlsTestConfigAssertion'
+          type: array
+        authentication:
+          allOf:
+          - $ref: '#/components/schemas/TlsTestConfigTlsAuth'
+          description: Credentials presented during the handshake.
+        fail_on_incomplete_chain:
+          description: 'If `true`, a certificate chain that omits intermediates fails the test.
+
+            If false, an incomplete chain passes. Default: `false`.'
+          type: boolean
+        host:
+          description: Host the test connects to.
+          example: api.example.com
+          type: string
+        port:
+          description: Port the test connects to, from 1 to 65535.
+          format: int64
+          type: integer
+        server_name:
+          description: 'Server Name Indication (SNI) value sent during the handshake.
+
+            Default: the value of `host`.'
+          type: string
+      required:
+      - host
+      - port
+      type: object
+    SyntheticTestTestType:
       enum:
-      - INCLUDING_DNS
-      - WITHOUT_DNS
+      - HTTP
+      - DNS
+      - TCP
+      - TLS
       type: string
-    SyntheticTestDnsRecordAssertionOperator:
+    BodyJSONSchemaAssertionSchemaDraft:
+      enum:
+      - DRAFT_06
+      - DRAFT_07
+      type: string
+    SyntheticTestBodyJSONPathAssertionOperator:
       enum:
       - CONTAINS
+      - NOT_CONTAINS
       - EQUALS
+      - NOT_EQUALS
       - REGEX_EQUALS
       - REGEX_NOT_EQUALS
+      - LESS_THAN
+      - GREATER_THAN
+      - IS_UNDEFINED
+      type: string
+    HttpTestConfigHeader:
+      description: 'Single HTTP request header. Headers are sent in the order listed.
+
+        Duplicate names are rejected, ignoring case.'
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      type: object
+    SyntheticTestBodyHashAssertion:
+      description: Asserts that a hash of the response body equals the target.
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/BodyHashAssertionAlgorithm'
+        target:
+          type: string
+      type: object
+    SyntheticTestHeaderAssertion:
+      description: Asserts that the named response header satisfies the operator.
+      properties:
+        name:
+          type: string
+        operator:
+          $ref: '#/components/schemas/SyntheticTestHeaderAssertionOperator'
+        target:
+          type: string
+      type: object
+    BodyJSONPathAssertionMatchType:
+      enum:
+      - FIRST_ELEMENT
+      - EVERY_ELEMENT
+      - AT_LEAST_ONE_ELEMENT
+      - SERIALIZATION
+      type: string
+    TlsVersionAssertionVersion:
+      enum:
+      - TLS_1_0
+      - TLS_1_1
+      - TLS_1_2
+      - TLS_1_3
       type: string
     SyntheticTestCertificatePropertyAssertion:
       description: 'Asserts on a named property of the leaf certificate, for example
@@ -321,27 +425,16 @@ components:
         target:
           type: string
       type: object
-    HttpTestConfigHttpVersion:
-      description: 'HTTP protocol version used for the request. When unset, the request
-
-        negotiates HTTP/2 and falls back to HTTP/1.1.'
+    configv1CollectionReferenceType:
       enum:
-      - HTTP_VERSION_HTTP_1_1
-      - HTTP_VERSION_HTTP_2
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
       type: string
-    SyntheticTestHeaderAssertionOperator:
+    DnsRecordAssertionMatchScope:
       enum:
-      - CONTAINS
-      - NOT_CONTAINS
-      - EQUALS
-      - NOT_EQUALS
-      - REGEX_EQUALS
-      - REGEX_NOT_EQUALS
-      - NOT_EXISTS
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
+      - EVERY_AVAILABLE
+      - AT_LEAST_ONE
       type: string
     SyntheticTestTcpTestConfig:
       properties:
@@ -362,6 +455,29 @@ components:
       - host
       - port
       type: object
+    configv1OAuth2ClientCredentials:
+      description: Configures the OAuth 2.0 client-credentials grant.
+      properties:
+        client_id:
+          description: Client identifier issued to the test.
+          type: string
+        client_secret:
+          description: Client secret issued to the test.
+          type: string
+        common:
+          allOf:
+          - $ref: '#/components/schemas/configv1OAuth2Common'
+          description: Token-endpoint parameters for the grant.
+      required:
+      - client_id
+      - client_secret
+      - common
+      type: object
+    HttpTestConfigHttpMethod:
+      enum:
+      - GET
+      - POST
+      type: string
     SyntheticTestMonitorConfig:
       description: 'Alerting configuration for the test. An alert fires when at least
 
@@ -398,6 +514,171 @@ components:
       - min_failing_locations
       - notification_policy_slug
       type: object
+    HttpTestConfigContentType:
+      description: 'Content type sent with the request, mapped to a `Content-Type` request
+
+        header. Setting both this field and an explicit `Content-Type` header
+
+        returns an error.'
+      enum:
+      - CONTENT_TYPE_APPLICATION_JSON
+      - CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED
+      - CONTENT_TYPE_TEXT_PLAIN
+      - CONTENT_TYPE_TEXT_XML
+      - CONTENT_TYPE_TEXT_HTML
+      - CONTENT_TYPE_MULTIPART_FORM_DATA
+      - CONTENT_TYPE_APPLICATION_OCTET_STREAM
+      - CONTENT_TYPE_GRAPHQL
+      type: string
+    SyntheticTestHttpTestConfigAssertion:
+      description: 'Assertion types valid for HTTP tests. Set exactly one assertion field
+
+        per entry.'
+      properties:
+        body_assertion:
+          $ref: '#/components/schemas/SyntheticTestBodyAssertion'
+        body_hash_assertion:
+          $ref: '#/components/schemas/SyntheticTestBodyHashAssertion'
+        body_json_path_assertion:
+          $ref: '#/components/schemas/SyntheticTestBodyJSONPathAssertion'
+        body_json_schema_assertion:
+          $ref: '#/components/schemas/SyntheticTestBodyJSONSchemaAssertion'
+        body_xpath_assertion:
+          $ref: '#/components/schemas/SyntheticTestBodyXPathAssertion'
+        header_assertion:
+          $ref: '#/components/schemas/SyntheticTestHeaderAssertion'
+        response_time_assertion:
+          $ref: '#/components/schemas/SyntheticTestResponseTimeAssertion'
+        status_code_assertion:
+          $ref: '#/components/schemas/SyntheticTestStatusCodeAssertion'
+      type: object
+    TlsVersionAssertionBound:
+      enum:
+      - MAX
+      - MIN
+      type: string
+    SyntheticTestDnsRecordAssertionOperator:
+      enum:
+      - CONTAINS
+      - EQUALS
+      - REGEX_EQUALS
+      - REGEX_NOT_EQUALS
+      type: string
+    DnsRecordAssertionRecordType:
+      enum:
+      - A
+      - AAAA
+      - CNAME
+      - MX
+      - NS
+      - TXT
+      - SOA
+      - SRV
+      type: string
+    SyntheticTestTestLocation:
+      enum:
+      - GCP_US_OREGON
+      - GCP_US_VIRGINIA
+      - GCP_BR_SAO_PAULO
+      - GCP_SG_SINGAPORE
+      - GCP_AU_SYDNEY
+      - GCP_IN_MUMBAI
+      - GCP_JP_TOKYO
+      - GCP_GB_LONDON
+      - GCP_DE_FRANKFURT
+      - GCP_ZA_JOHANNESBURG
+      - GCP_ID_JAKARTA
+      - GCP_CA_MONTREAL
+      - GCP_KR_SEOUL
+      - GCP_IT_MILAN
+      - GCP_QA_DOHA
+      - GCP_JP_OSAKA
+      - GCP_FR_PARIS
+      type: string
+    SyntheticTestHeaderAssertionOperator:
+      enum:
+      - CONTAINS
+      - NOT_CONTAINS
+      - EQUALS
+      - NOT_EQUALS
+      - REGEX_EQUALS
+      - REGEX_NOT_EQUALS
+      - NOT_EXISTS
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      type: string
+    SyntheticTestNetworkHopsAssertion:
+      description: Asserts on the number of network hops to the target.
+      properties:
+        operator:
+          $ref: '#/components/schemas/SyntheticTestNetworkHopsAssertionOperator'
+        target:
+          format: int32
+          type: integer
+      type: object
+    TlsTestConfigTlsAuth:
+      description: Credentials presented during the TLS handshake.
+      properties:
+        client_certificate:
+          $ref: '#/components/schemas/configv1ClientCertificate'
+      type: object
+    SyntheticTestResponseTimeAssertionOperator:
+      enum:
+      - LESS_THAN
+      type: string
+    SyntheticTestRetryConfig:
+      description: 'Per-location retry behavior after a failed attempt. When unset, the test
+
+        doesn''t retry.'
+      properties:
+        max_retries:
+          description: 'Number of retries after the initial failed attempt, from 0 to 3. A value
+
+            of `0` disables retries.'
+          format: int32
+          type: integer
+        retry_interval_ms:
+          description: 'Delay between attempts, in milliseconds, up to 5000. Applies only when
+
+            `max_retries` is set. Default: `300`.'
+          format: int32
+          type: integer
+      type: object
+    BodyHashAssertionAlgorithm:
+      enum:
+      - MD5
+      - SHA1
+      - SHA256
+      type: string
+    ResponseTimeAssertionScope:
+      enum:
+      - INCLUDING_DNS
+      - WITHOUT_DNS
+      type: string
+    SyntheticTestStatusCodeAssertion:
+      description: 'Asserts that the HTTP response status code matches the target. The
+
+        `target` field accepts a literal code such as `200`, or a regular
+
+        expression such as `2..` when the operator is `REGEX_EQUALS` or
+
+        `REGEX_NOT_EQUALS`.'
+      properties:
+        operator:
+          $ref: '#/components/schemas/SyntheticTestStatusCodeAssertionOperator'
+        target:
+          type: string
+      type: object
+    SyntheticTestTlsVersionAssertionOperator:
+      enum:
+      - EQUALS
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      type: string
     SyntheticTestHttpTestConfig:
       properties:
         allow_insecure_tls:
@@ -479,434 +760,6 @@ components:
       - method
       - url
       type: object
-    SyntheticTestBodyAssertionOperator:
-      enum:
-      - CONTAINS
-      - NOT_CONTAINS
-      - EQUALS
-      - NOT_EQUALS
-      - REGEX_EQUALS
-      - REGEX_NOT_EQUALS
-      type: string
-    SyntheticTestTcpTestConfigAssertion:
-      description: 'Assertion types valid for TCP tests. Set exactly one assertion field
-
-        per entry.'
-      properties:
-        connection_assertion:
-          $ref: '#/components/schemas/SyntheticTestConnectionAssertion'
-        network_hops_assertion:
-          $ref: '#/components/schemas/SyntheticTestNetworkHopsAssertion'
-        response_time_assertion:
-          $ref: '#/components/schemas/SyntheticTestResponseTimeAssertion'
-      type: object
-    SyntheticTestBodyJSONPathAssertion:
-      description: 'Asserts that a value extracted with JSONPath matches the target. The
-
-        `match_type` field controls how multiple matches are evaluated.'
-      properties:
-        json_path:
-          type: string
-        match_type:
-          $ref: '#/components/schemas/BodyJSONPathAssertionMatchType'
-        operator:
-          $ref: '#/components/schemas/SyntheticTestBodyJSONPathAssertionOperator'
-        target:
-          type: string
-      type: object
-    SyntheticTestBodyAssertion:
-      description: Asserts that the raw response body matches the target string.
-      properties:
-        operator:
-          $ref: '#/components/schemas/SyntheticTestBodyAssertionOperator'
-        target:
-          type: string
-      type: object
-    HttpTestConfigCookie:
-      description: 'Single cookie sent with the request. All cookies are combined in order
-
-        into one `Cookie` request header, such as `name=value; name2=value2`.
-
-        Duplicate names are rejected. Unlike header names, cookie names are
-
-        matched with case sensitivity. Setting cookies alongside an explicit
-
-        `Cookie` header returns an error.'
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-      type: object
-    configv1OAuth2ClientCredentials:
-      description: Configures the OAuth 2.0 client-credentials grant.
-      properties:
-        client_id:
-          description: Client identifier issued to the test.
-          type: string
-        client_secret:
-          description: Client secret issued to the test.
-          type: string
-        common:
-          allOf:
-          - $ref: '#/components/schemas/configv1OAuth2Common'
-          description: Token-endpoint parameters for the grant.
-      required:
-      - client_id
-      - client_secret
-      - common
-      type: object
-    SyntheticTestTestType:
-      enum:
-      - HTTP
-      - DNS
-      - TCP
-      - TLS
-      type: string
-    SyntheticTestHeaderAssertion:
-      description: Asserts that the named response header satisfies the operator.
-      properties:
-        name:
-          type: string
-        operator:
-          $ref: '#/components/schemas/SyntheticTestHeaderAssertionOperator'
-        target:
-          type: string
-      type: object
-    SyntheticTestStatusCodeAssertionOperator:
-      enum:
-      - EQUALS
-      - NOT_EQUALS
-      - REGEX_EQUALS
-      - REGEX_NOT_EQUALS
-      type: string
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1CollectionReferenceType:
-      enum:
-      - SIMPLE
-      - SERVICE
-      title: Type values must match entitiespb.Collection.CollectionType.
-      type: string
-    configv1ReadSyntheticTestResponse:
-      properties:
-        synthetic_test:
-          $ref: '#/components/schemas/configv1SyntheticTest'
-      type: object
-    DnsRecordAssertionRecordType:
-      enum:
-      - A
-      - AAAA
-      - CNAME
-      - MX
-      - NS
-      - TXT
-      - SOA
-      - SRV
-      type: string
-    SyntheticTestTestLocation:
-      enum:
-      - GCP_US_OREGON
-      - GCP_US_VIRGINIA
-      - GCP_BR_SAO_PAULO
-      - GCP_SG_SINGAPORE
-      - GCP_AU_SYDNEY
-      - GCP_IN_MUMBAI
-      - GCP_JP_TOKYO
-      - GCP_GB_LONDON
-      - GCP_DE_FRANKFURT
-      - GCP_ZA_JOHANNESBURG
-      - GCP_ID_JAKARTA
-      - GCP_CA_MONTREAL
-      - GCP_KR_SEOUL
-      - GCP_IT_MILAN
-      - GCP_QA_DOHA
-      - GCP_JP_OSAKA
-      - GCP_FR_PARIS
-      type: string
-    configv1ClientCertificate:
-      description: Certificate presented during the TLS handshake for mutual TLS (mTLS).
-      properties:
-        certificate:
-          description: PEM leaf certificate plus any intermediates.
-          type: string
-        private_key:
-          description: 'Matching unencrypted PEM key, in PKCS#8, PKCS#1, or SEC1 format. This
-
-            field is write-only: reads return `**REDACTED**`, and writing that
-
-            sentinel value back preserves the stored key.'
-          type: string
-      required:
-      - certificate
-      - private_key
-      type: object
-    configv1BasicAuth:
-      description: HTTP basic authentication credentials used by a synthetic test.
-      properties:
-        password:
-          description: Password sent with the request.
-          type: string
-        username:
-          description: User name sent with the request.
-          type: string
-      required:
-      - password
-      - username
-      type: object
-    SyntheticTestNetworkHopsAssertionOperator:
-      enum:
-      - EQUALS
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      type: string
-    configv1OAuth2TokenAuthMethod:
-      description: 'Selects how client credentials are sent to the OAuth 2.0 token endpoint.
-
-        When unset, credentials are sent in an HTTP basic authentication header, as
-
-        described in RFC 6749 section 2.3.1.'
-      enum:
-      - OTAM_BASIC_AUTH_HEADER
-      - OTAM_REQUEST_BODY
-      type: string
-    SyntheticTestTlsTestConfig:
-      properties:
-        accept_self_signed:
-          description: 'If `true`, a self-signed certificate passes verification. If `false`, a
-
-            self-signed certificate fails the test. Default: `false`.'
-          type: boolean
-        assertions:
-          description: 'Conditions the handshake and certificate must satisfy for the test to
-
-            pass.'
-          items:
-            $ref: '#/components/schemas/SyntheticTestTlsTestConfigAssertion'
-          type: array
-        authentication:
-          allOf:
-          - $ref: '#/components/schemas/TlsTestConfigTlsAuth'
-          description: Credentials presented during the handshake.
-        fail_on_incomplete_chain:
-          description: 'If `true`, a certificate chain that omits intermediates fails the test.
-
-            If false, an incomplete chain passes. Default: `false`.'
-          type: boolean
-        host:
-          description: Host the test connects to.
-          example: api.example.com
-          type: string
-        port:
-          description: Port the test connects to, from 1 to 65535.
-          format: int64
-          type: integer
-        server_name:
-          description: 'Server Name Indication (SNI) value sent during the handshake.
-
-            Default: the value of `host`.'
-          type: string
-      required:
-      - host
-      - port
-      type: object
-    SyntheticTestBodyXPathAssertion:
-      description: Asserts that a value extracted with XPath 1.0 matches the target.
-      properties:
-        operator:
-          $ref: '#/components/schemas/SyntheticTestBodyXPathAssertionOperator'
-        target:
-          type: string
-        xpath:
-          type: string
-      type: object
-    SyntheticTestRetryConfig:
-      description: 'Per-location retry behavior after a failed attempt. When unset, the test
-
-        doesn''t retry.'
-      properties:
-        max_retries:
-          description: 'Number of retries after the initial failed attempt, from 0 to 3. A value
-
-            of `0` disables retries.'
-          format: int32
-          type: integer
-        retry_interval_ms:
-          description: 'Delay between attempts, in milliseconds, up to 5000. Applies only when
-
-            `max_retries` is set. Default: `300`.'
-          format: int32
-          type: integer
-      type: object
-    ConfigV1UpdateSyntheticTestBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the SyntheticTest will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the SyntheticTest does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the SyntheticTest. If the specified configuration is valid, the endpoint returns a partial response without the SyntheticTest. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        synthetic_test:
-          allOf:
-          - $ref: '#/components/schemas/configv1SyntheticTest'
-          description: The SyntheticTest to update.
-      type: object
-    SyntheticTestCertificateAssertionOperator:
-      enum:
-      - EXPIRES_IN_MORE_THAN_DAYS
-      - EXPIRES_IN_LESS_THAN_DAYS
-      type: string
-    SyntheticTestResponseTimeAssertionOperator:
-      enum:
-      - LESS_THAN
-      type: string
-    configv1CollectionReference:
-      properties:
-        slug:
-          type: string
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
-      type: object
-    SyntheticTestHttpTestConfigAssertion:
-      description: 'Assertion types valid for HTTP tests. Set exactly one assertion field
-
-        per entry.'
-      properties:
-        body_assertion:
-          $ref: '#/components/schemas/SyntheticTestBodyAssertion'
-        body_hash_assertion:
-          $ref: '#/components/schemas/SyntheticTestBodyHashAssertion'
-        body_json_path_assertion:
-          $ref: '#/components/schemas/SyntheticTestBodyJSONPathAssertion'
-        body_json_schema_assertion:
-          $ref: '#/components/schemas/SyntheticTestBodyJSONSchemaAssertion'
-        body_xpath_assertion:
-          $ref: '#/components/schemas/SyntheticTestBodyXPathAssertion'
-        header_assertion:
-          $ref: '#/components/schemas/SyntheticTestHeaderAssertion'
-        response_time_assertion:
-          $ref: '#/components/schemas/SyntheticTestResponseTimeAssertion'
-        status_code_assertion:
-          $ref: '#/components/schemas/SyntheticTestStatusCodeAssertion'
-      type: object
-    SyntheticTestResponseTimeAssertion:
-      description: 'Asserts that the request response time is below the target, in
-
-        milliseconds. The `scope` field selects whether DNS resolution time is
-
-        included, and doesn''t apply to DNS tests.'
-      properties:
-        operator:
-          $ref: '#/components/schemas/SyntheticTestResponseTimeAssertionOperator'
-        scope:
-          $ref: '#/components/schemas/ResponseTimeAssertionScope'
-        target_ms:
-          format: int32
-          type: integer
-      type: object
-    configv1UpdateSyntheticTestResponse:
-      properties:
-        synthetic_test:
-          $ref: '#/components/schemas/configv1SyntheticTest'
-      type: object
-    configv1OAuth2ResourceOwnerPassword:
-      description: 'Configures the OAuth 2.0 resource-owner password-credentials grant. Set
-
-        `client_id` and `client_secret` when the token endpoint also authenticates
-
-        the client.'
-      properties:
-        client_id:
-          description: Client identifier issued to the test.
-          type: string
-        client_secret:
-          description: Client secret issued to the test.
-          type: string
-        common:
-          allOf:
-          - $ref: '#/components/schemas/configv1OAuth2Common'
-          description: Token-endpoint parameters for the grant.
-        password:
-          description: Password of the resource owner.
-          type: string
-        username:
-          description: User name of the resource owner.
-          type: string
-      required:
-      - common
-      - password
-      - username
-      type: object
-    configv1OAuth2Common:
-      description: OAuth 2.0 token-endpoint parameters shared by the OAuth 2.0 grant types.
-      properties:
-        access_token_url:
-          description: URL of the token endpoint that issues the access token.
-          example: https://auth.example.com/oauth2/token
-          type: string
-        audience:
-          description: Intended recipient of the access token.
-          type: string
-        resource:
-          description: Resource the access token grants access to.
-          type: string
-        scopes:
-          description: Scopes requested with the access token.
-          items:
-            type: string
-          type: array
-        token_auth_method:
-          $ref: '#/components/schemas/configv1OAuth2TokenAuthMethod'
-      required:
-      - access_token_url
-      type: object
-    SyntheticTestDnsTestConfig:
-      properties:
-        assertions:
-          description: Conditions the response must satisfy for the test to pass.
-          items:
-            $ref: '#/components/schemas/SyntheticTestDnsTestConfigAssertion'
-          type: array
-        dns_server:
-          description: 'Nameserver to query. When unset, the test uses the default resolver for
-
-            the probe location.'
-          type: string
-        dns_server_port:
-          description: 'Port of the nameserver in `dns_server`, from 1 to 65535. Required when
-
-            `dns_server` is set, and rejected when it isn''t.'
-          format: int64
-          type: integer
-        domain:
-          description: Domain the test resolves.
-          example: api.example.com
-          type: string
-      required:
-      - domain
-      type: object
-    configv1APITokenAuth:
-      description: 'Configures static API-token authentication. Each request carries a
-
-        `key: token` header. The whole token is treated as a secret.'
-      properties:
-        key:
-          description: 'Name of the header that carries the token. Must be a valid HTTP header
-
-            name.'
-          example: Authorization
-          type: string
-        token:
-          description: Full value of the header, including any scheme prefix.
-          example: Bearer TOKEN
-          type: string
-      required:
-      - key
-      - token
-      type: object
     SyntheticTestCertificatePropertyAssertionOperator:
       enum:
       - CONTAINS
@@ -916,82 +769,13 @@ components:
       - REGEX_EQUALS
       - REGEX_NOT_EQUALS
       type: string
-    SyntheticTestStatusCodeAssertion:
-      description: 'Asserts that the HTTP response status code matches the target. The
-
-        `target` field accepts a literal code such as `200`, or a regular
-
-        expression such as `2..` when the operator is `REGEX_EQUALS` or
-
-        `REGEX_NOT_EQUALS`.'
+    SyntheticTestBodyJSONSchemaAssertion:
+      description: Asserts that the JSON response body conforms to a JSON schema.
       properties:
-        operator:
-          $ref: '#/components/schemas/SyntheticTestStatusCodeAssertionOperator'
-        target:
+        draft:
+          $ref: '#/components/schemas/BodyJSONSchemaAssertionSchemaDraft'
+        schema:
           type: string
-      type: object
-    TlsVersionAssertionVersion:
-      enum:
-      - TLS_1_0
-      - TLS_1_1
-      - TLS_1_2
-      - TLS_1_3
-      type: string
-    BodyJSONSchemaAssertionSchemaDraft:
-      enum:
-      - DRAFT_06
-      - DRAFT_07
-      type: string
-    SyntheticTestNetworkHopsAssertion:
-      description: Asserts on the number of network hops to the target.
-      properties:
-        operator:
-          $ref: '#/components/schemas/SyntheticTestNetworkHopsAssertionOperator'
-        target:
-          format: int32
-          type: integer
-      type: object
-    TlsVersionAssertionBound:
-      enum:
-      - MAX
-      - MIN
-      type: string
-    DnsRecordAssertionMatchScope:
-      enum:
-      - EVERY_AVAILABLE
-      - AT_LEAST_ONE
-      type: string
-    SyntheticTestConnectionAssertion:
-      description: 'Asserts on the outcome of the TCP connection attempt. Only the `EQUALS`
-
-        operator is supported, for example a target of `ESTABLISHED`.'
-      properties:
-        operator:
-          $ref: '#/components/schemas/SyntheticTestConnectionAssertionOperator'
-        target:
-          $ref: '#/components/schemas/ConnectionAssertionConnectionStatus'
-      type: object
-    HttpTestConfigHeader:
-      description: 'Single HTTP request header. Headers are sent in the order listed.
-
-        Duplicate names are rejected, ignoring case.'
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-      type: object
-    SyntheticTestTlsVersionAssertion:
-      description: 'Asserts on the negotiated TLS version. The `bound` field selects whether
-
-        the assertion constrains the maximum or the minimum acceptable version.'
-      properties:
-        bound:
-          $ref: '#/components/schemas/TlsVersionAssertionBound'
-        operator:
-          $ref: '#/components/schemas/SyntheticTestTlsVersionAssertionOperator'
-        target:
-          $ref: '#/components/schemas/TlsVersionAssertionVersion'
       type: object
     SyntheticTestCertificateAssertion:
       description: Asserts on the leaf certificate's expiration window, in days.
@@ -1002,80 +786,27 @@ components:
           format: int32
           type: integer
       type: object
-    configv1DeleteSyntheticTestResponse:
-      type: object
-    apiError:
+    configv1UpdateSyntheticTestResponse:
       properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
+        synthetic_test:
+          $ref: '#/components/schemas/configv1SyntheticTest'
       type: object
-    SyntheticTestDnsTestConfigAssertion:
-      description: 'Assertion types valid for DNS tests. Set exactly one assertion field
+    SyntheticTestTlsTestConfigAssertion:
+      description: 'Assertion types valid for TLS tests. Set exactly one assertion field
 
         per entry.'
       properties:
-        dns_record_assertion:
-          $ref: '#/components/schemas/SyntheticTestDnsRecordAssertion'
+        cert_property_assertion:
+          $ref: '#/components/schemas/SyntheticTestCertificatePropertyAssertion'
+        certificate_assertion:
+          $ref: '#/components/schemas/SyntheticTestCertificateAssertion'
         response_time_assertion:
           $ref: '#/components/schemas/SyntheticTestResponseTimeAssertion'
+        tls_version_assertion:
+          $ref: '#/components/schemas/SyntheticTestTlsVersionAssertion'
       type: object
-    BodyHashAssertionAlgorithm:
-      enum:
-      - MD5
-      - SHA1
-      - SHA256
-      type: string
-    SyntheticTestBodyJSONPathAssertionOperator:
-      enum:
-      - CONTAINS
-      - NOT_CONTAINS
-      - EQUALS
-      - NOT_EQUALS
-      - REGEX_EQUALS
-      - REGEX_NOT_EQUALS
-      - LESS_THAN
-      - GREATER_THAN
-      - IS_UNDEFINED
-      type: string
-    BodyJSONPathAssertionMatchType:
-      enum:
-      - FIRST_ELEMENT
-      - EVERY_ELEMENT
-      - AT_LEAST_ONE_ELEMENT
-      - SERIALIZATION
-      type: string
-    ConnectionAssertionConnectionStatus:
-      enum:
-      - ESTABLISHED
-      - REFUSED
-      - TIMEOUT
-      type: string
-    SyntheticTestTlsVersionAssertionOperator:
-      enum:
-      - EQUALS
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      type: string
-    configv1CreateSyntheticTestRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the SyntheticTest. If the specified configuration is valid, the endpoint returns a partial response without the SyntheticTest. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        synthetic_test:
-          allOf:
-          - $ref: '#/components/schemas/configv1SyntheticTest'
-          description: The SyntheticTest to create.
-      type: object
-    SyntheticTestBodyJSONSchemaAssertion:
-      description: Asserts that the JSON response body conforms to a JSON schema.
-      properties:
-        draft:
-          $ref: '#/components/schemas/BodyJSONSchemaAssertionSchemaDraft'
-        schema:
-          type: string
+    genericError:
+      additionalProperties: true
       type: object
     SyntheticTestBodyXPathAssertionOperator:
       enum:
@@ -1089,22 +820,16 @@ components:
       - GREATER_THAN
       - IS_UNDEFINED
       type: string
-    HttpTestConfigContentType:
-      description: 'Content type sent with the request, mapped to a `Content-Type` request
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
 
-        header. Setting both this field and an explicit `Content-Type` header
+            client should request. An empty value indicates that there are no
 
-        returns an error.'
-      enum:
-      - CONTENT_TYPE_APPLICATION_JSON
-      - CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED
-      - CONTENT_TYPE_TEXT_PLAIN
-      - CONTENT_TYPE_TEXT_XML
-      - CONTENT_TYPE_TEXT_HTML
-      - CONTENT_TYPE_MULTIPART_FORM_DATA
-      - CONTENT_TYPE_APPLICATION_OCTET_STREAM
-      - CONTENT_TYPE_GRAPHQL
-      type: string
+            more items to return.'
+          type: string
+      type: object
     configv1SyntheticTest:
       properties:
         collection:
@@ -1203,6 +928,171 @@ components:
       - name
       - test_type
       type: object
+    configv1CollectionReference:
+      properties:
+        slug:
+          type: string
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
+    configv1ListSyntheticTestsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        synthetic_tests:
+          items:
+            $ref: '#/components/schemas/configv1SyntheticTest'
+          type: array
+      type: object
+    SyntheticTestTlsVersionAssertion:
+      description: 'Asserts on the negotiated TLS version. The `bound` field selects whether
+
+        the assertion constrains the maximum or the minimum acceptable version.'
+      properties:
+        bound:
+          $ref: '#/components/schemas/TlsVersionAssertionBound'
+        operator:
+          $ref: '#/components/schemas/SyntheticTestTlsVersionAssertionOperator'
+        target:
+          $ref: '#/components/schemas/TlsVersionAssertionVersion'
+      type: object
+    configv1OAuth2Common:
+      description: OAuth 2.0 token-endpoint parameters shared by the OAuth 2.0 grant types.
+      properties:
+        access_token_url:
+          description: URL of the token endpoint that issues the access token.
+          example: https://auth.example.com/oauth2/token
+          type: string
+        audience:
+          description: Intended recipient of the access token.
+          type: string
+        resource:
+          description: Resource the access token grants access to.
+          type: string
+        scopes:
+          description: Scopes requested with the access token.
+          items:
+            type: string
+          type: array
+        token_auth_method:
+          $ref: '#/components/schemas/configv1OAuth2TokenAuthMethod'
+      required:
+      - access_token_url
+      type: object
+    configv1OAuth2ResourceOwnerPassword:
+      description: 'Configures the OAuth 2.0 resource-owner password-credentials grant. Set
+
+        `client_id` and `client_secret` when the token endpoint also authenticates
+
+        the client.'
+      properties:
+        client_id:
+          description: Client identifier issued to the test.
+          type: string
+        client_secret:
+          description: Client secret issued to the test.
+          type: string
+        common:
+          allOf:
+          - $ref: '#/components/schemas/configv1OAuth2Common'
+          description: Token-endpoint parameters for the grant.
+        password:
+          description: Password of the resource owner.
+          type: string
+        username:
+          description: User name of the resource owner.
+          type: string
+      required:
+      - common
+      - password
+      - username
+      type: object
+    configv1APITokenAuth:
+      description: 'Configures static API-token authentication. Each request carries a
+
+        `key: token` header. The whole token is treated as a secret.'
+      properties:
+        key:
+          description: 'Name of the header that carries the token. Must be a valid HTTP header
+
+            name.'
+          example: Authorization
+          type: string
+        token:
+          description: Full value of the header, including any scheme prefix.
+          example: Bearer TOKEN
+          type: string
+      required:
+      - key
+      - token
+      type: object
+    SyntheticTestTcpTestConfigAssertion:
+      description: 'Assertion types valid for TCP tests. Set exactly one assertion field
+
+        per entry.'
+      properties:
+        connection_assertion:
+          $ref: '#/components/schemas/SyntheticTestConnectionAssertion'
+        network_hops_assertion:
+          $ref: '#/components/schemas/SyntheticTestNetworkHopsAssertion'
+        response_time_assertion:
+          $ref: '#/components/schemas/SyntheticTestResponseTimeAssertion'
+      type: object
+    configv1CreateSyntheticTestRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the SyntheticTest. If the specified configuration is valid, the endpoint returns a partial response without the SyntheticTest. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        synthetic_test:
+          allOf:
+          - $ref: '#/components/schemas/configv1SyntheticTest'
+          description: The SyntheticTest to create.
+      type: object
+    SyntheticTestStatusCodeAssertionOperator:
+      enum:
+      - EQUALS
+      - NOT_EQUALS
+      - REGEX_EQUALS
+      - REGEX_NOT_EQUALS
+      type: string
+    ConfigV1UpdateSyntheticTestBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the SyntheticTest will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the SyntheticTest does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the SyntheticTest. If the specified configuration is valid, the endpoint returns a partial response without the SyntheticTest. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        synthetic_test:
+          allOf:
+          - $ref: '#/components/schemas/configv1SyntheticTest'
+          description: The SyntheticTest to update.
+      type: object
+    SyntheticTestDnsTestConfig:
+      properties:
+        assertions:
+          description: Conditions the response must satisfy for the test to pass.
+          items:
+            $ref: '#/components/schemas/SyntheticTestDnsTestConfigAssertion'
+          type: array
+        dns_server:
+          description: 'Nameserver to query. When unset, the test uses the default resolver for
+
+            the probe location.'
+          type: string
+        dns_server_port:
+          description: 'Port of the nameserver in `dns_server`, from 1 to 65535. Required when
+
+            `dns_server` is set, and rejected when it isn''t.'
+          format: int64
+          type: integer
+        domain:
+          description: Domain the test resolves.
+          example: api.example.com
+          type: string
+      required:
+      - domain
+      type: object
     HttpTestConfigHttpAuth:
       description: 'Authentication applied to the request. Set any combination of these
 
@@ -1219,19 +1109,149 @@ components:
         oauth2_resource_owner_password:
           $ref: '#/components/schemas/configv1OAuth2ResourceOwnerPassword'
       type: object
-    SyntheticTestTlsTestConfigAssertion:
-      description: 'Assertion types valid for TLS tests. Set exactly one assertion field
+    SyntheticTestBodyJSONPathAssertion:
+      description: 'Asserts that a value extracted with JSONPath matches the target. The
+
+        `match_type` field controls how multiple matches are evaluated.'
+      properties:
+        json_path:
+          type: string
+        match_type:
+          $ref: '#/components/schemas/BodyJSONPathAssertionMatchType'
+        operator:
+          $ref: '#/components/schemas/SyntheticTestBodyJSONPathAssertionOperator'
+        target:
+          type: string
+      type: object
+    HttpTestConfigHttpVersion:
+      description: 'HTTP protocol version used for the request. When unset, the request
+
+        negotiates HTTP/2 and falls back to HTTP/1.1.'
+      enum:
+      - HTTP_VERSION_HTTP_1_1
+      - HTTP_VERSION_HTTP_2
+      type: string
+    SyntheticTestCertificateAssertionOperator:
+      enum:
+      - EXPIRES_IN_MORE_THAN_DAYS
+      - EXPIRES_IN_LESS_THAN_DAYS
+      type: string
+    SyntheticTestDnsTestConfigAssertion:
+      description: 'Assertion types valid for DNS tests. Set exactly one assertion field
 
         per entry.'
       properties:
-        cert_property_assertion:
-          $ref: '#/components/schemas/SyntheticTestCertificatePropertyAssertion'
-        certificate_assertion:
-          $ref: '#/components/schemas/SyntheticTestCertificateAssertion'
+        dns_record_assertion:
+          $ref: '#/components/schemas/SyntheticTestDnsRecordAssertion'
         response_time_assertion:
           $ref: '#/components/schemas/SyntheticTestResponseTimeAssertion'
-        tls_version_assertion:
-          $ref: '#/components/schemas/SyntheticTestTlsVersionAssertion'
+      type: object
+    configv1DeleteSyntheticTestResponse:
+      type: object
+    configv1ReadSyntheticTestResponse:
+      properties:
+        synthetic_test:
+          $ref: '#/components/schemas/configv1SyntheticTest'
+      type: object
+    SyntheticTestBodyAssertionOperator:
+      enum:
+      - CONTAINS
+      - NOT_CONTAINS
+      - EQUALS
+      - NOT_EQUALS
+      - REGEX_EQUALS
+      - REGEX_NOT_EQUALS
+      type: string
+    SyntheticTestNetworkHopsAssertionOperator:
+      enum:
+      - EQUALS
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      type: string
+    configv1BasicAuth:
+      description: HTTP basic authentication credentials used by a synthetic test.
+      properties:
+        password:
+          description: Password sent with the request.
+          type: string
+        username:
+          description: User name sent with the request.
+          type: string
+      required:
+      - password
+      - username
+      type: object
+    SyntheticTestConnectionAssertionOperator:
+      enum:
+      - EQUALS
+      type: string
+    configv1OAuth2TokenAuthMethod:
+      description: 'Selects how client credentials are sent to the OAuth 2.0 token endpoint.
+
+        When unset, credentials are sent in an HTTP basic authentication header, as
+
+        described in RFC 6749 section 2.3.1.'
+      enum:
+      - OTAM_BASIC_AUTH_HEADER
+      - OTAM_REQUEST_BODY
+      type: string
+    SyntheticTestBodyAssertion:
+      description: Asserts that the raw response body matches the target string.
+      properties:
+        operator:
+          $ref: '#/components/schemas/SyntheticTestBodyAssertionOperator'
+        target:
+          type: string
+      type: object
+    configv1ClientCertificate:
+      description: Certificate presented during the TLS handshake for mutual TLS (mTLS).
+      properties:
+        certificate:
+          description: PEM leaf certificate plus any intermediates.
+          type: string
+        private_key:
+          description: 'Matching unencrypted PEM key, in PKCS#8, PKCS#1, or SEC1 format. This
+
+            field is write-only: reads return `**REDACTED**`, and writing that
+
+            sentinel value back preserves the stored key.'
+          type: string
+      required:
+      - certificate
+      - private_key
+      type: object
+    SyntheticTestBodyXPathAssertion:
+      description: Asserts that a value extracted with XPath 1.0 matches the target.
+      properties:
+        operator:
+          $ref: '#/components/schemas/SyntheticTestBodyXPathAssertionOperator'
+        target:
+          type: string
+        xpath:
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    SyntheticTestResponseTimeAssertion:
+      description: 'Asserts that the request response time is below the target, in
+
+        milliseconds. The `scope` field selects whether DNS resolution time is
+
+        included, and doesn''t apply to DNS tests.'
+      properties:
+        operator:
+          $ref: '#/components/schemas/SyntheticTestResponseTimeAssertionOperator'
+        scope:
+          $ref: '#/components/schemas/ResponseTimeAssertionScope'
+        target_ms:
+          format: int32
+          type: integer
       type: object
     SyntheticTestDnsRecordAssertion:
       description: 'Asserts on DNS records returned for the query. The `match_scope` field
@@ -1251,58 +1271,38 @@ components:
         target:
           type: string
       type: object
-    HttpTestConfigHttpMethod:
-      enum:
-      - GET
-      - POST
-      type: string
-    TlsTestConfigTlsAuth:
-      description: Credentials presented during the TLS handshake.
-      properties:
-        client_certificate:
-          $ref: '#/components/schemas/configv1ClientCertificate'
-      type: object
     configv1CreateSyntheticTestResponse:
       properties:
         synthetic_test:
           $ref: '#/components/schemas/configv1SyntheticTest'
-      type: object
-    configv1ListSyntheticTestsResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        synthetic_tests:
-          items:
-            $ref: '#/components/schemas/configv1SyntheticTest'
-          type: array
-      type: object
-    SyntheticTestConnectionAssertionOperator:
-      enum:
-      - EQUALS
-      type: string
-    SyntheticTestBodyHashAssertion:
-      description: Asserts that a hash of the response body equals the target.
-      properties:
-        algorithm:
-          $ref: '#/components/schemas/BodyHashAssertionAlgorithm'
-        target:
-          type: string
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
       type: object
     SyntheticTestTestStatus:
       enum:
       - ENABLED
       - PAUSED
       type: string
+    ConnectionAssertionConnectionStatus:
+      enum:
+      - ESTABLISHED
+      - REFUSED
+      - TIMEOUT
+      type: string
+    HttpTestConfigCookie:
+      description: 'Single cookie sent with the request. All cookies are combined in order
+
+        into one `Cookie` request header, such as `name=value; name2=value2`.
+
+        Duplicate names are rejected. Unlike header names, cookie names are
+
+        matched with case sensitivity. Setting cookies alongside an explicit
+
+        `Cookie` header returns an error.'
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      type: object
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

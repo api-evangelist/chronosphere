@@ -202,16 +202,40 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LogPrimaryKeyLogPrimaryKeyField:
+    configunstableDeleteLogPrimaryKeyResponse:
+      type: object
+    configunstableCreateLogPrimaryKeyResponse:
       properties:
-        name:
-          description: name of the field as it will be referred to in queries; could be omitted and targeted_field would be used as the PK name in that case
-          type: string
-        source:
-          description: source is the name of the source field
+        log_primary_key:
+          $ref: '#/components/schemas/configunstableLogPrimaryKey'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
           type: string
       type: object
-    configunstableDeleteLogPrimaryKeyResponse:
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableCreateLogPrimaryKeyRequest:
+      properties:
+        log_primary_key:
+          $ref: '#/components/schemas/configunstableLogPrimaryKey'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LogPrimaryKey. If the specified configuration is valid, the endpoint returns a partial response without the LogPrimaryKey. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     configunstableListLogPrimaryKeysResponse:
       properties:
@@ -221,16 +245,6 @@ components:
           items:
             $ref: '#/components/schemas/configunstableLogPrimaryKey'
           type: array
-      type: object
-    configunstableReadLogPrimaryKeyResponse:
-      properties:
-        log_primary_key:
-          $ref: '#/components/schemas/configunstableLogPrimaryKey'
-      type: object
-    configunstableCreateLogPrimaryKeyResponse:
-      properties:
-        log_primary_key:
-          $ref: '#/components/schemas/configunstableLogPrimaryKey'
       type: object
     configunstableLogPrimaryKey:
       properties:
@@ -258,34 +272,20 @@ components:
             $ref: '#/components/schemas/LogPrimaryKeyLogPrimaryKeyField'
           type: array
       type: object
-    configunstableCreateLogPrimaryKeyRequest:
+    configunstableReadLogPrimaryKeyResponse:
       properties:
         log_primary_key:
           $ref: '#/components/schemas/configunstableLogPrimaryKey'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LogPrimaryKey. If the specified configuration is valid, the endpoint returns a partial response without the LogPrimaryKey. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
       type: object
     genericError:
       additionalProperties: true
       type: object
-    apiError:
+    LogPrimaryKeyLogPrimaryKeyField:
       properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
+        name:
+          description: name of the field as it will be referred to in queries; could be omitted and targeted_field would be used as the PK name in that case
           type: string
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        source:
+          description: source is the name of the source field
           type: string
       type: object

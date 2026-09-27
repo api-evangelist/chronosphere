@@ -93,24 +93,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MetricUsageReferenceCountsByType:
-      properties:
-        aggregation_rules:
-          format: int32
-          type: integer
-        dashboards:
-          format: int32
-          type: integer
-        drop_rules:
-          format: int32
-          type: integer
-        monitors:
-          format: int32
-          type: integer
-        recording_rules:
-          format: int32
-          type: integer
-      type: object
     statev1MetricUsage:
       properties:
         query_execution_counts_by_type:
@@ -129,6 +111,24 @@ components:
         utility_score:
           format: double
           type: number
+      type: object
+    MetricUsageReferenceCountsByType:
+      properties:
+        aggregation_rules:
+          format: int32
+          type: integer
+        dashboards:
+          format: int32
+          type: integer
+        drop_rules:
+          format: int32
+          type: integer
+        monitors:
+          format: int32
+          type: integer
+        recording_rules:
+          format: int32
+          type: integer
       type: object
     statev1ListMetricUsagesByMetricNameResponse:
       properties:

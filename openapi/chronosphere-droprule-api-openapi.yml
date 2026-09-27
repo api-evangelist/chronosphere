@@ -276,15 +276,14 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    DropRuleValueBasedDrop:
+    configv1ListDropRulesResponse:
       properties:
-        enabled:
-          description: Enables dropping metrics based on a set value.
-          type: boolean
-        target_drop_value:
-          description: The target data point value at which to drop metrics.
-          format: double
-          type: number
+        drop_rules:
+          items:
+            $ref: '#/components/schemas/configv1DropRule'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
     configv1DropRuleMode:
       enum:
@@ -292,15 +291,25 @@ components:
       - DISABLED
       - PREVIEW
       type: string
-    configv1UpdateDropRuleResponse:
+    configv1DeleteDropRuleResponse:
+      type: object
+    configv1CreateDropRuleResponse:
       properties:
         drop_rule:
           $ref: '#/components/schemas/configv1DropRule'
       type: object
-    configv1ReadDropRuleResponse:
+    ConfigV1UpdateDropRuleBody:
       properties:
+        create_if_missing:
+          description: If `true`, the DropRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the DropRule does not already exist.
+          type: boolean
         drop_rule:
-          $ref: '#/components/schemas/configv1DropRule'
+          allOf:
+          - $ref: '#/components/schemas/configv1DropRule'
+          description: The DropRule to update.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the DropRule. If the specified configuration is valid, the endpoint returns a partial response without the DropRule. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     configv1CreateDropRuleRequest:
       properties:
@@ -311,6 +320,53 @@ components:
         dry_run:
           description: If `true`, validates the specified configuration without creating the DropRule. If the specified configuration is valid, the endpoint returns a partial response without the DropRule. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
+      type: object
+    configv1ReadDropRuleResponse:
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
+      type: object
+    DropRuleValueBasedDrop:
+      properties:
+        enabled:
+          description: Enables dropping metrics based on a set value.
+          type: boolean
+        target_drop_value:
+          description: The target data point value at which to drop metrics.
+          format: double
+          type: number
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1LabelFilter:
+      properties:
+        name:
+          description: The name of the label to match.
+          example: job
+          type: string
+        value_glob:
+          description: The glob value of the label to match.
+          example: myservice*
+          type: string
+      type: object
+    configv1UpdateDropRuleResponse:
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule'
       type: object
     configv1DropRule:
       properties:
@@ -369,78 +425,14 @@ components:
       required:
       - name
       type: object
-    configv1LabelFilter:
-      properties:
-        name:
-          description: The name of the label to match.
-          example: job
-          type: string
-        value_glob:
-          description: The glob value of the label to match.
-          example: myservice*
-          type: string
-      type: object
-    configv1ListDropRulesResponse:
-      properties:
-        drop_rules:
-          items:
-            $ref: '#/components/schemas/configv1DropRule'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
     genericError:
       additionalProperties: true
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    ConfigV1UpdateDropRuleBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the DropRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the DropRule does not already exist.
-          type: boolean
-        drop_rule:
-          allOf:
-          - $ref: '#/components/schemas/configv1DropRule'
-          description: The DropRule to update.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the DropRule. If the specified configuration is valid, the endpoint returns a partial response without the DropRule. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configv1DeleteDropRuleResponse:
-      type: object
-    configv1CreateDropRuleResponse:
-      properties:
-        drop_rule:
-          $ref: '#/components/schemas/configv1DropRule'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
       type: object
     configv1DropRuleMode_2:
       type: string
       enum:
       - ENABLED
       - DISABLED
-    configv1CreateDropRuleRequest_2:
-      type: object
-      properties:
-        drop_rule:
-          $ref: '#/components/schemas/configv1DropRule_2'
-        dry_run:
-          type: boolean
-          description: If true, the DropRule isn't created, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
     DropRuleConditionalRateBasedDrop:
       type: object
       properties:
@@ -462,6 +454,56 @@ components:
       description: 'No longer supported and cannot be used.
 
         Defines behavior for conditional drop policies.'
+    ConfigV1UpdateDropRuleBody_2:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the DropRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the DropRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the DropRule isn't created or updated, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
+    configv1CreateDropRuleRequest_2:
+      type: object
+      properties:
+        drop_rule:
+          $ref: '#/components/schemas/configv1DropRule_2'
+        dry_run:
+          type: boolean
+          description: If true, the DropRule isn't created, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1LabelFilter_2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
     configv1DropRule_2:
       type: object
       properties:
@@ -507,48 +549,6 @@ components:
             documentation](https://docs.chronosphere.io/control/shaping/rules/drop-rules#define-a-value-based-drop-rule)
 
             for more information.'
-    configv1LabelFilter_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the label to match.
-          example: job
-        value_glob:
-          type: string
-          description: Glob value of the label to match.
-          example: myservice*
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    ConfigV1UpdateDropRuleBody_2:
-      type: object
-      properties:
-        drop_rule:
-          $ref: '#/components/schemas/configv1DropRule_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the DropRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the DropRule does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the DropRule isn't created or updated, and no response DropRule will be returned. The response will return an error if the given DropRule is invalid.
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
