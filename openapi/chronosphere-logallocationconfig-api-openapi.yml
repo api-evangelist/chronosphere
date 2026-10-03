@@ -191,6 +191,79 @@ components:
         log_allocation_config:
           $ref: '#/components/schemas/configv1LogAllocationConfig'
       type: object
+    configv1UpdateLogAllocationConfigResponse:
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig'
+      type: object
+    configv1LogAllocationConfig:
+      description: 'LogAllocationConfig is a singleton configuration object that specifies the
+
+        configuration for Log budget allocations.'
+      properties:
+        created_at:
+          description: Timestamp of when the LogAllocationConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        dataset_allocations:
+          description: Defines datasets and budget allocations. Datasets are evaluated in order.
+          items:
+            $ref: '#/components/schemas/LogAllocationConfigDatasetAllocation'
+          type: array
+        default_dataset:
+          allOf:
+          - $ref: '#/components/schemas/LogAllocationConfigDefaultDataset'
+          description: The default dataset applies to logs that aren't included in any other dataset.
+        updated_at:
+          description: Timestamp of when the LogAllocationConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    LogAllocationConfigDatasetAllocation:
+      properties:
+        allocation:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogAllocationConfigAllocation'
+          description: Specifies the percentage of the budget to allocate to this dataset.
+        dataset_slug:
+          description: Slug of the dataset.
+          type: string
+        priorities:
+          allOf:
+          - $ref: '#/components/schemas/LogAllocationConfigHighLowPriorities'
+          description: 'Defines explicit high and low priority match criteria to specify which logs to
+
+            drop first (low) and last (high). Anything not matched by either set of rules
+
+            is considered default priority and is dropped after low priority but before
+
+            high priority data.'
+      type: object
+    configv1UpdateLogAllocationConfigRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the LogAllocationConfig will be created if it does not already exist. If `false`, an error will be returned if the LogAllocationConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the LogAllocationConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogAllocationConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_allocation_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogAllocationConfig'
+          description: The LogAllocationConfig to update.
+      type: object
+    configv1LogSearchFilter:
+      properties:
+        query:
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
+          type: string
+      type: object
     LogAllocationConfigHighLowPriorities:
       description: 'Defines explicit high and low priority match criteria to specify which logs to
 
@@ -219,69 +292,13 @@ components:
             $ref: '#/components/schemas/configv1LogSearchFilter'
           type: array
       type: object
-    configv1LogAllocationConfigAllocation:
-      description: Configuration for allocating resources to a dataset.
-      properties:
-        percent_of_license:
-          description: Sets the percentage of the license limit to allocate to the default dataset.
-          format: double
-          type: number
-      type: object
-    configv1LogSearchFilter:
-      properties:
-        query:
-          description: 'Returns logs that match this query. The query can include only top-level
-
-            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
-
-            operator is allowed.'
-          type: string
-      type: object
-    configv1LogAllocationConfig:
-      description: 'LogAllocationConfig is a singleton configuration object that specifies the
-
-        configuration for Log budget allocations.'
-      properties:
-        created_at:
-          description: Timestamp of when the LogAllocationConfig was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-        dataset_allocations:
-          description: Defines datasets and budget allocations. Datasets are evaluated in order.
-          items:
-            $ref: '#/components/schemas/LogAllocationConfigDatasetAllocation'
-          type: array
-        default_dataset:
-          allOf:
-          - $ref: '#/components/schemas/LogAllocationConfigDefaultDataset'
-          description: The default dataset applies to logs that aren't included in any other dataset.
-        updated_at:
-          description: Timestamp of when the LogAllocationConfig was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-      type: object
-    configv1UpdateLogAllocationConfigResponse:
+    configv1ReadLogAllocationConfigResponse:
       properties:
         log_allocation_config:
           $ref: '#/components/schemas/configv1LogAllocationConfig'
       type: object
-    configv1CreateLogAllocationConfigRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LogAllocationConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogAllocationConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_allocation_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogAllocationConfig'
-          description: The LogAllocationConfig to create.
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
+    genericError:
+      additionalProperties: true
       type: object
     LogAllocationConfigDefaultDataset:
       description: Configuration for default dataset.
@@ -301,48 +318,31 @@ components:
 
             high priority data.'
       type: object
-    configv1UpdateLogAllocationConfigRequest:
+    apiError:
       properties:
-        create_if_missing:
-          description: If `true`, the LogAllocationConfig will be created if it does not already exist. If `false`, an error will be returned if the LogAllocationConfig does not already exist.
-          type: boolean
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1DeleteLogAllocationConfigResponse:
+      type: object
+    configv1CreateLogAllocationConfigRequest:
+      properties:
         dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the LogAllocationConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogAllocationConfig. If the specified configuration is invalid, the endpoint returns an error.
+          description: If `true`, validates the specified configuration without creating the LogAllocationConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogAllocationConfig. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
         log_allocation_config:
           allOf:
           - $ref: '#/components/schemas/configv1LogAllocationConfig'
-          description: The LogAllocationConfig to update.
+          description: The LogAllocationConfig to create.
       type: object
-    LogAllocationConfigDatasetAllocation:
+    configv1LogAllocationConfigAllocation:
+      description: Configuration for allocating resources to a dataset.
       properties:
-        allocation:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogAllocationConfigAllocation'
-          description: Specifies the percentage of the budget to allocate to this dataset.
-        dataset_slug:
-          description: Slug of the dataset.
-          type: string
-        priorities:
-          allOf:
-          - $ref: '#/components/schemas/LogAllocationConfigHighLowPriorities'
-          description: 'Defines explicit high and low priority match criteria to specify which logs to
-
-            drop first (low) and last (high). Anything not matched by either set of rules
-
-            is considered default priority and is dropped after low priority but before
-
-            high priority data.'
-      type: object
-    configv1ReadLogAllocationConfigResponse:
-      properties:
-        log_allocation_config:
-          $ref: '#/components/schemas/configv1LogAllocationConfig'
-      type: object
-    configv1DeleteLogAllocationConfigResponse:
-      type: object
-    genericError:
-      additionalProperties: true
+        percent_of_license:
+          description: Sets the percentage of the license limit to allocate to the default dataset.
+          format: double
+          type: number
       type: object
     configv1LogAllocationConfig_2:
       type: object
@@ -367,32 +367,16 @@ components:
       description: 'LogAllocationConfig is a singleton configuration object that specifies the
 
         configuration for Log budget allocations.'
-    configv1CreateLogAllocationConfigRequest_2:
+    LogAllocationConfigDatasetAllocation_2:
       type: object
       properties:
-        log_allocation_config:
-          $ref: '#/components/schemas/configv1LogAllocationConfig_2'
-        dry_run:
-          type: boolean
-          description: If true, the LogAllocationConfig isn't created, and no response LogAllocationConfig will be returned. The response will return an error if the given LogAllocationConfig is invalid.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
+        dataset_slug:
           type: string
-          description: An error message describing what went wrong.
-    LogAllocationConfigDefaultDataset_2:
-      type: object
-      properties:
+          description: Slug of the dataset.
         allocation:
           $ref: '#/components/schemas/configv1LogAllocationConfigAllocation'
         priorities:
           $ref: '#/components/schemas/LogAllocationConfigHighLowPriorities'
-      description: Configuration for default dataset.
     configv1UpdateLogAllocationConfigRequest_2:
       type: object
       properties:
@@ -404,16 +388,32 @@ components:
         dry_run:
           type: boolean
           description: If true, the LogAllocationConfig isn't created or updated, and no response LogAllocationConfig will be returned. The response will return an error if the given LogAllocationConfig is invalid.
-    LogAllocationConfigDatasetAllocation_2:
+    LogAllocationConfigDefaultDataset_2:
       type: object
       properties:
-        dataset_slug:
-          type: string
-          description: Slug of the dataset.
         allocation:
           $ref: '#/components/schemas/configv1LogAllocationConfigAllocation'
         priorities:
           $ref: '#/components/schemas/LogAllocationConfigHighLowPriorities'
+      description: Configuration for default dataset.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateLogAllocationConfigRequest_2:
+      type: object
+      properties:
+        log_allocation_config:
+          $ref: '#/components/schemas/configv1LogAllocationConfig_2'
+        dry_run:
+          type: boolean
+          description: If true, the LogAllocationConfig isn't created, and no response LogAllocationConfig will be returned. The response will return an error if the given LogAllocationConfig is invalid.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

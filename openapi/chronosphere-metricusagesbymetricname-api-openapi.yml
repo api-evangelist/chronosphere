@@ -93,68 +93,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    statev1MetricUsage:
-      properties:
-        query_execution_counts_by_type:
-          $ref: '#/components/schemas/MetricUsageQueryExecutionCountsByType'
-        reference_counts_by_type:
-          $ref: '#/components/schemas/MetricUsageReferenceCountsByType'
-        total_query_executions:
-          format: int32
-          type: integer
-        total_references:
-          format: int32
-          type: integer
-        total_unique_users:
-          format: int32
-          type: integer
-        utility_score:
-          format: double
-          type: number
-      type: object
-    MetricUsageReferenceCountsByType:
-      properties:
-        aggregation_rules:
-          format: int32
-          type: integer
-        dashboards:
-          format: int32
-          type: integer
-        drop_rules:
-          format: int32
-          type: integer
-        monitors:
-          format: int32
-          type: integer
-        recording_rules:
-          format: int32
-          type: integer
-      type: object
-    statev1ListMetricUsagesByMetricNameResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        usages:
-          items:
-            $ref: '#/components/schemas/statev1MetricUsageByMetricName'
-          type: array
-      type: object
-    statev1MetricUsageByMetricName:
-      properties:
-        dpps:
-          format: double
-          type: number
-        metric_name:
-          type: string
-        usage:
-          $ref: '#/components/schemas/statev1MetricUsage'
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
     MetricUsageQueryExecutionCountsByType:
       properties:
         dashboard:
@@ -176,6 +114,68 @@ components:
 
             more items to return.'
           type: string
+      type: object
+    statev1MetricUsage:
+      properties:
+        query_execution_counts_by_type:
+          $ref: '#/components/schemas/MetricUsageQueryExecutionCountsByType'
+        reference_counts_by_type:
+          $ref: '#/components/schemas/MetricUsageReferenceCountsByType'
+        total_query_executions:
+          format: int32
+          type: integer
+        total_references:
+          format: int32
+          type: integer
+        total_unique_users:
+          format: int32
+          type: integer
+        utility_score:
+          format: double
+          type: number
+      type: object
+    statev1ListMetricUsagesByMetricNameResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        usages:
+          items:
+            $ref: '#/components/schemas/statev1MetricUsageByMetricName'
+          type: array
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    statev1MetricUsageByMetricName:
+      properties:
+        dpps:
+          format: double
+          type: number
+        metric_name:
+          type: string
+        usage:
+          $ref: '#/components/schemas/statev1MetricUsage'
+      type: object
+    MetricUsageReferenceCountsByType:
+      properties:
+        aggregation_rules:
+          format: int32
+          type: integer
+        dashboards:
+          format: int32
+          type: integer
+        drop_rules:
+          format: int32
+          type: integer
+        monitors:
+          format: int32
+          type: integer
+        recording_rules:
+          format: int32
+          type: integer
       type: object
   securitySchemes:
     ApiKeyAuth:

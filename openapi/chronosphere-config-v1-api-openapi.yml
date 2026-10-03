@@ -147,18 +147,24 @@ components:
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
       type: object
-    configv1CreateServiceAttributeResponse:
+    configv1UpdateServiceAttributeResponse:
       properties:
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
         service_slug:
           type: string
       type: object
-    configv1UpdateServiceAttributeResponse:
+    configv1ReadServiceAttributeResponse:
       properties:
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
         service_slug:
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
           type: string
       type: object
     ConfigV1CreateServiceAttributeBody:
@@ -168,10 +174,13 @@ components:
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
       type: object
-    apiError:
+    configv1DeleteServiceAttributeResponse:
+      type: object
+    configv1CreateServiceAttributeResponse:
       properties:
-        message:
-          description: An error message describing what went wrong.
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+        service_slug:
           type: string
       type: object
     configv1ServiceAttribute:
@@ -202,15 +211,6 @@ components:
           description: Timestamp of when the service attributes were updated. Cannot be set by clients.
           format: date-time
           readOnly: true
-          type: string
-      type: object
-    configv1DeleteServiceAttributeResponse:
-      type: object
-    configv1ReadServiceAttributeResponse:
-      properties:
-        service_attribute:
-          $ref: '#/components/schemas/configv1ServiceAttribute'
-        service_slug:
           type: string
       type: object
   securitySchemes:

@@ -260,6 +260,20 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    configv1ReadLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
+    configv1ListLogScaleAlertsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_scale_alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LogScaleAlert'
     configv1LogScaleAlert:
       type: object
       properties:
@@ -323,16 +337,6 @@ components:
           description: Email of the user that the alert runs on behalf of. Required.
         alert_type:
           $ref: '#/components/schemas/LogScaleAlertAlertType'
-    configv1UpdateLogScaleAlertResponse:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
-    LogScaleAlertAlertType:
-      type: string
-      enum:
-      - STANDARD
-      - FILTER
     configv1PageResult:
       type: object
       properties:
@@ -343,26 +347,21 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    configv1ReadLogScaleAlertResponse:
+    configv1DeleteLogScaleAlertResponse:
+      type: object
+    LogScaleAlertAlertType:
+      type: string
+      enum:
+      - STANDARD
+      - FILTER
+    configv1UpdateLogScaleAlertResponse:
       type: object
       properties:
         log_scale_alert:
           $ref: '#/components/schemas/configv1LogScaleAlert'
-    apiError:
+    genericError:
       type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1CreateLogScaleAlertResponse:
-      type: object
-      properties:
-        log_scale_alert:
-          $ref: '#/components/schemas/configv1LogScaleAlert'
+      additionalProperties: true
     ConfigV1UpdateLogScaleAlertBody:
       type: object
       properties:
@@ -374,20 +373,16 @@ components:
         dry_run:
           type: boolean
           description: If true, the LogScaleAlert isn't created or updated, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
-    configv1ListLogScaleAlertsResponse:
+    apiError:
       type: object
       properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        log_scale_alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1LogScaleAlert'
-    configv1DeleteLogScaleAlertResponse:
-      type: object
-    genericError:
-      type: object
-      additionalProperties: true
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     configv1CreateLogScaleAlertRequest:
       type: object
       properties:
@@ -396,4 +391,9 @@ components:
         dry_run:
           type: boolean
           description: If true, the LogScaleAlert isn't created, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid.
+    configv1CreateLogScaleAlertResponse:
+      type: object
+      properties:
+        log_scale_alert:
+          $ref: '#/components/schemas/configv1LogScaleAlert'
 x-original-swagger-version: '2.0'

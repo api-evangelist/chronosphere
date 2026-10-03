@@ -280,16 +280,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1CreateCloudIntegrationRequest:
-      properties:
-        cloud_integration:
-          allOf:
-          - $ref: '#/components/schemas/configv1CloudIntegration'
-          description: The CloudIntegration to create.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the CloudIntegration. If the specified configuration is valid, the endpoint returns a partial response without the CloudIntegration. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
     configv1CloudIntegrationState:
       description: "State represents the operational state of a CloudIntegration.\n\n - STATE_ENABLED: Integration is fully enabled and actively collecting metrics.\n - STATE_DISABLED: Integration is disabled and not collecting metrics.\n - STATE_PREVIEW: Integration is in preview mode for estimating cardinality/license\nimpact before full enablement."
       enum:
@@ -297,6 +287,27 @@ components:
       - STATE_DISABLED
       - STATE_PREVIEW
       type: string
+    configv1ListCloudIntegrationsResponse:
+      properties:
+        cloud_integrations:
+          items:
+            $ref: '#/components/schemas/configv1CloudIntegration'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1DeleteCloudIntegrationResponse:
+      type: object
+    configv1ReadCloudIntegrationResponse:
+      properties:
+        cloud_integration:
+          $ref: '#/components/schemas/configv1CloudIntegration'
+      type: object
+    configv1CreateCloudIntegrationResponse:
+      properties:
+        cloud_integration:
+          $ref: '#/components/schemas/configv1CloudIntegration'
+      type: object
     configv1PageResult:
       properties:
         next_token:
@@ -307,19 +318,23 @@ components:
             more items to return.'
           type: string
       type: object
+    configv1CreateCloudIntegrationRequest:
+      properties:
+        cloud_integration:
+          allOf:
+          - $ref: '#/components/schemas/configv1CloudIntegration'
+          description: The CloudIntegration to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the CloudIntegration. If the specified configuration is valid, the endpoint returns a partial response without the CloudIntegration. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
     configv1UpdateCloudIntegrationResponse:
       properties:
         cloud_integration:
           $ref: '#/components/schemas/configv1CloudIntegration'
       type: object
-    configv1ListCloudIntegrationsResponse:
-      properties:
-        cloud_integrations:
-          items:
-            $ref: '#/components/schemas/configv1CloudIntegration'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+    genericError:
+      additionalProperties: true
       type: object
     apiError:
       properties:
@@ -339,21 +354,6 @@ components:
         dry_run:
           description: If `true`, validates the specified configuration without creating or updating the CloudIntegration. If the specified configuration is valid, the endpoint returns a partial response without the CloudIntegration. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-      type: object
-    configv1DeleteCloudIntegrationResponse:
-      type: object
-    configv1CreateCloudIntegrationResponse:
-      properties:
-        cloud_integration:
-          $ref: '#/components/schemas/configv1CloudIntegration'
-      type: object
-    configv1ReadCloudIntegrationResponse:
-      properties:
-        cloud_integration:
-          $ref: '#/components/schemas/configv1CloudIntegration'
-      type: object
-    genericError:
-      additionalProperties: true
       type: object
     configv1CloudIntegration:
       description: 'CloudIntegration represents a configuration for collecting metrics from a

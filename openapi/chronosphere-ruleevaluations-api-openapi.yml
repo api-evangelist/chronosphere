@@ -66,12 +66,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
+    RuleEvaluationSeverity:
+      description: "Severity of the rule evaluation issue.\n\n - SEVERITY_ERROR: A hard evaluation failure.\n - SEVERITY_WARNING: A non-fatal warning; the evaluation succeeded but something needs attention."
+      enum:
+      - SEVERITY_ERROR
+      - SEVERITY_WARNING
+      type: string
     statev1RuleEvaluation:
       properties:
         count:
@@ -108,12 +108,6 @@ components:
       - MONITOR
       - RECORDING
       type: string
-    RuleEvaluationSeverity:
-      description: "Severity of the rule evaluation issue.\n\n - SEVERITY_ERROR: A hard evaluation failure.\n - SEVERITY_WARNING: A non-fatal warning; the evaluation succeeded but something needs attention."
-      enum:
-      - SEVERITY_ERROR
-      - SEVERITY_WARNING
-      type: string
     configv1PageResult:
       properties:
         next_token:
@@ -132,6 +126,12 @@ components:
           items:
             $ref: '#/components/schemas/statev1RuleEvaluation'
           type: array
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

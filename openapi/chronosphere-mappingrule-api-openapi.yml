@@ -283,110 +283,15 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1ReadMappingRuleResponse:
+    configv1CreateMappingRuleRequest:
       properties:
-        mapping_rule:
-          $ref: '#/components/schemas/configv1MappingRule'
-      type: object
-    configv1DeleteMappingRuleResponse:
-      type: object
-    configv1MappingRuleMode:
-      description: " - ENABLED: ENABLED rules are applied. Rules default to ENABLED.\n - PREVIEW: PREVIEW rules are not applied, but shaping impact stats\nfor them rule are recorded."
-      enum:
-      - ENABLED
-      - PREVIEW
-      type: string
-    ConfigV1UpdateMappingRuleBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the MappingRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the MappingRule does not already exist.
-          type: boolean
         dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the MappingRule. If the specified configuration is valid, the endpoint returns a partial response without the MappingRule. If the specified configuration is invalid, the endpoint returns an error.
+          description: If `true`, validates the specified configuration without creating the MappingRule. If the specified configuration is valid, the endpoint returns a partial response without the MappingRule. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
         mapping_rule:
           allOf:
           - $ref: '#/components/schemas/configv1MappingRule'
-          description: The MappingRule to update.
-      type: object
-    configv1CreateMappingRuleResponse:
-      properties:
-        mapping_rule:
-          $ref: '#/components/schemas/configv1MappingRule'
-      type: object
-    configv1MappingRuleStoragePolicy:
-      properties:
-        resolution:
-          description: 'Deprecated: This parameter is no longer supported.'
-          type: string
-        retention:
-          description: 'Deprecated: This parameter is no longer supported.'
-          type: string
-      type: object
-    MappingRuleAggregationPolicy:
-      properties:
-        aggregation:
-          allOf:
-          - $ref: '#/components/schemas/configv1AggregationType'
-          description: Defines the method by which metrics are aggregated.
-        drop_timestamp:
-          description: 'Deprecated: This parameter is no longer supported.'
-          type: boolean
-        interval:
-          description: The interval between aggregated data points.
-          type: string
-        storage_policy:
-          allOf:
-          - $ref: '#/components/schemas/configv1MappingRuleStoragePolicy'
-          description: 'Deprecated: Use `interval` instead.'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    configv1AggregationType:
-      enum:
-      - LAST
-      - MIN
-      - MAX
-      - MEAN
-      - MEDIAN
-      - COUNT
-      - SUM
-      - SUMSQ
-      - STDEV
-      - P10
-      - P20
-      - P30
-      - P40
-      - P50
-      - P60
-      - P70
-      - P80
-      - P90
-      - P95
-      - P99
-      - P999
-      - P9999
-      - P25
-      - P75
-      - COUNT_SAMPLES
-      - HISTOGRAM
-      type: string
-    configv1ListMappingRulesResponse:
-      properties:
-        mapping_rules:
-          items:
-            $ref: '#/components/schemas/configv1MappingRule'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+          description: The MappingRule to create.
       type: object
     configv1MappingRule:
       properties:
@@ -441,26 +346,49 @@ components:
       - filters
       - name
       type: object
-    apiError:
+    configv1AggregationType:
+      enum:
+      - LAST
+      - MIN
+      - MAX
+      - MEAN
+      - MEDIAN
+      - COUNT
+      - SUM
+      - SUMSQ
+      - STDEV
+      - P10
+      - P20
+      - P30
+      - P40
+      - P50
+      - P60
+      - P70
+      - P80
+      - P90
+      - P95
+      - P99
+      - P999
+      - P9999
+      - P25
+      - P75
+      - COUNT_SAMPLES
+      - HISTOGRAM
+      type: string
+    configv1PageResult:
       properties:
-        message:
-          description: An error message describing what went wrong.
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
           type: string
       type: object
-    configv1UpdateMappingRuleResponse:
+    configv1ReadMappingRuleResponse:
       properties:
         mapping_rule:
           $ref: '#/components/schemas/configv1MappingRule'
-      type: object
-    configv1CreateMappingRuleRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the MappingRule. If the specified configuration is valid, the endpoint returns a partial response without the MappingRule. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        mapping_rule:
-          allOf:
-          - $ref: '#/components/schemas/configv1MappingRule'
-          description: The MappingRule to create.
       type: object
     configv1LabelFilter:
       properties:
@@ -473,56 +401,89 @@ components:
           example: myservice*
           type: string
       type: object
+    configv1CreateMappingRuleResponse:
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+      type: object
     genericError:
       additionalProperties: true
       type: object
-    ConfigV1UpdateMappingRuleBody_2:
+    ConfigV1UpdateMappingRuleBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the MappingRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the MappingRule does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the MappingRule. If the specified configuration is valid, the endpoint returns a partial response without the MappingRule. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        mapping_rule:
+          allOf:
+          - $ref: '#/components/schemas/configv1MappingRule'
+          description: The MappingRule to update.
+      type: object
+    configv1MappingRuleStoragePolicy:
+      properties:
+        resolution:
+          description: 'Deprecated: This parameter is no longer supported.'
+          type: string
+        retention:
+          description: 'Deprecated: This parameter is no longer supported.'
+          type: string
+      type: object
+    configv1UpdateMappingRuleResponse:
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule'
+      type: object
+    configv1DeleteMappingRuleResponse:
+      type: object
+    configv1MappingRuleMode:
+      description: " - ENABLED: ENABLED rules are applied. Rules default to ENABLED.\n - PREVIEW: PREVIEW rules are not applied, but shaping impact stats\nfor them rule are recorded."
+      enum:
+      - ENABLED
+      - PREVIEW
+      type: string
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    MappingRuleAggregationPolicy:
+      properties:
+        aggregation:
+          allOf:
+          - $ref: '#/components/schemas/configv1AggregationType'
+          description: Defines the method by which metrics are aggregated.
+        drop_timestamp:
+          description: 'Deprecated: This parameter is no longer supported.'
+          type: boolean
+        interval:
+          description: The interval between aggregated data points.
+          type: string
+        storage_policy:
+          allOf:
+          - $ref: '#/components/schemas/configv1MappingRuleStoragePolicy'
+          description: 'Deprecated: Use `interval` instead.'
+      type: object
+    configv1ListMappingRulesResponse:
+      properties:
+        mapping_rules:
+          items:
+            $ref: '#/components/schemas/configv1MappingRule'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1CreateMappingRuleRequest_2:
       type: object
       properties:
         mapping_rule:
           $ref: '#/components/schemas/configv1MappingRule_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the MappingRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the MappingRule does not already exist.
         dry_run:
           type: boolean
-          description: If true, the MappingRule isn't created or updated, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
-    configv1MappingRuleStoragePolicy_2:
-      type: object
-      properties:
-        resolution:
-          type: string
-          description: Required resolution of the aggregated metrics.
-        retention:
-          type: string
-          description: Required retention of the aggregated metrics.
-    MappingRuleAggregationPolicy_2:
-      type: object
-      properties:
-        aggregation:
-          $ref: '#/components/schemas/configv1AggregationType'
-        storage_policy:
-          $ref: '#/components/schemas/configv1MappingRuleStoragePolicy_2'
-        interval:
-          type: string
-          description: 'Interval between aggregated data points, equivalent to the resolution
-
-            field in storage policy. If set, then the storage_policy field can''t be
-
-            set.'
-        drop_timestamp:
-          type: boolean
-          description: 'Deprecated: This field is no longer supported.'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
+          description: If true, the MappingRule isn't created, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
     configv1MappingRule_2:
       type: object
       properties:
@@ -559,24 +520,16 @@ components:
             policy can''t be set.'
         mode:
           $ref: '#/components/schemas/configv1MappingRuleMode'
-    apiError_2:
+    configv1PageResult_2:
       type: object
       properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
+        next_token:
           type: string
-          description: An error message describing what went wrong.
-    configv1CreateMappingRuleRequest_2:
-      type: object
-      properties:
-        mapping_rule:
-          $ref: '#/components/schemas/configv1MappingRule_2'
-        dry_run:
-          type: boolean
-          description: If true, the MappingRule isn't created, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     configv1LabelFilter_2:
       type: object
       properties:
@@ -588,6 +541,53 @@ components:
           type: string
           description: Glob value of the label to match.
           example: myservice*
+    ConfigV1UpdateMappingRuleBody_2:
+      type: object
+      properties:
+        mapping_rule:
+          $ref: '#/components/schemas/configv1MappingRule_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the MappingRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the MappingRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the MappingRule isn't created or updated, and no response MappingRule will be returned. The response will return an error if the given MappingRule is invalid.
+    configv1MappingRuleStoragePolicy_2:
+      type: object
+      properties:
+        resolution:
+          type: string
+          description: Required resolution of the aggregated metrics.
+        retention:
+          type: string
+          description: Required retention of the aggregated metrics.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    MappingRuleAggregationPolicy_2:
+      type: object
+      properties:
+        aggregation:
+          $ref: '#/components/schemas/configv1AggregationType'
+        storage_policy:
+          $ref: '#/components/schemas/configv1MappingRuleStoragePolicy_2'
+        interval:
+          type: string
+          description: 'Interval between aggregated data points, equivalent to the resolution
+
+            field in storage policy. If set, then the storage_policy field can''t be
+
+            set.'
+        drop_timestamp:
+          type: boolean
+          description: 'Deprecated: This field is no longer supported.'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

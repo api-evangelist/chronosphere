@@ -292,7 +292,18 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1DeleteCollectionResponse:
+    ConfigV1UpdateCollectionBody:
+      properties:
+        collection:
+          allOf:
+          - $ref: '#/components/schemas/configv1Collection'
+          description: The Collection to update.
+        create_if_missing:
+          description: If `true`, the Collection will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Collection does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Collection. If the specified configuration is valid, the endpoint returns a partial response without the Collection. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     configv1Collection:
       properties:
@@ -333,6 +344,23 @@ components:
       - name
       - team_slug
       type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1DeleteCollectionResponse:
+      type: object
+    configv1CreateCollectionResponse:
+      properties:
+        collection:
+          $ref: '#/components/schemas/configv1Collection'
+      type: object
     configv1ReadCollectionResponse:
       properties:
         collection:
@@ -342,6 +370,9 @@ components:
       properties:
         collection:
           $ref: '#/components/schemas/configv1Collection'
+      type: object
+    genericError:
+      additionalProperties: true
       type: object
     configv1CreateCollectionRequest:
       properties:
@@ -353,29 +384,11 @@ components:
           description: If `true`, validates the specified configuration without creating the Collection. If the specified configuration is valid, the endpoint returns a partial response without the Collection. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    configv1CreateCollectionResponse:
-      properties:
-        collection:
-          $ref: '#/components/schemas/configv1Collection'
-      type: object
     apiError:
       properties:
         message:
           description: An error message describing what went wrong.
           type: string
-      type: object
-    ConfigV1UpdateCollectionBody:
-      properties:
-        collection:
-          allOf:
-          - $ref: '#/components/schemas/configv1Collection'
-          description: The Collection to update.
-        create_if_missing:
-          description: If `true`, the Collection will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Collection does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Collection. If the specified configuration is valid, the endpoint returns a partial response without the Collection. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
       type: object
     configv1ListCollectionsResponse:
       properties:
@@ -386,19 +399,17 @@ components:
         page:
           $ref: '#/components/schemas/configv1PageResult'
       type: object
-    genericError:
-      additionalProperties: true
+    ConfigV1UpdateCollectionBody_2:
       type: object
-    configv1PageResult:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
+        collection:
+          $ref: '#/components/schemas/configv1Collection_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the Collection will be created if it does not already exist, identified by slug. If false, an error will be returned if the Collection does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Collection isn't created or updated, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
     configv1Collection_2:
       type: object
       properties:
@@ -431,6 +442,16 @@ components:
             This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
 
             This does not override the policy used when a monitor explicitly references a policy.'
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     configv1CreateCollectionRequest_2:
       type: object
       properties:
@@ -449,27 +470,6 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    ConfigV1UpdateCollectionBody_2:
-      type: object
-      properties:
-        collection:
-          $ref: '#/components/schemas/configv1Collection_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the Collection will be created if it does not already exist, identified by slug. If false, an error will be returned if the Collection does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Collection isn't created or updated, and no response Collection will be returned. The response will return an error if the given Collection is invalid.
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

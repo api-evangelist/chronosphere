@@ -192,33 +192,7 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    AllocationFixedValue:
-      properties:
-        license:
-          $ref: '#/components/schemas/ResourcePoolsLicense'
-        value:
-          format: int64
-          type: string
-      type: object
-    configv1UpdateResourcePoolsResponse:
-      properties:
-        resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools'
-      type: object
-    configv1UpdateResourcePoolsRequest:
-      properties:
-        create_if_missing:
-          description: If `true`, the ResourcePools will be created if it does not already exist. If `false`, an error will be returned if the ResourcePools does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the ResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the ResourcePools. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        resource_pools:
-          allOf:
-          - $ref: '#/components/schemas/configv1ResourcePools'
-          description: The ResourcePools to update.
-      type: object
-    configv1CreateResourcePoolsResponse:
+    configv1ReadResourcePoolsResponse:
       properties:
         resource_pools:
           $ref: '#/components/schemas/configv1ResourcePools'
@@ -256,15 +230,6 @@ components:
       - filters
       - name
       type: object
-    ResourcePoolsLicense:
-      enum:
-      - PERSISTED_WRITES_STANDARD
-      - PERSISTED_WRITES_HISTOGRAM
-      - PERSISTED_CARDINALITY_STANDARD
-      - PERSISTED_CARDINALITY_HISTOGRAM
-      - MATCHED_WRITES_STANDARD
-      - MATCHED_WRITES_HISTOGRAM
-      type: string
     ResourcePoolsAllocationThreshold:
       properties:
         fixed_value:
@@ -296,11 +261,48 @@ components:
           - $ref: '#/components/schemas/configv1ResourcePools'
           description: The ResourcePools to create.
       type: object
-    apiError:
+    configv1DeleteResourcePoolsResponse:
+      type: object
+    configv1LabelFilter:
       properties:
-        message:
-          description: An error message describing what went wrong.
+        name:
+          description: The name of the label to match.
+          example: job
           type: string
+        value_glob:
+          description: The glob value of the label to match.
+          example: myservice*
+          type: string
+      type: object
+    ResourcePoolsLicense:
+      enum:
+      - PERSISTED_WRITES_STANDARD
+      - PERSISTED_WRITES_HISTOGRAM
+      - PERSISTED_CARDINALITY_STANDARD
+      - PERSISTED_CARDINALITY_HISTOGRAM
+      - MATCHED_WRITES_STANDARD
+      - MATCHED_WRITES_HISTOGRAM
+      type: string
+    configv1UpdateResourcePoolsRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the ResourcePools will be created if it does not already exist. If `false`, an error will be returned if the ResourcePools does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the ResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the ResourcePools. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        resource_pools:
+          allOf:
+          - $ref: '#/components/schemas/configv1ResourcePools'
+          description: The ResourcePools to update.
+      type: object
+    configv1UpdateResourcePoolsResponse:
+      properties:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools'
+      type: object
+    genericError:
+      additionalProperties: true
       type: object
     configv1ResourcePoolsAllocation:
       properties:
@@ -347,62 +349,6 @@ components:
             $ref: '#/components/schemas/AllocationThresholds'
           type: array
       type: object
-    AllocationThresholds:
-      description: Thresholds define strict quota limits for each metrics license.
-      properties:
-        all_priorities:
-          allOf:
-          - $ref: '#/components/schemas/ResourcePoolsAllocationThreshold'
-          description: 'Threshold limit that defines when to drop new metrics in the pool. This
-
-            threshold applies to all priorities of metrics: high, default, and low. This
-
-            field must be set, and have a value equal to or greater than other priority
-
-            fields.'
-        default_and_low_priority:
-          allOf:
-          - $ref: '#/components/schemas/ResourcePoolsAllocationThreshold'
-          description: 'Threshold limit that defines when to drop new metrics in the pool that are
-
-            default and low priority. If this field is set, its value must be equal to
-
-            or greater than the value set for `low_priority`.'
-        license:
-          allOf:
-          - $ref: '#/components/schemas/ResourcePoolsLicense'
-          description: 'License to which these thresholds apply. If you configure
-
-            `priority_thresholds`, only the `PERSISTED_CARDINALITY_STANDARD` and
-
-            `PERSISTED_CARDINALITY_HISTOGRAM` licenses are supported.'
-        low_priority:
-          allOf:
-          - $ref: '#/components/schemas/ResourcePoolsAllocationThreshold'
-          description: 'Threshold limit that defines when to drop new metrics in the pool that are
-
-            only low priority. If this field is set, its value must be equal to or
-
-            lesser than other priority fields.'
-      type: object
-    configv1DeleteResourcePoolsResponse:
-      type: object
-    configv1ReadResourcePoolsResponse:
-      properties:
-        resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools'
-      type: object
-    configv1LabelFilter:
-      properties:
-        name:
-          description: The name of the label to match.
-          example: job
-          type: string
-        value_glob:
-          description: The glob value of the label to match.
-          example: myservice*
-          type: string
-      type: object
     ResourcePoolsDefaultPool:
       properties:
         allocation:
@@ -441,8 +387,75 @@ components:
             $ref: '#/components/schemas/AllocationThresholds'
           type: array
       type: object
-    genericError:
-      additionalProperties: true
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ResourcePoolsPriorities:
+      properties:
+        high_priority_filters:
+          description: 'Optional. Filters that define which metrics are high priority. Any metric that
+
+            matches at least one filter is considered high priority. High priority metrics
+
+            are dropped last when the license limit is exceeded.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+          type: array
+        low_priority_filters:
+          description: 'Optional. Filters that define which metrics are low priority. Any metric that
+
+            matches at least one filter is considered low priority. Low priority metrics
+
+            are dropped first when the license limit is exceeded.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+          type: array
+      type: object
+    AllocationThresholds:
+      description: Thresholds define strict quota limits for each metrics license.
+      properties:
+        all_priorities:
+          allOf:
+          - $ref: '#/components/schemas/ResourcePoolsAllocationThreshold'
+          description: 'Threshold limit that defines when to drop new metrics in the pool. This
+
+            threshold applies to all priorities of metrics: high, default, and low. This
+
+            field must be set, and have a value equal to or greater than other priority
+
+            fields.'
+        default_and_low_priority:
+          allOf:
+          - $ref: '#/components/schemas/ResourcePoolsAllocationThreshold'
+          description: 'Threshold limit that defines when to drop new metrics in the pool that are
+
+            default and low priority. If this field is set, its value must be equal to
+
+            or greater than the value set for `low_priority`.'
+        license:
+          allOf:
+          - $ref: '#/components/schemas/ResourcePoolsLicense'
+          description: 'License to which these thresholds apply. If you configure
+
+            `priority_thresholds`, only the `PERSISTED_CARDINALITY_STANDARD` and
+
+            `PERSISTED_CARDINALITY_HISTOGRAM` licenses are supported.'
+        low_priority:
+          allOf:
+          - $ref: '#/components/schemas/ResourcePoolsAllocationThreshold'
+          description: 'Threshold limit that defines when to drop new metrics in the pool that are
+
+            only low priority. If this field is set, its value must be equal to or
+
+            lesser than other priority fields.'
+      type: object
+    configv1CreateResourcePoolsResponse:
+      properties:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools'
       type: object
     configv1ResourcePools:
       properties:
@@ -470,59 +483,14 @@ components:
       required:
       - default_pool
       type: object
-    ResourcePoolsPriorities:
+    AllocationFixedValue:
       properties:
-        high_priority_filters:
-          description: 'Optional. Filters that define which metrics are high priority. Any metric that
-
-            matches at least one filter is considered high priority. High priority metrics
-
-            are dropped last when the license limit is exceeded.'
-          items:
-            $ref: '#/components/schemas/configv1LabelFilter'
-          type: array
-        low_priority_filters:
-          description: 'Optional. Filters that define which metrics are low priority. Any metric that
-
-            matches at least one filter is considered low priority. Low priority metrics
-
-            are dropped first when the license limit is exceeded.'
-          items:
-            $ref: '#/components/schemas/configv1LabelFilter'
-          type: array
-      type: object
-    AllocationThreshold:
-      type: object
-      properties:
-        percent_of_pool_allocation:
-          type: number
-          description: 'Threshold expressed as a percent of the license allocated to a pool.
-
-            A value of `100` represents a threshold that is the pool''s full allocation.
-
-            Values over `100` indicate thresholds that exceed the pool''s allocation.
-
-            For example, a value of `50` represents a threshold that is half the pool''s
-
-            allocation and a value of `200` represents a threshold that is double the
-
-            pool''s allocation.'
-          format: double
-        fixed_value:
-          type: string
-          description: Threshold expressed as a fixed value of the license.
+        license:
+          $ref: '#/components/schemas/ResourcePoolsLicense'
+        value:
           format: int64
-    configv1UpdateResourcePoolsRequest_2:
+          type: string
       type: object
-      properties:
-        resource_pools:
-          $ref: '#/components/schemas/configv1ResourcePools_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the ResourcePools will be created if it does not already exist. If false, an error will be returned if the ResourcePools does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the ResourcePools isn't created or updated, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
     ResourcePoolsPool_2:
       type: object
       properties:
@@ -548,16 +516,28 @@ components:
         dry_run:
           type: boolean
           description: If true, the ResourcePools isn't created, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
-    apiError_2:
+    configv1LabelFilter_2:
       type: object
       properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
+        name:
           type: string
-          description: An error message describing what went wrong.
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
+    configv1UpdateResourcePoolsRequest_2:
+      type: object
+      properties:
+        resource_pools:
+          $ref: '#/components/schemas/configv1ResourcePools_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the ResourcePools will be created if it does not already exist. If false, an error will be returned if the ResourcePools does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the ResourcePools isn't created or updated, and no response ResourcePools will be returned. The response will return an error if the given ResourcePools is invalid.
     configv1ResourcePoolsAllocation_2:
       type: object
       properties:
@@ -597,31 +577,6 @@ components:
             supported.'
           items:
             $ref: '#/components/schemas/AllocationThresholds_2'
-    AllocationThresholds_2:
-      title: 'Thresholds define strict quota limits for each metrics license.
-
-        **This feature is part of pre-release functionality and is subject to change.**'
-      type: object
-      properties:
-        license:
-          $ref: '#/components/schemas/ResourcePoolsLicense'
-        all_priorities:
-          $ref: '#/components/schemas/AllocationThreshold'
-        default_and_low_priority:
-          $ref: '#/components/schemas/AllocationThreshold'
-        low_priority:
-          $ref: '#/components/schemas/AllocationThreshold'
-    configv1LabelFilter_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the label to match.
-          example: job
-        value_glob:
-          type: string
-          description: Glob value of the label to match.
-          example: myservice*
     ResourcePoolsDefaultPool_2:
       type: object
       properties:
@@ -640,26 +595,16 @@ components:
             supported.'
           items:
             $ref: '#/components/schemas/AllocationThresholds_2'
-    configv1ResourcePools_2:
+    apiError_2:
       type: object
       properties:
-        created_at:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
           type: string
-          description: Timestamp of when the ResourcePools was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          description: Timestamp of when the ResourcePools was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        default_pool:
-          $ref: '#/components/schemas/ResourcePoolsDefaultPool_2'
-        pools:
-          type: array
-          description: Optional pools. Cannot set more than 20 pools.
-          items:
-            $ref: '#/components/schemas/ResourcePoolsPool_2'
+          description: An error message describing what went wrong.
     ResourcePoolsPriorities_2:
       type: object
       properties:
@@ -681,6 +626,61 @@ components:
             priority metrics are dropped first when the license limit is exceeded.'
           items:
             $ref: '#/components/schemas/configv1LabelFilter_2'
+    AllocationThreshold:
+      type: object
+      properties:
+        percent_of_pool_allocation:
+          type: number
+          description: 'Threshold expressed as a percent of the license allocated to a pool.
+
+            A value of `100` represents a threshold that is the pool''s full allocation.
+
+            Values over `100` indicate thresholds that exceed the pool''s allocation.
+
+            For example, a value of `50` represents a threshold that is half the pool''s
+
+            allocation and a value of `200` represents a threshold that is double the
+
+            pool''s allocation.'
+          format: double
+        fixed_value:
+          type: string
+          description: Threshold expressed as a fixed value of the license.
+          format: int64
+    AllocationThresholds_2:
+      title: 'Thresholds define strict quota limits for each metrics license.
+
+        **This feature is part of pre-release functionality and is subject to change.**'
+      type: object
+      properties:
+        license:
+          $ref: '#/components/schemas/ResourcePoolsLicense'
+        all_priorities:
+          $ref: '#/components/schemas/AllocationThreshold'
+        default_and_low_priority:
+          $ref: '#/components/schemas/AllocationThreshold'
+        low_priority:
+          $ref: '#/components/schemas/AllocationThreshold'
+    configv1ResourcePools_2:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Timestamp of when the ResourcePools was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the ResourcePools was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        default_pool:
+          $ref: '#/components/schemas/ResourcePoolsDefaultPool_2'
+        pools:
+          type: array
+          description: Optional pools. Cannot set more than 20 pools.
+          items:
+            $ref: '#/components/schemas/ResourcePoolsPool_2'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

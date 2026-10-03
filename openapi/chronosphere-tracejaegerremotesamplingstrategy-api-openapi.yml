@@ -551,19 +551,21 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    TraceJaegerRemoteSamplingStrategyAppliedStrategy:
+    PerOperationSamplingStrategiesPerOperationSamplingStrategy:
       properties:
-        probabilistic_strategy:
+        operation:
+          description: The operation to which this specific strategy should apply.
+          type: string
+        probabilistic_sampling_strategy:
           $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
-        per_operation_strategies:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies'
-        rate_limiting_strategy:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy'
       type: object
-    configunstableUpdateTraceJaegerRemoteSamplingStrategyResponse:
+    configunstableCreateTraceJaegerRemoteSamplingStrategyRequest:
       properties:
         trace_jaeger_remote_sampling_strategy:
           $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies:
       properties:
@@ -584,6 +586,18 @@ components:
           items:
             $ref: '#/components/schemas/PerOperationSamplingStrategiesPerOperationSamplingStrategy'
           type: array
+      type: object
+    configunstableReadTraceJaegerRemoteSamplingStrategyResponse:
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
+      type: object
+    TraceJaegerRemoteSamplingStrategyProbabilisticStrategy:
+      properties:
+        sampling_rate:
+          description: Value in the range [0, 1] that defines the probability of sampling any trace.
+          format: double
+          type: number
       type: object
     configunstableTraceJaegerRemoteSamplingStrategy:
       properties:
@@ -609,11 +623,6 @@ components:
         applied_strategy:
           $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyAppliedStrategy'
       type: object
-    configunstableCreateTraceJaegerRemoteSamplingStrategyResponse:
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
-      type: object
     configv1PageResult:
       properties:
         next_token:
@@ -624,19 +633,55 @@ components:
             more items to return.'
           type: string
       type: object
+    configunstableCreateTraceJaegerRemoteSamplingStrategyResponse:
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
+      type: object
+    TraceJaegerRemoteSamplingStrategyAppliedStrategy:
+      properties:
+        probabilistic_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
+        per_operation_strategies:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies'
+        rate_limiting_strategy:
+          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy'
+      type: object
+    configunstableListTraceJaegerRemoteSamplingStrategiesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_jaeger_remote_sampling_strategies:
+          items:
+            $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
+          type: array
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configunstableUpdateTraceJaegerRemoteSamplingStrategyResponse:
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableDeleteTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
     TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy:
       properties:
         max_traces_per_second:
           description: Maximum number of traces to sample per second.
           format: int32
           type: integer
-      type: object
-    TraceJaegerRemoteSamplingStrategyProbabilisticStrategy:
-      properties:
-        sampling_rate:
-          description: Value in the range [0, 1] that defines the probability of sampling any trace.
-          format: double
-          type: number
       type: object
     ConfigUnstableUpdateTraceJaegerRemoteSamplingStrategyBody:
       properties:
@@ -649,50 +694,84 @@ components:
           description: If `true`, validates the specified configuration without creating or updating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableListTraceJaegerRemoteSamplingStrategiesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        trace_jaeger_remote_sampling_strategies:
-          items:
-            $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
-          type: array
-      type: object
-    PerOperationSamplingStrategiesPerOperationSamplingStrategy:
-      properties:
-        operation:
-          description: The operation to which this specific strategy should apply.
-          type: string
-        probabilistic_sampling_strategy:
-          $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy'
-      type: object
-    configunstableCreateTraceJaegerRemoteSamplingStrategyRequest:
+    configv1UpdateTraceJaegerRemoteSamplingStrategyResponse:
       properties:
         trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+      type: object
+    configv1DeleteTraceJaegerRemoteSamplingStrategyResponse:
+      type: object
+    PerOperationSamplingStrategiesPerOperationSamplingStrategy_2:
+      properties:
+        operation:
+          description: The operation to which this specific strategy applies.
+          type: string
+        probabilistic_sampling_strategy:
+          allOf:
+          - $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy_2'
+          description: 'Defines the probabilistic strategy to apply to traces matching this
+
+            operation.'
+      type: object
+    ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the TraceJaegerRemoteSamplingStrategy will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the TraceJaegerRemoteSamplingStrategy does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        trace_jaeger_remote_sampling_strategy:
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+          description: The TraceJaegerRemoteSamplingStrategy to update.
+      type: object
+    TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies_2:
+      properties:
+        default_lower_bound_traces_per_second:
+          description: 'Defines a minimum number of traces to send for any operation in the service,
+
+            regardless of matching per operation strategy.'
+          format: double
+          type: number
+        default_sampling_rate:
+          description: 'Defines the service-wide sampling probability (in the range `[0, 1]`) when
+
+            specific operations are not matched.'
+          format: double
+          type: number
+        default_upper_bound_traces_per_second:
+          description: 'Defines a maximum number of traces to send for any operation in the service,
+
+            regardless of matching per operation strategy.'
+          format: double
+          type: number
+        per_operation_strategies:
+          description: 'Defines explicit operations-specific strategies that take precedence over the
+
+            default sampling rate.'
+          items:
+            $ref: '#/components/schemas/PerOperationSamplingStrategiesPerOperationSamplingStrategy_2'
+          type: array
+      type: object
+    TraceJaegerRemoteSamplingStrategyProbabilisticStrategy_2:
+      properties:
+        sampling_rate:
+          description: 'Value in the range `[0, 1]` that defines the percentage probability of
+
+            sampling any trace, where `0` is zero percent and `1` equals 100 percent.'
+          format: double
+          type: number
+      type: object
+    configv1CreateTraceJaegerRemoteSamplingStrategyRequest:
+      properties:
         dry_run:
           description: If `true`, validates the specified configuration without creating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-      type: object
-    configunstableDeleteTraceJaegerRemoteSamplingStrategyResponse:
-      type: object
-    configunstableReadTraceJaegerRemoteSamplingStrategyResponse:
-      properties:
         trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configunstableTraceJaegerRemoteSamplingStrategy'
-      type: object
-    genericError:
-      additionalProperties: true
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+          description: The TraceJaegerRemoteSamplingStrategy to create.
       type: object
     TraceJaegerRemoteSamplingStrategyAppliedStrategy_2:
       properties:
@@ -715,29 +794,16 @@ components:
 
             can be set.'
       type: object
-    ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody:
+    configv1ReadTraceJaegerRemoteSamplingStrategyResponse:
       properties:
-        create_if_missing:
-          description: If `true`, the TraceJaegerRemoteSamplingStrategy will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the TraceJaegerRemoteSamplingStrategy does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
         trace_jaeger_remote_sampling_strategy:
-          allOf:
-          - $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-          description: The TraceJaegerRemoteSamplingStrategy to update.
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
       type: object
-    configv1DeleteTraceJaegerRemoteSamplingStrategyResponse:
-      type: object
-    configv1ListTraceJaegerRemoteSamplingStrategiesResponse:
+    apiError_2:
       properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        trace_jaeger_remote_sampling_strategies:
-          items:
-            $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-          type: array
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configv1TraceJaegerRemoteSamplingStrategy:
       properties:
@@ -777,85 +843,19 @@ components:
       required:
       - name
       type: object
-    TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies_2:
-      properties:
-        default_lower_bound_traces_per_second:
-          description: 'Defines a minimum number of traces to send for any operation in the service,
-
-            regardless of matching per operation strategy.'
-          format: double
-          type: number
-        default_sampling_rate:
-          description: 'Defines the service-wide sampling probability (in the range `[0, 1]`) when
-
-            specific operations are not matched.'
-          format: double
-          type: number
-        default_upper_bound_traces_per_second:
-          description: 'Defines a maximum number of traces to send for any operation in the service,
-
-            regardless of matching per operation strategy.'
-          format: double
-          type: number
-        per_operation_strategies:
-          description: 'Defines explicit operations-specific strategies that take precedence over the
-
-            default sampling rate.'
-          items:
-            $ref: '#/components/schemas/PerOperationSamplingStrategiesPerOperationSamplingStrategy_2'
-          type: array
-      type: object
-    configv1ReadTraceJaegerRemoteSamplingStrategyResponse:
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-      type: object
-    TraceJaegerRemoteSamplingStrategyProbabilisticStrategy_2:
-      properties:
-        sampling_rate:
-          description: 'Value in the range `[0, 1]` that defines the percentage probability of
-
-            sampling any trace, where `0` is zero percent and `1` equals 100 percent.'
-          format: double
-          type: number
-      type: object
-    configv1CreateTraceJaegerRemoteSamplingStrategyRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        trace_jaeger_remote_sampling_strategy:
-          allOf:
-          - $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-          description: The TraceJaegerRemoteSamplingStrategy to create.
-      type: object
-    apiError_2:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1UpdateTraceJaegerRemoteSamplingStrategyResponse:
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
-      type: object
-    PerOperationSamplingStrategiesPerOperationSamplingStrategy_2:
-      properties:
-        operation:
-          description: The operation to which this specific strategy applies.
-          type: string
-        probabilistic_sampling_strategy:
-          allOf:
-          - $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy_2'
-          description: 'Defines the probabilistic strategy to apply to traces matching this
-
-            operation.'
-      type: object
     configv1CreateTraceJaegerRemoteSamplingStrategyResponse:
       properties:
         trace_jaeger_remote_sampling_strategy:
           $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+      type: object
+    configv1ListTraceJaegerRemoteSamplingStrategiesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_jaeger_remote_sampling_strategies:
+          items:
+            $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy'
+          type: array
       type: object
     ConfigV1UpdateTraceJaegerRemoteSamplingStrategyBody_2:
       type: object
@@ -868,6 +868,24 @@ components:
         dry_run:
           type: boolean
           description: If true, the TraceJaegerRemoteSamplingStrategy isn't created or updated, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateTraceJaegerRemoteSamplingStrategyRequest_2:
+      type: object
+      properties:
+        trace_jaeger_remote_sampling_strategy:
+          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy_2'
+        dry_run:
+          type: boolean
+          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
     configv1TraceJaegerRemoteSamplingStrategy_2:
       type: object
       properties:
@@ -892,24 +910,6 @@ components:
           description: The name of the service this sampling strategy applies to. This must match the slug and name fields.
         applied_strategy:
           $ref: '#/components/schemas/TraceJaegerRemoteSamplingStrategyAppliedStrategy'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1CreateTraceJaegerRemoteSamplingStrategyRequest_2:
-      type: object
-      properties:
-        trace_jaeger_remote_sampling_strategy:
-          $ref: '#/components/schemas/configv1TraceJaegerRemoteSamplingStrategy_2'
-        dry_run:
-          type: boolean
-          description: If true, the TraceJaegerRemoteSamplingStrategy isn't created, and no response TraceJaegerRemoteSamplingStrategy will be returned. The response will return an error if the given TraceJaegerRemoteSamplingStrategy is invalid.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

@@ -262,45 +262,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1DeleteLogRetentionConfigResponse:
-      type: object
-    configv1UpdateLogRetentionConfigResponse:
+    configv1ListLogRetentionConfigsResponse:
       properties:
-        log_retention_config:
-          $ref: '#/components/schemas/configv1LogRetentionConfig'
-      type: object
-    configv1ReadLogRetentionConfigResponse:
-      properties:
-        log_retention_config:
-          $ref: '#/components/schemas/configv1LogRetentionConfig'
-      type: object
-    ConfigV1UpdateLogRetentionConfigBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the LogRetentionConfig will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the LogRetentionConfig does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the LogRetentionConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogRetentionConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_retention_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogRetentionConfig'
-          description: The LogRetentionConfig to update.
-      type: object
-    configv1LogRetentionConfigMode:
-      enum:
-      - ENABLED
-      - DISABLED
-      type: string
-    configv1CreateLogRetentionConfigRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LogRetentionConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogRetentionConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_retention_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogRetentionConfig'
-          description: The LogRetentionConfig to create.
+        log_retention_configs:
+          items:
+            $ref: '#/components/schemas/configv1LogRetentionConfig'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
     configv1PageResult:
       properties:
@@ -310,12 +279,6 @@ components:
             client should request. An empty value indicates that there are no
 
             more items to return.'
-          type: string
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
           type: string
       type: object
     configv1LogRetentionConfig:
@@ -365,17 +328,54 @@ components:
       - retention_days
       - slug
       type: object
-    configv1ListLogRetentionConfigsResponse:
-      properties:
-        log_retention_configs:
-          items:
-            $ref: '#/components/schemas/configv1LogRetentionConfig'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
     genericError:
       additionalProperties: true
+      type: object
+    configv1CreateLogRetentionConfigRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LogRetentionConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogRetentionConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_retention_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogRetentionConfig'
+          description: The LogRetentionConfig to create.
+      type: object
+    configv1LogRetentionConfigMode:
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    configv1ReadLogRetentionConfigResponse:
+      properties:
+        log_retention_config:
+          $ref: '#/components/schemas/configv1LogRetentionConfig'
+      type: object
+    configv1DeleteLogRetentionConfigResponse:
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ConfigV1UpdateLogRetentionConfigBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the LogRetentionConfig will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the LogRetentionConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the LogRetentionConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogRetentionConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_retention_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogRetentionConfig'
+          description: The LogRetentionConfig to update.
+      type: object
+    configv1UpdateLogRetentionConfigResponse:
+      properties:
+        log_retention_config:
+          $ref: '#/components/schemas/configv1LogRetentionConfig'
       type: object
     configv1CreateLogRetentionConfigResponse:
       properties:

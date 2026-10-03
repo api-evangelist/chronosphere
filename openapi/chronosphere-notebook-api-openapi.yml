@@ -273,11 +273,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableCreateNotebookResponse:
-      properties:
-        notebook:
-          $ref: '#/components/schemas/configunstableNotebook'
-      type: object
     configv1CollectionReference:
       properties:
         type:
@@ -285,51 +280,13 @@ components:
         slug:
           type: string
       type: object
-    ConfigUnstableUpdateNotebookBody:
+    configunstableCreateNotebookResponse:
       properties:
         notebook:
           $ref: '#/components/schemas/configunstableNotebook'
-        create_if_missing:
-          description: If `true`, the Notebook will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Notebook does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Notebook. If the specified configuration is valid, the endpoint returns a partial response without the Notebook. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
       type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+    configunstableDeleteNotebookResponse:
       type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableCreateNotebookRequest:
-      properties:
-        notebook:
-          $ref: '#/components/schemas/configunstableNotebook'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the Notebook. If the specified configuration is valid, the endpoint returns a partial response without the Notebook. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configv1CollectionReferenceType:
-      enum:
-      - SIMPLE
-      - SERVICE
-      title: Type values must match entitiespb.Collection.CollectionType.
-      type: string
     configunstableNotebook:
       properties:
         slug:
@@ -359,7 +316,58 @@ components:
         collection:
           $ref: '#/components/schemas/configv1CollectionReference'
       type: object
-    configunstableDeleteNotebookResponse:
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configunstableUpdateNotebookResponse:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+      type: object
+    ConfigUnstableUpdateNotebookBody:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+        create_if_missing:
+          description: If `true`, the Notebook will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Notebook does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Notebook. If the specified configuration is valid, the endpoint returns a partial response without the Notebook. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
+    configunstableCreateNotebookRequest:
+      properties:
+        notebook:
+          $ref: '#/components/schemas/configunstableNotebook'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Notebook. If the specified configuration is valid, the endpoint returns a partial response without the Notebook. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configunstableListNotebooksResponse:
       properties:
@@ -371,14 +379,6 @@ components:
           type: array
       type: object
     configunstableReadNotebookResponse:
-      properties:
-        notebook:
-          $ref: '#/components/schemas/configunstableNotebook'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableUpdateNotebookResponse:
       properties:
         notebook:
           $ref: '#/components/schemas/configunstableNotebook'

@@ -188,11 +188,6 @@ components:
           description: If `true`, validates the specified configuration without creating or updating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    QueryResourcePoolsDefaultPool:
-      properties:
-        data_read_limit:
-          $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
-      type: object
     QueryResourcePoolsPool:
       properties:
         name:
@@ -220,76 +215,6 @@ components:
           type: array
         data_read_limit:
           $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
-      type: object
-    configunstableQueryResourcePools:
-      description: 'QueryResourcePools groups automated metrics query sources (monitors,
-
-        recording rules, SLOs, and service accounts) into pools with per-pool
-
-        datapoints-read rate limits. When a pool sustains usage above its limit for
-
-        the configured sustain period, all of its queries are rejected for a penalty
-
-        period, after which the pool is readmitted. Repeat offenses increase the
-
-        penalty period; sustained good behavior resets it.
-
-
-        Pools only apply to automated query sources. Queries issued manually (for
-
-        example, from the UI) are never admission-controlled by pools. Query
-
-        sources that don''t match any pool map to the default pool.'
-      properties:
-        pools:
-          description: 'Optional. Pools that group automated query sources. Query sources map to
-
-            the first pool that matches, in configured order.'
-          items:
-            $ref: '#/components/schemas/QueryResourcePoolsPool'
-          type: array
-        default_pool:
-          $ref: '#/components/schemas/QueryResourcePoolsDefaultPool'
-        created_at:
-          description: Set in API responses.
-          format: date-time
-          readOnly: true
-          type: string
-        updated_at:
-          description: Set in API responses.
-          format: date-time
-          readOnly: true
-          type: string
-      type: object
-    configunstableCreateQueryResourcePoolsResponse:
-      properties:
-        query_resource_pools:
-          $ref: '#/components/schemas/configunstableQueryResourcePools'
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableDeleteQueryResourcePoolsResponse:
-      type: object
-    configunstableCreateQueryResourcePoolsRequest:
-      properties:
-        query_resource_pools:
-          $ref: '#/components/schemas/configunstableQueryResourcePools'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configunstableUpdateQueryResourcePoolsResponse:
-      properties:
-        query_resource_pools:
-          $ref: '#/components/schemas/configunstableQueryResourcePools'
       type: object
     configunstableReadQueryResourcePoolsResponse:
       properties:
@@ -337,6 +262,51 @@ components:
           format: int32
           type: integer
       type: object
+    configunstableCreateQueryResourcePoolsResponse:
+      properties:
+        query_resource_pools:
+          $ref: '#/components/schemas/configunstableQueryResourcePools'
+      type: object
+    configunstableQueryResourcePools:
+      description: 'QueryResourcePools groups automated metrics query sources (monitors,
+
+        recording rules, SLOs, and service accounts) into pools with per-pool
+
+        datapoints-read rate limits. When a pool sustains usage above its limit for
+
+        the configured sustain period, all of its queries are rejected for a penalty
+
+        period, after which the pool is readmitted. Repeat offenses increase the
+
+        penalty period; sustained good behavior resets it.
+
+
+        Pools only apply to automated query sources. Queries issued manually (for
+
+        example, from the UI) are never admission-controlled by pools. Query
+
+        sources that don''t match any pool map to the default pool.'
+      properties:
+        pools:
+          description: 'Optional. Pools that group automated query sources. Query sources map to
+
+            the first pool that matches, in configured order.'
+          items:
+            $ref: '#/components/schemas/QueryResourcePoolsPool'
+          type: array
+        default_pool:
+          $ref: '#/components/schemas/QueryResourcePoolsDefaultPool'
+        created_at:
+          description: Set in API responses.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Set in API responses.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
     QueryResourcePoolsSourceType:
       enum:
       - MONITOR
@@ -346,4 +316,34 @@ components:
       type: string
     genericError:
       additionalProperties: true
+      type: object
+    configunstableDeleteQueryResourcePoolsResponse:
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableUpdateQueryResourcePoolsResponse:
+      properties:
+        query_resource_pools:
+          $ref: '#/components/schemas/configunstableQueryResourcePools'
+      type: object
+    QueryResourcePoolsDefaultPool:
+      properties:
+        data_read_limit:
+          $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
+      type: object
+    configunstableCreateQueryResourcePoolsRequest:
+      properties:
+        query_resource_pools:
+          $ref: '#/components/schemas/configunstableQueryResourcePools'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object

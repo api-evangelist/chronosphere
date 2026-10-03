@@ -414,13 +414,10 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configunstableCreateServiceRequest:
+    configunstableUpdateServiceResponse:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
       type: object
     configunstableListServicesResponse:
       properties:
@@ -431,16 +428,10 @@ components:
             $ref: '#/components/schemas/configunstableService'
           type: array
       type: object
-    ConfigUnstableUpdateServiceBody:
+    configunstableCreateServiceResponse:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
-        create_if_missing:
-          description: If `true`, the Service will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Service does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
       type: object
     configv1PageResult:
       properties:
@@ -451,11 +442,6 @@ components:
 
             more items to return.'
           type: string
-      type: object
-    configunstableReadServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configunstableService'
       type: object
     configunstableService:
       properties:
@@ -492,6 +478,28 @@ components:
             This does not override the policy used when a monitor explicitly references a policy.'
           type: string
       type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configunstableCreateServiceRequest:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    ConfigUnstableUpdateServiceBody:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+        create_if_missing:
+          description: If `true`, the Service will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Service does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
     apiError:
       properties:
         code:
@@ -502,20 +510,12 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
+    configunstableReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+      type: object
     configunstableDeleteServiceResponse:
-      type: object
-    configunstableUpdateServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configunstableService'
-      type: object
-    configunstableCreateServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configunstableService'
-      type: object
-    genericError:
-      additionalProperties: true
       type: object
     configv1ListServicesResponse:
       properties:
@@ -525,11 +525,6 @@ components:
           items:
             $ref: '#/components/schemas/configv1Service'
           type: array
-      type: object
-    configv1ReadServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configv1Service'
       type: object
     apiError_2:
       properties:
@@ -575,6 +570,11 @@ components:
       required:
       - name
       - team_slug
+      type: object
+    configv1ReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configv1Service'
       type: object
     configv1Service_2:
       type: object

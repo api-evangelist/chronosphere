@@ -191,11 +191,6 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1CreateTraceBehaviorConfigResponse:
-      properties:
-        trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
-      type: object
     TraceBehaviorConfigMainBehaviorAssignment:
       properties:
         behavior_slug:
@@ -217,63 +212,6 @@ components:
         updated_at:
           description: The timestamp of when the trace behavior was updated.
           format: date-time
-          type: string
-      type: object
-    configv1UpdateTraceBehaviorConfigRequest:
-      properties:
-        create_if_missing:
-          description: If `true`, the TraceBehaviorConfig will be created if it does not already exist. If `false`, an error will be returned if the TraceBehaviorConfig does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the TraceBehaviorConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehaviorConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        trace_behavior_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1TraceBehaviorConfig'
-          description: The TraceBehaviorConfig to update.
-      type: object
-    configv1DeleteTraceBehaviorConfigResponse:
-      type: object
-    configv1ReadTraceBehaviorConfigResponse:
-      properties:
-        trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
-      type: object
-    TraceBehaviorConfigOverrideBehaviorAssignment:
-      properties:
-        behavior_slug:
-          description: The slug reference of a trace behavior.
-          type: string
-        created_at:
-          description: The timestamp of when the override behavior assignment was created.
-          format: date-time
-          type: string
-        created_by:
-          description: The author or creator of the override.
-          type: string
-        dataset_slug:
-          description: The slug reference of a trace dataset.
-          type: string
-        description:
-          description: A description of the override.
-          type: string
-        end_time:
-          description: The ending time of the override.
-          format: date-time
-          type: string
-        start_time:
-          description: The starting time of the override.
-          format: date-time
-          type: string
-        updated_at:
-          description: The timestamp of when the override behavior assignment was updated.
-          format: date-time
-          type: string
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
           type: string
       type: object
     configv1TraceBehaviorConfig:
@@ -335,6 +273,58 @@ components:
           readOnly: true
           type: string
       type: object
+    configv1CreateTraceBehaviorConfigResponse:
+      properties:
+        trace_behavior_config:
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+      type: object
+    configv1UpdateTraceBehaviorConfigResponse:
+      properties:
+        trace_behavior_config:
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+      type: object
+    configv1DeleteTraceBehaviorConfigResponse:
+      type: object
+    TraceBehaviorConfigOverrideBehaviorAssignment:
+      properties:
+        behavior_slug:
+          description: The slug reference of a trace behavior.
+          type: string
+        created_at:
+          description: The timestamp of when the override behavior assignment was created.
+          format: date-time
+          type: string
+        created_by:
+          description: The author or creator of the override.
+          type: string
+        dataset_slug:
+          description: The slug reference of a trace dataset.
+          type: string
+        description:
+          description: A description of the override.
+          type: string
+        end_time:
+          description: The ending time of the override.
+          format: date-time
+          type: string
+        start_time:
+          description: The starting time of the override.
+          format: date-time
+          type: string
+        updated_at:
+          description: The timestamp of when the override behavior assignment was updated.
+          format: date-time
+          type: string
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
     configv1CreateTraceBehaviorConfigRequest:
       properties:
         dry_run:
@@ -345,35 +335,24 @@ components:
           - $ref: '#/components/schemas/configv1TraceBehaviorConfig'
           description: The TraceBehaviorConfig to create.
       type: object
-    configv1UpdateTraceBehaviorConfigResponse:
+    configv1ReadTraceBehaviorConfigResponse:
       properties:
         trace_behavior_config:
           $ref: '#/components/schemas/configv1TraceBehaviorConfig'
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1UpdateTraceBehaviorConfigRequest_2:
-      type: object
+    configv1UpdateTraceBehaviorConfigRequest:
       properties:
-        trace_behavior_config:
-          $ref: '#/components/schemas/configv1TraceBehaviorConfig_2'
         create_if_missing:
+          description: If `true`, the TraceBehaviorConfig will be created if it does not already exist. If `false`, an error will be returned if the TraceBehaviorConfig does not already exist.
           type: boolean
-          description: If true, the TraceBehaviorConfig will be created if it does not already exist. If false, an error will be returned if the TraceBehaviorConfig does not already exist.
         dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the TraceBehaviorConfig. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehaviorConfig. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-          description: If true, the TraceBehaviorConfig isn't created or updated, and no response TraceBehaviorConfig will be returned. The response will return an error if the given TraceBehaviorConfig is invalid.
-    apiError_2:
+        trace_behavior_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1TraceBehaviorConfig'
+          description: The TraceBehaviorConfig to update.
       type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     configv1TraceBehaviorConfig_2:
       type: object
       properties:
@@ -433,6 +412,16 @@ components:
       description: 'TraceBehaviorConfig is a singleton configuration object that specifies the
 
         configuration for trace behaviors.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     configv1CreateTraceBehaviorConfigRequest_2:
       type: object
       properties:
@@ -441,6 +430,17 @@ components:
         dry_run:
           type: boolean
           description: If true, the TraceBehaviorConfig isn't created, and no response TraceBehaviorConfig will be returned. The response will return an error if the given TraceBehaviorConfig is invalid.
+    configv1UpdateTraceBehaviorConfigRequest_2:
+      type: object
+      properties:
+        trace_behavior_config:
+          $ref: '#/components/schemas/configv1TraceBehaviorConfig_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceBehaviorConfig will be created if it does not already exist. If false, an error will be returned if the TraceBehaviorConfig does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehaviorConfig isn't created or updated, and no response TraceBehaviorConfig will be returned. The response will return an error if the given TraceBehaviorConfig is invalid.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

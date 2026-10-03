@@ -47,20 +47,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ChronoConfigCollectionsConfig:
-      properties:
-        group_teams:
-          description: 'Ordered map of prometheus group regexes to chronosphere team slug. This is used to
-
-            determine which team will own the collection created for each prometheus group..'
-          items:
-            $ref: '#/components/schemas/CollectionsConfigGroupTeam'
-          type: array
-        notification_policy_team_slug:
-          description: The team that will own the generated notification policy
-          type: string
-      title: Configuration for when ContainerType == COLLECTIONS or DEFAULT is collections
-      type: object
     CollectionsConfigGroupTeam:
       properties:
         group_regex:
@@ -68,6 +54,46 @@ components:
         team_slug:
           type: string
       type: object
+    ChronoConfigSeverityMapping:
+      properties:
+        severity:
+          type: string
+        chronosphere_severity:
+          $ref: '#/components/schemas/SeverityMappingSeverity'
+      type: object
+    SyncPrometheusChangeLog:
+      properties:
+        type:
+          $ref: '#/components/schemas/SyncPrometheusChangeLogType'
+        diff:
+          description: 'TODO: do we want to keep diff in the public API?'
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+      type: object
+    configunstableSyncPrometheusRequest:
+      properties:
+        rules_yaml:
+          type: string
+        rules_yaml_gzip:
+          format: byte
+          type: string
+        alertmanager_yaml:
+          type: string
+        alertmanager_yaml_gzip:
+          format: byte
+          type: string
+        chrono_config:
+          $ref: '#/components/schemas/SyncPrometheusChronoConfig'
+        dry_run:
+          type: boolean
+      type: object
+    SeverityMappingSeverity:
+      enum:
+      - CRITICAL
+      type: string
     SyncPrometheusChronoConfig:
       properties:
         use_collections:
@@ -106,6 +132,16 @@ components:
             TODO: before configv1 - is this still required? does chronoctl set it?'
           type: boolean
       type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
     SyncPrometheusChangeLogType:
       enum:
       - CREATED_NOTIFIER
@@ -127,10 +163,20 @@ components:
       - UPDATED_RECORDING_RULE
       - DELETED_RECORDING_RULE
       type: string
-    SeverityMappingSeverity:
-      enum:
-      - CRITICAL
-      type: string
+    ChronoConfigCollectionsConfig:
+      properties:
+        group_teams:
+          description: 'Ordered map of prometheus group regexes to chronosphere team slug. This is used to
+
+            determine which team will own the collection created for each prometheus group..'
+          items:
+            $ref: '#/components/schemas/CollectionsConfigGroupTeam'
+          type: array
+        notification_policy_team_slug:
+          description: The team that will own the generated notification policy
+          type: string
+      title: Configuration for when ContainerType == COLLECTIONS or DEFAULT is collections
+      type: object
     configunstableSyncPrometheusResponse:
       properties:
         changes:
@@ -138,55 +184,9 @@ components:
             $ref: '#/components/schemas/SyncPrometheusChangeLog'
           type: array
       type: object
-    SyncPrometheusChangeLog:
-      properties:
-        type:
-          $ref: '#/components/schemas/SyncPrometheusChangeLogType'
-        diff:
-          description: 'TODO: do we want to keep diff in the public API?'
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableSyncPrometheusRequest:
-      properties:
-        rules_yaml:
-          type: string
-        rules_yaml_gzip:
-          format: byte
-          type: string
-        alertmanager_yaml:
-          type: string
-        alertmanager_yaml_gzip:
-          format: byte
-          type: string
-        chrono_config:
-          $ref: '#/components/schemas/SyncPrometheusChronoConfig'
-        dry_run:
-          type: boolean
-      type: object
     SyncPrometheusContainerType:
       enum:
       - COLLECTIONS
       - BUCKETS
       title: 'TODO: confirm naming with InfoModel team'
       type: string
-    ChronoConfigSeverityMapping:
-      properties:
-        severity:
-          type: string
-        chronosphere_severity:
-          $ref: '#/components/schemas/SeverityMappingSeverity'
-      type: object

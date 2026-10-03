@@ -289,33 +289,17 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1ReadMutingRuleResponse:
+    configv1MutingRuleLabelMatcherMatcherType:
+      enum:
+      - EXACT
+      - REGEX
+      - NOT_EXACT
+      - NOT_REGEXP
+      type: string
+    configv1UpdateMutingRuleResponse:
       properties:
         muting_rule:
           $ref: '#/components/schemas/configv1MutingRule'
-      type: object
-    configv1CreateMutingRuleRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the MutingRule. If the specified configuration is valid, the endpoint returns a partial response without the MutingRule. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        muting_rule:
-          allOf:
-          - $ref: '#/components/schemas/configv1MutingRule'
-          description: The MutingRule to create.
-      type: object
-    configv1MutingRuleLabelMatcher:
-      properties:
-        name:
-          description: Required. Always matches against an exact label name.
-          type: string
-        type:
-          allOf:
-          - $ref: '#/components/schemas/configv1MutingRuleLabelMatcherMatcherType'
-          description: Required. Determines how the label value is matched.
-        value:
-          description: Required. Matches against a label value based on the configured type.
-          type: string
       type: object
     configv1MutingRule:
       properties:
@@ -360,22 +344,50 @@ components:
       required:
       - name
       type: object
-    configv1DeleteMutingRuleResponse:
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
       type: object
-    configv1MutingRuleLabelMatcherMatcherType:
-      enum:
-      - EXACT
-      - REGEX
-      - NOT_EXACT
-      - NOT_REGEXP
-      type: string
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1UpdateMutingRuleResponse:
+    configv1ReadMutingRuleResponse:
       properties:
         muting_rule:
           $ref: '#/components/schemas/configv1MutingRule'
+      type: object
+    configv1ListMutingRulesResponse:
+      properties:
+        muting_rules:
+          items:
+            $ref: '#/components/schemas/configv1MutingRule'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1MutingRuleLabelMatcher:
+      properties:
+        name:
+          description: Required. Always matches against an exact label name.
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/configv1MutingRuleLabelMatcherMatcherType'
+          description: Required. Determines how the label value is matched.
+        value:
+          description: Required. Matches against a label value based on the configured type.
+          type: string
+      type: object
+    configv1CreateMutingRuleResponse:
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule'
+      type: object
+    genericError:
+      additionalProperties: true
       type: object
     apiError:
       properties:
@@ -383,10 +395,15 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    configv1CreateMutingRuleResponse:
+    configv1CreateMutingRuleRequest:
       properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the MutingRule. If the specified configuration is valid, the endpoint returns a partial response without the MutingRule. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
         muting_rule:
-          $ref: '#/components/schemas/configv1MutingRule'
+          allOf:
+          - $ref: '#/components/schemas/configv1MutingRule'
+          description: The MutingRule to create.
       type: object
     ConfigV1UpdateMutingRuleBody:
       properties:
@@ -401,44 +418,8 @@ components:
           - $ref: '#/components/schemas/configv1MutingRule'
           description: The MutingRule to update.
       type: object
-    configv1ListMutingRulesResponse:
-      properties:
-        muting_rules:
-          items:
-            $ref: '#/components/schemas/configv1MutingRule'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+    configv1DeleteMutingRuleResponse:
       type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    configv1CreateMutingRuleRequest_2:
-      type: object
-      properties:
-        muting_rule:
-          $ref: '#/components/schemas/configv1MutingRule_2'
-        dry_run:
-          type: boolean
-          description: If true, the MutingRule isn't created, and no response MutingRule will be returned. The response will return an error if the given MutingRule is invalid.
-    configv1MutingRuleLabelMatcher_2:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1MutingRuleLabelMatcherMatcherType'
-        name:
-          type: string
-          description: Required. Always matches against an exact label name.
-        value:
-          type: string
-          description: Required. Matches against a label value based on the configured type.
     configv1MutingRule_2:
       type: object
       properties:
@@ -480,6 +461,27 @@ components:
         comment:
           type: string
           description: Descriptive comment that explains why the muting rule was created.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1MutingRuleLabelMatcher_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1MutingRuleLabelMatcherMatcherType'
+        name:
+          type: string
+          description: Required. Always matches against an exact label name.
+        value:
+          type: string
+          description: Required. Matches against a label value based on the configured type.
     apiError_2:
       type: object
       properties:
@@ -490,6 +492,14 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
+    configv1CreateMutingRuleRequest_2:
+      type: object
+      properties:
+        muting_rule:
+          $ref: '#/components/schemas/configv1MutingRule_2'
+        dry_run:
+          type: boolean
+          description: If true, the MutingRule isn't created, and no response MutingRule will be returned. The response will return an error if the given MutingRule is invalid.
     ConfigV1UpdateMutingRuleBody_2:
       type: object
       properties:
@@ -501,16 +511,6 @@ components:
         dry_run:
           type: boolean
           description: If true, the MutingRule isn't created or updated, and no response MutingRule will be returned. The response will return an error if the given MutingRule is invalid.
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

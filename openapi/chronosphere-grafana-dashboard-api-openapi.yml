@@ -297,6 +297,33 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    configv1CollectionReference:
+      properties:
+        slug:
+          type: string
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
+    configv1UpdateGrafanaDashboardResponse:
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
+    configv1CreateGrafanaDashboardResponse:
+      properties:
+        grafana_dashboard:
+          $ref: '#/components/schemas/configv1GrafanaDashboard'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     ConfigV1UpdateGrafanaDashboardBody:
       properties:
         create_if_missing:
@@ -310,12 +337,31 @@ components:
           - $ref: '#/components/schemas/configv1GrafanaDashboard'
           description: The GrafanaDashboard to update.
       type: object
-    configv1CollectionReference:
+    configv1ListGrafanaDashboardsResponse:
       properties:
-        slug:
+        grafana_dashboards:
+          items:
+            $ref: '#/components/schemas/configv1GrafanaDashboard'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
+    genericError:
+      additionalProperties: true
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
           type: string
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
+    configv1DeleteGrafanaDashboardResponse:
       type: object
     configv1CreateGrafanaDashboardRequest:
       properties:
@@ -367,57 +413,21 @@ components:
       required:
       - name
       type: object
-    configv1UpdateGrafanaDashboardResponse:
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1CreateGrafanaDashboardResponse:
-      properties:
-        grafana_dashboard:
-          $ref: '#/components/schemas/configv1GrafanaDashboard'
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1CollectionReferenceType:
-      enum:
-      - SIMPLE
-      - SERVICE
-      title: Type values must match entitiespb.Collection.CollectionType.
-      type: string
     configv1ReadGrafanaDashboardResponse:
       properties:
         grafana_dashboard:
           $ref: '#/components/schemas/configv1GrafanaDashboard'
       type: object
-    configv1DeleteGrafanaDashboardResponse:
+    configv1PageResult_2:
       type: object
-    configv1ListGrafanaDashboardsResponse:
-      properties:
-        grafana_dashboards:
-          items:
-            $ref: '#/components/schemas/configv1GrafanaDashboard'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
-    configv1PageResult:
       properties:
         next_token:
-          description: 'An opaque page token that identifies the next page of items that the
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
 
-            client should request. An empty value indicates that there are no
+            client should request. An empty next_token indicates that there are no
 
             more items to return.'
-          type: string
-      type: object
     ConfigV1UpdateGrafanaDashboardBody_2:
       type: object
       properties:
@@ -429,6 +439,22 @@ components:
         dry_run:
           type: boolean
           description: If true, the GrafanaDashboard isn't created or updated, and no response GrafanaDashboard will be returned. The response will return an error if the given GrafanaDashboard is invalid.
+    configv1CollectionReferenceType_2:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
     configv1CreateGrafanaDashboardRequest_2:
       type: object
       properties:
@@ -471,32 +497,6 @@ components:
         dashboard_json:
           type: string
           description: Required raw JSON of the Grafana dashboard.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    configv1CollectionReferenceType_2:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token

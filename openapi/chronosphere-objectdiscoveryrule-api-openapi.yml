@@ -239,33 +239,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableDeleteObjectDiscoveryRuleResponse:
-      type: object
-    ConfigUnstableUpdateObjectDiscoveryRuleBody:
+    configunstableCreateObjectDiscoveryRuleRequest:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-        create_if_missing:
-          description: If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.
-          type: boolean
-      type: object
-    configunstableObjectDiscoveryRule:
-      properties:
-        slug:
-          description: The unique identifier of the ObjectDiscoveryRule. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the ObjectDiscoveryRule is created.
-          type: string
-        name:
-          description: The name of the ObjectDiscoveryRule. You can modify this value after the ObjectDiscoveryRule is created.
-          type: string
-        metric:
-          $ref: '#/components/schemas/ObjectDiscoveryRuleMetricRule'
       type: object
     configunstableUpdateObjectDiscoveryRuleResponse:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
       type: object
-    configunstableCreateObjectDiscoveryRuleRequest:
+    configunstableReadObjectDiscoveryRuleResponse:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
@@ -280,10 +264,15 @@ components:
             more items to return.'
           type: string
       type: object
+    configunstableDeleteObjectDiscoveryRuleResponse:
+      type: object
     configunstableCreateObjectDiscoveryRuleResponse:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+      type: object
+    genericError:
+      additionalProperties: true
       type: object
     apiError:
       properties:
@@ -294,20 +283,6 @@ components:
         message:
           description: An error message describing what went wrong.
           type: string
-      type: object
-    configunstableListObjectDiscoveryRulesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        object_discovery_rules:
-          items:
-            $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-          type: array
-      type: object
-    configunstableReadObjectDiscoveryRuleResponse:
-      properties:
-        object_discovery_rule:
-          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
       type: object
     ObjectDiscoveryRuleMetricRule:
       properties:
@@ -320,6 +295,31 @@ components:
         objectMappingLabel:
           type: string
       type: object
-    genericError:
-      additionalProperties: true
+    ConfigUnstableUpdateObjectDiscoveryRuleBody:
+      properties:
+        object_discovery_rule:
+          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+        create_if_missing:
+          description: If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.
+          type: boolean
+      type: object
+    configunstableListObjectDiscoveryRulesResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        object_discovery_rules:
+          items:
+            $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+          type: array
+      type: object
+    configunstableObjectDiscoveryRule:
+      properties:
+        slug:
+          description: The unique identifier of the ObjectDiscoveryRule. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the ObjectDiscoveryRule is created.
+          type: string
+        name:
+          description: The name of the ObjectDiscoveryRule. You can modify this value after the ObjectDiscoveryRule is created.
+          type: string
+        metric:
+          $ref: '#/components/schemas/ObjectDiscoveryRuleMetricRule'
       type: object

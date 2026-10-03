@@ -180,34 +180,127 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LogParserRegexParser:
-      properties:
-        regex:
-          description: 'The regular expression parser pattern to apply. Must use RE2 syntax.
+    ReplaceFieldStaticValue:
+      description: 'StaticValue is the configuration for the replace field control rule in static value
 
-            Named capturing groups become named fields in the extracted log.'
+        mode. Used to replace the selected content with a static value.'
+      properties:
+        value:
+          description: 'The value to replace selected content with. If empty, the action removes the
+
+            selected content.'
           type: string
       type: object
-    LogControlRuleDropField:
-      description: DropField is the configuration for a drop field action.
+    MappedValueReplacePair:
       properties:
-        field_regex:
-          description: Defines the the regular expression that determines which fields to drop.
+        key:
           type: string
-        parent_path:
+        value:
+          type: string
+      type: object
+    LogParserGrokParser:
+      properties:
+        pattern:
+          description: "The grok pattern to apply. Named capture groups become named fields in \nthe extracted log."
+          type: string
+      type: object
+    LogControlRuleSample:
+      description: Sample is the configuration for the sample logs action.
+      properties:
+        rate:
+          description: 'Percentage of matching logs to keep. Must be in the range `[0, 1]`, where `1`
+
+            is equal to 100% of logs. For example, to keep 25% of logs, enter `0.25` as
+
+            the `rate`.'
+          format: double
+          type: number
+      required:
+      - rate
+      type: object
+    configv1LogFieldPath:
+      properties:
+        selector:
+          description: 'The log filter used to indicate the field path. Use `parent[child]` syntax to
+
+            indicate nesting.'
+          type: string
+      type: object
+    LogIngestConfigLogParser:
+      properties:
+        grok_parser:
+          $ref: '#/components/schemas/LogParserGrokParser'
+        key_value_parser:
+          $ref: '#/components/schemas/LogParserKeyValueParser'
+        parser_type:
+          allOf:
+          - $ref: '#/components/schemas/LogParserParserType'
+          description: The type of parser to use.
+        regex_parser:
+          allOf:
+          - $ref: '#/components/schemas/LogParserRegexParser'
+          description: This object contains settings relevant to `REGEX` parsers.
+      type: object
+    EmitMetricsMetricMode:
+      enum:
+      - COUNTER
+      - GAUGE
+      - HISTOGRAM
+      type: string
+    configv1UpdateLogControlConfigRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the LogControlConfig will be created if it does not already exist. If `false`, an error will be returned if the LogControlConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the LogControlConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogControlConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_control_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogControlConfig'
+          description: The LogControlConfig to update.
+      type: object
+    EmitMetricsHistogram:
+      properties:
+        value:
           allOf:
           - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: 'Optional. Specifies the level of depth in the log to apply the regular
-
-            expression to. For example, if you want to apply the regular expression to
-
-            fields under `httpRequest`, such as `httpRequest.status`, enter `httpRequest`
-
-            in the `parent_path` field. If empty, the fields to drop are at the root level
-
-            of the log.'
+          description: The name of the log field whose value you want to use as the metric value.
       required:
-      - field_regex
+      - value
+      type: object
+    ReplaceFieldMappedValue:
+      description: MappedValue is the configuration for mapped value replace mode.
+      properties:
+        default_value:
+          description: The value to use if no matching value is found.
+          type: string
+        pairs:
+          description: A list of key/value pairs to replace matched content with.
+          items:
+            $ref: '#/components/schemas/MappedValueReplacePair'
+          type: array
+        use_default:
+          description: 'If `true`, specifies a default value if no matching key is found. If
+
+            `false`, the value will be unchanged if no matching key is found.'
+          type: boolean
+      type: object
+    LogControlRuleParseField:
+      description: ParseField is the configuration for a parse field action.
+      properties:
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogFieldPath'
+          description: "The destination field where parsed structured data will be written.\nIf the key already exists, the value will be overwritten.\nIf unset, the log will be updated at the root level and any conflicting \nkeys will be overwritten."
+        parser:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigLogParser'
+          description: The parser to apply to the source field.
+        source:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogFieldPath'
+          description: The source field to parse.
       type: object
     LogControlRuleReplaceField:
       description: ReplaceField is the configuration for a replace field action.
@@ -243,14 +336,150 @@ components:
       - replace_mode
       - replace_regex
       type: object
-    configv1DeleteLogControlConfigResponse:
+    configv1CreateLogControlConfigResponse:
+      properties:
+        log_control_config:
+          $ref: '#/components/schemas/configv1LogControlConfig'
       type: object
-    ReplaceFieldReplaceMode:
-      description: " - HASH: Replace the matched content with a hashed string, which can help reduce the\nsize of large strings. After replacing the original content with a string,\nthere’s no way to recover that information.\n - STATIC_VALUE: Replace the matched content with a static string. For example, replace\npunctuation in a field with an empty string, or truncate the ends of long\nstack traces.\n - MAPPED_VALUE: Replace the matched content with specified key/value pairs. For example,\nreduce log volume by replacing a string error with a specific error code. If\nnone of the key/value pairs match, the provided default value is used.\n\n@REQUIRED"
+    configv1LogControlRuleType:
       enum:
-      - HASH
-      - STATIC_VALUE
-      - MAPPED_VALUE
+      - DROP
+      - SAMPLE
+      - DROP_FIELD
+      - REPLACE_FIELD
+      - EMIT_METRICS
+      - PARSE_FIELD
+      type: string
+    LogParserRegexParser:
+      properties:
+        regex:
+          description: 'The regular expression parser pattern to apply. Must use RE2 syntax.
+
+            Named capturing groups become named fields in the extracted log.'
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1CreateLogControlConfigRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LogControlConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogControlConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_control_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogControlConfig'
+          description: The LogControlConfig to create.
+      type: object
+    configv1ReadLogControlConfigResponse:
+      properties:
+        log_control_config:
+          $ref: '#/components/schemas/configv1LogControlConfig'
+      type: object
+    EmitMetricsCounter:
+      properties:
+        value:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogFieldPath'
+          description: 'Optional. Specifies the name of the log field whose value you want to use as
+
+            the metric value. If unset, the counter increments by one.'
+      type: object
+    LogControlRuleEmitMetrics:
+      description: EmitMetrics is the configuration for emit metrics action.
+      properties:
+        counter:
+          allOf:
+          - $ref: '#/components/schemas/EmitMetricsCounter'
+          description: 'Generates a metric that counts the number of times a certain event has
+
+            occurred.'
+        drop_log:
+          description: Optional. If `true`, drops the entire log after emitting the defined metric.
+          type: boolean
+        gauge:
+          allOf:
+          - $ref: '#/components/schemas/EmitMetricsGauge'
+          description: 'Generates a metric that tracks a value, which changes over time. Choose `LAST`
+
+            (most recent), `MIN` (minimum value), or `MAX` (maximum value) to define which
+
+            value to use.'
+        histogram:
+          allOf:
+          - $ref: '#/components/schemas/EmitMetricsHistogram'
+          description: 'Generates a metric that tracks the distribution of values across data
+
+            groupings with exponentially increasing size.'
+        labels:
+          description: 'The labels to emit with the metric, specified as key/value pairs. The
+
+            generated label is a valid Prometheus label name, mapped to a log key.'
+          items:
+            $ref: '#/components/schemas/LogControlRuleEmitMetricsLabel'
+          type: array
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/EmitMetricsMetricMode'
+          description: 'Indicates the mode of the generated metric. Must be one of the following
+
+            values:'
+        name:
+          description: 'A unique name for the generated metric. This name must conform to Prometheus
+
+            naming conventions.'
+          type: string
+      required:
+      - mode
+      - name
+      type: object
+    GaugeAggregationType:
+      enum:
+      - LAST
+      - MIN
+      - MAX
+      type: string
+    LogControlRuleEmitMetricsLabel:
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/configv1LogFieldPath'
+      type: object
+    LogParserKeyValueParser:
+      description: 'A parser to extract key/value pairs from a string.
+
+        If duplicate keys are found, the first instance is used.'
+      properties:
+        delimiter:
+          description: The string for splitting the input into key/value pairs.
+          type: string
+        pair_separator:
+          description: The string for splitting each pair into its key and value.
+          type: string
+        trim_set:
+          description: 'Specifies the code points of any Unicode characters to trim from the
+
+            beginning and end of keys and values.'
+          type: string
+      required:
+      - delimiter
+      - pair_separator
+      type: object
+    LogParserParserType:
+      enum:
+      - JSON
+      - REGEX
+      - KEY_VALUE
+      - GROK
+      type: string
+    configv1LogControlRuleMode:
+      enum:
+      - ENABLED
+      - DISABLED
       type: string
     configv1LogControlRule:
       description: LogControlRule is the configuration for a log control rule.
@@ -310,90 +539,34 @@ components:
 
             values.'
       type: object
-    MappedValueReplacePair:
+    LogControlRuleDropField:
+      description: DropField is the configuration for a drop field action.
       properties:
-        key:
+        field_regex:
+          description: Defines the the regular expression that determines which fields to drop.
           type: string
-        value:
-          type: string
-      type: object
-    GaugeAggregationType:
-      enum:
-      - LAST
-      - MIN
-      - MAX
-      type: string
-    LogControlRuleParseField:
-      description: ParseField is the configuration for a parse field action.
-      properties:
-        destination:
+        parent_path:
           allOf:
           - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: "The destination field where parsed structured data will be written.\nIf the key already exists, the value will be overwritten.\nIf unset, the log will be updated at the root level and any conflicting \nkeys will be overwritten."
-        parser:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigLogParser'
-          description: The parser to apply to the source field.
-        source:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: The source field to parse.
-      type: object
-    LogIngestConfigLogParser:
-      properties:
-        grok_parser:
-          $ref: '#/components/schemas/LogParserGrokParser'
-        key_value_parser:
-          $ref: '#/components/schemas/LogParserKeyValueParser'
-        parser_type:
-          allOf:
-          - $ref: '#/components/schemas/LogParserParserType'
-          description: The type of parser to use.
-        regex_parser:
-          allOf:
-          - $ref: '#/components/schemas/LogParserRegexParser'
-          description: This object contains settings relevant to `REGEX` parsers.
-      type: object
-    configv1LogFieldPath:
-      properties:
-        selector:
-          description: 'The log filter used to indicate the field path. Use `parent[child]` syntax to
+          description: 'Optional. Specifies the level of depth in the log to apply the regular
 
-            indicate nesting.'
-          type: string
-      type: object
-    LogParserKeyValueParser:
-      description: 'A parser to extract key/value pairs from a string.
+            expression to. For example, if you want to apply the regular expression to
 
-        If duplicate keys are found, the first instance is used.'
-      properties:
-        delimiter:
-          description: The string for splitting the input into key/value pairs.
-          type: string
-        pair_separator:
-          description: The string for splitting each pair into its key and value.
-          type: string
-        trim_set:
-          description: 'Specifies the code points of any Unicode characters to trim from the
+            fields under `httpRequest`, such as `httpRequest.status`, enter `httpRequest`
 
-            beginning and end of keys and values.'
-          type: string
+            in the `parent_path` field. If empty, the fields to drop are at the root level
+
+            of the log.'
       required:
-      - delimiter
-      - pair_separator
+      - field_regex
       type: object
-    configv1LogControlRuleMode:
+    ReplaceFieldReplaceMode:
+      description: " - HASH: Replace the matched content with a hashed string, which can help reduce the\nsize of large strings. After replacing the original content with a string,\nthere’s no way to recover that information.\n - STATIC_VALUE: Replace the matched content with a static string. For example, replace\npunctuation in a field with an empty string, or truncate the ends of long\nstack traces.\n - MAPPED_VALUE: Replace the matched content with specified key/value pairs. For example,\nreduce log volume by replacing a string error with a specific error code. If\nnone of the key/value pairs match, the provided default value is used.\n\n@REQUIRED"
       enum:
-      - ENABLED
-      - DISABLED
+      - HASH
+      - STATIC_VALUE
+      - MAPPED_VALUE
       type: string
-    LogControlRuleEmitMetricsLabel:
-      properties:
-        key:
-          type: string
-        value:
-          $ref: '#/components/schemas/configv1LogFieldPath'
-      type: object
     EmitMetricsGauge:
       properties:
         aggregation_type:
@@ -409,163 +582,8 @@ components:
       required:
       - value
       type: object
-    ReplaceFieldMappedValue:
-      description: MappedValue is the configuration for mapped value replace mode.
-      properties:
-        default_value:
-          description: The value to use if no matching value is found.
-          type: string
-        pairs:
-          description: A list of key/value pairs to replace matched content with.
-          items:
-            $ref: '#/components/schemas/MappedValueReplacePair'
-          type: array
-        use_default:
-          description: 'If `true`, specifies a default value if no matching key is found. If
-
-            `false`, the value will be unchanged if no matching key is found.'
-          type: boolean
-      type: object
     genericError:
       additionalProperties: true
-      type: object
-    configv1ReadLogControlConfigResponse:
-      properties:
-        log_control_config:
-          $ref: '#/components/schemas/configv1LogControlConfig'
-      type: object
-    configv1CreateLogControlConfigResponse:
-      properties:
-        log_control_config:
-          $ref: '#/components/schemas/configv1LogControlConfig'
-      type: object
-    ReplaceFieldStaticValue:
-      description: 'StaticValue is the configuration for the replace field control rule in static value
-
-        mode. Used to replace the selected content with a static value.'
-      properties:
-        value:
-          description: 'The value to replace selected content with. If empty, the action removes the
-
-            selected content.'
-          type: string
-      type: object
-    EmitMetricsMetricMode:
-      enum:
-      - COUNTER
-      - GAUGE
-      - HISTOGRAM
-      type: string
-    LogControlRuleEmitMetrics:
-      description: EmitMetrics is the configuration for emit metrics action.
-      properties:
-        counter:
-          allOf:
-          - $ref: '#/components/schemas/EmitMetricsCounter'
-          description: 'Generates a metric that counts the number of times a certain event has
-
-            occurred.'
-        drop_log:
-          description: Optional. If `true`, drops the entire log after emitting the defined metric.
-          type: boolean
-        gauge:
-          allOf:
-          - $ref: '#/components/schemas/EmitMetricsGauge'
-          description: 'Generates a metric that tracks a value, which changes over time. Choose `LAST`
-
-            (most recent), `MIN` (minimum value), or `MAX` (maximum value) to define which
-
-            value to use.'
-        histogram:
-          allOf:
-          - $ref: '#/components/schemas/EmitMetricsHistogram'
-          description: 'Generates a metric that tracks the distribution of values across data
-
-            groupings with exponentially increasing size.'
-        labels:
-          description: 'The labels to emit with the metric, specified as key/value pairs. The
-
-            generated label is a valid Prometheus label name, mapped to a log key.'
-          items:
-            $ref: '#/components/schemas/LogControlRuleEmitMetricsLabel'
-          type: array
-        mode:
-          allOf:
-          - $ref: '#/components/schemas/EmitMetricsMetricMode'
-          description: 'Indicates the mode of the generated metric. Must be one of the following
-
-            values:'
-        name:
-          description: 'A unique name for the generated metric. This name must conform to Prometheus
-
-            naming conventions.'
-          type: string
-      required:
-      - mode
-      - name
-      type: object
-    LogParserParserType:
-      enum:
-      - JSON
-      - REGEX
-      - KEY_VALUE
-      - GROK
-      type: string
-    configv1LogControlRuleType:
-      enum:
-      - DROP
-      - SAMPLE
-      - DROP_FIELD
-      - REPLACE_FIELD
-      - EMIT_METRICS
-      - PARSE_FIELD
-      type: string
-    configv1CreateLogControlConfigRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LogControlConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogControlConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_control_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogControlConfig'
-          description: The LogControlConfig to create.
-      type: object
-    EmitMetricsHistogram:
-      properties:
-        value:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: The name of the log field whose value you want to use as the metric value.
-      required:
-      - value
-      type: object
-    EmitMetricsCounter:
-      properties:
-        value:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: 'Optional. Specifies the name of the log field whose value you want to use as
-
-            the metric value. If unset, the counter increments by one.'
-      type: object
-    configv1UpdateLogControlConfigResponse:
-      properties:
-        log_control_config:
-          $ref: '#/components/schemas/configv1LogControlConfig'
-      type: object
-    LogControlRuleSample:
-      description: Sample is the configuration for the sample logs action.
-      properties:
-        rate:
-          description: 'Percentage of matching logs to keep. Must be in the range `[0, 1]`, where `1`
-
-            is equal to 100% of logs. For example, to keep 25% of logs, enter `0.25` as
-
-            the `rate`.'
-          format: double
-          type: number
-      required:
-      - rate
       type: object
     configv1LogControlConfig:
       description: 'LogControlConfig is a singleton configuration object that specifies the
@@ -588,30 +606,12 @@ components:
           readOnly: true
           type: string
       type: object
-    configv1UpdateLogControlConfigRequest:
+    configv1UpdateLogControlConfigResponse:
       properties:
-        create_if_missing:
-          description: If `true`, the LogControlConfig will be created if it does not already exist. If `false`, an error will be returned if the LogControlConfig does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the LogControlConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogControlConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
         log_control_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogControlConfig'
-          description: The LogControlConfig to update.
+          $ref: '#/components/schemas/configv1LogControlConfig'
       type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    LogParserGrokParser:
-      properties:
-        pattern:
-          description: "The grok pattern to apply. Named capture groups become named fields in \nthe extracted log."
-          type: string
+    configv1DeleteLogControlConfigResponse:
       type: object
   securitySchemes:
     ApiKeyAuth:

@@ -196,19 +196,40 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableDeleteNoopEntityResponse:
-      properties:
-        not_hidden:
-          type: boolean
-      type: object
-    NoopEntityNestedEnum:
-      enum:
-      - ENABLED
-      type: string
-    configunstableUpdateNoopEntityResponse:
+    configunstableCreateNoopEntityResponse:
       properties:
         noop_entity:
           $ref: '#/components/schemas/configunstableNoopEntity'
+      type: object
+    configunstableNoopEnum:
+      enum:
+      - ACTIVE
+      type: string
+    genericError:
+      additionalProperties: true
+      type: object
+    ConfigUnstableUpdateNoopEntityBody:
+      properties:
+        noop_entity:
+          $ref: '#/components/schemas/configunstableNoopEntity'
+        create_if_missing:
+          description: If `true`, the NoopEntity will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the NoopEntity does not already exist.
+          type: boolean
+      type: object
+    configunstableReadNoopEntityResponse:
+      properties:
+        noop_entity:
+          $ref: '#/components/schemas/configunstableNoopEntity'
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configunstableNoopEntity:
       properties:
@@ -233,22 +254,16 @@ components:
         enum:
           $ref: '#/components/schemas/configunstableNoopEnum'
       type: object
-    configunstableCreateNoopEntityResponse:
+    NoopEntityNestedEnum:
+      enum:
+      - ENABLED
+      type: string
+    configunstableDeleteNoopEntityResponse:
       properties:
-        noop_entity:
-          $ref: '#/components/schemas/configunstableNoopEntity'
+        not_hidden:
+          type: boolean
       type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableReadNoopEntityResponse:
+    configunstableUpdateNoopEntityResponse:
       properties:
         noop_entity:
           $ref: '#/components/schemas/configunstableNoopEntity'
@@ -258,18 +273,3 @@ components:
         noop_entity:
           $ref: '#/components/schemas/configunstableNoopEntity'
       type: object
-    ConfigUnstableUpdateNoopEntityBody:
-      properties:
-        noop_entity:
-          $ref: '#/components/schemas/configunstableNoopEntity'
-        create_if_missing:
-          description: If `true`, the NoopEntity will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the NoopEntity does not already exist.
-          type: boolean
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableNoopEnum:
-      enum:
-      - ACTIVE
-      type: string

@@ -73,6 +73,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     configv1ListServiceAttributesResponse:
       properties:
         page:
@@ -81,6 +91,9 @@ components:
           items:
             $ref: '#/components/schemas/configv1ServiceAttribute'
           type: array
+      type: object
+    genericError:
+      additionalProperties: true
       type: object
     apiError:
       properties:
@@ -116,19 +129,6 @@ components:
           description: Timestamp of when the service attributes were updated. Cannot be set by clients.
           format: date-time
           readOnly: true
-          type: string
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
           type: string
       type: object
   securitySchemes:

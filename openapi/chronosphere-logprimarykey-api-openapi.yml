@@ -202,12 +202,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableDeleteLogPrimaryKeyResponse:
-      type: object
-    configunstableCreateLogPrimaryKeyResponse:
+    configunstableListLogPrimaryKeysResponse:
       properties:
-        log_primary_key:
-          $ref: '#/components/schemas/configunstableLogPrimaryKey'
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_primary_keys:
+          items:
+            $ref: '#/components/schemas/configunstableLogPrimaryKey'
+          type: array
       type: object
     configv1PageResult:
       properties:
@@ -219,16 +221,6 @@ components:
             more items to return.'
           type: string
       type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
     configunstableCreateLogPrimaryKeyRequest:
       properties:
         log_primary_key:
@@ -237,14 +229,8 @@ components:
           description: If `true`, validates the specified configuration without creating the LogPrimaryKey. If the specified configuration is valid, the endpoint returns a partial response without the LogPrimaryKey. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    configunstableListLogPrimaryKeysResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        log_primary_keys:
-          items:
-            $ref: '#/components/schemas/configunstableLogPrimaryKey'
-          type: array
+    genericError:
+      additionalProperties: true
       type: object
     configunstableLogPrimaryKey:
       properties:
@@ -272,13 +258,22 @@ components:
             $ref: '#/components/schemas/LogPrimaryKeyLogPrimaryKeyField'
           type: array
       type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableDeleteLogPrimaryKeyResponse:
+      type: object
     configunstableReadLogPrimaryKeyResponse:
       properties:
         log_primary_key:
           $ref: '#/components/schemas/configunstableLogPrimaryKey'
-      type: object
-    genericError:
-      additionalProperties: true
       type: object
     LogPrimaryKeyLogPrimaryKeyField:
       properties:
@@ -288,4 +283,9 @@ components:
         source:
           description: source is the name of the source field
           type: string
+      type: object
+    configunstableCreateLogPrimaryKeyResponse:
+      properties:
+        log_primary_key:
+          $ref: '#/components/schemas/configunstableLogPrimaryKey'
       type: object
