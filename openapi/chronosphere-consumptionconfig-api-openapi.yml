@@ -180,64 +180,163 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1ReadConsumptionConfigResponse:
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1UpdateConsumptionConfigResponse:
       properties:
         consumption_config:
           $ref: '#/components/schemas/configv1ConsumptionConfig'
       type: object
-    StringFilterStringFilterMatchType:
-      enum:
-      - EXACT
-      - REGEX
-      - EXACT_NEGATION
-      - REGEX_NEGATION
-      - IN
-      - NOT_IN
-      type: string
-    PartitionFilterCondition:
+    TraceSearchFilterDurationFilter:
       properties:
-        dataset_slug:
-          description: Deprecated. Use `log_filter`, `metric_filters`, or `trace_span_filters` instead.
-          type: string
-        log_filter:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogSearchFilter'
-          description: 'If set, matches incoming log data by log query.
-
-
-            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
-        metric_filters:
-          description: 'If set, matches incoming metric data by label. If multiple label
-
-            filters are specified, an incoming metric must match every label
-
-            filter to match the condition. Label values support glob patterns,
-
-            including matching multiple patterns with an `OR`, such as
-
-            `service:{svc1,svc2}`.
-
-
-            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
-          items:
-            $ref: '#/components/schemas/configv1LabelFilter'
-          type: array
-        trace_span_filters:
-          description: 'If set, matches incoming trace data at the span level: a span
-
-            matches the condition only if it satisfies every span filter.
-
-            Match alternatives with an `IN` string filter or with separate
-
-            conditions.
-
-
-            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
-          items:
-            $ref: '#/components/schemas/configv1ConsumptionSpanFilter'
-          type: array
+        max_secs:
+          description: Maximum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
+        min_secs:
+          description: Minimum duration, in seconds, required for a span or trace to match.
+          format: double
+          type: number
       type: object
-    configv1DeleteConsumptionConfigResponse:
+    configv1CreateConsumptionConfigResponse:
+      properties:
+        consumption_config:
+          $ref: '#/components/schemas/configv1ConsumptionConfig'
+      type: object
+    ConsumptionConfigPartition:
+      properties:
+        filters:
+          description: 'Criteria that defines which data matches the `partition`. Filters are
+
+            concatenated together as implied `AND` operators. A request must match every
+
+            filter to match the `partition`. At most one `IN` filter and one `NOT_IN`
+
+            filter is allowed, since multiple filters of the same operator type are
+
+            always reducible to a single filter.'
+          items:
+            $ref: '#/components/schemas/ConsumptionConfigPartitionFilter'
+          type: array
+        name:
+          description: 'Name of the partition. Must be unique within the parent partition. You can
+
+            modify this value after the partition is created.'
+          type: string
+        partitions:
+          description: 'Optional. Child partitions of this partition. If set, requests that match the
+
+            current partition are allocated to the first child partition that matches.
+
+            Requests that don''t match any child partition are assigned to an implicit `default`
+
+            child partition.'
+          items:
+            $ref: '#/components/schemas/ConsumptionConfigPartition'
+          type: array
+        slug:
+          description: 'Immutable identifier of the partition. Must be unique within the parent
+
+            partition. You can''t modify this value after the partition is created.'
+          type: string
+      required:
+      - filters
+      type: object
+    TraceSearchFilterNumericFilter:
+      properties:
+        comparison:
+          allOf:
+          - $ref: '#/components/schemas/NumericFilterComparisonType'
+          description: The comparison operation to apply to an input against the given query value.
+        value:
+          description: The filter value used in comparison against match candidates.
+          format: double
+          type: number
+      type: object
+    TraceSearchFilterBoolFilter:
+      properties:
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: boolean
+      type: object
+    configv1LogSearchFilter:
+      properties:
+        query:
+          description: 'Returns logs that match this query. The query can include only top-level
+
+            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
+
+            operator is allowed.'
+          type: string
+      type: object
+    NumericFilterComparisonType:
+      enum:
+      - EQUAL
+      - NOT_EQUAL
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      type: string
+    configv1ConsumptionConfig:
+      properties:
+        created_at:
+          description: Timestamp of when the ConsumptionConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        partitions:
+          description: 'Partitions define non-overlapping groupings of telemetry data. Partitions are
+
+            defined in order of precedence, where incoming requests are allocated to the
+
+            first partition that matches. Requests that don''t match any partition use an
+
+            implicit `default` partition.'
+          items:
+            $ref: '#/components/schemas/ConsumptionConfigPartition'
+          type: array
+        updated_at:
+          description: Timestamp of when the ConsumptionConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    TraceSearchFilterTagFilter:
+      properties:
+        key:
+          description: The key or name of the span tag that this filter inspects.
+          type: string
+        numeric_value:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
+          description: 'If the query matches the tag with the specified key, and the value type is
+
+            `numeric`, specifies the matcher used to evaluate the span tag value.'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
+          description: 'If the query matches the tag with the specified key, and the value type is a
+
+            `string`, specifies the matcher used to evaluate the span tag value.'
+      type: object
+    TraceSearchFilterStringFilter:
+      properties:
+        in_values:
+          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
+          items:
+            type: string
+          type: array
+        match:
+          allOf:
+          - $ref: '#/components/schemas/StringFilterStringFilterMatchType'
+          description: 'Specifies the comparison operator for the query. If `EXACT`, compared strings
+
+            must have the exact value of the query value.'
+        value:
+          description: The value of the filter compared to the target trace or span field.
+          type: string
       type: object
     configv1ConsumptionSpanFilter:
       properties:
@@ -287,91 +386,56 @@ components:
             $ref: '#/components/schemas/TraceSearchFilterTagFilter'
           type: array
       type: object
-    configv1CreateConsumptionConfigRequest:
-      properties:
-        consumption_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1ConsumptionConfig'
-          description: The ConsumptionConfig to create.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the ConsumptionConfig. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    ConsumptionConfigPartition:
-      properties:
-        filters:
-          description: 'Criteria that defines which data matches the `partition`. Filters are
-
-            concatenated together as implied `AND` operators. A request must match every
-
-            filter to match the `partition`. At most one `IN` filter and one `NOT_IN`
-
-            filter is allowed, since multiple filters of the same operator type are
-
-            always reducible to a single filter.'
-          items:
-            $ref: '#/components/schemas/ConsumptionConfigPartitionFilter'
-          type: array
-        name:
-          description: 'Name of the partition. Must be unique within the parent partition. You can
-
-            modify this value after the partition is created.'
-          type: string
-        partitions:
-          description: 'Optional. Child partitions of this partition. If set, requests that match the
-
-            current partition are allocated to the first child partition that matches.
-
-            Requests that don''t match any child partition are assigned to an implicit `default`
-
-            child partition.'
-          items:
-            $ref: '#/components/schemas/ConsumptionConfigPartition'
-          type: array
-        slug:
-          description: 'Immutable identifier of the partition. Must be unique within the parent
-
-            partition. You can''t modify this value after the partition is created.'
-          type: string
-      required:
-      - filters
+    configv1DeleteConsumptionConfigResponse:
       type: object
     PartitionFilterOperator:
       enum:
       - IN
       - NOT_IN
       type: string
-    TraceSearchFilterStringFilter:
+    PartitionFilterCondition:
       properties:
-        in_values:
-          description: Values the filter tests against when using `IN` or `NOT_IN` match type.
-          items:
-            type: string
-          type: array
-        match:
-          allOf:
-          - $ref: '#/components/schemas/StringFilterStringFilterMatchType'
-          description: 'Specifies the comparison operator for the query. If `EXACT`, compared strings
-
-            must have the exact value of the query value.'
-        value:
-          description: The value of the filter compared to the target trace or span field.
+        dataset_slug:
+          description: Deprecated. Use `log_filter`, `metric_filters`, or `trace_span_filters` instead.
           type: string
+        log_filter:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogSearchFilter'
+          description: 'If set, matches incoming log data by log query.
+
+
+            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
+        metric_filters:
+          description: 'If set, matches incoming metric data by label. If multiple label
+
+            filters are specified, an incoming metric must match every label
+
+            filter to match the condition. Label values support glob patterns,
+
+            including matching multiple patterns with an `OR`, such as
+
+            `service:{svc1,svc2}`.
+
+
+            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter'
+          type: array
+        trace_span_filters:
+          description: 'If set, matches incoming trace data at the span level: a span
+
+            matches the condition only if it satisfies every span filter.
+
+            Match alternatives with an `IN` string filter or with separate
+
+            conditions.
+
+
+            Exactly one of `log_filter`, `metric_filters`, or `trace_span_filters` must be set.'
+          items:
+            $ref: '#/components/schemas/configv1ConsumptionSpanFilter'
+          type: array
       type: object
-    configv1UpdateConsumptionConfigResponse:
-      properties:
-        consumption_config:
-          $ref: '#/components/schemas/configv1ConsumptionConfig'
-      type: object
-    NumericFilterComparisonType:
-      enum:
-      - EQUAL
-      - NOT_EQUAL
-      - GREATER_THAN
-      - GREATER_THAN_OR_EQUAL
-      - LESS_THAN
-      - LESS_THAN_OR_EQUAL
-      type: string
     configv1UpdateConsumptionConfigRequest:
       properties:
         consumption_config:
@@ -385,55 +449,11 @@ components:
           description: If `true`, validates the specified configuration without creating or updating the ConsumptionConfig. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionConfig. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    configv1LogSearchFilter:
-      properties:
-        query:
-          description: 'Returns logs that match this query. The query can include only top-level
-
-            operations. Nested clauses aren''t supported. Only one type of `AND` or `OR`
-
-            operator is allowed.'
-          type: string
-      type: object
-    TraceSearchFilterNumericFilter:
-      properties:
-        comparison:
-          allOf:
-          - $ref: '#/components/schemas/NumericFilterComparisonType'
-          description: The comparison operation to apply to an input against the given query value.
-        value:
-          description: The filter value used in comparison against match candidates.
-          format: double
-          type: number
-      type: object
-    TraceSearchFilterTagFilter:
-      properties:
-        key:
-          description: The key or name of the span tag that this filter inspects.
-          type: string
-        numeric_value:
-          allOf:
-          - $ref: '#/components/schemas/TraceSearchFilterNumericFilter'
-          description: 'If the query matches the tag with the specified key, and the value type is
-
-            `numeric`, specifies the matcher used to evaluate the span tag value.'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TraceSearchFilterStringFilter'
-          description: 'If the query matches the tag with the specified key, and the value type is a
-
-            `string`, specifies the matcher used to evaluate the span tag value.'
-      type: object
     apiError:
       properties:
         message:
           description: An error message describing what went wrong.
           type: string
-      type: object
-    configv1CreateConsumptionConfigResponse:
-      properties:
-        consumption_config:
-          $ref: '#/components/schemas/configv1ConsumptionConfig'
       type: object
     ConsumptionConfigPartitionFilter:
       properties:
@@ -453,11 +473,19 @@ components:
       required:
       - operator
       type: object
-    TraceSearchFilterBoolFilter:
+    StringFilterStringFilterMatchType:
+      enum:
+      - EXACT
+      - REGEX
+      - EXACT_NEGATION
+      - REGEX_NEGATION
+      - IN
+      - NOT_IN
+      type: string
+    configv1ReadConsumptionConfigResponse:
       properties:
-        value:
-          description: The value of the filter compared to the target trace or span field.
-          type: boolean
+        consumption_config:
+          $ref: '#/components/schemas/configv1ConsumptionConfig'
       type: object
     configv1LabelFilter:
       properties:
@@ -470,43 +498,15 @@ components:
           example: myservice*
           type: string
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    TraceSearchFilterDurationFilter:
+    configv1CreateConsumptionConfigRequest:
       properties:
-        max_secs:
-          description: Maximum duration, in seconds, required for a span or trace to match.
-          format: double
-          type: number
-        min_secs:
-          description: Minimum duration, in seconds, required for a span or trace to match.
-          format: double
-          type: number
-      type: object
-    configv1ConsumptionConfig:
-      properties:
-        created_at:
-          description: Timestamp of when the ConsumptionConfig was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-        partitions:
-          description: 'Partitions define non-overlapping groupings of telemetry data. Partitions are
-
-            defined in order of precedence, where incoming requests are allocated to the
-
-            first partition that matches. Requests that don''t match any partition use an
-
-            implicit `default` partition.'
-          items:
-            $ref: '#/components/schemas/ConsumptionConfigPartition'
-          type: array
-        updated_at:
-          description: Timestamp of when the ConsumptionConfig was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
+        consumption_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1ConsumptionConfig'
+          description: The ConsumptionConfig to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the ConsumptionConfig. If the specified configuration is valid, the endpoint returns a partial response without the ConsumptionConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
   securitySchemes:
     ApiKeyAuth:

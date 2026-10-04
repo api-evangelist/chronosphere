@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-update-collection-response-schema.json",
+  "title": "configv1UpdateCollectionResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1UpdateCollectionResponse",
+  "properties": {
+    "collection": {
+      "$ref": "#/$defs/configv1Collection"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configv1Collection": {
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the Collection was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the collection.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Collection. You can modify this value after the Collection is created.",
+          "type": "string"
+        },
+        "notification_policy_slug": {
+          "description": "The slug of the default notification policy for monitors in this collection.\nThis value is only required when the collection contains monitors and one\nor more of those monitors don't explicitly reference a policy. This value does\nnot override the policy used when a monitor explicitly references a different\npolicy.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The unique identifier of the Collection. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Collection is created.",
+          "type": "string"
+        },
+        "team_slug": {
+          "description": "The slug of the team that the collection belongs to.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Collection was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "team_slug"
+      ],
+      "type": "object"
+    }
+  }
+}

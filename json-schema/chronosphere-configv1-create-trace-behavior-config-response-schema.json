@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-create-trace-behavior-config-response-schema.json",
+  "title": "configv1CreateTraceBehaviorConfigResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-tracebehaviorconfig-api-openapi.yml#/components/schemas/configv1CreateTraceBehaviorConfigResponse",
+  "properties": {
+    "trace_behavior_config": {
+      "$ref": "#/$defs/configv1TraceBehaviorConfig"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "TraceBehaviorConfigMainBehaviorAssignment": {
+      "properties": {
+        "behavior_slug": {
+          "description": "The slug reference of a trace behavior.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "The timestamp of when the trace behavior was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "created_by": {
+          "description": "The author or creator of the behavior assignment.",
+          "type": "string"
+        },
+        "dataset_slug": {
+          "description": "The slug reference of a trace dataset.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the behavior assignment.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "The timestamp of when the trace behavior was updated.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TraceBehaviorConfigOverrideBehaviorAssignment": {
+      "properties": {
+        "behavior_slug": {
+          "description": "The slug reference of a trace behavior.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "The timestamp of when the override behavior assignment was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "created_by": {
+          "description": "The author or creator of the override.",
+          "type": "string"
+        },
+        "dataset_slug": {
+          "description": "The slug reference of a trace dataset.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the override.",
+          "type": "string"
+        },
+        "end_time": {
+          "description": "The ending time of the override.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "start_time": {
+          "description": "The starting time of the override.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "The timestamp of when the override behavior assignment was updated.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1TraceBehaviorConfig": {
+      "description": "TraceBehaviorConfig is a singleton configuration object that specifies the\nconfiguration for trace behaviors.",
+      "properties": {
+        "baseline_behavior_slug": {
+          "description": "The baseline behavior to use for behavior assignments and base head sampling rates.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the TraceBehaviorConfig was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "dataset_priorities": {
+          "description": "List of dataset priorities. This list specifies the order in which datasets are\nconsidered when determining the behavior to follow for a trace. Dataset\npriorities are used to break ties when a trace matches more than one dataset\nwith an active behavior.\n* Each entry in this list must refer to the slug of an existing dataset.\n* The order of the list is the order in which the datasets are considered.\n* The list must contain all datasets referenced in either\n  `main_behavior_assignments` or `override_behavior_assignments`.\n* The list can contain datasets that are not referenced in either of these\n  assignments.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "main_behavior_assignments": {
+          "description": "List of assignments for the main behavior. The referenced datasets will be\nenrolled in behaviors. The referenced behaviors are the active behaviors for the\ndataset when there is no active override. Only one main behavior can be assigned\nto a dataset. See the documentation for\n[customizing your sampling\nstrategy](https://docs.chronosphere.io/control/shaping/sample-traces/behaviors#customize-your-sampling-strategy)\nfor more information.",
+          "items": {
+            "$ref": "#/$defs/TraceBehaviorConfigMainBehaviorAssignment"
+          },
+          "type": "array"
+        },
+        "override_behavior_assignments": {
+          "description": "List of assignments for the override behavior. These assignments specify the\nactive behavior for a dataset over a specific time range. Only one override\nbehavior can be assigned to a dataset.",
+          "items": {
+            "$ref": "#/$defs/TraceBehaviorConfigOverrideBehaviorAssignment"
+          },
+          "type": "array"
+        },
+        "preview_behavior_assignments": {
+          "description": "List of assignments for the preview behavior. The referenced behaviors are in\npreview mode for the assigned dataset. You can assign only one preview behavior\nto a dataset.",
+          "items": {
+            "$ref": "#/$defs/TraceBehaviorConfigOverrideBehaviorAssignment"
+          },
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the TraceBehaviorConfig was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

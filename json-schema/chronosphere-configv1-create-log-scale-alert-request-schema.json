@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-create-log-scale-alert-request-schema.json",
+  "title": "configv1CreateLogScaleAlertRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-logscalealert-api-openapi.yml#/components/schemas/configv1CreateLogScaleAlertRequest",
+  "type": "object",
+  "properties": {
+    "log_scale_alert": {
+      "$ref": "#/$defs/configv1LogScaleAlert"
+    },
+    "dry_run": {
+      "type": "boolean",
+      "description": "If true, the LogScaleAlert isn't created, and no response LogScaleAlert will be returned. The response will return an error if the given LogScaleAlert is invalid."
+    }
+  },
+  "$defs": {
+    "LogScaleAlertAlertType": {
+      "type": "string",
+      "enum": [
+        "STANDARD",
+        "FILTER"
+      ]
+    },
+    "configv1LogScaleAlert": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Unique identifier of the LogScaleAlert. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the LogScaleAlert is created."
+        },
+        "repository": {
+          "type": "string",
+          "description": "Name of LogScale repository the alerts belongs to. Required."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the alert."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Timestamp of when the LogScaleAlert was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Timestamp of when the LogScaleAlert was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the alert."
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Flag indicating whether the alert is disabled."
+        },
+        "log_scale_query": {
+          "type": "string",
+          "description": "LogScale query to execute."
+        },
+        "time_window_secs": {
+          "type": "integer",
+          "description": "Lookback window used for an alert's evaluation.\nIf this is set to 86400 seconds (24 hours), only the events from the last 24 hours will be considered when the alert query is run.",
+          "format": "int32"
+        },
+        "throttle_secs": {
+          "type": "integer",
+          "description": "Throttle time in seconds. The alert is triggered at most once per throttle period.",
+          "format": "int32"
+        },
+        "throttle_field": {
+          "type": "string",
+          "description": "Field to throttle on. Optional."
+        },
+        "log_scale_action_slugs": {
+          "type": "array",
+          "description": "Slugs of LogScale actions that will receive the alerts. When the value is empty\nthis alert won't trigger. Optional.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags attached to the alert.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "run_as_user": {
+          "type": "string",
+          "description": "Email of the user that the alert runs on behalf of. Required."
+        },
+        "alert_type": {
+          "$ref": "#/$defs/LogScaleAlertAlertType"
+        }
+      }
+    }
+  }
+}

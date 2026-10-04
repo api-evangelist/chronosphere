@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Log Ingest Config API
   version: v1
-  description: 'Operations tagged LogIngestConfig across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged LogIngestConfig across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -186,30 +186,42 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    LogIngestConfigLogFieldParser:
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1LogFieldPath:
       properties:
-        destination:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: 'The destination field for storing parsed structured data.
+        selector:
+          description: 'The log filter used to indicate the field path. Use `parent[child]` syntax to
 
-            If the specified key already exists, its value is overwritten.
+            indicate nesting.'
+          type: string
+      type: object
+    configv1UpdateLogIngestConfigRequest:
+      properties:
+        create_if_missing:
+          description: If `true`, the LogIngestConfig will be created if it does not already exist. If `false`, an error will be returned if the LogIngestConfig does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the LogIngestConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogIngestConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_ingest_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogIngestConfig'
+          description: The LogIngestConfig to update.
+      type: object
+    LogParserRegexParser:
+      properties:
+        regex:
+          description: 'The regular expression parser pattern to apply. Must use RE2 syntax.
 
-            If this value is unset, the log is updated at the root level and any
-
-            conflicting keys are overwritten.'
-        mode:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigLogFieldParserMode'
-          description: Specifies whether the field parser is enabled or disabled.
-        parser:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigLogParser'
-          description: The parser to apply to the source field.
-        source:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogFieldPath'
-          description: The source field to parse.
+            Named capturing groups become named fields in the extracted log.'
+          type: string
+      type: object
+    configv1CreateLogIngestConfigResponse:
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
       type: object
     LogParserGrokParser:
       properties:
@@ -217,44 +229,24 @@ components:
           description: "The grok pattern to apply. Named capture groups become named fields in \nthe extracted log."
           type: string
       type: object
-    configv1CreateLogIngestConfigRequest:
+    LogIngestConfigTimestampNormalization:
+      description: TimestampNormalization specifies which fields to check for timestamp values.
       properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the LogIngestConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogIngestConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_ingest_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogIngestConfig'
-          description: The LogIngestConfig to create.
-      type: object
-    configv1LogIngestConfig:
-      description: LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.
-      properties:
-        created_at:
-          description: Timestamp of when the LogIngestConfig was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
-        field_normalization:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigFieldNormalization'
-          description: Maps and normalizes well-known fields from parsed logs.
-        field_parsers:
-          description: The parsers to apply to specific fields within structured logs or plaintext logs after those logs are parsed.
+        source:
+          description: 'List of field paths to check for timestamp values, in priority order.
+
+            Common fields include "timestamp", "@timestamp", "time", "datetime".'
           items:
-            $ref: '#/components/schemas/LogIngestConfigLogFieldParser'
+            $ref: '#/components/schemas/configv1LogFieldPath'
           type: array
-        plaintext_parsers:
-          description: The parsers to apply to plaintext logs. The first parser that matches the log is used.
-          items:
-            $ref: '#/components/schemas/LogIngestConfigPlaintextParser'
-          type: array
-        updated_at:
-          description: Timestamp of when the LogIngestConfig was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-          type: string
       type: object
+    LogParserParserType:
+      enum:
+      - JSON
+      - REGEX
+      - KEY_VALUE
+      - GROK
+      type: string
     LogIngestConfigFieldNormalization:
       description: 'FieldNormalization allows you to map and normalize well-known fields from your logs.
 
@@ -294,96 +286,6 @@ components:
 
             The system will try each specified field in order until a valid timestamp is found.'
       type: object
-    LogIngestConfigPlaintextParser:
-      properties:
-        keep_original:
-          description: 'If `true`, the original log is retained after parsing and stored in the
-
-            key `plaintext_log`. If `false`, the original log is dropped after parsing.
-
-            Default value: `false`.'
-          type: boolean
-        mode:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigPlaintextParserMode'
-          description: Specifies whether the parser is enabled or disabled.
-        name:
-          description: The name of the parser. Must be unique within the configuration.
-          type: string
-        parser:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigLogParser'
-          description: The parser configuration to apply to plaintext logs.
-      type: object
-    configv1LogFieldPath:
-      properties:
-        selector:
-          description: 'The log filter used to indicate the field path. Use `parent[child]` syntax to
-
-            indicate nesting.'
-          type: string
-      type: object
-    LogIngestConfigLogParser:
-      properties:
-        grok_parser:
-          $ref: '#/components/schemas/LogParserGrokParser'
-        key_value_parser:
-          $ref: '#/components/schemas/LogParserKeyValueParser'
-        parser_type:
-          allOf:
-          - $ref: '#/components/schemas/LogParserParserType'
-          description: The type of parser to use.
-        regex_parser:
-          allOf:
-          - $ref: '#/components/schemas/LogParserRegexParser'
-          description: This object contains settings relevant to `REGEX` parsers.
-      type: object
-    LogIngestConfigNamedStringNormalization:
-      description: NamedStringNormalization maps a field to a named target with optional transformations.
-      properties:
-        normalization:
-          allOf:
-          - $ref: '#/components/schemas/LogIngestConfigStringNormalization'
-          description: The normalization configuration for this field.
-        target:
-          description: The name of the target field where the normalized value will be stored.
-          type: string
-      type: object
-    configv1CreateLogIngestConfigResponse:
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-      type: object
-    LogIngestConfigLogFieldParserMode:
-      enum:
-      - ENABLED
-      - DISABLED
-      type: string
-    configv1UpdateLogIngestConfigRequest:
-      properties:
-        create_if_missing:
-          description: If `true`, the LogIngestConfig will be created if it does not already exist. If `false`, an error will be returned if the LogIngestConfig does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the LogIngestConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogIngestConfig. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        log_ingest_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1LogIngestConfig'
-          description: The LogIngestConfig to update.
-      type: object
-    configv1UpdateLogIngestConfigResponse:
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-      type: object
-    configv1ReadLogIngestConfigResponse:
-      properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig'
-      type: object
-    configv1DeleteLogIngestConfigResponse:
-      type: object
     LogIngestConfigStringNormalization:
       description: StringNormalization defines how to extract and transform string values from log fields.
       properties:
@@ -414,19 +316,77 @@ components:
             For example: {"warn": "WARNING", "err": "ERROR"} to standardize severity levels.'
           type: object
       type: object
-    LogParserRegexParser:
+    LogIngestConfigLogFieldParserMode:
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    configv1CreateLogIngestConfigRequest:
       properties:
-        regex:
-          description: 'The regular expression parser pattern to apply. Must use RE2 syntax.
-
-            Named capturing groups become named fields in the extracted log.'
-          type: string
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the LogIngestConfig. If the specified configuration is valid, the endpoint returns a partial response without the LogIngestConfig. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        log_ingest_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogIngestConfig'
+          description: The LogIngestConfig to create.
       type: object
-    apiError:
+    LogIngestConfigPlaintextParserMode:
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    configv1ReadLogIngestConfigResponse:
       properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+      type: object
+    LogIngestConfigLogParser:
+      properties:
+        grok_parser:
+          $ref: '#/components/schemas/LogParserGrokParser'
+        key_value_parser:
+          $ref: '#/components/schemas/LogParserKeyValueParser'
+        parser_type:
+          allOf:
+          - $ref: '#/components/schemas/LogParserParserType'
+          description: The type of parser to use.
+        regex_parser:
+          allOf:
+          - $ref: '#/components/schemas/LogParserRegexParser'
+          description: This object contains settings relevant to `REGEX` parsers.
+      type: object
+    configv1DeleteLogIngestConfigResponse:
+      type: object
+    configv1UpdateLogIngestConfigResponse:
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig'
+      type: object
+    LogIngestConfigLogFieldParser:
+      properties:
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogFieldPath'
+          description: 'The destination field for storing parsed structured data.
+
+            If the specified key already exists, its value is overwritten.
+
+            If this value is unset, the log is updated at the root level and any
+
+            conflicting keys are overwritten.'
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigLogFieldParserMode'
+          description: Specifies whether the field parser is enabled or disabled.
+        parser:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigLogParser'
+          description: The parser to apply to the source field.
+        source:
+          allOf:
+          - $ref: '#/components/schemas/configv1LogFieldPath'
+          description: The source field to parse.
       type: object
     LogParserKeyValueParser:
       description: 'A parser to extract key/value pairs from a string.
@@ -448,41 +408,83 @@ components:
       - delimiter
       - pair_separator
       type: object
-    LogParserParserType:
-      enum:
-      - JSON
-      - REGEX
-      - KEY_VALUE
-      - GROK
-      type: string
-    LogIngestConfigPlaintextParserMode:
-      enum:
-      - ENABLED
-      - DISABLED
-      type: string
-    LogIngestConfigTimestampNormalization:
-      description: TimestampNormalization specifies which fields to check for timestamp values.
+    apiError:
       properties:
-        source:
-          description: 'List of field paths to check for timestamp values, in priority order.
-
-            Common fields include "timestamp", "@timestamp", "time", "datetime".'
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    LogIngestConfigNamedStringNormalization:
+      description: NamedStringNormalization maps a field to a named target with optional transformations.
+      properties:
+        normalization:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigStringNormalization'
+          description: The normalization configuration for this field.
+        target:
+          description: The name of the target field where the normalized value will be stored.
+          type: string
+      type: object
+    configv1LogIngestConfig:
+      description: LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.
+      properties:
+        created_at:
+          description: Timestamp of when the LogIngestConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
+        field_normalization:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigFieldNormalization'
+          description: Maps and normalizes well-known fields from parsed logs.
+        field_parsers:
+          description: The parsers to apply to specific fields within structured logs or plaintext logs after those logs are parsed.
           items:
-            $ref: '#/components/schemas/configv1LogFieldPath'
+            $ref: '#/components/schemas/LogIngestConfigLogFieldParser'
           type: array
+        plaintext_parsers:
+          description: The parsers to apply to plaintext logs. The first parser that matches the log is used.
+          items:
+            $ref: '#/components/schemas/LogIngestConfigPlaintextParser'
+          type: array
+        updated_at:
+          description: Timestamp of when the LogIngestConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+          type: string
       type: object
-    genericError:
-      additionalProperties: true
+    LogIngestConfigPlaintextParser:
+      properties:
+        keep_original:
+          description: 'If `true`, the original log is retained after parsing and stored in the
+
+            key `plaintext_log`. If `false`, the original log is dropped after parsing.
+
+            Default value: `false`.'
+          type: boolean
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigPlaintextParserMode'
+          description: Specifies whether the parser is enabled or disabled.
+        name:
+          description: The name of the parser. Must be unique within the configuration.
+          type: string
+        parser:
+          allOf:
+          - $ref: '#/components/schemas/LogIngestConfigLogParser'
+          description: The parser configuration to apply to plaintext logs.
       type: object
-    configv1LogParser:
+    configv1UpdateLogIngestConfigRequest_2:
       type: object
       properties:
-        name:
-          type: string
-          description: Name is the name of the parser.
-        regex:
-          type: string
-          description: Regex is the Re2 regex parser pattern to apply. Named capturing groups become named fields in the extracted log.
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogIngestConfig will be created if it does not already exist. If false, an error will be returned if the LogIngestConfig does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created or updated, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
     apiError_2:
       type: object
       properties:
@@ -493,14 +495,15 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    configv1CreateLogIngestConfigRequest_2:
+    configv1LogParser:
       type: object
       properties:
-        log_ingest_config:
-          $ref: '#/components/schemas/configv1LogIngestConfig_2'
-        dry_run:
-          type: boolean
-          description: If true, the LogIngestConfig isn't created, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
+        name:
+          type: string
+          description: Name is the name of the parser.
+        regex:
+          type: string
+          description: Regex is the Re2 regex parser pattern to apply. Named capturing groups become named fields in the extracted log.
     configv1LogIngestConfig_2:
       type: object
       properties:
@@ -520,17 +523,62 @@ components:
           items:
             $ref: '#/components/schemas/configv1LogParser'
       description: LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.
-    configv1UpdateLogIngestConfigRequest_2:
+    configv1CreateLogIngestConfigRequest_2:
       type: object
       properties:
         log_ingest_config:
           $ref: '#/components/schemas/configv1LogIngestConfig_2'
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
+    configv1UpdateLogIngestConfigRequest_3:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig_3'
         create_if_missing:
           type: boolean
           description: If true, the LogIngestConfig will be created if it does not already exist. If false, an error will be returned if the LogIngestConfig does not already exist.
         dry_run:
           type: boolean
           description: If true, the LogIngestConfig isn't created or updated, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
+    apiError_3:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1LogIngestConfig_3:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Timestamp of when the LogIngestConfig was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the LogIngestConfig was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        parsers:
+          type: array
+          description: The ordered list of parsers to run on ingested logs. The first parser which matches the log is used.
+          items:
+            $ref: '#/components/schemas/configv1LogParser'
+      description: LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.
+    configv1CreateLogIngestConfigRequest_3:
+      type: object
+      properties:
+        log_ingest_config:
+          $ref: '#/components/schemas/configv1LogIngestConfig_3'
+        dry_run:
+          type: boolean
+          description: If true, the LogIngestConfig isn't created, and no response LogIngestConfig will be returned. The response will return an error if the given LogIngestConfig is invalid.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -540,3 +588,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

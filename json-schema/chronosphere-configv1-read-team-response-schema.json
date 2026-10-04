@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-read-team-response-schema.json",
+  "title": "configv1ReadTeamResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-team-api-openapi.yml#/components/schemas/configv1ReadTeamResponse",
+  "properties": {
+    "team": {
+      "$ref": "#/$defs/configv1Team"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configv1Team": {
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the Team was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. Short description of the team.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Team. You can modify this value after the Team is created.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The unique identifier of the Team. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Team is created.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Team was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "user_emails": {
+          "description": "Unordered set of emails whose users are members of this team.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

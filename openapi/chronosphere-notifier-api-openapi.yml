@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Notifier API
   version: v1
-  description: 'Operations tagged Notifier across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Notifier across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -276,11 +276,210 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    OpsGenieConfigResponder:
+      properties:
+        id:
+          description: The ID of the responder. Cannot be set if `name` or `username` are set.
+          type: string
+        name:
+          description: The name of the responder. Cannot be set if `id` or `username` are set.
+          type: string
+        responder_type:
+          allOf:
+          - $ref: '#/components/schemas/ResponderResponderType'
+          description: The type of the responder.
+        username:
+          description: The username of the responder. Cannot be set if `id` or `name` are set.
+          type: string
+      type: object
+    ConfigV1UpdateNotifierBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the Notifier will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Notifier does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Notifier. If the specified configuration is valid, the endpoint returns a partial response without the Notifier. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        notifier:
+          allOf:
+          - $ref: '#/components/schemas/configv1Notifier'
+          description: The Notifier to update.
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CreateNotifierRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Notifier. If the specified configuration is valid, the endpoint returns a partial response without the Notifier. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        notifier:
+          allOf:
+          - $ref: '#/components/schemas/configv1Notifier'
+          description: The Notifier to create.
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     SlackConfigField:
       properties:
         short:
           type: boolean
         title:
+          type: string
+        value:
+          type: string
+      type: object
+    PagerdutyConfigLink:
+      properties:
+        href:
+          type: string
+        text:
+          type: string
+      type: object
+    configv1NotifierHTTPConfigTLSConfig:
+      properties:
+        insecure_skip_verify:
+          description: If `true`, disables validation of the server certificate.
+          type: boolean
+      type: object
+    configv1NotifierSlackConfig:
+      properties:
+        actions:
+          items:
+            $ref: '#/components/schemas/NotifierSlackConfigAction'
+          type: array
+        api_url:
+          description: 'Your Slack webhook API URL. Required if including a `slack` object in
+
+            your request body.'
+          type: string
+        callback_id:
+          type: string
+        channel:
+          description: The channel to send notifications to.
+          type: string
+        color:
+          type: string
+        fallback:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/SlackConfigField'
+          type: array
+        footer:
+          type: string
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        icon_emoji:
+          type: string
+        icon_url:
+          type: string
+        image_url:
+          type: string
+        link_names:
+          type: boolean
+        mrkdwn_in:
+          items:
+            type: string
+          type: array
+        pretext:
+          type: string
+        short_fields:
+          type: boolean
+        text:
+          type: string
+        thumb_url:
+          type: string
+        title:
+          type: string
+        title_link:
+          type: string
+        username:
+          description: The user to send notifications to.
+          type: string
+      type: object
+    configv1ReadNotifierResponse:
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier'
+      type: object
+    configv1NotifierHTTPConfig:
+      properties:
+        basic_auth:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfigBasicAuth'
+          description: 'If an object is specified, sets an `Authorization` header with the
+
+            values of `password` and `username`. Cannot be set if `bearer_token` is
+
+            set.'
+        bearer_token:
+          description: Sets a token for bearer authentication. Cannot be set if `basic_auth` is set.
+          type: string
+        proxy_url:
+          description: 'Your proxy URL. (This parameter is deprecated, and custom proxies are
+
+            unsupported.)'
+          type: string
+        tls_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfigTLSConfig'
+          description: Your TLS configuration.
+      type: object
+    NotifierEmailConfig:
+      properties:
+        html:
+          description: The body of the email to send, in HTML format.
+          type: string
+        text:
+          description: The body of the email to send, in plain text format.
+          type: string
+        to:
+          description: 'The email address to send notifications to. Required if including an
+
+            `email` object in your request body.'
+          type: string
+      type: object
+    configv1CreateNotifierResponse:
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier'
+      type: object
+    configv1NotifierWebhookConfig:
+      properties:
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        url:
+          description: 'Your webhook URL. This URL will be called as a `POST` request. Required
+
+            if including a `webhook` object in your request body.'
+          type: string
+      type: object
+    NotifierSlackConfigAction:
+      properties:
+        confirm_field:
+          $ref: '#/components/schemas/SlackConfigConfirmationField'
+        name:
+          type: string
+        style:
+          type: string
+        text:
+          type: string
+        type:
+          type: string
+        url:
           type: string
         value:
           type: string
@@ -333,103 +532,16 @@ components:
           description: A comma-separated list of tags attached to the notifications.
           type: string
       type: object
-    NotifierSlackConfigAction:
+    SlackConfigConfirmationField:
       properties:
-        confirm_field:
-          $ref: '#/components/schemas/SlackConfigConfirmationField'
-        name:
+        dismiss_text:
           type: string
-        style:
+        ok_text:
           type: string
         text:
           type: string
-        type:
+        title:
           type: string
-        url:
-          type: string
-        value:
-          type: string
-      type: object
-    configv1NotifierHTTPConfig:
-      properties:
-        basic_auth:
-          allOf:
-          - $ref: '#/components/schemas/configv1NotifierHTTPConfigBasicAuth'
-          description: 'If an object is specified, sets an `Authorization` header with the
-
-            values of `password` and `username`. Cannot be set if `bearer_token` is
-
-            set.'
-        bearer_token:
-          description: Sets a token for bearer authentication. Cannot be set if `basic_auth` is set.
-          type: string
-        proxy_url:
-          description: 'Your proxy URL. (This parameter is deprecated, and custom proxies are
-
-            unsupported.)'
-          type: string
-        tls_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1NotifierHTTPConfigTLSConfig'
-          description: Your TLS configuration.
-      type: object
-    configv1CreateNotifierRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the Notifier. If the specified configuration is valid, the endpoint returns a partial response without the Notifier. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        notifier:
-          allOf:
-          - $ref: '#/components/schemas/configv1Notifier'
-          description: The Notifier to create.
-      type: object
-    OpsGenieConfigResponder:
-      properties:
-        id:
-          description: The ID of the responder. Cannot be set if `name` or `username` are set.
-          type: string
-        name:
-          description: The name of the responder. Cannot be set if `id` or `username` are set.
-          type: string
-        responder_type:
-          allOf:
-          - $ref: '#/components/schemas/ResponderResponderType'
-          description: The type of the responder.
-        username:
-          description: The username of the responder. Cannot be set if `id` or `name` are set.
-          type: string
-      type: object
-    PagerdutyConfigImage:
-      properties:
-        alt:
-          type: string
-        href:
-          type: string
-        src:
-          type: string
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    ConfigV1UpdateNotifierBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the Notifier will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Notifier does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Notifier. If the specified configuration is valid, the endpoint returns a partial response without the Notifier. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        notifier:
-          allOf:
-          - $ref: '#/components/schemas/configv1Notifier'
-          description: The Notifier to update.
       type: object
     configv1ListNotifiersResponse:
       properties:
@@ -440,19 +552,50 @@ components:
         page:
           $ref: '#/components/schemas/configv1PageResult'
       type: object
-    NotifierEmailConfig:
+    configv1NotifierVictorOpsConfig:
       properties:
-        html:
-          description: The body of the email to send, in HTML format.
-          type: string
-        text:
-          description: The body of the email to send, in plain text format.
-          type: string
-        to:
-          description: 'The email address to send notifications to. Required if including an
+        api_key:
+          description: 'Your VictorOps API key. Required if including a `victor_ops` object in
 
-            `email` object in your request body.'
+            your request body.'
           type: string
+        api_url:
+          description: 'The VictorOps API URL. Required if including a `victor_ops` object in your
+
+            request body.'
+          type: string
+        custom_fields:
+          additionalProperties:
+            type: string
+          type: object
+        entity_display_name:
+          description: A summary of the alerted problem.
+          type: string
+        http_config:
+          allOf:
+          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
+          description: Your HTTP client configuration.
+        message_type:
+          description: 'The behavior of the alert. Possible values are `CRITICAL`, `WARNING`, and
+
+            `INFO`.'
+          type: string
+        monitoring_tool:
+          description: The monitoring tool from which the state message originated.
+          type: string
+        routing_key:
+          description: 'Your VictorOps routing key. Required if including a `victor_ops` object in
+
+            your request body.'
+          type: string
+        state_message:
+          description: A detailed explanation of the alerted problem.
+          type: string
+      type: object
+    configv1UpdateNotifierResponse:
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier'
       type: object
     configv1Notifier:
       properties:
@@ -521,180 +664,6 @@ components:
       required:
       - name
       type: object
-    configv1CreateNotifierResponse:
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-      type: object
-    configv1NotifierWebhookConfig:
-      properties:
-        http_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
-          description: Your HTTP client configuration.
-        url:
-          description: 'Your webhook URL. This URL will be called as a `POST` request. Required
-
-            if including a `webhook` object in your request body.'
-          type: string
-      type: object
-    configv1NotifierVictorOpsConfig:
-      properties:
-        api_key:
-          description: 'Your VictorOps API key. Required if including a `victor_ops` object in
-
-            your request body.'
-          type: string
-        api_url:
-          description: 'The VictorOps API URL. Required if including a `victor_ops` object in your
-
-            request body.'
-          type: string
-        custom_fields:
-          additionalProperties:
-            type: string
-          type: object
-        entity_display_name:
-          description: A summary of the alerted problem.
-          type: string
-        http_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
-          description: Your HTTP client configuration.
-        message_type:
-          description: 'The behavior of the alert. Possible values are `CRITICAL`, `WARNING`, and
-
-            `INFO`.'
-          type: string
-        monitoring_tool:
-          description: The monitoring tool from which the state message originated.
-          type: string
-        routing_key:
-          description: 'Your VictorOps routing key. Required if including a `victor_ops` object in
-
-            your request body.'
-          type: string
-        state_message:
-          description: A detailed explanation of the alerted problem.
-          type: string
-      type: object
-    configv1DeleteNotifierResponse:
-      type: object
-    ResponderResponderType:
-      enum:
-      - TEAM
-      - USER
-      - ESCALATION
-      - SCHEDULE
-      type: string
-    configv1UpdateNotifierResponse:
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1NotifierSlackConfig:
-      properties:
-        actions:
-          items:
-            $ref: '#/components/schemas/NotifierSlackConfigAction'
-          type: array
-        api_url:
-          description: 'Your Slack webhook API URL. Required if including a `slack` object in
-
-            your request body.'
-          type: string
-        callback_id:
-          type: string
-        channel:
-          description: The channel to send notifications to.
-          type: string
-        color:
-          type: string
-        fallback:
-          type: string
-        fields:
-          items:
-            $ref: '#/components/schemas/SlackConfigField'
-          type: array
-        footer:
-          type: string
-        http_config:
-          allOf:
-          - $ref: '#/components/schemas/configv1NotifierHTTPConfig'
-          description: Your HTTP client configuration.
-        icon_emoji:
-          type: string
-        icon_url:
-          type: string
-        image_url:
-          type: string
-        link_names:
-          type: boolean
-        mrkdwn_in:
-          items:
-            type: string
-          type: array
-        pretext:
-          type: string
-        short_fields:
-          type: boolean
-        text:
-          type: string
-        thumb_url:
-          type: string
-        title:
-          type: string
-        title_link:
-          type: string
-        username:
-          description: The user to send notifications to.
-          type: string
-      type: object
-    configv1NotifierHTTPConfigBasicAuth:
-      properties:
-        password:
-          type: string
-        username:
-          type: string
-      type: object
-    PagerdutyConfigLink:
-      properties:
-        href:
-          type: string
-        text:
-          type: string
-      type: object
-    SlackConfigConfirmationField:
-      properties:
-        dismiss_text:
-          type: string
-        ok_text:
-          type: string
-        text:
-          type: string
-        title:
-          type: string
-      type: object
-    configv1ReadNotifierResponse:
-      properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier'
-      type: object
-    configv1NotifierHTTPConfigTLSConfig:
-      properties:
-        insecure_skip_verify:
-          description: If `true`, disables validation of the server certificate.
-          type: boolean
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
     configv1NotifierPagerdutyConfig:
       properties:
         class:
@@ -755,14 +724,37 @@ components:
           description: The Pagerduty URL to send API requests to.
           type: string
       type: object
-    configv1CreateNotifierRequest_2:
-      type: object
+    ResponderResponderType:
+      enum:
+      - TEAM
+      - USER
+      - ESCALATION
+      - SCHEDULE
+      type: string
+    PagerdutyConfigImage:
       properties:
-        notifier:
-          $ref: '#/components/schemas/configv1Notifier_2'
-        dry_run:
-          type: boolean
-          description: If true, the Notifier isn't created, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+        alt:
+          type: string
+        href:
+          type: string
+        src:
+          type: string
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1DeleteNotifierResponse:
+      type: object
+    configv1NotifierHTTPConfigBasicAuth:
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+      type: object
     OpsGenieConfigResponder_2:
       type: object
       properties:
@@ -777,31 +769,6 @@ components:
           description: Username of the responder. Cannot be set if id or name are set.
         responder_type:
           $ref: '#/components/schemas/ResponderResponderType'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    NotifierWebhookConfig:
-      type: object
-      properties:
-        http_config:
-          $ref: '#/components/schemas/NotifierHTTPConfig'
-        url:
-          type: string
-          description: Required webhook URL (will be called as a POST request).
-    HTTPConfigBasicAuth:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
     ConfigV1UpdateNotifierBody_2:
       type: object
       properties:
@@ -813,6 +780,24 @@ components:
         dry_run:
           type: boolean
           description: If true, the Notifier isn't created or updated, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+    configv1CreateNotifierRequest_2:
+      type: object
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier_2'
+        dry_run:
+          type: boolean
+          description: If true, the Notifier isn't created, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     NotifierEmailConfig_2:
       type: object
       properties:
@@ -825,60 +810,6 @@ components:
         text:
           type: string
           description: Optional text body of the email.
-    configv1Notifier_2:
-      type: object
-      properties:
-        slug:
-          type: string
-          description: Unique identifier of the Notifier. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Notifier is created.
-        name:
-          type: string
-          description: Required. Name of the Notifier. You can modify this value after the Notifier is created.
-        created_at:
-          type: string
-          description: Timestamp of when the Notifier was created. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          description: Timestamp of when the Notifier was last updated. Cannot be set by clients.
-          format: date-time
-          readOnly: true
-        skip_resolved:
-          type: boolean
-          description: If true, do not notify on resolved alerts. Cannot set if discard is set.
-        webhook:
-          $ref: '#/components/schemas/NotifierWebhookConfig'
-        slack:
-          $ref: '#/components/schemas/NotifierSlackConfig'
-        pagerduty:
-          $ref: '#/components/schemas/NotifierPagerdutyConfig'
-        email:
-          $ref: '#/components/schemas/NotifierEmailConfig_2'
-        ops_genie:
-          $ref: '#/components/schemas/NotifierOpsGenieConfig'
-        victor_ops:
-          $ref: '#/components/schemas/NotifierVictorOpsConfig'
-        discard:
-          type: boolean
-          description: 'If set, enables the "discard" integration which simply discards all
-
-            notifications. Cannot set if another integration is set.'
-    NotifierHTTPConfig:
-      type: object
-      properties:
-        basic_auth:
-          $ref: '#/components/schemas/HTTPConfigBasicAuth'
-        bearer_token:
-          type: string
-          description: Bearer token authentication. Cannot be set if basic_auth is set.
-        proxy_url:
-          type: string
-          description: 'Optional proxy URL.
-
-            DEPRECATED: Custom proxies are unsupported.'
-        tls_config:
-          $ref: '#/components/schemas/HTTPConfigTLSConfig'
     NotifierOpsGenieConfig:
       type: object
       properties:
@@ -922,104 +853,6 @@ components:
         priority:
           type: string
           description: Priority level of alert. Possible values are P1, P2, P3, P4, and P5.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    NotifierVictorOpsConfig:
-      type: object
-      properties:
-        http_config:
-          $ref: '#/components/schemas/NotifierHTTPConfig'
-        api_key:
-          type: string
-          description: Required VictorOps API key.
-        api_url:
-          type: string
-          description: Required VictorOps API URL.
-        routing_key:
-          type: string
-          description: Required VictorOps routing key.
-        message_type:
-          type: string
-          description: Describes the behavior of the alert (CRITICAL, WARNING, INFO).
-        entity_display_name:
-          type: string
-          description: Summary of the alerted problem.
-        state_message:
-          type: string
-          description: Long explanation of the alerted problem.
-        monitoring_tool:
-          type: string
-          description: The monitoring tool the state message is from.
-        custom_fields:
-          type: object
-          additionalProperties:
-            type: string
-    NotifierPagerdutyConfig:
-      type: object
-      properties:
-        http_config:
-          $ref: '#/components/schemas/NotifierHTTPConfig'
-        url:
-          type: string
-          description: The Pagerduty URL to send API requests to.
-        client:
-          type: string
-          description: Client identification of the notification sender.
-        client_url:
-          type: string
-          description: A backlink to the sender of the notification.
-        description:
-          type: string
-          description: Description of the incident.
-        severity:
-          type: string
-          description: 'Severity of the incident.
-
-            Valid values are ''critical'', ''error'', ''warning'', ''info'', or blank'
-        class:
-          type: string
-          description: The class/type of the event.
-        component:
-          type: string
-          description: The part or component of the affected system which is broken.
-        group:
-          type: string
-          description: A cluster or grouping of services.
-        details:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Set of arbitrary key/value pairs which provide further detail about the
-
-            incident.'
-        images:
-          type: array
-          description: Images to attach to the incident.
-          items:
-            $ref: '#/components/schemas/PagerdutyConfigImage'
-        links:
-          type: array
-          description: Links to attach to the incident.
-          items:
-            $ref: '#/components/schemas/PagerdutyConfigLink'
-        service_key:
-          type: string
-          description: 'The PagerDuty integration key (when using PagerDuty integration type
-
-            "Prometheus"). Cannot be set if routing_key is set.'
-        routing_key:
-          type: string
-          description: 'The PagerDuty integration key (when using PagerDuty integration type
-
-            "Events API v2"). Cannot be set if service_key is set.'
     NotifierSlackConfig:
       type: object
       properties:
@@ -1080,6 +913,320 @@ components:
         insecure_skip_verify:
           type: boolean
           description: Disables validation of the server certificate.
+    NotifierPagerdutyConfig:
+      type: object
+      properties:
+        http_config:
+          $ref: '#/components/schemas/NotifierHTTPConfig'
+        url:
+          type: string
+          description: The Pagerduty URL to send API requests to.
+        client:
+          type: string
+          description: Client identification of the notification sender.
+        client_url:
+          type: string
+          description: A backlink to the sender of the notification.
+        description:
+          type: string
+          description: Description of the incident.
+        severity:
+          type: string
+          description: 'Severity of the incident.
+
+            Valid values are ''critical'', ''error'', ''warning'', ''info'', or blank'
+        class:
+          type: string
+          description: The class/type of the event.
+        component:
+          type: string
+          description: The part or component of the affected system which is broken.
+        group:
+          type: string
+          description: A cluster or grouping of services.
+        details:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Set of arbitrary key/value pairs which provide further detail about the
+
+            incident.'
+        images:
+          type: array
+          description: Images to attach to the incident.
+          items:
+            $ref: '#/components/schemas/PagerdutyConfigImage'
+        links:
+          type: array
+          description: Links to attach to the incident.
+          items:
+            $ref: '#/components/schemas/PagerdutyConfigLink'
+        service_key:
+          type: string
+          description: 'The PagerDuty integration key (when using PagerDuty integration type
+
+            "Prometheus"). Cannot be set if routing_key is set.'
+        routing_key:
+          type: string
+          description: 'The PagerDuty integration key (when using PagerDuty integration type
+
+            "Events API v2"). Cannot be set if service_key is set.'
+    NotifierVictorOpsConfig:
+      type: object
+      properties:
+        http_config:
+          $ref: '#/components/schemas/NotifierHTTPConfig'
+        api_key:
+          type: string
+          description: Required VictorOps API key.
+        api_url:
+          type: string
+          description: Required VictorOps API URL.
+        routing_key:
+          type: string
+          description: Required VictorOps routing key.
+        message_type:
+          type: string
+          description: Describes the behavior of the alert (CRITICAL, WARNING, INFO).
+        entity_display_name:
+          type: string
+          description: Summary of the alerted problem.
+        state_message:
+          type: string
+          description: Long explanation of the alerted problem.
+        monitoring_tool:
+          type: string
+          description: The monitoring tool the state message is from.
+        custom_fields:
+          type: object
+          additionalProperties:
+            type: string
+    configv1Notifier_2:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Notifier. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Notifier is created.
+        name:
+          type: string
+          description: Required. Name of the Notifier. You can modify this value after the Notifier is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Notifier was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Notifier was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        skip_resolved:
+          type: boolean
+          description: If true, do not notify on resolved alerts. Cannot set if discard is set.
+        webhook:
+          $ref: '#/components/schemas/NotifierWebhookConfig'
+        slack:
+          $ref: '#/components/schemas/NotifierSlackConfig'
+        pagerduty:
+          $ref: '#/components/schemas/NotifierPagerdutyConfig'
+        email:
+          $ref: '#/components/schemas/NotifierEmailConfig_2'
+        ops_genie:
+          $ref: '#/components/schemas/NotifierOpsGenieConfig'
+        victor_ops:
+          $ref: '#/components/schemas/NotifierVictorOpsConfig'
+        discard:
+          type: boolean
+          description: 'If set, enables the "discard" integration which simply discards all
+
+            notifications. Cannot set if another integration is set.'
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    NotifierHTTPConfig:
+      type: object
+      properties:
+        basic_auth:
+          $ref: '#/components/schemas/HTTPConfigBasicAuth'
+        bearer_token:
+          type: string
+          description: Bearer token authentication. Cannot be set if basic_auth is set.
+        proxy_url:
+          type: string
+          description: 'Optional proxy URL.
+
+            DEPRECATED: Custom proxies are unsupported.'
+        tls_config:
+          $ref: '#/components/schemas/HTTPConfigTLSConfig'
+    NotifierWebhookConfig:
+      type: object
+      properties:
+        http_config:
+          $ref: '#/components/schemas/NotifierHTTPConfig'
+        url:
+          type: string
+          description: Required webhook URL (will be called as a POST request).
+    HTTPConfigBasicAuth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    OpsGenieConfigResponder_3:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the responder. Cannot be set if name or username are set.
+        name:
+          type: string
+          description: Name of the responder. Cannot be set if id or username are set.
+        username:
+          type: string
+          description: Username of the responder. Cannot be set if id or name are set.
+        responder_type:
+          $ref: '#/components/schemas/ResponderResponderType'
+    ConfigV1UpdateNotifierBody_3:
+      type: object
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the Notifier will be created if it does not already exist, identified by slug. If false, an error will be returned if the Notifier does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Notifier isn't created or updated, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+    configv1CreateNotifierRequest_3:
+      type: object
+      properties:
+        notifier:
+          $ref: '#/components/schemas/configv1Notifier_3'
+        dry_run:
+          type: boolean
+          description: If true, the Notifier isn't created, and no response Notifier will be returned. The response will return an error if the given Notifier is invalid.
+    configv1PageResult_3:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    NotifierEmailConfig_3:
+      type: object
+      properties:
+        to:
+          type: string
+          description: Required email address to send notifications to.
+        html:
+          type: string
+          description: Optional HTML body of the email.
+        text:
+          type: string
+          description: Optional text body of the email.
+    NotifierOpsGenieConfig_2:
+      type: object
+      properties:
+        http_config:
+          $ref: '#/components/schemas/NotifierHTTPConfig'
+        api_key:
+          type: string
+          description: Required OpsGenie API key.
+        api_url:
+          type: string
+          description: 'Required OpsGenie API URL to send requests to, e.g.
+
+            "https://api.opsgenie.com/".'
+        message:
+          type: string
+          description: Alert text.
+        description:
+          type: string
+          description: Description of the alert.
+        source:
+          type: string
+          description: A backlink to the sender of the notification.
+        details:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'A set of arbitrary key/value pairs that provide further detail about the
+
+            alert.'
+        responders:
+          type: array
+          description: List of responders responsible for notifications.
+          items:
+            $ref: '#/components/schemas/OpsGenieConfigResponder_3'
+        tags:
+          type: string
+          description: Comma separated list of tags attached to the notifications.
+        note:
+          type: string
+          description: Additional alert note.
+        priority:
+          type: string
+          description: Priority level of alert. Possible values are P1, P2, P3, P4, and P5.
+    configv1Notifier_3:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Notifier. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Notifier is created.
+        name:
+          type: string
+          description: Required. Name of the Notifier. You can modify this value after the Notifier is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Notifier was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Notifier was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        skip_resolved:
+          type: boolean
+          description: If true, do not notify on resolved alerts. Cannot set if discard is set.
+        webhook:
+          $ref: '#/components/schemas/NotifierWebhookConfig'
+        slack:
+          $ref: '#/components/schemas/NotifierSlackConfig'
+        pagerduty:
+          $ref: '#/components/schemas/NotifierPagerdutyConfig'
+        email:
+          $ref: '#/components/schemas/NotifierEmailConfig_3'
+        ops_genie:
+          $ref: '#/components/schemas/NotifierOpsGenieConfig_2'
+        victor_ops:
+          $ref: '#/components/schemas/NotifierVictorOpsConfig'
+        discard:
+          type: boolean
+          description: 'If set, enables the "discard" integration which simply discards all
+
+            notifications. Cannot set if another integration is set.'
+    apiError_3:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -1089,3 +1236,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

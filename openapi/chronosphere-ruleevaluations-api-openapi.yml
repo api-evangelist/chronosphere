@@ -72,6 +72,36 @@ components:
       - SEVERITY_ERROR
       - SEVERITY_WARNING
       type: string
+    statev1ListRuleEvaluationsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        rule_evaluations:
+          items:
+            $ref: '#/components/schemas/statev1RuleEvaluation'
+          type: array
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    RuleEvaluationRuleType:
+      enum:
+      - MONITOR
+      - RECORDING
+      type: string
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     statev1RuleEvaluation:
       properties:
         count:
@@ -102,36 +132,6 @@ components:
 
             include_warnings is set on the request.'
           example: SEVERITY_ERROR
-      type: object
-    RuleEvaluationRuleType:
-      enum:
-      - MONITOR
-      - RECORDING
-      type: string
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    statev1ListRuleEvaluationsResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        rule_evaluations:
-          items:
-            $ref: '#/components/schemas/statev1RuleEvaluation'
-          type: array
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

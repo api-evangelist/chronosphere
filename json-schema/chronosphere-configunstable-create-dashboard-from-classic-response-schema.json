@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-create-dashboard-from-classic-response-schema.json",
+  "title": "configunstableCreateDashboardFromClassicResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-configunstable-api-openapi.yml#/components/schemas/configunstableCreateDashboardFromClassicResponse",
+  "properties": {
+    "dashboard": {
+      "$ref": "#/$defs/configunstableDashboard"
+    },
+    "unsupported_features": {
+      "description": "Classic dashboard features encountered during conversion that were dropped,\nonly approximated, or otherwise noteworthy. Populated on dry-run as well.",
+      "items": {
+        "$ref": "#/$defs/CreateDashboardFromClassicResponseUnsupportedFeature"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "CreateDashboardFromClassicResponseUnsupportedFeature": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "level": {
+          "description": "The converter's feature level ('supported' | 'unsupported'); empty when\nthe converter didn't set one.",
+          "type": "string"
+        },
+        "panel_key": {
+          "type": "string"
+        },
+        "panel_name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableDashboard": {
+      "properties": {
+        "slug": {
+          "description": "The unique identifier of the Dashboard. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Dashboard is created.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Dashboard. You can modify this value after the Dashboard is created.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the Dashboard was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Dashboard was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "collection_slug": {
+          "description": "Required slug of the collection the dashboard belongs to.",
+          "type": "string"
+        },
+        "dashboard_json": {
+          "description": "Required raw JSON of the dashboard.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

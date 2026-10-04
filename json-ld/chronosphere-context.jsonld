@@ -1,0 +1,524 @@
+{
+  "@context": {
+    "@vocab": "https://chronosphere.io/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "chronosphere": "https://chronosphere.io/schema#",
+    "configv1ReadAzureMetricsIntegrationResponse": "chronosphere:configv1ReadAzureMetricsIntegrationResponse",
+    "azure_metrics_integration": {
+      "@id": "chronosphere:azure_metrics_integration",
+      "@type": "@id"
+    },
+    "configv1CreateAzureMetricsIntegrationRequest": "chronosphere:configv1CreateAzureMetricsIntegrationRequest",
+    "dry_run": {
+      "@id": "chronosphere:dry_run",
+      "@type": "xsd:boolean"
+    },
+    "configv1ListAzureMetricsIntegrationsResponse": "chronosphere:configv1ListAzureMetricsIntegrationsResponse",
+    "azure_metrics_integrations": {
+      "@id": "chronosphere:azure_metrics_integrations",
+      "@container": "@list"
+    },
+    "page": {
+      "@id": "chronosphere:page",
+      "@type": "@id"
+    },
+    "configv1PageResult": "chronosphere:configv1PageResult",
+    "next_token": {
+      "@id": "chronosphere:next_token",
+      "@type": "xsd:string"
+    },
+    "configv1CreateAzureMetricsIntegrationResponse": "chronosphere:configv1CreateAzureMetricsIntegrationResponse",
+    "AzureMetricsIntegrationAzureResourceType": "chronosphere:AzureMetricsIntegrationAzureResourceType",
+    "metric_names": {
+      "@id": "chronosphere:metric_names",
+      "@container": "@list"
+    },
+    "name": {
+      "@id": "chronosphere:name",
+      "@type": "xsd:string"
+    },
+    "AzureMetricsIntegrationAzurePrincipal": "chronosphere:AzureMetricsIntegrationAzurePrincipal",
+    "client_id": {
+      "@id": "chronosphere:client_id",
+      "@type": "xsd:string"
+    },
+    "tenant_id": {
+      "@id": "chronosphere:tenant_id",
+      "@type": "xsd:string"
+    },
+    "configv1UpdateAzureMetricsIntegrationResponse": "chronosphere:configv1UpdateAzureMetricsIntegrationResponse",
+    "configv1AzureMetricsIntegration": "chronosphere:configv1AzureMetricsIntegration",
+    "count_metrics_enabled": {
+      "@id": "chronosphere:count_metrics_enabled",
+      "@type": "xsd:boolean"
+    },
+    "created_at": {
+      "@id": "chronosphere:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "principal": {
+      "@id": "chronosphere:principal"
+    },
+    "propagate_tags": {
+      "@id": "chronosphere:propagate_tags",
+      "@type": "xsd:boolean"
+    },
+    "scrape_config": {
+      "@id": "chronosphere:scrape_config"
+    },
+    "slug": {
+      "@id": "chronosphere:slug",
+      "@type": "xsd:string"
+    },
+    "updated_at": {
+      "@id": "chronosphere:updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "usage_metrics_enabled": {
+      "@id": "chronosphere:usage_metrics_enabled",
+      "@type": "xsd:boolean"
+    },
+    "apiError": "chronosphere:apiError",
+    "message": {
+      "@id": "chronosphere:message",
+      "@type": "xsd:string"
+    },
+    "ConfigV1UpdateAzureMetricsIntegrationBody": "chronosphere:ConfigV1UpdateAzureMetricsIntegrationBody",
+    "create_if_missing": {
+      "@id": "chronosphere:create_if_missing",
+      "@type": "xsd:boolean"
+    },
+    "AzureMetricsIntegrationAzureScrapeConfig": "chronosphere:AzureMetricsIntegrationAzureScrapeConfig",
+    "locations": {
+      "@id": "chronosphere:locations",
+      "@container": "@list"
+    },
+    "resource_types": {
+      "@id": "chronosphere:resource_types",
+      "@container": "@list"
+    },
+    "subscription_ids": {
+      "@id": "chronosphere:subscription_ids",
+      "@container": "@list"
+    },
+    "ResourceChangeAction": "chronosphere:ResourceChangeAction",
+    "configv1DeleteBucketResponse": "chronosphere:configv1DeleteBucketResponse",
+    "changes": {
+      "@id": "chronosphere:changes",
+      "@container": "@list"
+    },
+    "configv1ResourceType": "chronosphere:configv1ResourceType",
+    "configv1Bucket": "chronosphere:configv1Bucket",
+    "description": {
+      "@id": "chronosphere:description",
+      "@type": "xsd:string"
+    },
+    "labels": {
+      "@id": "chronosphere:labels"
+    },
+    "notification_policy_slug": {
+      "@id": "chronosphere:notification_policy_slug",
+      "@type": "xsd:string"
+    },
+    "team_slug": {
+      "@id": "chronosphere:team_slug",
+      "@type": "xsd:string"
+    },
+    "ConfigV1UpdateBucketBody": "chronosphere:ConfigV1UpdateBucketBody",
+    "bucket": {
+      "@id": "chronosphere:bucket"
+    },
+    "configv1ReadBucketResponse": "chronosphere:configv1ReadBucketResponse",
+    "ResourceChange": "chronosphere:ResourceChange",
+    "action": {
+      "@id": "chronosphere:action",
+      "@type": "@id"
+    },
+    "resource": {
+      "@id": "chronosphere:resource",
+      "@type": "@id"
+    },
+    "configv1CreateBucketRequest": "chronosphere:configv1CreateBucketRequest",
+    "configv1UpdateBucketResponse": "chronosphere:configv1UpdateBucketResponse",
+    "configv1ListBucketsResponse": "chronosphere:configv1ListBucketsResponse",
+    "buckets": {
+      "@id": "chronosphere:buckets",
+      "@container": "@list"
+    },
+    "configv1CreateBucketResponse": "chronosphere:configv1CreateBucketResponse",
+    "configv1PageResult_2": "chronosphere:configv1PageResult_2",
+    "configv1Bucket_2": "chronosphere:configv1Bucket_2",
+    "ConfigV1UpdateBucketBody_2": "chronosphere:ConfigV1UpdateBucketBody_2",
+    "apiError_2": "chronosphere:apiError_2",
+    "code": {
+      "@id": "chronosphere:code",
+      "@type": "xsd:integer"
+    },
+    "configv1CreateBucketRequest_2": "chronosphere:configv1CreateBucketRequest_2",
+    "configv1CreateClassicDashboardRequest": "chronosphere:configv1CreateClassicDashboardRequest",
+    "classic_dashboard": {
+      "@id": "chronosphere:classic_dashboard"
+    },
+    "configv1CollectionReference": "chronosphere:configv1CollectionReference",
+    "type": {
+      "@id": "chronosphere:type",
+      "@type": "@id"
+    },
+    "configv1CreateClassicDashboardResponse": "chronosphere:configv1CreateClassicDashboardResponse",
+    "configv1CollectionReferenceType": "chronosphere:configv1CollectionReferenceType",
+    "configv1UpdateClassicDashboardResponse": "chronosphere:configv1UpdateClassicDashboardResponse",
+    "ConfigV1UpdateClassicDashboardBody": "chronosphere:ConfigV1UpdateClassicDashboardBody",
+    "configv1ReadClassicDashboardResponse": "chronosphere:configv1ReadClassicDashboardResponse",
+    "configv1ListClassicDashboardsResponse": "chronosphere:configv1ListClassicDashboardsResponse",
+    "classic_dashboards": {
+      "@id": "chronosphere:classic_dashboards",
+      "@container": "@list"
+    },
+    "configv1GrafanaDashboard": "chronosphere:configv1GrafanaDashboard",
+    "bucket_slug": {
+      "@id": "chronosphere:bucket_slug",
+      "@type": "xsd:string"
+    },
+    "collection": {
+      "@id": "chronosphere:collection"
+    },
+    "collection_slug": {
+      "@id": "chronosphere:collection_slug",
+      "@type": "xsd:string"
+    },
+    "dashboard_json": {
+      "@id": "chronosphere:dashboard_json",
+      "@type": "xsd:string"
+    },
+    "configv1CreateClassicDashboardRequest_2": "chronosphere:configv1CreateClassicDashboardRequest_2",
+    "configv1CollectionReferenceType_2": "chronosphere:configv1CollectionReferenceType_2",
+    "ConfigV1UpdateClassicDashboardBody_2": "chronosphere:ConfigV1UpdateClassicDashboardBody_2",
+    "configv1GrafanaDashboard_2": "chronosphere:configv1GrafanaDashboard_2",
+    "configv1CloudIntegrationState": "chronosphere:configv1CloudIntegrationState",
+    "configv1ListCloudIntegrationsResponse": "chronosphere:configv1ListCloudIntegrationsResponse",
+    "cloud_integrations": {
+      "@id": "chronosphere:cloud_integrations",
+      "@container": "@list"
+    },
+    "configv1ReadCloudIntegrationResponse": "chronosphere:configv1ReadCloudIntegrationResponse",
+    "cloud_integration": {
+      "@id": "chronosphere:cloud_integration",
+      "@type": "@id"
+    },
+    "configv1CreateCloudIntegrationResponse": "chronosphere:configv1CreateCloudIntegrationResponse",
+    "configv1CreateCloudIntegrationRequest": "chronosphere:configv1CreateCloudIntegrationRequest",
+    "configv1UpdateCloudIntegrationResponse": "chronosphere:configv1UpdateCloudIntegrationResponse",
+    "ConfigV1UpdateCloudIntegrationBody": "chronosphere:ConfigV1UpdateCloudIntegrationBody",
+    "configv1CloudIntegration": "chronosphere:configv1CloudIntegration",
+    "external_connection_slug": {
+      "@id": "chronosphere:external_connection_slug",
+      "@type": "xsd:string"
+    },
+    "metric_labels": {
+      "@id": "chronosphere:metric_labels"
+    },
+    "provider_config": {
+      "@id": "chronosphere:provider_config"
+    },
+    "provider_type": {
+      "@id": "chronosphere:provider_type",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "chronosphere:state"
+    },
+    "ConfigV1UpdateCollectionBody": "chronosphere:ConfigV1UpdateCollectionBody",
+    "configv1Collection": "chronosphere:configv1Collection",
+    "configv1CreateCollectionResponse": "chronosphere:configv1CreateCollectionResponse",
+    "configv1ReadCollectionResponse": "chronosphere:configv1ReadCollectionResponse",
+    "configv1UpdateCollectionResponse": "chronosphere:configv1UpdateCollectionResponse",
+    "configv1CreateCollectionRequest": "chronosphere:configv1CreateCollectionRequest",
+    "configv1ListCollectionsResponse": "chronosphere:configv1ListCollectionsResponse",
+    "collections": {
+      "@id": "chronosphere:collections",
+      "@container": "@list"
+    },
+    "ConfigV1UpdateCollectionBody_2": "chronosphere:ConfigV1UpdateCollectionBody_2",
+    "configv1Collection_2": "chronosphere:configv1Collection_2",
+    "configv1CreateCollectionRequest_2": "chronosphere:configv1CreateCollectionRequest_2",
+    "ConfigUnstableUpdateCommandCenterGroupBody": "chronosphere:ConfigUnstableUpdateCommandCenterGroupBody",
+    "command_center_group": {
+      "@id": "chronosphere:command_center_group",
+      "@type": "@id"
+    },
+    "configunstableCommandCenterGroup": "chronosphere:configunstableCommandCenterGroup",
+    "group_slo_reference": {
+      "@id": "chronosphere:group_slo_reference",
+      "@type": "@id"
+    },
+    "configunstableSloReference": "chronosphere:configunstableSloReference",
+    "configunstableListCommandCenterGroupsResponse": "chronosphere:configunstableListCommandCenterGroupsResponse",
+    "command_center_groups": {
+      "@id": "chronosphere:command_center_groups",
+      "@container": "@list"
+    },
+    "configunstableCreateCommandCenterGroupRequest": "chronosphere:configunstableCreateCommandCenterGroupRequest",
+    "configunstableCreateCommandCenterGroupResponse": "chronosphere:configunstableCreateCommandCenterGroupResponse",
+    "configunstableReadCommandCenterGroupResponse": "chronosphere:configunstableReadCommandCenterGroupResponse",
+    "configunstableUpdateCommandCenterGroupResponse": "chronosphere:configunstableUpdateCommandCenterGroupResponse",
+    "ConfigV1UpdateServiceAttributeBody": "chronosphere:ConfigV1UpdateServiceAttributeBody",
+    "service_attribute": {
+      "@id": "chronosphere:service_attribute",
+      "@type": "@id"
+    },
+    "configv1UpdateServiceAttributeResponse": "chronosphere:configv1UpdateServiceAttributeResponse",
+    "service_slug": {
+      "@id": "chronosphere:service_slug",
+      "@type": "xsd:string"
+    },
+    "configv1ReadServiceAttributeResponse": "chronosphere:configv1ReadServiceAttributeResponse",
+    "ConfigV1CreateServiceAttributeBody": "chronosphere:ConfigV1CreateServiceAttributeBody",
+    "configv1CreateServiceAttributeResponse": "chronosphere:configv1CreateServiceAttributeResponse",
+    "configv1ServiceAttribute": "chronosphere:configv1ServiceAttribute",
+    "CreateDashboardFromClassicResponseUnsupportedFeature": "chronosphere:CreateDashboardFromClassicResponseUnsupportedFeature",
+    "id": {
+      "@id": "chronosphere:id",
+      "@type": "xsd:string"
+    },
+    "level": {
+      "@id": "chronosphere:level",
+      "@type": "xsd:string"
+    },
+    "panel_key": {
+      "@id": "chronosphere:panel_key",
+      "@type": "xsd:string"
+    },
+    "panel_name": {
+      "@id": "chronosphere:panel_name",
+      "@type": "xsd:string"
+    },
+    "configunstableCreateDashboardFromClassicRequest": "chronosphere:configunstableCreateDashboardFromClassicRequest",
+    "classic_dashboard_json": {
+      "@id": "chronosphere:classic_dashboard_json",
+      "@type": "xsd:string"
+    },
+    "configunstableCreateDashboardFromClassicResponse": "chronosphere:configunstableCreateDashboardFromClassicResponse",
+    "dashboard": {
+      "@id": "chronosphere:dashboard",
+      "@type": "@id"
+    },
+    "unsupported_features": {
+      "@id": "chronosphere:unsupported_features",
+      "@container": "@list"
+    },
+    "configunstableDashboard": "chronosphere:configunstableDashboard",
+    "configv1ConsumptionBudget": "chronosphere:configv1ConsumptionBudget",
+    "alert_action_config": {
+      "@id": "chronosphere:alert_action_config"
+    },
+    "default_priority": {
+      "@id": "chronosphere:default_priority",
+      "@type": "xsd:integer"
+    },
+    "partition_slug_path": {
+      "@id": "chronosphere:partition_slug_path",
+      "@type": "xsd:string"
+    },
+    "priorities": {
+      "@id": "chronosphere:priorities",
+      "@container": "@list"
+    },
+    "thresholds": {
+      "@id": "chronosphere:thresholds",
+      "@container": "@list"
+    },
+    "ConsumptionBudgetResourceGroup": "chronosphere:ConsumptionBudgetResourceGroup",
+    "configv1CreateConsumptionBudgetRequest": "chronosphere:configv1CreateConsumptionBudgetRequest",
+    "consumption_budget": {
+      "@id": "chronosphere:consumption_budget"
+    },
+    "ConsumptionBudgetThresholdType": "chronosphere:ConsumptionBudgetThresholdType",
+    "ConsumptionBudgetUnit": "chronosphere:ConsumptionBudgetUnit",
+    "configv1ListConsumptionBudgetsResponse": "chronosphere:configv1ListConsumptionBudgetsResponse",
+    "consumption_budgets": {
+      "@id": "chronosphere:consumption_budgets",
+      "@container": "@list"
+    },
+    "ConsumptionBudgetPriorityFilter": "chronosphere:ConsumptionBudgetPriorityFilter",
+    "dataset_slug": {
+      "@id": "chronosphere:dataset_slug",
+      "@type": "xsd:string"
+    },
+    "log_filter": {
+      "@id": "chronosphere:log_filter"
+    },
+    "ThresholdVolume": "chronosphere:ThresholdVolume",
+    "fixed_value": {
+      "@id": "chronosphere:fixed_value",
+      "@type": "xsd:string"
+    },
+    "ConfigV1UpdateConsumptionBudgetBody": "chronosphere:ConfigV1UpdateConsumptionBudgetBody",
+    "configv1CreateConsumptionBudgetResponse": "chronosphere:configv1CreateConsumptionBudgetResponse",
+    "ThresholdInstantRate": "chronosphere:ThresholdInstantRate",
+    "fixed_value_per_sec": {
+      "@id": "chronosphere:fixed_value_per_sec",
+      "@type": "xsd:string"
+    },
+    "configv1LogSearchFilter": "chronosphere:configv1LogSearchFilter",
+    "query": {
+      "@id": "chronosphere:query",
+      "@type": "xsd:string"
+    },
+    "configv1ConsumptionBudgetThreshold": "chronosphere:configv1ConsumptionBudgetThreshold",
+    "instant_rate": {
+      "@id": "chronosphere:instant_rate"
+    },
+    "resource_group": {
+      "@id": "chronosphere:resource_group"
+    },
+    "unit": {
+      "@id": "chronosphere:unit"
+    },
+    "volume": {
+      "@id": "chronosphere:volume"
+    },
+    "ConsumptionBudgetThresholdAction": "chronosphere:ConsumptionBudgetThresholdAction",
+    "configv1UpdateConsumptionBudgetResponse": "chronosphere:configv1UpdateConsumptionBudgetResponse",
+    "configv1ReadConsumptionBudgetResponse": "chronosphere:configv1ReadConsumptionBudgetResponse",
+    "ConsumptionBudgetPriority": "chronosphere:ConsumptionBudgetPriority",
+    "filters": {
+      "@id": "chronosphere:filters",
+      "@container": "@list"
+    },
+    "priority": {
+      "@id": "chronosphere:priority",
+      "@type": "xsd:integer"
+    },
+    "ConsumptionBudgetAlertActionConfig": "chronosphere:ConsumptionBudgetAlertActionConfig",
+    "annotations": {
+      "@id": "chronosphere:annotations"
+    },
+    "instant_rate_sustain_secs": {
+      "@id": "chronosphere:instant_rate_sustain_secs",
+      "@type": "xsd:integer"
+    },
+    "configv1ReadConsumptionConfigResponse": "chronosphere:configv1ReadConsumptionConfigResponse",
+    "consumption_config": {
+      "@id": "chronosphere:consumption_config",
+      "@type": "@id"
+    },
+    "StringFilterStringFilterMatchType": "chronosphere:StringFilterStringFilterMatchType",
+    "PartitionFilterCondition": "chronosphere:PartitionFilterCondition",
+    "metric_filters": {
+      "@id": "chronosphere:metric_filters",
+      "@container": "@list"
+    },
+    "trace_span_filters": {
+      "@id": "chronosphere:trace_span_filters",
+      "@container": "@list"
+    },
+    "configv1ConsumptionSpanFilter": "chronosphere:configv1ConsumptionSpanFilter",
+    "duration": {
+      "@id": "chronosphere:duration"
+    },
+    "error": {
+      "@id": "chronosphere:error"
+    },
+    "is_root_span": {
+      "@id": "chronosphere:is_root_span"
+    },
+    "operation": {
+      "@id": "chronosphere:operation"
+    },
+    "parent_operation": {
+      "@id": "chronosphere:parent_operation"
+    },
+    "parent_service": {
+      "@id": "chronosphere:parent_service"
+    },
+    "service": {
+      "@id": "chronosphere:service"
+    },
+    "tags": {
+      "@id": "chronosphere:tags",
+      "@container": "@list"
+    },
+    "configv1CreateConsumptionConfigRequest": "chronosphere:configv1CreateConsumptionConfigRequest",
+    "ConsumptionConfigPartition": "chronosphere:ConsumptionConfigPartition",
+    "partitions": {
+      "@id": "chronosphere:partitions",
+      "@container": "@list"
+    },
+    "PartitionFilterOperator": "chronosphere:PartitionFilterOperator",
+    "TraceSearchFilterStringFilter": "chronosphere:TraceSearchFilterStringFilter",
+    "in_values": {
+      "@id": "chronosphere:in_values",
+      "@container": "@list"
+    },
+    "match": {
+      "@id": "chronosphere:match"
+    },
+    "value": {
+      "@id": "chronosphere:value",
+      "@type": "xsd:string"
+    },
+    "configv1UpdateConsumptionConfigResponse": "chronosphere:configv1UpdateConsumptionConfigResponse",
+    "NumericFilterComparisonType": "chronosphere:NumericFilterComparisonType",
+    "configv1UpdateConsumptionConfigRequest": "chronosphere:configv1UpdateConsumptionConfigRequest",
+    "TraceSearchFilterNumericFilter": "chronosphere:TraceSearchFilterNumericFilter",
+    "comparison": {
+      "@id": "chronosphere:comparison"
+    },
+    "TraceSearchFilterTagFilter": "chronosphere:TraceSearchFilterTagFilter",
+    "key": {
+      "@id": "chronosphere:key",
+      "@type": "xsd:string"
+    },
+    "numeric_value": {
+      "@id": "chronosphere:numeric_value"
+    },
+    "configv1CreateConsumptionConfigResponse": "chronosphere:configv1CreateConsumptionConfigResponse",
+    "ConsumptionConfigPartitionFilter": "chronosphere:ConsumptionConfigPartitionFilter",
+    "conditions": {
+      "@id": "chronosphere:conditions",
+      "@container": "@list"
+    },
+    "operator": {
+      "@id": "chronosphere:operator"
+    },
+    "TraceSearchFilterBoolFilter": "chronosphere:TraceSearchFilterBoolFilter",
+    "configv1LabelFilter": "chronosphere:configv1LabelFilter",
+    "value_glob": {
+      "@id": "chronosphere:value_glob",
+      "@type": "xsd:string"
+    },
+    "TraceSearchFilterDurationFilter": "chronosphere:TraceSearchFilterDurationFilter",
+    "max_secs": {
+      "@id": "chronosphere:max_secs",
+      "@type": "xsd:decimal"
+    },
+    "min_secs": {
+      "@id": "chronosphere:min_secs",
+      "@type": "xsd:decimal"
+    },
+    "configv1ConsumptionConfig": "chronosphere:configv1ConsumptionConfig",
+    "configunstableReadDashboardResponse": "chronosphere:configunstableReadDashboardResponse",
+    "configunstableUpdateDashboardResponse": "chronosphere:configunstableUpdateDashboardResponse",
+    "configunstableListDashboardsResponse": "chronosphere:configunstableListDashboardsResponse",
+    "dashboards": {
+      "@id": "chronosphere:dashboards",
+      "@container": "@list"
+    },
+    "configunstableCreateDashboardResponse": "chronosphere:configunstableCreateDashboardResponse",
+    "ConfigUnstableUpdateDashboardBody": "chronosphere:ConfigUnstableUpdateDashboardBody",
+    "configunstableCreateDashboardRequest": "chronosphere:configunstableCreateDashboardRequest"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Chronosphere API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Chronosphere's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-03) from openapi/chronosphere-azuremetricsintegration-api-openapi.yml, openapi/chronosphere-bucket-api-openapi.yml, openapi/chronosphere-classicdashboard-api-openapi.yml.",
+  "dcterms:created": "2026-10-03",
+  "dcterms:source": [
+    "openapi/chronosphere-azuremetricsintegration-api-openapi.yml",
+    "openapi/chronosphere-bucket-api-openapi.yml",
+    "openapi/chronosphere-classicdashboard-api-openapi.yml",
+    "openapi/chronosphere-cloud-integration-api-openapi.yml",
+    "openapi/chronosphere-collection-api-openapi.yml"
+  ]
+}

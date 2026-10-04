@@ -262,23 +262,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1ListLogRetentionConfigsResponse:
-      properties:
-        log_retention_configs:
-          items:
-            $ref: '#/components/schemas/configv1LogRetentionConfig'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
+    genericError:
+      additionalProperties: true
       type: object
-    configv1PageResult:
+    configv1ReadLogRetentionConfigResponse:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
+        log_retention_config:
+          $ref: '#/components/schemas/configv1LogRetentionConfig'
+      type: object
+    configv1UpdateLogRetentionConfigResponse:
+      properties:
+        log_retention_config:
+          $ref: '#/components/schemas/configv1LogRetentionConfig'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
           type: string
       type: object
     configv1LogRetentionConfig:
@@ -328,9 +328,35 @@ components:
       - retention_days
       - slug
       type: object
-    genericError:
-      additionalProperties: true
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
       type: object
+    configv1CreateLogRetentionConfigResponse:
+      properties:
+        log_retention_config:
+          $ref: '#/components/schemas/configv1LogRetentionConfig'
+      type: object
+    configv1ListLogRetentionConfigsResponse:
+      properties:
+        log_retention_configs:
+          items:
+            $ref: '#/components/schemas/configv1LogRetentionConfig'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1LogRetentionConfigMode:
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
     configv1CreateLogRetentionConfigRequest:
       properties:
         dry_run:
@@ -340,24 +366,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/configv1LogRetentionConfig'
           description: The LogRetentionConfig to create.
-      type: object
-    configv1LogRetentionConfigMode:
-      enum:
-      - ENABLED
-      - DISABLED
-      type: string
-    configv1ReadLogRetentionConfigResponse:
-      properties:
-        log_retention_config:
-          $ref: '#/components/schemas/configv1LogRetentionConfig'
-      type: object
-    configv1DeleteLogRetentionConfigResponse:
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
       type: object
     ConfigV1UpdateLogRetentionConfigBody:
       properties:
@@ -372,15 +380,7 @@ components:
           - $ref: '#/components/schemas/configv1LogRetentionConfig'
           description: The LogRetentionConfig to update.
       type: object
-    configv1UpdateLogRetentionConfigResponse:
-      properties:
-        log_retention_config:
-          $ref: '#/components/schemas/configv1LogRetentionConfig'
-      type: object
-    configv1CreateLogRetentionConfigResponse:
-      properties:
-        log_retention_config:
-          $ref: '#/components/schemas/configv1LogRetentionConfig'
+    configv1DeleteLogRetentionConfigResponse:
       type: object
   securitySchemes:
     ApiKeyAuth:

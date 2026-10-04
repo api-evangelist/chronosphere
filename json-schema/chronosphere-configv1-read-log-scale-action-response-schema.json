@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-read-log-scale-action-response-schema.json",
+  "title": "configv1ReadLogScaleActionResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-logscaleaction-api-openapi.yml#/components/schemas/configv1ReadLogScaleActionResponse",
+  "type": "object",
+  "properties": {
+    "log_scale_action": {
+      "$ref": "#/$defs/configv1LogScaleAction"
+    }
+  },
+  "$defs": {
+    "LogScaleActionActionType": {
+      "type": "string",
+      "enum": [
+        "EMAIL",
+        "HUMIO_REPO",
+        "OPS_GENIE",
+        "PAGER_DUTY",
+        "SLACK",
+        "SLACK_POST_MESSAGE",
+        "VICTOR_OPS",
+        "WEBHOOK",
+        "UPLOAD_FILE"
+      ]
+    },
+    "LogScaleActionEmailAction": {
+      "type": "object",
+      "properties": {
+        "recipients": {
+          "type": "array",
+          "description": "List of email addresses to send an email to.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subject_template": {
+          "type": "string",
+          "description": "Subject of the email. Can be templated with values from the query result."
+        },
+        "body_template": {
+          "type": "string",
+          "description": "Body of the email. Can be templated with values from the query result."
+        },
+        "attach_csv": {
+          "type": "boolean",
+          "description": "Whether the result set should be attached as a CSV file."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "LogScaleActionHumioRepoAction": {
+      "type": "object",
+      "properties": {
+        "ingest_token": {
+          "type": "string",
+          "description": "Ingest token for the repository that the action should ingest into."
+        }
+      }
+    },
+    "LogScaleActionOpsGenieAction": {
+      "type": "object",
+      "properties": {
+        "api_url": {
+          "type": "string",
+          "description": "OpsGenie webhook URL to send the request to."
+        },
+        "ops_genie_key": {
+          "type": "string",
+          "description": "Key to authenticate with OpsGenie."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "LogScaleActionPagerDutyAction": {
+      "type": "object",
+      "properties": {
+        "severity": {
+          "$ref": "#/$defs/PagerDutyActionSeverity"
+        },
+        "routing_key": {
+          "type": "string",
+          "description": "Routing key to authenticate with PagerDuty."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "LogScaleActionSlackAction": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Slack webhook URL to send the request to."
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Fields to include within the Slack message. Can be templated with values from the query result."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "LogScaleActionSlackPostMessageAction": {
+      "type": "object",
+      "properties": {
+        "api_token": {
+          "type": "string",
+          "description": "API token to authenticate with Slack."
+        },
+        "channels": {
+          "type": "array",
+          "description": "List of Slack channels to message.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Fields to include within the Slack message. Can be templated with values from the query result."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "LogScaleActionUploadFileAction": {
+      "type": "object",
+      "properties": {
+        "file_name": {
+          "type": "string",
+          "description": "File name for the uploaded file."
+        }
+      }
+    },
+    "LogScaleActionVictorOpsAction": {
+      "type": "object",
+      "properties": {
+        "message_type": {
+          "type": "string",
+          "description": "Type of the VictorOps message to make."
+        },
+        "notify_url": {
+          "type": "string",
+          "description": "VictorOps webhook URL to send the request to."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "LogScaleActionWebhookAction": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "#/$defs/WebhookActionHTTPMethod"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to send the HTTP or HTTPS request to."
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Headers of the HTTP or HTTPS request."
+        },
+        "body_template": {
+          "type": "string",
+          "description": "Body of the HTTP or HTTPS request. Can be templated with values from the query result."
+        },
+        "ignore_ssl": {
+          "type": "boolean",
+          "description": "Flag indicating whether SSL should be ignored for the request."
+        },
+        "use_proxy": {
+          "type": "boolean",
+          "description": "Defines whether the action should use the configured proxy to make web requests."
+        }
+      }
+    },
+    "PagerDutyActionSeverity": {
+      "type": "string",
+      "enum": [
+        "CRITICAL",
+        "ERROR",
+        "WARNING",
+        "INFO"
+      ]
+    },
+    "WebhookActionHTTPMethod": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "HEAD",
+        "OPTIONS"
+      ]
+    },
+    "configv1LogScaleAction": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "description": "Unique identifier of the LogScaleAction. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the LogScaleAction is created."
+        },
+        "repository": {
+          "type": "string",
+          "description": "Name of the LogScale repository the alerts belongs to. Required."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of an action."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Timestamp of when the LogScaleAction was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Timestamp of when the LogScaleAction was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "action_type": {
+          "$ref": "#/$defs/LogScaleActionActionType"
+        },
+        "email_action": {
+          "$ref": "#/$defs/LogScaleActionEmailAction"
+        },
+        "humio_action": {
+          "$ref": "#/$defs/LogScaleActionHumioRepoAction"
+        },
+        "ops_genie_action": {
+          "$ref": "#/$defs/LogScaleActionOpsGenieAction"
+        },
+        "pager_duty_action": {
+          "$ref": "#/$defs/LogScaleActionPagerDutyAction"
+        },
+        "slack_action": {
+          "$ref": "#/$defs/LogScaleActionSlackAction"
+        },
+        "slack_post_message_action": {
+          "$ref": "#/$defs/LogScaleActionSlackPostMessageAction"
+        },
+        "victor_ops_action": {
+          "$ref": "#/$defs/LogScaleActionVictorOpsAction"
+        },
+        "webhook_action": {
+          "$ref": "#/$defs/LogScaleActionWebhookAction"
+        },
+        "upload_file_action": {
+          "$ref": "#/$defs/LogScaleActionUploadFileAction"
+        }
+      }
+    }
+  }
+}

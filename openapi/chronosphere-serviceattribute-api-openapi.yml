@@ -73,15 +73,8 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+    genericError:
+      additionalProperties: true
       type: object
     configv1ListServiceAttributesResponse:
       properties:
@@ -92,13 +85,20 @@ components:
             $ref: '#/components/schemas/configv1ServiceAttribute'
           type: array
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
     apiError:
       properties:
         message:
           description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
           type: string
       type: object
     configv1ServiceAttribute:

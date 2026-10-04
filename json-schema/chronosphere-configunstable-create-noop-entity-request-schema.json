@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-create-noop-entity-request-schema.json",
+  "title": "configunstableCreateNoopEntityRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-noopentity-api-openapi.yml#/components/schemas/configunstableCreateNoopEntityRequest",
+  "properties": {
+    "noop_entity": {
+      "$ref": "#/$defs/configunstableNoopEntity"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "NoopEntityNestedEnum": {
+      "enum": [
+        "ENABLED"
+      ],
+      "type": "string"
+    },
+    "configunstableNoopEntity": {
+      "properties": {
+        "slug": {
+          "description": "The unique identifier of the NoopEntity. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the NoopEntity is created.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the NoopEntity. You can modify this value after the NoopEntity is created.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the NoopEntity was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the NoopEntity was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "nested_enum": {
+          "$ref": "#/$defs/NoopEntityNestedEnum"
+        },
+        "enum": {
+          "$ref": "#/$defs/configunstableNoopEnum"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableNoopEnum": {
+      "enum": [
+        "ACTIVE"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Trace Behavior API
   version: v1
-  description: 'Operations tagged TraceBehavior across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged TraceBehavior across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -276,73 +276,8 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    TraceBehaviorSlowSampleOptions:
-      properties:
-        enabled:
-          description: Determines whether or not to define options for slow traces.
-          type: boolean
-        min_duration_seconds:
-          description: 'Duration in seconds under which traces are sampled according to the given
-
-            sample rate.'
-          format: double
-          type: number
-        sample_rate:
-          description: Defines the sample rate for traces during a specified duration.
-          format: double
-          type: number
-        sampling_type:
-          allOf:
-          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
-          description: Specifies the sampling type.
-      type: object
-    configv1CreateTraceBehaviorResponse:
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-      type: object
-    TraceBehaviorFastSampleOptions:
-      properties:
-        enabled:
-          description: Determines whether or not to define options for fast traces.
-          type: boolean
-        max_duration_seconds:
-          description: 'Duration in seconds under which traces are sampled according to the given
-
-            sample rate.'
-          format: double
-          type: number
-        sample_rate:
-          description: Defines the sample rate for traces during a specified duration.
-          format: double
-          type: number
-        sampling_type:
-          allOf:
-          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
-          description: Specifies the sampling type.
-      type: object
-    ConfigV1UpdateTraceBehaviorBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the TraceBehavior will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the TraceBehavior does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the TraceBehavior. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehavior. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        trace_behavior:
-          allOf:
-          - $ref: '#/components/schemas/configv1TraceBehavior'
-          description: The TraceBehavior to update.
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+    genericError:
+      additionalProperties: true
       type: object
     configv1CreateTraceBehaviorRequest:
       properties:
@@ -354,34 +289,39 @@ components:
           - $ref: '#/components/schemas/configv1TraceBehavior'
           description: The TraceBehavior to create.
       type: object
-    configv1UpdateTraceBehaviorResponse:
+    TraceBehaviorSmallTraceSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for small traces.
+          type: boolean
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+        span_count_threshold:
+          description: 'Defines the sampling rate for small traces. If the number of spans in the
+
+            trace is less than or equal to (`<=`) the `span_count_threshold`, the trace is
+
+            sampled according to the given sample rate.'
+          format: int64
+          type: integer
+      type: object
+    configv1CreateTraceBehaviorResponse:
       properties:
         trace_behavior:
           $ref: '#/components/schemas/configv1TraceBehavior'
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1ListTraceBehaviorsResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        trace_behaviors:
-          items:
-            $ref: '#/components/schemas/configv1TraceBehavior'
-          type: array
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1ReadTraceBehaviorResponse:
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior'
-      type: object
+    TraceBehaviorSamplingType:
+      description: " - LOW_VALUE: Match indicates a low value trace. With multiple low value matches sample at the lowest rate.\n - HIGH_VALUE: Match indicates a high value trace. With multiple high value matches sample at the highest rate."
+      enum:
+      - LOW_VALUE
+      - HIGH_VALUE
+      type: string
     configv1TraceBehavior:
       properties:
         base_head_sample_rate:
@@ -449,6 +389,26 @@ components:
       required:
       - name
       type: object
+    TraceBehaviorSlowSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for slow traces.
+          type: boolean
+        min_duration_seconds:
+          description: 'Duration in seconds under which traces are sampled according to the given
+
+            sample rate.'
+          format: double
+          type: number
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+      type: object
     TraceBehaviorLargeTraceSampleOptions:
       properties:
         enabled:
@@ -471,7 +431,62 @@ components:
           format: int64
           type: integer
       type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1UpdateTraceBehaviorResponse:
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior'
+      type: object
+    configv1ListTraceBehaviorsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        trace_behaviors:
+          items:
+            $ref: '#/components/schemas/configv1TraceBehavior'
+          type: array
+      type: object
+    TraceBehaviorFastSampleOptions:
+      properties:
+        enabled:
+          description: Determines whether or not to define options for fast traces.
+          type: boolean
+        max_duration_seconds:
+          description: 'Duration in seconds under which traces are sampled according to the given
+
+            sample rate.'
+          format: double
+          type: number
+        sample_rate:
+          description: Defines the sample rate for traces during a specified duration.
+          format: double
+          type: number
+        sampling_type:
+          allOf:
+          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
+          description: Specifies the sampling type.
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     configv1DeleteTraceBehaviorResponse:
+      type: object
+    configv1ReadTraceBehaviorResponse:
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior'
       type: object
     TraceBehaviorErrorSampleOptions:
       properties:
@@ -487,43 +502,36 @@ components:
           - $ref: '#/components/schemas/TraceBehaviorSamplingType'
           description: Specifies the sampling type.
       type: object
-    TraceBehaviorSmallTraceSampleOptions:
+    ConfigV1UpdateTraceBehaviorBody:
       properties:
-        enabled:
-          description: Determines whether or not to define options for small traces.
+        create_if_missing:
+          description: If `true`, the TraceBehavior will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the TraceBehavior does not already exist.
           type: boolean
-        sample_rate:
-          description: Defines the sample rate for traces during a specified duration.
-          format: double
-          type: number
-        sampling_type:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the TraceBehavior. If the specified configuration is valid, the endpoint returns a partial response without the TraceBehavior. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        trace_behavior:
           allOf:
-          - $ref: '#/components/schemas/TraceBehaviorSamplingType'
-          description: Specifies the sampling type.
-        span_count_threshold:
-          description: 'Defines the sampling rate for small traces. If the number of spans in the
-
-            trace is less than or equal to (`<=`) the `span_count_threshold`, the trace is
-
-            sampled according to the given sample rate.'
-          format: int64
-          type: integer
+          - $ref: '#/components/schemas/configv1TraceBehavior'
+          description: The TraceBehavior to update.
       type: object
-    TraceBehaviorSamplingType:
-      description: " - LOW_VALUE: Match indicates a low value trace. With multiple low value matches sample at the lowest rate.\n - HIGH_VALUE: Match indicates a high value trace. With multiple high value matches sample at the highest rate."
-      enum:
-      - LOW_VALUE
-      - HIGH_VALUE
-      type: string
-    TraceBehaviorSlowSampleOptions_2:
+    configv1CreateTraceBehaviorRequest_2:
       type: object
       properties:
-        min_duration_seconds:
-          type: number
-          description: 'Duration in seconds over which traces are sampled
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior_2'
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehavior isn't created, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
+    TraceBehaviorSmallTraceSampleOptions_2:
+      type: object
+      properties:
+        span_count_threshold:
+          type: integer
+          description: 'For N = number of spans in the trace, if N <= span_count_threshold, the trace is sampled according to the
 
-            according to the given sample rate.'
-          format: double
+            given sample rate.'
+          format: int64
         sample_rate:
           type: number
           description: Sample rate.
@@ -533,63 +541,6 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
-    TraceBehaviorFastSampleOptions_2:
-      type: object
-      properties:
-        max_duration_seconds:
-          type: number
-          description: 'Duration in seconds under which traces are sampled
-
-            according to the given sample rate.'
-          format: double
-        sample_rate:
-          type: number
-          description: Sample rate for traces under the given duration.
-          format: double
-        sampling_type:
-          $ref: '#/components/schemas/TraceBehaviorSamplingType'
-        enabled:
-          type: boolean
-          description: Whether or not to use these options.
-    ConfigV1UpdateTraceBehaviorBody_2:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the TraceBehavior will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceBehavior does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the TraceBehavior isn't created or updated, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1CreateTraceBehaviorRequest_2:
-      type: object
-      properties:
-        trace_behavior:
-          $ref: '#/components/schemas/configv1TraceBehavior_2'
-        dry_run:
-          type: boolean
-          description: If true, the TraceBehavior isn't created, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     configv1TraceBehavior_2:
       type: object
       properties:
@@ -631,6 +582,24 @@ components:
           $ref: '#/components/schemas/TraceBehaviorLargeTraceSampleOptions_2'
         small_trace_sample_options:
           $ref: '#/components/schemas/TraceBehaviorSmallTraceSampleOptions_2'
+    TraceBehaviorSlowSampleOptions_2:
+      type: object
+      properties:
+        min_duration_seconds:
+          type: number
+          description: 'Duration in seconds over which traces are sampled
+
+            according to the given sample rate.'
+          format: double
+        sample_rate:
+          type: number
+          description: Sample rate.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
     TraceBehaviorLargeTraceSampleOptions_2:
       type: object
       properties:
@@ -649,6 +618,44 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    TraceBehaviorFastSampleOptions_2:
+      type: object
+      properties:
+        max_duration_seconds:
+          type: number
+          description: 'Duration in seconds under which traces are sampled
+
+            according to the given sample rate.'
+          format: double
+        sample_rate:
+          type: number
+          description: Sample rate for traces under the given duration.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     TraceBehaviorErrorSampleOptions_2:
       type: object
       properties:
@@ -661,7 +668,26 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
-    TraceBehaviorSmallTraceSampleOptions_2:
+    ConfigV1UpdateTraceBehaviorBody_2:
+      type: object
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceBehavior will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceBehavior does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehavior isn't created or updated, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
+    configv1CreateTraceBehaviorRequest_3:
+      type: object
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior_3'
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehavior isn't created, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
+    TraceBehaviorSmallTraceSampleOptions_3:
       type: object
       properties:
         span_count_threshold:
@@ -679,6 +705,144 @@ components:
         enabled:
           type: boolean
           description: Whether or not to use these options.
+    configv1TraceBehavior_3:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Required. Name of the TraceBehavior. You can modify this value after the TraceBehavior is created.
+        slug:
+          type: string
+          description: Unique identifier of the TraceBehavior. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the TraceBehavior is created.
+        created_at:
+          type: string
+          description: Timestamp of when the TraceBehavior was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the TraceBehavior was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        description:
+          type: string
+        base_tail_sample_rate:
+          type: number
+          description: Sample rate for fully assembled traces that do not apply to the error, fast, slow, large, or small sampling options.
+          format: double
+        base_head_sample_rate:
+          type: number
+          description: 'Sample rate for head sampling. This applies to all root spans that are enrolled in head sampling,
+
+            but do not have a specific rule defined for their service.'
+          format: double
+        error_sample_options:
+          $ref: '#/components/schemas/TraceBehaviorErrorSampleOptions_3'
+        fast_sample_options:
+          $ref: '#/components/schemas/TraceBehaviorFastSampleOptions_3'
+        slow_sample_options:
+          $ref: '#/components/schemas/TraceBehaviorSlowSampleOptions_3'
+        large_trace_sample_options:
+          $ref: '#/components/schemas/TraceBehaviorLargeTraceSampleOptions_3'
+        small_trace_sample_options:
+          $ref: '#/components/schemas/TraceBehaviorSmallTraceSampleOptions_3'
+    TraceBehaviorSlowSampleOptions_3:
+      type: object
+      properties:
+        min_duration_seconds:
+          type: number
+          description: 'Duration in seconds over which traces are sampled
+
+            according to the given sample rate.'
+          format: double
+        sample_rate:
+          type: number
+          description: Sample rate.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    TraceBehaviorLargeTraceSampleOptions_3:
+      type: object
+      properties:
+        span_count_threshold:
+          type: integer
+          description: 'For N = number of spans in the trace, if N >= span_count_threshold, the trace is sampled according to the
+
+            given sample rate.'
+          format: int64
+        sample_rate:
+          type: number
+          description: Sample rate.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    apiError_3:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    TraceBehaviorFastSampleOptions_3:
+      type: object
+      properties:
+        max_duration_seconds:
+          type: number
+          description: 'Duration in seconds under which traces are sampled
+
+            according to the given sample rate.'
+          format: double
+        sample_rate:
+          type: number
+          description: Sample rate for traces under the given duration.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    configv1PageResult_3:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    TraceBehaviorErrorSampleOptions_3:
+      type: object
+      properties:
+        sample_rate:
+          type: number
+          description: Sample rate for traces with errors.
+          format: double
+        sampling_type:
+          $ref: '#/components/schemas/TraceBehaviorSamplingType'
+        enabled:
+          type: boolean
+          description: Whether or not to use these options.
+    ConfigV1UpdateTraceBehaviorBody_3:
+      type: object
+      properties:
+        trace_behavior:
+          $ref: '#/components/schemas/configv1TraceBehavior_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the TraceBehavior will be created if it does not already exist, identified by slug. If false, an error will be returned if the TraceBehavior does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the TraceBehavior isn't created or updated, and no response TraceBehavior will be returned. The response will return an error if the given TraceBehavior is invalid.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -688,3 +852,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

@@ -202,24 +202,8 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableListLogPrimaryKeysResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        log_primary_keys:
-          items:
-            $ref: '#/components/schemas/configunstableLogPrimaryKey'
-          type: array
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+    genericError:
+      additionalProperties: true
       type: object
     configunstableCreateLogPrimaryKeyRequest:
       properties:
@@ -228,9 +212,6 @@ components:
         dry_run:
           description: If `true`, validates the specified configuration without creating the LogPrimaryKey. If the specified configuration is valid, the endpoint returns a partial response without the LogPrimaryKey. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-      type: object
-    genericError:
-      additionalProperties: true
       type: object
     configunstableLogPrimaryKey:
       properties:
@@ -258,6 +239,11 @@ components:
             $ref: '#/components/schemas/LogPrimaryKeyLogPrimaryKeyField'
           type: array
       type: object
+    configunstableCreateLogPrimaryKeyResponse:
+      properties:
+        log_primary_key:
+          $ref: '#/components/schemas/configunstableLogPrimaryKey'
+      type: object
     apiError:
       properties:
         code:
@@ -268,7 +254,24 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    configunstableDeleteLogPrimaryKeyResponse:
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configunstableListLogPrimaryKeysResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_primary_keys:
+          items:
+            $ref: '#/components/schemas/configunstableLogPrimaryKey'
+          type: array
       type: object
     configunstableReadLogPrimaryKeyResponse:
       properties:
@@ -284,8 +287,5 @@ components:
           description: source is the name of the source field
           type: string
       type: object
-    configunstableCreateLogPrimaryKeyResponse:
-      properties:
-        log_primary_key:
-          $ref: '#/components/schemas/configunstableLogPrimaryKey'
+    configunstableDeleteLogPrimaryKeyResponse:
       type: object

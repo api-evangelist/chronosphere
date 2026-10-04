@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-read-notebook-response-schema.json",
+  "title": "configunstableReadNotebookResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-notebook-api-openapi.yml#/components/schemas/configunstableReadNotebookResponse",
+  "properties": {
+    "notebook": {
+      "$ref": "#/$defs/configunstableNotebook"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configunstableNotebook": {
+      "properties": {
+        "slug": {
+          "description": "The unique identifier of the Notebook. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Notebook is created.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Notebook. You can modify this value after the Notebook is created.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the Notebook was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Notebook was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "collection_slug": {
+          "description": "Slug of the collection the notebook belongs to. Required if `collection`\nisn't set.",
+          "type": "string"
+        },
+        "notebook_json": {
+          "description": "Required raw JSON of the notebook.",
+          "type": "string"
+        },
+        "collection": {
+          "$ref": "#/$defs/configv1CollectionReference"
+        }
+      },
+      "type": "object"
+    },
+    "configv1CollectionReference": {
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/configv1CollectionReferenceType"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1CollectionReferenceType": {
+      "enum": [
+        "SIMPLE",
+        "SERVICE"
+      ],
+      "title": "Type values must match entitiespb.Collection.CollectionType.",
+      "type": "string"
+    }
+  }
+}

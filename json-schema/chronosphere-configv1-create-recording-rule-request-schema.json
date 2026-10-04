@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-create-recording-rule-request-schema.json",
+  "title": "configv1CreateRecordingRuleRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-recordingrule-api-openapi.yml#/components/schemas/configv1CreateRecordingRuleRequest",
+  "properties": {
+    "dry_run": {
+      "description": "If `true`, validates the specified configuration without creating the RecordingRule. If the specified configuration is valid, the endpoint returns a partial response without the RecordingRule. If the specified configuration is invalid, the endpoint returns an error.",
+      "type": "boolean"
+    },
+    "recording_rule": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/configv1RecordingRule"
+        }
+      ],
+      "description": "The RecordingRule to create."
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "RecordingRuleExecutionMode": {
+      "description": "ExecutionMode controls how a recording rule is assigned to shards for execution.\n\n - EXECUTION_MODE_SYNCHRONIZED: Synchronized: shard rule by execution group, which ensures that all\nsynchronized rules in the same group execute on the same shard.",
+      "enum": [
+        "EXECUTION_MODE_SYNCHRONIZED"
+      ],
+      "type": "string"
+    },
+    "configv1RecordingRule": {
+      "properties": {
+        "bucket_slug": {
+          "description": "The slug of the bucket the recording rule belongs to. Required if\n`execution_group` is not set. If both `bucket_slug` and `execution_group`\nare set, their values must match.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the RecordingRule was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "execution_group": {
+          "description": "The slug of the execution group in which the recording rule will be evaluated.\nRules in the same execution group run at intervals. All rules in a group must\ncomplete before the rules in that group run again. Required if `bucket_slug`\nisn't set. If both `bucket_slug` and `execution_group` are set, their values\nmust match.\n\nCreating too many rules in an execution group can cause delays in execution of\nthe next iteration. Chronosphere recommends limiting the number of rules in an\nexecution group to 200-300 maximum.",
+          "type": "string"
+        },
+        "execution_mode": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RecordingRuleExecutionMode"
+            }
+          ],
+          "description": "Controls how this rule is assigned to shards for execution.\nWhen set to SYNCHRONIZED, all rules in the same execution group with\nthis mode are assigned to the same shard, which ensures that they execute\ntogether with the same evaluation timestamp."
+        },
+        "interval_secs": {
+          "description": "Specifies how often to evaluate the recording rule. Default: `60s`.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "label_policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1RecordingRuleLabelPolicy"
+            }
+          ],
+          "description": "Specifies label names to add to the output metric. If you attempt to add an\nexisting label, the label isn't added. For example, `add (instance123:instance)`."
+        },
+        "metric_name": {
+          "description": "The name of the time series to use for the output of `prometheus_expr`.\nThis value must be a valid metric name. If you don't set this value,\nthe output of `prometheus_expr` is output to a time series with a name\ndefined by the value of `name`.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the RecordingRule. You can modify this value after the RecordingRule is created.",
+          "type": "string"
+        },
+        "prometheus_expr": {
+          "description": "The PromQL expression to evaluate at the time of each evaluation cycle. The\nresult is output to a new time series with a name defined by the value of\n`metric_name`. If `metric_name` is unset, the result is output to a\ntime series defined by the value of `name`.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The unique identifier of the RecordingRule. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the RecordingRule is created.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the RecordingRule was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "configv1RecordingRuleLabelPolicy": {
+      "properties": {
+        "add": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A list of labels to add or overwrite before storing the result.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

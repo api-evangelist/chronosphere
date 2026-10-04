@@ -53,7 +53,11 @@ idempotency:
     create_if_missing true a repeated PUT converges on the same state; with it false a PUT against
     a missing resource errors rather than silently creating one. Repeating a POST Create against
     an existing slug returns 409 rather than duplicating, and DELETE is naturally idempotent.
-  scope: per-resource slug
+  coverage: full
+  scope:
+    - per-resource slug
+  coverage: full
+  scope: []
   retention: not applicable — no key store
   fields:
   - name: create_if_missing

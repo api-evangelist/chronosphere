@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-create-trace-tail-sampling-rules-request-schema.json",
+  "title": "configunstableCreateTraceTailSamplingRulesRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-tracetailsamplingrules-api-openapi.yml#/components/schemas/configunstableCreateTraceTailSamplingRulesRequest",
+  "properties": {
+    "trace_tail_sampling_rules": {
+      "$ref": "#/$defs/configunstableTraceTailSamplingRules"
+    },
+    "dry_run": {
+      "description": "If `true`, validates the specified configuration without creating the TraceTailSamplingRules. If the specified configuration is valid, the endpoint returns a partial response without the TraceTailSamplingRules. If the specified configuration is invalid, the endpoint returns an error.",
+      "type": "boolean"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "NumericFilterComparisonType": {
+      "enum": [
+        "EQUAL",
+        "NOT_EQUAL",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUAL",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUAL"
+      ],
+      "type": "string"
+    },
+    "SpanFilterSpanFilterMatchType": {
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ],
+      "type": "string"
+    },
+    "StringFilterStringFilterMatchType": {
+      "enum": [
+        "EXACT",
+        "REGEX",
+        "EXACT_NEGATION",
+        "REGEX_NEGATION",
+        "IN",
+        "NOT_IN"
+      ],
+      "type": "string"
+    },
+    "TraceSearchFilterBoolFilter": {
+      "properties": {
+        "value": {
+          "description": "The value of the filter compared to the target trace or span field.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterCountFilter": {
+      "properties": {
+        "min": {
+          "description": "Minimum number of spans that must match a span query, inclusive.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "max": {
+          "description": "Maximum number of spans that must match a span query, inclusive.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterDurationFilter": {
+      "properties": {
+        "min_secs": {
+          "description": "Minimum duration, in seconds, required for a span or trace to match.",
+          "format": "double",
+          "type": "number"
+        },
+        "max_secs": {
+          "description": "Maximum duration, in seconds, required for a span or trace to match.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterNumericFilter": {
+      "properties": {
+        "comparison": {
+          "$ref": "#/$defs/NumericFilterComparisonType"
+        },
+        "value": {
+          "description": "The filter value used in comparison against match candidates.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterScopeFilter": {
+      "properties": {
+        "span_scopes": {
+          "description": "Specifies the span filters that define which spans contribute to the metrics calculation.\nOnly spans matching these filters will be included in the metrics aggregation.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterSpanFilter"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterSpanFilter": {
+      "properties": {
+        "match_type": {
+          "$ref": "#/$defs/SpanFilterSpanFilterMatchType"
+        },
+        "service": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "operation": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "parent_service": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "parent_operation": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "duration": {
+          "$ref": "#/$defs/TraceSearchFilterDurationFilter"
+        },
+        "error": {
+          "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+        },
+        "tags": {
+          "description": "Matches the tags of the candidate span.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterTagFilter"
+          },
+          "type": "array"
+        },
+        "span_count": {
+          "$ref": "#/$defs/TraceSearchFilterCountFilter"
+        },
+        "is_root_span": {
+          "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterStringFilter": {
+      "properties": {
+        "match": {
+          "$ref": "#/$defs/StringFilterStringFilterMatchType"
+        },
+        "value": {
+          "description": "The value of the filter compared to the target trace or span field.",
+          "type": "string"
+        },
+        "in_values": {
+          "description": "Values the filter tests against when using `IN` or `NOT_IN` match type.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterTagFilter": {
+      "properties": {
+        "key": {
+          "description": "The key or name of the span tag that this filter inspects.",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "numeric_value": {
+          "$ref": "#/$defs/TraceSearchFilterNumericFilter"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterTraceFilter": {
+      "properties": {
+        "duration": {
+          "$ref": "#/$defs/TraceSearchFilterDurationFilter"
+        },
+        "error": {
+          "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableDefaultSampleRate": {
+      "properties": {
+        "enabled": {
+          "description": "Whether to override the default sample rate",
+          "type": "boolean"
+        },
+        "sample_rate": {
+          "description": "A fraction of traces to keep, which should be a number between 0 and 1, inclusive",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableTraceTailSamplingRule": {
+      "description": "Contains configuration for one tail sampling rule.",
+      "properties": {
+        "filter": {
+          "$ref": "#/$defs/configv1TraceSearchFilter"
+        },
+        "sample_rate": {
+          "description": "A fraction of traces to keep, which should be a number between 0 and 1, inclusive",
+          "format": "double",
+          "type": "number"
+        },
+        "name": {
+          "description": "A human-readable name of the rule, which summarizes what it's for",
+          "type": "string"
+        },
+        "system_name": {
+          "description": "Value used as the metric label value for metrics emitted relating to this rule.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "When the rule was created (novel system_name)",
+          "format": "date-time",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "When the rule was updated (existing system_name)",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableTraceTailSamplingRules": {
+      "description": "Root object containing all tail sampling rules (for a tenant).",
+      "properties": {
+        "created_at": {
+          "description": "Set in API responses.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Set in API responses.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "rules": {
+          "description": "Optional. A list of rules, evaluated in order until a match is found,\nand the sample rate applied, or else the default sample rate is applied.",
+          "items": {
+            "$ref": "#/$defs/configunstableTraceTailSamplingRule"
+          },
+          "type": "array"
+        },
+        "default_sample_rate": {
+          "$ref": "#/$defs/configunstableDefaultSampleRate"
+        }
+      },
+      "type": "object"
+    },
+    "configv1TraceSearchFilter": {
+      "properties": {
+        "trace": {
+          "$ref": "#/$defs/TraceSearchFilterTraceFilter"
+        },
+        "span": {
+          "description": "Specifies the span conditions to match on. All conditions must be true in a\nsingle span for the span to be considered a match. If `span_count` is specified,\nthe number of spans within the trace that match span conditions must be within\n`[min, max]`. You can specify multiple span conditions, and each can be\nsatisfied by any number of spans within the trace.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterSpanFilter"
+          },
+          "type": "array"
+        },
+        "scope_filter": {
+          "$ref": "#/$defs/TraceSearchFilterScopeFilter"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

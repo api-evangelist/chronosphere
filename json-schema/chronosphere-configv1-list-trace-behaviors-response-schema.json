@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-list-trace-behaviors-response-schema.json",
+  "title": "configv1ListTraceBehaviorsResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-tracebehavior-api-openapi.yml#/components/schemas/configv1ListTraceBehaviorsResponse",
+  "properties": {
+    "page": {
+      "$ref": "#/$defs/configv1PageResult"
+    },
+    "trace_behaviors": {
+      "items": {
+        "$ref": "#/$defs/configv1TraceBehavior"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "TraceBehaviorErrorSampleOptions": {
+      "properties": {
+        "enabled": {
+          "description": "Determines whether or not to define options for error traces.",
+          "type": "boolean"
+        },
+        "sample_rate": {
+          "description": "Specifies the sample rate for traces with errors.",
+          "format": "double",
+          "type": "number"
+        },
+        "sampling_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSamplingType"
+            }
+          ],
+          "description": "Specifies the sampling type."
+        }
+      },
+      "type": "object"
+    },
+    "TraceBehaviorFastSampleOptions": {
+      "properties": {
+        "enabled": {
+          "description": "Determines whether or not to define options for fast traces.",
+          "type": "boolean"
+        },
+        "max_duration_seconds": {
+          "description": "Duration in seconds under which traces are sampled according to the given\nsample rate.",
+          "format": "double",
+          "type": "number"
+        },
+        "sample_rate": {
+          "description": "Defines the sample rate for traces during a specified duration.",
+          "format": "double",
+          "type": "number"
+        },
+        "sampling_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSamplingType"
+            }
+          ],
+          "description": "Specifies the sampling type."
+        }
+      },
+      "type": "object"
+    },
+    "TraceBehaviorLargeTraceSampleOptions": {
+      "properties": {
+        "enabled": {
+          "description": "Determines whether or not to define options for large traces.",
+          "type": "boolean"
+        },
+        "sample_rate": {
+          "description": "Defines the sample rate for traces during a specified duration.",
+          "format": "double",
+          "type": "number"
+        },
+        "sampling_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSamplingType"
+            }
+          ],
+          "description": "Specifies the sampling type."
+        },
+        "span_count_threshold": {
+          "description": "Defines the sampling rate for large traces. If the number of spans in the\ntrace is grater than or equal to (`>=`) the `span_count_threshold`, the trace\nis sampled according to the given sample rate.",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TraceBehaviorSamplingType": {
+      "description": " - LOW_VALUE: Match indicates a low value trace. With multiple low value matches sample at the lowest rate.\n - HIGH_VALUE: Match indicates a high value trace. With multiple high value matches sample at the highest rate.",
+      "enum": [
+        "LOW_VALUE",
+        "HIGH_VALUE"
+      ],
+      "type": "string"
+    },
+    "TraceBehaviorSlowSampleOptions": {
+      "properties": {
+        "enabled": {
+          "description": "Determines whether or not to define options for slow traces.",
+          "type": "boolean"
+        },
+        "min_duration_seconds": {
+          "description": "Duration in seconds under which traces are sampled according to the given\nsample rate.",
+          "format": "double",
+          "type": "number"
+        },
+        "sample_rate": {
+          "description": "Defines the sample rate for traces during a specified duration.",
+          "format": "double",
+          "type": "number"
+        },
+        "sampling_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSamplingType"
+            }
+          ],
+          "description": "Specifies the sampling type."
+        }
+      },
+      "type": "object"
+    },
+    "TraceBehaviorSmallTraceSampleOptions": {
+      "properties": {
+        "enabled": {
+          "description": "Determines whether or not to define options for small traces.",
+          "type": "boolean"
+        },
+        "sample_rate": {
+          "description": "Defines the sample rate for traces during a specified duration.",
+          "format": "double",
+          "type": "number"
+        },
+        "sampling_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSamplingType"
+            }
+          ],
+          "description": "Specifies the sampling type."
+        },
+        "span_count_threshold": {
+          "description": "Defines the sampling rate for small traces. If the number of spans in the\ntrace is less than or equal to (`<=`) the `span_count_threshold`, the trace is\nsampled according to the given sample rate.",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "configv1PageResult": {
+      "properties": {
+        "next_token": {
+          "description": "An opaque page token that identifies the next page of items that the\nclient should request. An empty value indicates that there are no\nmore items to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1TraceBehavior": {
+      "properties": {
+        "base_head_sample_rate": {
+          "description": "Specifies the sample rate for head sampling. This rate applies to all root spans\nthat are enrolled in head sampling, but don't have a specific rule defined for\ntheir service.",
+          "format": "double",
+          "type": "number"
+        },
+        "base_tail_sample_rate": {
+          "description": "Specifies the base sample rate for fully assembled traces that don't apply to\nthe `error_sample_options`, `fast_sample_options`, `slow_sample_options`,\n`large_trace_sample_options`, or `small_trace_sample_options` sampling options.",
+          "format": "double",
+          "type": "number"
+        },
+        "created_at": {
+          "description": "Timestamp of when the TraceBehavior was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "error_sample_options": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorErrorSampleOptions"
+            }
+          ],
+          "description": "Optional. Specifies sampling options for traces whose root span is an error."
+        },
+        "fast_sample_options": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorFastSampleOptions"
+            }
+          ],
+          "description": "Optional. Specifies sampling options for traces whose root span duration is less\nthan the specified threshold."
+        },
+        "large_trace_sample_options": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorLargeTraceSampleOptions"
+            }
+          ],
+          "description": "Optional. Specifies sampling options for traces with spans greater than or equal\nto the specified threshold."
+        },
+        "name": {
+          "description": "The name of the TraceBehavior. You can modify this value after the TraceBehavior is created.",
+          "type": "string"
+        },
+        "slow_sample_options": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSlowSampleOptions"
+            }
+          ],
+          "description": "Optional. Specifies sampling options for traces whose root span duration is\ngreater than the specified threshold."
+        },
+        "slug": {
+          "description": "The unique identifier of the TraceBehavior. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the TraceBehavior is created.",
+          "type": "string"
+        },
+        "small_trace_sample_options": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceBehaviorSmallTraceSampleOptions"
+            }
+          ],
+          "description": "Optional. Specifies sampling options for traces with spans less than or equal to\nthe specified threshold."
+        },
+        "updated_at": {
+          "description": "Timestamp of when the TraceBehavior was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

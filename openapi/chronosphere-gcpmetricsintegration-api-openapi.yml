@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Gcp Metrics Integration API
   version: v1
-  description: 'Operations tagged GcpMetricsIntegration across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged GcpMetricsIntegration across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -279,6 +279,127 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    genericError:
+      additionalProperties: true
+      type: object
+    GcpMetricsIntegrationRollupRuleLabel:
+      description: Specifies a label to keep during aggregation.
+      properties:
+        context:
+          allOf:
+          - $ref: '#/components/schemas/GcpMetricsIntegrationLabelContext'
+          description: Specifies the scope of the label, such as `resource.labels` or `metric.labels`.
+        name:
+          description: Name of the label.
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1DeleteGcpMetricsIntegrationResponse:
+      type: object
+    configv1GcpMetricsIntegrationFilter:
+      description: Defines a filter to apply to metrics.
+      properties:
+        context:
+          allOf:
+          - $ref: '#/components/schemas/GcpMetricsIntegrationLabelContext'
+          description: Specifies the scope of the label, such as `resource.labels` or `metric.labels`.
+        name:
+          description: Label name to filter on.
+          type: string
+        value_glob:
+          description: 'Value pattern using glob syntax, such as `"prod-*"` or `"us-east-?"`.
+
+            If a glob pattern isn''t specified, an exact match is applied.'
+          type: string
+      type: object
+    GcpMetricsIntegrationMetricGroup:
+      properties:
+        filters:
+          description: Rollup rules to apply server-side aggregations to metrics in this group.
+          items:
+            $ref: '#/components/schemas/configv1GcpMetricsIntegrationFilter'
+          type: array
+        prefixes:
+          description: 'A list of Google Cloud metric prefixes to ingest.
+
+
+            Filters to apply to metrics in this group.'
+          items:
+            type: string
+          type: array
+        project_id:
+          description: The Google Cloud project ID that can access the metric data.
+          type: string
+        rollup_rules:
+          items:
+            $ref: '#/components/schemas/configv1GcpMetricsIntegrationRollupRule'
+          type: array
+      type: object
+    configv1ReadGcpMetricsIntegrationResponse:
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+      type: object
+    configv1GcpMetricsIntegrationServiceAccount:
+      properties:
+        client_email:
+          description: The email address of the Google Cloud service account to impersonate for authentication.
+          type: string
+      type: object
+    configv1GcpMetricsIntegrationRollupRule:
+      description: Defines server-side aggregation rules for metrics.
+      properties:
+        aggregation:
+          allOf:
+          - $ref: '#/components/schemas/configv1GcpMetricsIntegrationAggregation'
+          description: Aggregation method to use for cross-series aggregation.
+        label_policy:
+          allOf:
+          - $ref: '#/components/schemas/GcpMetricsIntegrationRollupRuleLabelPolicy'
+          description: Specifies which labels to preserve during aggregation.
+        metric_name:
+          description: Metric name to apply the aggregation to, such as `"cloudsql.googleapis.com/database/uptime"`.
+          type: string
+      type: object
+    configv1GcpMetricsIntegrationAggregation:
+      description: Specifies the cross-series aggregation method.
+      enum:
+      - MEAN
+      - MIN
+      - MAX
+      - SUM
+      - COUNT
+      type: string
+    configv1UpdateGcpMetricsIntegrationResponse:
+      properties:
+        gcp_metrics_integration:
+          allOf:
+          - $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+          description: The updated GcpMetricsIntegration.
+      type: object
+    GcpMetricsIntegrationRollupRuleLabelPolicy:
+      description: Specifies which labels to preserve during aggregation.
+      properties:
+        keep:
+          description: Labels to keep during aggregation.
+          items:
+            $ref: '#/components/schemas/GcpMetricsIntegrationRollupRuleLabel'
+          type: array
+      type: object
+    configv1CreateGcpMetricsIntegrationResponse:
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+      type: object
     configv1ListGcpMetricsIntegrationsResponse:
       properties:
         gcp_metrics_integrations:
@@ -287,6 +408,12 @@ components:
           type: array
         page:
           $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configv1GcpMetricsIntegration:
       properties:
@@ -318,83 +445,23 @@ components:
       required:
       - name
       type: object
-    configv1GcpMetricsIntegrationServiceAccount:
+    GcpMetricsIntegrationLabelContext:
+      description: "LabelContext represents the scope of a label in GCP (used for filters and aggregations).\n\n - RESOURCE_LABELS: Scopes labels to resources.\n - METRIC_LABELS: Scopes labels to metrics.\n - METADATA_SYSTEM_LABELS: Scopes labels to system metadata.\n - METADATA_USER_LABELS: Scopes labels to user metadata."
+      enum:
+      - RESOURCE_LABELS
+      - METRIC_LABELS
+      - METADATA_SYSTEM_LABELS
+      - METADATA_USER_LABELS
+      type: string
+    configv1CreateGcpMetricsIntegrationRequest:
       properties:
-        client_email:
-          description: The email address of the Google Cloud service account to impersonate for authentication.
-          type: string
-      type: object
-    configv1GcpMetricsIntegrationFilter:
-      description: Defines a filter to apply to metrics.
-      properties:
-        context:
-          allOf:
-          - $ref: '#/components/schemas/GcpMetricsIntegrationLabelContext'
-          description: Specifies the scope of the label, such as `resource.labels` or `metric.labels`.
-        name:
-          description: Label name to filter on.
-          type: string
-        value_glob:
-          description: 'Value pattern using glob syntax, such as `"prod-*"` or `"us-east-?"`.
-
-            If a glob pattern isn''t specified, an exact match is applied.'
-          type: string
-      type: object
-    configv1ReadGcpMetricsIntegrationResponse:
-      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the GcpMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the GcpMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
         gcp_metrics_integration:
-          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
-      type: object
-    GcpMetricsIntegrationMetricGroup:
-      properties:
-        filters:
-          description: Rollup rules to apply server-side aggregations to metrics in this group.
-          items:
-            $ref: '#/components/schemas/configv1GcpMetricsIntegrationFilter'
-          type: array
-        prefixes:
-          description: 'A list of Google Cloud metric prefixes to ingest.
-
-
-            Filters to apply to metrics in this group.'
-          items:
-            type: string
-          type: array
-        project_id:
-          description: The Google Cloud project ID that can access the metric data.
-          type: string
-        rollup_rules:
-          items:
-            $ref: '#/components/schemas/configv1GcpMetricsIntegrationRollupRule'
-          type: array
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    GcpMetricsIntegrationRollupRuleLabel:
-      description: Specifies a label to keep during aggregation.
-      properties:
-        context:
           allOf:
-          - $ref: '#/components/schemas/GcpMetricsIntegrationLabelContext'
-          description: Specifies the scope of the label, such as `resource.labels` or `metric.labels`.
-        name:
-          description: Name of the label.
-          type: string
-      type: object
-    configv1CreateGcpMetricsIntegrationResponse:
-      properties:
-        gcp_metrics_integration:
-          $ref: '#/components/schemas/configv1GcpMetricsIntegration'
-      type: object
-    configv1DeleteGcpMetricsIntegrationResponse:
+          - $ref: '#/components/schemas/configv1GcpMetricsIntegration'
+          description: The GcpMetricsIntegration to create.
       type: object
     ConfigV1UpdateGcpMetricsIntegrationBody:
       properties:
@@ -409,92 +476,31 @@ components:
           - $ref: '#/components/schemas/configv1GcpMetricsIntegration'
           description: The GcpMetricsIntegration to update.
       type: object
-    configv1GcpMetricsIntegrationRollupRule:
-      description: Defines server-side aggregation rules for metrics.
-      properties:
-        aggregation:
-          allOf:
-          - $ref: '#/components/schemas/configv1GcpMetricsIntegrationAggregation'
-          description: Aggregation method to use for cross-series aggregation.
-        label_policy:
-          allOf:
-          - $ref: '#/components/schemas/GcpMetricsIntegrationRollupRuleLabelPolicy'
-          description: Specifies which labels to preserve during aggregation.
-        metric_name:
-          description: Metric name to apply the aggregation to, such as `"cloudsql.googleapis.com/database/uptime"`.
-          type: string
+    configv1UpdateGcpMetricsIntegrationResponse_2:
       type: object
-    configv1CreateGcpMetricsIntegrationRequest:
       properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the GcpMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the GcpMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
         gcp_metrics_integration:
-          allOf:
-          - $ref: '#/components/schemas/configv1GcpMetricsIntegration'
-          description: The GcpMetricsIntegration to create.
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration_2'
+    apiError_2:
       type: object
-    configv1GcpMetricsIntegrationAggregation:
-      description: Specifies the cross-series aggregation method.
-      enum:
-      - MEAN
-      - MIN
-      - MAX
-      - SUM
-      - COUNT
-      type: string
-    apiError:
       properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
         message:
-          description: An error message describing what went wrong.
           type: string
-      type: object
-    GcpMetricsIntegrationLabelContext:
-      description: "LabelContext represents the scope of a label in GCP (used for filters and aggregations).\n\n - RESOURCE_LABELS: Scopes labels to resources.\n - METRIC_LABELS: Scopes labels to metrics.\n - METADATA_SYSTEM_LABELS: Scopes labels to system metadata.\n - METADATA_USER_LABELS: Scopes labels to user metadata."
-      enum:
-      - RESOURCE_LABELS
-      - METRIC_LABELS
-      - METADATA_SYSTEM_LABELS
-      - METADATA_USER_LABELS
-      type: string
-    GcpMetricsIntegrationRollupRuleLabelPolicy:
-      description: Specifies which labels to preserve during aggregation.
-      properties:
-        keep:
-          description: Labels to keep during aggregation.
-          items:
-            $ref: '#/components/schemas/GcpMetricsIntegrationRollupRuleLabel'
-          type: array
-      type: object
-    configv1UpdateGcpMetricsIntegrationResponse:
-      properties:
-        gcp_metrics_integration:
-          allOf:
-          - $ref: '#/components/schemas/configv1GcpMetricsIntegration'
-          description: The updated GcpMetricsIntegration.
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    ConfigV1UpdateGcpMetricsIntegrationBody_2:
+          description: An error message describing what went wrong.
+    configv1PageResult_2:
       type: object
       properties:
-        gcp_metrics_integration:
-          $ref: '#/components/schemas/configv1GcpMetricsIntegration_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the GcpMetricsIntegration will be created if it does not already exist, identified by slug. If false, an error will be returned if the GcpMetricsIntegration does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the GcpMetricsIntegration isn't created or updated, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
-    configv1CreateGcpMetricsIntegrationRequest_2:
-      type: object
-      properties:
-        gcp_metrics_integration:
-          $ref: '#/components/schemas/configv1GcpMetricsIntegration_2'
-        dry_run:
-          type: boolean
-          description: If true, the GcpMetricsIntegration isn't created, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     configv1GcpMetricsIntegration_2:
       type: object
       properties:
@@ -521,28 +527,48 @@ components:
           description: Metric groups to be ingested for this integration.
           items:
             $ref: '#/components/schemas/GcpMetricsIntegrationMetricGroup_2'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1UpdateGcpMetricsIntegrationResponse_2:
+    configv1CreateGcpMetricsIntegrationRequest_2:
       type: object
       properties:
         gcp_metrics_integration:
           $ref: '#/components/schemas/configv1GcpMetricsIntegration_2'
+        dry_run:
+          type: boolean
+          description: If true, the GcpMetricsIntegration isn't created, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
     configv1GcpMetricsIntegrationServiceAccount_2:
       type: object
       properties:
         client_email:
           type: string
           description: Email address of the service account to impersonate.
-    apiError_2:
+    ConfigV1UpdateGcpMetricsIntegrationBody_2:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the GcpMetricsIntegration will be created if it does not already exist, identified by slug. If false, an error will be returned if the GcpMetricsIntegration does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the GcpMetricsIntegration isn't created or updated, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
+    GcpMetricsIntegrationMetricGroup_2:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Project ID that has access to the metric data.
+        prefixes:
+          type: array
+          description: List of Gcp metric prefixes to ingest.
+          items:
+            type: string
+    configv1UpdateGcpMetricsIntegrationResponse_3:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration_3'
+    apiError_3:
       type: object
       properties:
         code:
@@ -552,7 +578,68 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    GcpMetricsIntegrationMetricGroup_2:
+    configv1PageResult_3:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1GcpMetricsIntegration_3:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the GcpMetricsIntegration. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the GcpMetricsIntegration is created.
+        name:
+          type: string
+          description: Required. Name of the GcpMetricsIntegration. You can modify this value after the GcpMetricsIntegration is created.
+        created_at:
+          type: string
+          description: Timestamp of when the GcpMetricsIntegration was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the GcpMetricsIntegration was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        service_account:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegrationServiceAccount_3'
+        metric_groups:
+          type: array
+          description: Metric groups to be ingested for this integration.
+          items:
+            $ref: '#/components/schemas/GcpMetricsIntegrationMetricGroup_3'
+    configv1CreateGcpMetricsIntegrationRequest_3:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration_3'
+        dry_run:
+          type: boolean
+          description: If true, the GcpMetricsIntegration isn't created, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
+    configv1GcpMetricsIntegrationServiceAccount_3:
+      type: object
+      properties:
+        client_email:
+          type: string
+          description: Email address of the service account to impersonate.
+    ConfigV1UpdateGcpMetricsIntegrationBody_3:
+      type: object
+      properties:
+        gcp_metrics_integration:
+          $ref: '#/components/schemas/configv1GcpMetricsIntegration_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the GcpMetricsIntegration will be created if it does not already exist, identified by slug. If false, an error will be returned if the GcpMetricsIntegration does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the GcpMetricsIntegration isn't created or updated, and no response GcpMetricsIntegration will be returned. The response will return an error if the given GcpMetricsIntegration is invalid.
+    GcpMetricsIntegrationMetricGroup_3:
       type: object
       properties:
         project_id:
@@ -572,3 +659,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

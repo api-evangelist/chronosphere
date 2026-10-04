@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-update-log-ingest-config-response-schema.json",
+  "title": "configv1UpdateLogIngestConfigResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-logingestconfig-api-openapi.yml#/components/schemas/configv1UpdateLogIngestConfigResponse",
+  "properties": {
+    "log_ingest_config": {
+      "$ref": "#/$defs/configv1LogIngestConfig"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "LogIngestConfigFieldNormalization": {
+      "description": "FieldNormalization allows you to map and normalize well-known fields from your logs.\nThese mappings run after parsing to standardize common fields like timestamp,\nseverity level, and message across different log formats.",
+      "properties": {
+        "custom_field_normalization": {
+          "description": "Maps additional custom fields from your logs. These will not be indexed.\nUse these for any other fields you want to normalize, such as environment, region, or user ID.",
+          "items": {
+            "$ref": "#/$defs/LogIngestConfigNamedStringNormalization"
+          },
+          "type": "array"
+        },
+        "message": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigStringNormalization"
+            }
+          ],
+          "description": "Maps the main message field from your logs.\nThis is typically the human-readable description of the log event."
+        },
+        "service": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigStringNormalization"
+            }
+          ],
+          "description": "Maps the service field from your logs.\nThe mapped value will be indexed and can be used for filtering and grouping."
+        },
+        "severity": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigStringNormalization"
+            }
+          ],
+          "description": "Maps severity or log level fields (e.g., ERROR, WARN, INFO, DEBUG).\nUse value mapping to normalize different severity formats across your logs."
+        },
+        "timestamp": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigTimestampNormalization"
+            }
+          ],
+          "description": "Maps timestamp fields from your logs to ensure consistent time ordering.\nThe system will try each specified field in order until a valid timestamp is found."
+        }
+      },
+      "type": "object"
+    },
+    "LogIngestConfigLogFieldParser": {
+      "properties": {
+        "destination": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1LogFieldPath"
+            }
+          ],
+          "description": "The destination field for storing parsed structured data.\nIf the specified key already exists, its value is overwritten.\nIf this value is unset, the log is updated at the root level and any\nconflicting keys are overwritten."
+        },
+        "mode": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigLogFieldParserMode"
+            }
+          ],
+          "description": "Specifies whether the field parser is enabled or disabled."
+        },
+        "parser": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigLogParser"
+            }
+          ],
+          "description": "The parser to apply to the source field."
+        },
+        "source": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1LogFieldPath"
+            }
+          ],
+          "description": "The source field to parse."
+        }
+      },
+      "type": "object"
+    },
+    "LogIngestConfigLogFieldParserMode": {
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
+    },
+    "LogIngestConfigLogParser": {
+      "properties": {
+        "grok_parser": {
+          "$ref": "#/$defs/LogParserGrokParser"
+        },
+        "key_value_parser": {
+          "$ref": "#/$defs/LogParserKeyValueParser"
+        },
+        "parser_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogParserParserType"
+            }
+          ],
+          "description": "The type of parser to use."
+        },
+        "regex_parser": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogParserRegexParser"
+            }
+          ],
+          "description": "This object contains settings relevant to `REGEX` parsers."
+        }
+      },
+      "type": "object"
+    },
+    "LogIngestConfigNamedStringNormalization": {
+      "description": "NamedStringNormalization maps a field to a named target with optional transformations.",
+      "properties": {
+        "normalization": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigStringNormalization"
+            }
+          ],
+          "description": "The normalization configuration for this field."
+        },
+        "target": {
+          "description": "The name of the target field where the normalized value will be stored.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LogIngestConfigPlaintextParser": {
+      "properties": {
+        "keep_original": {
+          "description": "If `true`, the original log is retained after parsing and stored in the\nkey `plaintext_log`. If `false`, the original log is dropped after parsing.\nDefault value: `false`.",
+          "type": "boolean"
+        },
+        "mode": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigPlaintextParserMode"
+            }
+          ],
+          "description": "Specifies whether the parser is enabled or disabled."
+        },
+        "name": {
+          "description": "The name of the parser. Must be unique within the configuration.",
+          "type": "string"
+        },
+        "parser": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigLogParser"
+            }
+          ],
+          "description": "The parser configuration to apply to plaintext logs."
+        }
+      },
+      "type": "object"
+    },
+    "LogIngestConfigPlaintextParserMode": {
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
+    },
+    "LogIngestConfigStringNormalization": {
+      "description": "StringNormalization defines how to extract and transform string values from log fields.",
+      "properties": {
+        "default_value": {
+          "description": "Default value to use when no source fields contain values.",
+          "type": "string"
+        },
+        "sanitize_patterns": {
+          "description": "Optional regex patterns to extract and sanitize values.\nEach pattern must have exactly one capturing group that will be used as the result.\nFor example: \"^.*level=([A-Z]+).*$\" to extract log level from a string.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "source": {
+          "description": "List of field paths to check for values, in priority order.\nThe first non-empty value found will be used.",
+          "items": {
+            "$ref": "#/$defs/configv1LogFieldPath"
+          },
+          "type": "array"
+        },
+        "value_map": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional mapping to normalize values.\nFor example: {\"warn\": \"WARNING\", \"err\": \"ERROR\"} to standardize severity levels.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "LogIngestConfigTimestampNormalization": {
+      "description": "TimestampNormalization specifies which fields to check for timestamp values.",
+      "properties": {
+        "source": {
+          "description": "List of field paths to check for timestamp values, in priority order.\nCommon fields include \"timestamp\", \"@timestamp\", \"time\", \"datetime\".",
+          "items": {
+            "$ref": "#/$defs/configv1LogFieldPath"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LogParserGrokParser": {
+      "properties": {
+        "pattern": {
+          "description": "The grok pattern to apply. Named capture groups become named fields in \nthe extracted log.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LogParserKeyValueParser": {
+      "description": "A parser to extract key/value pairs from a string.\nIf duplicate keys are found, the first instance is used.",
+      "properties": {
+        "delimiter": {
+          "description": "The string for splitting the input into key/value pairs.",
+          "type": "string"
+        },
+        "pair_separator": {
+          "description": "The string for splitting each pair into its key and value.",
+          "type": "string"
+        },
+        "trim_set": {
+          "description": "Specifies the code points of any Unicode characters to trim from the\nbeginning and end of keys and values.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "delimiter",
+        "pair_separator"
+      ],
+      "type": "object"
+    },
+    "LogParserParserType": {
+      "enum": [
+        "JSON",
+        "REGEX",
+        "KEY_VALUE",
+        "GROK"
+      ],
+      "type": "string"
+    },
+    "LogParserRegexParser": {
+      "properties": {
+        "regex": {
+          "description": "The regular expression parser pattern to apply. Must use RE2 syntax.\nNamed capturing groups become named fields in the extracted log.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1LogFieldPath": {
+      "properties": {
+        "selector": {
+          "description": "The log filter used to indicate the field path. Use `parent[child]` syntax to\nindicate nesting.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1LogIngestConfig": {
+      "description": "LogIngestConfig is a singleton configuration object that specifies the configuration for log ingest.",
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the LogIngestConfig was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "field_normalization": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogIngestConfigFieldNormalization"
+            }
+          ],
+          "description": "Maps and normalizes well-known fields from parsed logs."
+        },
+        "field_parsers": {
+          "description": "The parsers to apply to specific fields within structured logs or plaintext logs after those logs are parsed.",
+          "items": {
+            "$ref": "#/$defs/LogIngestConfigLogFieldParser"
+          },
+          "type": "array"
+        },
+        "plaintext_parsers": {
+          "description": "The parsers to apply to plaintext logs. The first parser that matches the log is used.",
+          "items": {
+            "$ref": "#/$defs/LogIngestConfigPlaintextParser"
+          },
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the LogIngestConfig was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

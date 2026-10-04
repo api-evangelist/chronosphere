@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-update-log-allocation-config-response-schema.json",
+  "title": "configv1UpdateLogAllocationConfigResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-logallocationconfig-api-openapi.yml#/components/schemas/configv1UpdateLogAllocationConfigResponse",
+  "properties": {
+    "log_allocation_config": {
+      "$ref": "#/$defs/configv1LogAllocationConfig"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "LogAllocationConfigDatasetAllocation": {
+      "properties": {
+        "allocation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1LogAllocationConfigAllocation"
+            }
+          ],
+          "description": "Specifies the percentage of the budget to allocate to this dataset."
+        },
+        "dataset_slug": {
+          "description": "Slug of the dataset.",
+          "type": "string"
+        },
+        "priorities": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogAllocationConfigHighLowPriorities"
+            }
+          ],
+          "description": "Defines explicit high and low priority match criteria to specify which logs to\ndrop first (low) and last (high). Anything not matched by either set of rules\nis considered default priority and is dropped after low priority but before\nhigh priority data."
+        }
+      },
+      "type": "object"
+    },
+    "LogAllocationConfigDefaultDataset": {
+      "description": "Configuration for default dataset.",
+      "properties": {
+        "allocation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1LogAllocationConfigAllocation"
+            }
+          ],
+          "description": "Sets the percentage of the license limit to allocate to this dataset."
+        },
+        "priorities": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogAllocationConfigHighLowPriorities"
+            }
+          ],
+          "description": "Defines explicit high and low priority match criteria to specify which logs to\ndrop first (low) and last (high). Anything not matched by either set of rules\nis considered default priority and is dropped after low priority but before\nhigh priority data."
+        }
+      },
+      "type": "object"
+    },
+    "LogAllocationConfigHighLowPriorities": {
+      "description": "Defines explicit high and low priority match criteria to specify which logs to\ndrop first (low) and last (high). Anything not matched by either set of rules is\nconsidered default priority and is dropped after low priority but before high\npriority data.",
+      "properties": {
+        "high_priority_filters": {
+          "description": "A list of search filters defining which logs are considered high priority in\nthis dataset. Filters are combined as OR statements so only one filter needs\nto match.",
+          "items": {
+            "$ref": "#/$defs/configv1LogSearchFilter"
+          },
+          "type": "array"
+        },
+        "low_priority_filters": {
+          "description": "A list of search filters defining which logs are considered low priority in\nthis dataset. Filters are combined as OR statements so only one filter needs\nto match.",
+          "items": {
+            "$ref": "#/$defs/configv1LogSearchFilter"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "configv1LogAllocationConfig": {
+      "description": "LogAllocationConfig is a singleton configuration object that specifies the\nconfiguration for Log budget allocations.",
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the LogAllocationConfig was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "dataset_allocations": {
+          "description": "Defines datasets and budget allocations. Datasets are evaluated in order.",
+          "items": {
+            "$ref": "#/$defs/LogAllocationConfigDatasetAllocation"
+          },
+          "type": "array"
+        },
+        "default_dataset": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/LogAllocationConfigDefaultDataset"
+            }
+          ],
+          "description": "The default dataset applies to logs that aren't included in any other dataset."
+        },
+        "updated_at": {
+          "description": "Timestamp of when the LogAllocationConfig was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1LogAllocationConfigAllocation": {
+      "description": "Configuration for allocating resources to a dataset.",
+      "properties": {
+        "percent_of_license": {
+          "description": "Sets the percentage of the license limit to allocate to the default dataset.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "configv1LogSearchFilter": {
+      "properties": {
+        "query": {
+          "description": "Returns logs that match this query. The query can include only top-level\noperations. Nested clauses aren't supported. Only one type of `AND` or `OR`\noperator is allowed.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

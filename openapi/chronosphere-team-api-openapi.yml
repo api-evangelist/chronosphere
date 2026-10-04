@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Team API
   version: v1
-  description: 'Operations tagged Team across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Team across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -276,6 +276,69 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
+    configv1ListTeamsResponse:
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        teams:
+          items:
+            $ref: '#/components/schemas/configv1Team'
+          type: array
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    configv1CreateTeamRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        team:
+          allOf:
+          - $ref: '#/components/schemas/configv1Team'
+          description: The Team to create.
+      type: object
+    ConfigV1UpdateTeamBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the Team will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Team does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        team:
+          allOf:
+          - $ref: '#/components/schemas/configv1Team'
+          description: The Team to update.
+      type: object
+    configv1ReadTeamResponse:
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configv1DeleteTeamResponse:
+      type: object
+    configv1UpdateTeamResponse:
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team'
+      type: object
     configv1Team:
       properties:
         created_at:
@@ -305,74 +368,50 @@ components:
       required:
       - name
       type: object
-    configv1ReadTeamResponse:
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    configv1UpdateTeamResponse:
-      properties:
-        team:
-          $ref: '#/components/schemas/configv1Team'
-      type: object
-    configv1CreateTeamRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        team:
-          allOf:
-          - $ref: '#/components/schemas/configv1Team'
-          description: The Team to create.
-      type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configv1DeleteTeamResponse:
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    ConfigV1UpdateTeamBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the Team will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Team does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        team:
-          allOf:
-          - $ref: '#/components/schemas/configv1Team'
-          description: The Team to update.
-      type: object
-    configv1ListTeamsResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        teams:
-          items:
-            $ref: '#/components/schemas/configv1Team'
-          type: array
-      type: object
     configv1CreateTeamResponse:
       properties:
         team:
           $ref: '#/components/schemas/configv1Team'
       type: object
+    configv1CreateTeamRequest_2:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team_2'
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    ConfigV1UpdateTeamBody_2:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the Team will be created if it does not already exist, identified by slug. If false, an error will be returned if the Team does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created or updated, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
     configv1Team_2:
       type: object
       properties:
@@ -400,25 +439,26 @@ components:
         description:
           type: string
           description: Optional short description of the team.
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    configv1CreateTeamRequest_2:
+    configv1CreateTeamRequest_3:
       type: object
       properties:
         team:
-          $ref: '#/components/schemas/configv1Team_2'
+          $ref: '#/components/schemas/configv1Team_3'
         dry_run:
           type: boolean
           description: If true, the Team isn't created, and no response Team will be returned. The response will return an error if the given Team is invalid.
-    apiError_2:
+    ConfigV1UpdateTeamBody_3:
+      type: object
+      properties:
+        team:
+          $ref: '#/components/schemas/configv1Team_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the Team will be created if it does not already exist, identified by slug. If false, an error will be returned if the Team does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Team isn't created or updated, and no response Team will be returned. The response will return an error if the given Team is invalid.
+    apiError_3:
       type: object
       properties:
         code:
@@ -428,17 +468,43 @@ components:
         message:
           type: string
           description: An error message describing what went wrong.
-    ConfigV1UpdateTeamBody_2:
+    configv1PageResult_3:
       type: object
       properties:
-        team:
-          $ref: '#/components/schemas/configv1Team_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the Team will be created if it does not already exist, identified by slug. If false, an error will be returned if the Team does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the Team isn't created or updated, and no response Team will be returned. The response will return an error if the given Team is invalid.
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1Team_3:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Team. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Team is created.
+        name:
+          type: string
+          description: Required. Name of the Team. You can modify this value after the Team is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Team was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Team was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        user_emails:
+          type: array
+          description: Unordered set of emails whose users are members of this team.
+          items:
+            type: string
+        description:
+          type: string
+          description: Optional short description of the team.
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -448,3 +514,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

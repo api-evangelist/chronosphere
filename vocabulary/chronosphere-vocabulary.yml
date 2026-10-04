@@ -1,0 +1,427 @@
+generated: '2026-10-03'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/chronosphere-azuremetricsintegration-api-openapi.yml
+- openapi/chronosphere-bucket-api-openapi.yml
+- openapi/chronosphere-classicdashboard-api-openapi.yml
+- openapi/chronosphere-cloud-integration-api-openapi.yml
+- openapi/chronosphere-collection-api-openapi.yml
+vocabulary:
+  name: Chronosphere Domain Vocabulary
+  description: 'Terms declared by Chronosphere''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-03'
+  terms:
+  - term: configv1ReadAzureMetricsIntegrationResponse
+    definition: 'Object declared by the contract with fields: azure_metrics_integration.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1ReadAzureMetricsIntegrationResponse
+  - term: configv1CreateAzureMetricsIntegrationRequest
+    definition: 'Object declared by the contract with fields: azure_metrics_integration, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1CreateAzureMetricsIntegrationRequest
+  - term: configv1ListAzureMetricsIntegrationsResponse
+    definition: 'Object declared by the contract with fields: azure_metrics_integrations, page.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1ListAzureMetricsIntegrationsResponse
+  - term: configv1PageResult
+    definition: 'Object declared by the contract with fields: next_token.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1PageResult
+  - term: configv1CreateAzureMetricsIntegrationResponse
+    definition: 'Object declared by the contract with fields: azure_metrics_integration.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1CreateAzureMetricsIntegrationResponse
+  - term: AzureMetricsIntegrationAzureResourceType
+    definition: 'Object declared by the contract with fields: metric_names, name.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/AzureMetricsIntegrationAzureResourceType
+  - term: AzureMetricsIntegrationAzurePrincipal
+    definition: 'Object declared by the contract with fields: client_id, tenant_id.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/AzureMetricsIntegrationAzurePrincipal
+  - term: configv1UpdateAzureMetricsIntegrationResponse
+    definition: 'Object declared by the contract with fields: azure_metrics_integration.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1UpdateAzureMetricsIntegrationResponse
+  - term: configv1AzureMetricsIntegration
+    definition: 'Object declared by the contract with fields: count_metrics_enabled, created_at, name, principal, propagate_tags, scrape_config,
+      slug, updated_at, usage_metrics_enabled.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/configv1AzureMetricsIntegration
+  - term: apiError
+    definition: 'Object declared by the contract with fields: message.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/apiError
+  - term: ConfigV1UpdateAzureMetricsIntegrationBody
+    definition: 'Object declared by the contract with fields: azure_metrics_integration, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/ConfigV1UpdateAzureMetricsIntegrationBody
+  - term: AzureMetricsIntegrationAzureScrapeConfig
+    definition: 'Object declared by the contract with fields: locations, resource_types, subscription_ids.'
+    tags:
+    - Object
+    source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml#/components/schemas/AzureMetricsIntegrationAzureScrapeConfig
+  - term: ResourceChangeAction
+    definition: 'Enumeration declared by the contract with values: CREATED, UPDATED, DELETED, NOOP.'
+    tags:
+    - Enumeration
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/ResourceChangeAction
+  - term: configv1DeleteBucketResponse
+    definition: 'Object declared by the contract with fields: changes.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1DeleteBucketResponse
+  - term: configv1ResourceType
+    definition: 'Enumeration declared by the contract with values: BUCKET, DASHBOARD, GRAFANA_DASHBOARD, MONITOR, NOTIFICATION_POLICY, RECORDING_RULE,
+      MAPPING_RULE, ROLLUP_RULE.'
+    tags:
+    - Enumeration
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1ResourceType
+  - term: configv1Bucket
+    definition: 'Object declared by the contract with fields: created_at, description, labels, name, notification_policy_slug, slug, team_slug,
+      updated_at.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1Bucket
+  - term: ConfigV1UpdateBucketBody
+    definition: 'Object declared by the contract with fields: bucket, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/ConfigV1UpdateBucketBody
+  - term: configv1ReadBucketResponse
+    definition: 'Object declared by the contract with fields: bucket.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1ReadBucketResponse
+  - term: ResourceChange
+    definition: 'Object declared by the contract with fields: action, resource, slug.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/ResourceChange
+  - term: configv1CreateBucketRequest
+    definition: 'Object declared by the contract with fields: bucket, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1CreateBucketRequest
+  - term: configv1UpdateBucketResponse
+    definition: 'Object declared by the contract with fields: bucket.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1UpdateBucketResponse
+  - term: configv1ListBucketsResponse
+    definition: 'Object declared by the contract with fields: buckets, page.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1ListBucketsResponse
+  - term: configv1CreateBucketResponse
+    definition: 'Object declared by the contract with fields: bucket.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1CreateBucketResponse
+  - term: configv1PageResult_2
+    definition: 'Object declared by the contract with fields: next_token.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1PageResult_2
+  - term: configv1Bucket_2
+    definition: 'Object declared by the contract with fields: slug, name, created_at, updated_at, description, labels, team_slug, notification_policy_slug.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1Bucket_2
+  - term: ConfigV1UpdateBucketBody_2
+    definition: 'Object declared by the contract with fields: bucket, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/ConfigV1UpdateBucketBody_2
+  - term: apiError_2
+    definition: 'Object declared by the contract with fields: code, message.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/apiError_2
+  - term: configv1CreateBucketRequest_2
+    definition: 'Object declared by the contract with fields: bucket, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1CreateBucketRequest_2
+  - term: configv1CreateClassicDashboardRequest
+    definition: 'Object declared by the contract with fields: classic_dashboard, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1CreateClassicDashboardRequest
+  - term: configv1CollectionReference
+    definition: 'Object declared by the contract with fields: slug, type.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1CollectionReference
+  - term: configv1CreateClassicDashboardResponse
+    definition: 'Object declared by the contract with fields: classic_dashboard.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1CreateClassicDashboardResponse
+  - term: Type values must match entitiespb.Collection.CollectionType.
+    definition: 'Enumeration declared by the contract with values: SIMPLE, SERVICE.'
+    tags:
+    - Enumeration
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1CollectionReferenceType
+  - term: configv1UpdateClassicDashboardResponse
+    definition: 'Object declared by the contract with fields: classic_dashboard.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1UpdateClassicDashboardResponse
+  - term: ConfigV1UpdateClassicDashboardBody
+    definition: 'Object declared by the contract with fields: classic_dashboard, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/ConfigV1UpdateClassicDashboardBody
+  - term: configv1ReadClassicDashboardResponse
+    definition: 'Object declared by the contract with fields: classic_dashboard.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1ReadClassicDashboardResponse
+  - term: configv1ListClassicDashboardsResponse
+    definition: 'Object declared by the contract with fields: classic_dashboards, page.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1ListClassicDashboardsResponse
+  - term: configv1GrafanaDashboard
+    definition: 'Object declared by the contract with fields: bucket_slug, collection, collection_slug, created_at, dashboard_json, name, slug,
+      updated_at.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1GrafanaDashboard
+  - term: configv1CreateClassicDashboardRequest_2
+    definition: 'Object declared by the contract with fields: classic_dashboard, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1CreateClassicDashboardRequest_2
+  - term: configv1CollectionReferenceType_2
+    definition: Type values must match entitiespb.Collection.CollectionType.
+    tags:
+    - Enumeration
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1CollectionReferenceType_2
+  - term: ConfigV1UpdateClassicDashboardBody_2
+    definition: 'Object declared by the contract with fields: classic_dashboard, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/ConfigV1UpdateClassicDashboardBody_2
+  - term: configv1GrafanaDashboard_2
+    definition: 'Object declared by the contract with fields: slug, name, created_at, updated_at, bucket_slug, collection_slug, collection, dashboard_json.'
+    tags:
+    - Object
+    source: openapi/chronosphere-classicdashboard-api-openapi.yml#/components/schemas/configv1GrafanaDashboard_2
+  - term: configv1CloudIntegrationState
+    definition: 'State represents the operational state of a CloudIntegration. - STATE_ENABLED: Integration is fully enabled and actively collecting
+      metrics. - STATE_DISABLED: Integration is disabled and not collecting metrics. - STATE_PREVIEW: Integration is in preview mode for estimating
+      cardinality/license impact before full enablement.'
+    tags:
+    - Enumeration
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1CloudIntegrationState
+  - term: configv1ListCloudIntegrationsResponse
+    definition: 'Object declared by the contract with fields: cloud_integrations, page.'
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1ListCloudIntegrationsResponse
+  - term: configv1ReadCloudIntegrationResponse
+    definition: 'Object declared by the contract with fields: cloud_integration.'
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1ReadCloudIntegrationResponse
+  - term: configv1CreateCloudIntegrationResponse
+    definition: 'Object declared by the contract with fields: cloud_integration.'
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1CreateCloudIntegrationResponse
+  - term: configv1CreateCloudIntegrationRequest
+    definition: 'Object declared by the contract with fields: cloud_integration, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1CreateCloudIntegrationRequest
+  - term: configv1UpdateCloudIntegrationResponse
+    definition: 'Object declared by the contract with fields: cloud_integration.'
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1UpdateCloudIntegrationResponse
+  - term: ConfigV1UpdateCloudIntegrationBody
+    definition: 'Object declared by the contract with fields: cloud_integration, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/ConfigV1UpdateCloudIntegrationBody
+  - term: configv1CloudIntegration
+    definition: CloudIntegration represents a configuration for collecting metrics from a cloud provider. Each integration contains provider-specific
+      configuration.
+    tags:
+    - Object
+    source: openapi/chronosphere-cloud-integration-api-openapi.yml#/components/schemas/configv1CloudIntegration
+  - term: ConfigV1UpdateCollectionBody
+    definition: 'Object declared by the contract with fields: collection, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/ConfigV1UpdateCollectionBody
+  - term: configv1Collection
+    definition: 'Object declared by the contract with fields: created_at, description, name, notification_policy_slug, slug, team_slug, updated_at.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1Collection
+  - term: configv1CreateCollectionResponse
+    definition: 'Object declared by the contract with fields: collection.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1CreateCollectionResponse
+  - term: configv1ReadCollectionResponse
+    definition: 'Object declared by the contract with fields: collection.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1ReadCollectionResponse
+  - term: configv1UpdateCollectionResponse
+    definition: 'Object declared by the contract with fields: collection.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1UpdateCollectionResponse
+  - term: configv1CreateCollectionRequest
+    definition: 'Object declared by the contract with fields: collection, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1CreateCollectionRequest
+  - term: configv1ListCollectionsResponse
+    definition: 'Object declared by the contract with fields: collections, page.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1ListCollectionsResponse
+  - term: ConfigV1UpdateCollectionBody_2
+    definition: 'Object declared by the contract with fields: collection, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/ConfigV1UpdateCollectionBody_2
+  - term: configv1Collection_2
+    definition: 'Object declared by the contract with fields: slug, name, created_at, updated_at, team_slug, description, notification_policy_slug.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1Collection_2
+  - term: configv1CreateCollectionRequest_2
+    definition: 'Object declared by the contract with fields: collection, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-collection-api-openapi.yml#/components/schemas/configv1CreateCollectionRequest_2
+  - term: ConfigUnstableUpdateCommandCenterGroupBody
+    definition: 'Object declared by the contract with fields: command_center_group, create_if_missing, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/ConfigUnstableUpdateCommandCenterGroupBody
+  - term: configunstableCommandCenterGroup
+    definition: CommandCenterGroup is a group of signals tracked in the command center.
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableCommandCenterGroup
+  - term: configunstableSloReference
+    definition: SloReference references an SLO by slug.
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableSloReference
+  - term: configunstableListCommandCenterGroupsResponse
+    definition: 'Object declared by the contract with fields: page, command_center_groups.'
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableListCommandCenterGroupsResponse
+  - term: configunstableCreateCommandCenterGroupRequest
+    definition: 'Object declared by the contract with fields: command_center_group, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableCreateCommandCenterGroupRequest
+  - term: configunstableCreateCommandCenterGroupResponse
+    definition: 'Object declared by the contract with fields: command_center_group.'
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableCreateCommandCenterGroupResponse
+  - term: configunstableReadCommandCenterGroupResponse
+    definition: 'Object declared by the contract with fields: command_center_group.'
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableReadCommandCenterGroupResponse
+  - term: configunstableUpdateCommandCenterGroupResponse
+    definition: 'Object declared by the contract with fields: command_center_group.'
+    tags:
+    - Object
+    source: openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableUpdateCommandCenterGroupResponse
+  - term: ConfigV1UpdateServiceAttributeBody
+    definition: 'Object declared by the contract with fields: create_if_missing, dry_run, service_attribute.'
+    tags:
+    - Object
+    source: openapi/chronosphere-config-v1-api-openapi.yml#/components/schemas/ConfigV1UpdateServiceAttributeBody
+  - term: configv1UpdateServiceAttributeResponse
+    definition: 'Object declared by the contract with fields: service_attribute, service_slug.'
+    tags:
+    - Object
+    source: openapi/chronosphere-config-v1-api-openapi.yml#/components/schemas/configv1UpdateServiceAttributeResponse
+  - term: configv1ReadServiceAttributeResponse
+    definition: 'Object declared by the contract with fields: service_attribute, service_slug.'
+    tags:
+    - Object
+    source: openapi/chronosphere-config-v1-api-openapi.yml#/components/schemas/configv1ReadServiceAttributeResponse
+  - term: ConfigV1CreateServiceAttributeBody
+    definition: 'Object declared by the contract with fields: dry_run, service_attribute.'
+    tags:
+    - Object
+    source: openapi/chronosphere-config-v1-api-openapi.yml#/components/schemas/ConfigV1CreateServiceAttributeBody
+  - term: configv1CreateServiceAttributeResponse
+    definition: 'Object declared by the contract with fields: service_attribute, service_slug.'
+    tags:
+    - Object
+    source: openapi/chronosphere-config-v1-api-openapi.yml#/components/schemas/configv1CreateServiceAttributeResponse
+  - term: configv1ServiceAttribute
+    definition: 'Object declared by the contract with fields: created_at, description, name, notification_policy_slug, service_slug, team_slug,
+      updated_at.'
+    tags:
+    - Object
+    source: openapi/chronosphere-config-v1-api-openapi.yml#/components/schemas/configv1ServiceAttribute
+  - term: CreateDashboardFromClassicResponseUnsupportedFeature
+    definition: 'Object declared by the contract with fields: id, message, level, panel_key, panel_name.'
+    tags:
+    - Object
+    source: openapi/chronosphere-configunstable-api-openapi.yml#/components/schemas/CreateDashboardFromClassicResponseUnsupportedFeature
+  - term: configunstableCreateDashboardFromClassicRequest
+    definition: CreateDashboardFromClassicRequest converts raw classic (Grafana) dashboard JSON into the standard dashboard format and creates
+      the result as a standard Dashboard entity in one call. Unlike CreateClassicDashboard, this does NOT create a classic dashboard entity -
+      the result is a standard Dashboard, indistinguishable from one created via CreateDashboard.
+    tags:
+    - Object
+    source: openapi/chronosphere-configunstable-api-openapi.yml#/components/schemas/configunstableCreateDashboardFromClassicRequest
+  - term: configunstableCreateDashboardFromClassicResponse
+    definition: 'Object declared by the contract with fields: dashboard, unsupported_features.'
+    tags:
+    - Object
+    source: openapi/chronosphere-configunstable-api-openapi.yml#/components/schemas/configunstableCreateDashboardFromClassicResponse
+  - term: configunstableDashboard
+    definition: 'Object declared by the contract with fields: slug, name, created_at, updated_at, collection_slug, dashboard_json.'
+    tags:
+    - Object
+    source: openapi/chronosphere-configunstable-api-openapi.yml#/components/schemas/configunstableDashboard
+  - term: configv1ConsumptionBudget
+    definition: 'Object declared by the contract with fields: alert_action_config, created_at, default_priority, name, notification_policy_slug,
+      partition_slug_path, priorities, resource, slug, thresholds, updated_at.'
+    tags:
+    - Object
+    source: openapi/chronosphere-consumptionbudget-api-openapi.yml#/components/schemas/configv1ConsumptionBudget
+  - term: ConsumptionBudgetResourceGroup
+    definition: 'Enumeration declared by the contract with values: LOG_PERSISTED_BYTES, LOG_PROCESSED_BYTES, METRIC_PERSISTED_SERIES, METRIC_ALL,
+      LOG_ALL, TRACE_PROCESSED_BYTES, TRACE_PERSISTED_BYTES, TRACE_ALL, ALL.'
+    tags:
+    - Enumeration
+    source: openapi/chronosphere-consumptionbudget-api-openapi.yml#/components/schemas/ConsumptionBudgetResourceGroup
+  - term: configv1CreateConsumptionBudgetRequest
+    definition: 'Object declared by the contract with fields: consumption_budget, dry_run.'
+    tags:
+    - Object
+    source: openapi/chronosphere-consumptionbudget-api-openapi.yml#/components/schemas/configv1CreateConsumptionBudgetRequest

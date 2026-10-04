@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-list-services-response-schema.json",
+  "title": "configv1ListServicesResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-service-api-openapi.yml#/components/schemas/configv1ListServicesResponse",
+  "properties": {
+    "page": {
+      "$ref": "#/$defs/configv1PageResult"
+    },
+    "services": {
+      "items": {
+        "$ref": "#/$defs/configv1Service"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configv1PageResult": {
+      "properties": {
+        "next_token": {
+          "description": "An opaque page token that identifies the next page of items that the\nclient should request. An empty value indicates that there are no\nmore items to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1Service": {
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the Service was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. Description of the service collection.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Service. You can modify this value after the Service is created.",
+          "type": "string"
+        },
+        "notification_policy_slug": {
+          "description": "Slug of the notification policy used by default for monitors in this service\ncollection. This parameter is optional if the collection doesn't contain\nmonitors, or if all of its monitors explicitly reference a policy. This\nparameter doesn't override the policy used if a monitor explicitly references\na policy.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The unique identifier of the Service. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Service is created.",
+          "type": "string"
+        },
+        "team_slug": {
+          "description": "Slug of the team the service collection belongs to.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Service was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "team_slug"
+      ],
+      "type": "object"
+    }
+  }
+}

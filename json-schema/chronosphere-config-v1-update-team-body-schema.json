@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-config-v1-update-team-body-schema.json",
+  "title": "ConfigV1UpdateTeamBody",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-team-api-openapi.yml#/components/schemas/ConfigV1UpdateTeamBody",
+  "properties": {
+    "create_if_missing": {
+      "description": "If `true`, the Team will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Team does not already exist.",
+      "type": "boolean"
+    },
+    "dry_run": {
+      "description": "If `true`, validates the specified configuration without creating or updating the Team. If the specified configuration is valid, the endpoint returns a partial response without the Team. If the specified configuration is invalid, the endpoint returns an error.",
+      "type": "boolean"
+    },
+    "team": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/configv1Team"
+        }
+      ],
+      "description": "The Team to update."
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configv1Team": {
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the Team was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. Short description of the team.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Team. You can modify this value after the Team is created.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The unique identifier of the Team. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Team is created.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Team was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "user_emails": {
+          "description": "Unordered set of emails whose users are members of this team.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

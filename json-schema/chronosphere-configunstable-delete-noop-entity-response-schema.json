@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-delete-noop-entity-response-schema.json",
+  "title": "configunstableDeleteNoopEntityResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-noopentity-api-openapi.yml#/components/schemas/configunstableDeleteNoopEntityResponse",
+  "properties": {
+    "not_hidden": {
+      "type": "boolean"
+    }
+  },
+  "type": "object"
+}

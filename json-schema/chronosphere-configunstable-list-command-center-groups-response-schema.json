@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-list-command-center-groups-response-schema.json",
+  "title": "configunstableListCommandCenterGroupsResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-commandcentergroup-api-openapi.yml#/components/schemas/configunstableListCommandCenterGroupsResponse",
+  "properties": {
+    "page": {
+      "$ref": "#/$defs/configv1PageResult"
+    },
+    "command_center_groups": {
+      "items": {
+        "$ref": "#/$defs/configunstableCommandCenterGroup"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configunstableCommandCenterGroup": {
+      "description": "CommandCenterGroup is a group of signals tracked in the command center.",
+      "properties": {
+        "slug": {
+          "description": "Unique slug identifying the CommandCenterGroup.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Unique name of the CommandCenterGroup.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the CommandCenterGroup was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the CommandCenterGroup was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "group_slo_reference": {
+          "$ref": "#/$defs/configunstableSloReference"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableSloReference": {
+      "description": "SloReference references an SLO by slug.",
+      "properties": {
+        "slug": {
+          "description": "Slug of the referenced SLO.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1PageResult": {
+      "properties": {
+        "next_token": {
+          "description": "An opaque page token that identifies the next page of items that the\nclient should request. An empty value indicates that there are no\nmore items to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

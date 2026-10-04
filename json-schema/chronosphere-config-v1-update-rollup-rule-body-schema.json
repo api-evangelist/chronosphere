@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-config-v1-update-rollup-rule-body-schema.json",
+  "title": "ConfigV1UpdateRollupRuleBody",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-rolluprule-api-openapi.yml#/components/schemas/ConfigV1UpdateRollupRuleBody",
+  "properties": {
+    "create_if_missing": {
+      "description": "If `true`, the RollupRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the RollupRule does not already exist.",
+      "type": "boolean"
+    },
+    "dry_run": {
+      "description": "If `true`, validates the specified configuration without creating or updating the RollupRule. If the specified configuration is valid, the endpoint returns a partial response without the RollupRule. If the specified configuration is invalid, the endpoint returns an error.",
+      "type": "boolean"
+    },
+    "rollup_rule": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/configv1RollupRule"
+        }
+      ],
+      "description": "The RollupRule to update."
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "GraphiteLabelPolicyReplace": {
+      "properties": {
+        "name": {
+          "description": "Name of the label to replace the value for. Only positional Graphite labels\nsuch as `__gX__` are allowed.",
+          "type": "string"
+        },
+        "new_value": {
+          "description": "New value of the replaced label.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "new_value"
+      ],
+      "type": "object"
+    },
+    "RollupRuleGraphiteLabelPolicy": {
+      "properties": {
+        "replace": {
+          "description": "List of labels to replace. Use to discard high-cardinality values while still\npreserving the original positions of the Graphite metric.",
+          "items": {
+            "$ref": "#/$defs/GraphiteLabelPolicyReplace"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "replace"
+      ],
+      "type": "object"
+    },
+    "RollupRuleLabelReplace": {
+      "description": "Must keep this around for backwards compatibility because terraform will\nstill send this key w/ a null value.",
+      "type": "object"
+    },
+    "RollupRuleMetricType": {
+      "description": " - CUMULATIVE_COUNTER: Alias of COUNTER.\n - DELTA_COUNTER: Alias of DELTA.",
+      "enum": [
+        "COUNTER",
+        "GAUGE",
+        "DELTA",
+        "DISTRIBUTION",
+        "CUMULATIVE_EXPONENTIAL_HISTOGRAM",
+        "MEASUREMENT",
+        "CUMULATIVE_COUNTER",
+        "DELTA_COUNTER",
+        "DELTA_EXPONENTIAL_HISTOGRAM"
+      ],
+      "type": "string"
+    },
+    "configv1AggregationType": {
+      "enum": [
+        "LAST",
+        "MIN",
+        "MAX",
+        "MEAN",
+        "MEDIAN",
+        "COUNT",
+        "SUM",
+        "SUMSQ",
+        "STDEV",
+        "P10",
+        "P20",
+        "P30",
+        "P40",
+        "P50",
+        "P60",
+        "P70",
+        "P80",
+        "P90",
+        "P95",
+        "P99",
+        "P999",
+        "P9999",
+        "P25",
+        "P75",
+        "COUNT_SAMPLES",
+        "HISTOGRAM"
+      ],
+      "type": "string"
+    },
+    "configv1LabelFilter": {
+      "properties": {
+        "name": {
+          "description": "The name of the label to match.",
+          "type": "string"
+        },
+        "value_glob": {
+          "description": "The glob value of the label to match.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1RollupRule": {
+      "properties": {
+        "add_metric_type_label": {
+          "description": "Defines whether to add a `__rollup_type__` label in the new metric.",
+          "type": "boolean"
+        },
+        "aggregation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1AggregationType"
+            }
+          ],
+          "description": "Defines the method by which metrics are aggregated."
+        },
+        "bucket_slug": {
+          "description": "The slug of the bucket the RollupRule belongs to.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the RollupRule was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "drop_raw": {
+          "description": "Defines whether to automatically generate drop rules for this rollup rule. Set\nto `true` to remove raw metrics that match this rollup rule. Default: `false`.",
+          "type": "boolean"
+        },
+        "expansive_match": {
+          "description": "**DEPRECATED**.\nA series matches and aggregates only if each label defined by filters and\n`label_policy.keep` or `graphite_label_policy.replace` (respectively) exist in\nthe series. Setting `expansive_match=true` removes this restriction. Default:\n`expansive_match=false`.\n\nIf `false`, a series matches and aggregates only if each label defined by the\nprovided `filters` and the `label_policy.keep` or\n`graphite_label_policy.replace` settings exist in the series.",
+          "type": "boolean"
+        },
+        "filters": {
+          "description": "Filters incoming metrics by label. If multiple label filters are specified, an\nincoming metric must match every label filter to match the rule. Label values\nsupport glob patterns, including matching multiple patterns with an `OR`, such\nas `service:{svc1,svc2}`. These special filters are available for matching\nmetrics by non-label request metadata:\n * `__metric_type__`: Matches the incoming metric's [Observability Platform\n   metric\n   type](https://docs.chronosphere.io/control/shaping/shape-metrics/types#observability-platform-types).\n   This is the recommended method for filtering on metric type. Valid values:\n   `cumulative_counter`, `cumulative_exponential_histogram`, `delta_counter`,\n   `delta_exponential_histogram`, `gauge`, `measurement`.\n * `__metric_source__`: Matches the incoming metric's [source\n   format](https://docs.chronosphere.io/control/shaping/shape-metrics/types#supported-formats).\n   Valid values: `carbon`, `chrono_gcp`, `dogstatsd`, `open_metrics`,\n   `open_telemetry`, `prometheus`, `signalfx`, `statsd`, `wavefront`.\n * `__m3_prom_type__`: When ingesting metric data with Prometheus, matches the\n   incoming metric's [Prometheus metric\n   type](https://docs.chronosphere.io/control/shaping/shape-metrics/types#prometheus). Valid\n   values: `counter`, `gauge`, `histogram`, `gauge_histogram`, `summary`,\n   `info`, `state_set`, `quantile`.\n * `__otel_type__`: When ingesting with OpenTelemetry, matches on the incoming\n   metric's [OpenTelemetry metric\n   type](https://docs.chronosphere.io/control/shaping/shape-metrics/types#opentelemetry).\n   Valid values: `sum`, `monotonic_sum`, `gauge`, `histogram`, `exp_histogram`,\n  `summary`. For example, the following filter matches any cumulative counter\n  metric with a `service=gateway` label whose metric name starts with\n  `http_requests_`:\n```\n__metric_type__:cumulative_counter service:gateway __name__:http_requests_*\n```",
+          "items": {
+            "$ref": "#/$defs/configv1LabelFilter"
+          },
+          "type": "array"
+        },
+        "graphite_label_policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RollupRuleGraphiteLabelPolicy"
+            }
+          ],
+          "description": "Optional. Label aggregation policy for Graphite metrics. If set, new\nrestrictions will apply to the rule:\n- `label_policy` cannot be set.\n- `metric_name` cannot be set.\n- `filters` can reference only positional Graphite labels, such as `__gX__`,\n  and synthetic labels, such as `__metric_type__`."
+        },
+        "interval": {
+          "description": "Optional. Sets a custom interval that defines the amount of\ntime between aggregated data points. Intervals are based on your\n[retention policy](https://docs.chronosphere.io/administer/limits-licensing/licensing).\nThis field was known as `storage_policies` in version\n0.286.0-2023-01-06-release.1\nand earlier.",
+          "type": "string"
+        },
+        "label_policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1RollupRuleLabelPolicy"
+            }
+          ],
+          "description": "Label aggregation policy, which acts as a filter, defining which labels to\npreserve in the resulting metric. Use `keep` to keep one or more labels, or\n`discard` to ignore one or more labels. Required for non-Graphite rules."
+        },
+        "label_replace": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RollupRuleLabelReplace"
+            }
+          ],
+          "description": "**DEPRECATED**."
+        },
+        "metric_name": {
+          "description": "The name of the new metric to create and persist to the database. You can use\nthe template string `{{.MetricName }}` to create a new metric name that\nreferences the original metric name. For example, `new_metric: '{{ .MetricName\n}}:by_instance'` outputs a metric with the name `my_metric:by_instance` if the\nmatched metric is `my_metric`.\nThis field is optional for Graphite rollup rules.",
+          "type": "string"
+        },
+        "metric_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/RollupRuleMetricType"
+            }
+          ],
+          "description": "Declares the metric type of the input metrics. Each rollup rule must declare the\ntype of metric it aggregates by setting the `metric_type` field, because each\nmetric type aggregates differently. Choosing the wrong `metric_type` for your\nrule can produce unexpected results.\n\n`COUNTER` is deprecated; use `CUMULATIVE_COUNTER` instead.\n\n`DELTA` is deprecated; use `DELTA_COUNTER` instead."
+        },
+        "mode": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1RollupRuleMode"
+            }
+          ],
+          "description": "The operational mode for this rollup rule. If `mode=ENABLED`, the rule is\napplied. If `mode=PREVIEW`, the rule is not applied, but shaping impact stats\nfor the rule are recorded. If empty, defaults to `mode=ENABLED`."
+        },
+        "name": {
+          "description": "The name of the RollupRule. You can modify this value after the RollupRule is created.",
+          "type": "string"
+        },
+        "skip_on_conflict": {
+          "description": "If true, this rollup rule is skipped if another rollup rule produces a\nmetric with the same output name. Use this flag to write rollup rules that\nproduce metrics only if no other rollup rule produces a series with the\nsame name.",
+          "type": "boolean"
+        },
+        "slug": {
+          "description": "The unique identifier of the RollupRule. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the RollupRule is created.",
+          "type": "string"
+        },
+        "storage_policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1RollupRuleStoragePolicy"
+            }
+          ],
+          "description": "**DEPRECATED**.\nUse `interval` instead. Storage policy applied to the resulting\nrollup rule, which must match a known storage policy. If empty, the default\nstorage policy is used. If set, `interval` can't be set."
+        },
+        "updated_at": {
+          "description": "Timestamp of when the RollupRule was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "bucket_slug",
+        "name"
+      ],
+      "type": "object"
+    },
+    "configv1RollupRuleLabelPolicy": {
+      "description": "TODO: consolidate w/ RecordingRule.LabelPolicy once both of these\n entities implement the same label semantics.",
+      "properties": {
+        "discard": {
+          "description": "Labels to discard in the output metric. If set, the `keep` field must be\nempty.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "keep": {
+          "description": "Labels to retain in the output metric. If set, the `discard` field must\nbe empty.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "configv1RollupRuleMode": {
+      "enum": [
+        "ENABLED",
+        "PREVIEW"
+      ],
+      "title": "- PREVIEW: TODO: DISABLED = 2;",
+      "type": "string"
+    },
+    "configv1RollupRuleStoragePolicy": {
+      "properties": {
+        "resolution": {
+          "description": "Resolution of the aggregated metrics.",
+          "type": "string"
+        },
+        "retention": {
+          "description": "Retention of the aggregated metrics.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "resolution",
+        "retention"
+      ],
+      "type": "object"
+    }
+  }
+}

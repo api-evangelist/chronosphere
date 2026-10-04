@@ -1,15 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Config V1 Log Scale Action API
-  description: 'The Config API provides standard HTTP/JSON REST endpoints for creating, reading,
-
-    updating, deleting, and listing configurable Chronosphere resources.
-
-
-    Use this link to download the raw Swagger specification:
-
-    /api/v1/config/swagger.json'
+  title: Chronosphere Log Scale Action API
   version: v1
+  description: 'Operations tagged LogScaleAction across 2 of this provider''s published API definitions: chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: /
 tags:
@@ -121,6 +114,8 @@ paths:
       x-codegen-request-body-name: body
       summary: Create log scale action
       x-summary-source: derived
+    servers:
+    - url: /
   /api/v1/config/log-scale-actions/{slug}:
     get:
       tags:
@@ -258,227 +253,13 @@ paths:
                 $ref: '#/components/schemas/genericError'
       summary: Delete log scale action
       x-summary-source: derived
+    servers:
+    - url: /
 components:
   schemas:
-    ConfigV1UpdateLogScaleActionBody:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-        create_if_missing:
-          type: boolean
-          description: If true, the LogScaleAction will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAction does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the LogScaleAction isn't created or updated, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
-    LogScaleActionWebhookAction:
-      type: object
-      properties:
-        method:
-          $ref: '#/components/schemas/WebhookActionHTTPMethod'
-        url:
-          type: string
-          description: URL to send the HTTP or HTTPS request to.
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-          description: Headers of the HTTP or HTTPS request.
-        body_template:
-          type: string
-          description: Body of the HTTP or HTTPS request. Can be templated with values from the query result.
-        ignore_ssl:
-          type: boolean
-          description: Flag indicating whether SSL should be ignored for the request.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    configv1ReadLogScaleActionResponse:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-    configv1CreateLogScaleActionRequest:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-        dry_run:
-          type: boolean
-          description: If true, the LogScaleAction isn't created, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
-    LogScaleActionOpsGenieAction:
-      type: object
-      properties:
-        api_url:
-          type: string
-          description: OpsGenie webhook URL to send the request to.
-        ops_genie_key:
-          type: string
-          description: Key to authenticate with OpsGenie.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionPagerDutyAction:
-      type: object
-      properties:
-        severity:
-          $ref: '#/components/schemas/PagerDutyActionSeverity'
-        routing_key:
-          type: string
-          description: Routing key to authenticate with PagerDuty.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionEmailAction:
-      type: object
-      properties:
-        recipients:
-          type: array
-          description: List of email addresses to send an email to.
-          items:
-            type: string
-        subject_template:
-          type: string
-          description: Subject of the email. Can be templated with values from the query result.
-        body_template:
-          type: string
-          description: Body of the email. Can be templated with values from the query result.
-        attach_csv:
-          type: boolean
-          description: Whether the result set should be attached as a CSV file.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionActionType:
-      type: string
-      enum:
-      - EMAIL
-      - HUMIO_REPO
-      - OPS_GENIE
-      - PAGER_DUTY
-      - SLACK
-      - SLACK_POST_MESSAGE
-      - VICTOR_OPS
-      - WEBHOOK
-      - UPLOAD_FILE
-    LogScaleActionHumioRepoAction:
-      type: object
-      properties:
-        ingest_token:
-          type: string
-          description: Ingest token for the repository that the action should ingest into.
-    configv1PageResult:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    WebhookActionHTTPMethod:
-      type: string
-      enum:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
-      - HEAD
-      - OPTIONS
-    configv1UpdateLogScaleActionResponse:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-    PagerDutyActionSeverity:
-      type: string
-      enum:
-      - CRITICAL
-      - ERROR
-      - WARNING
-      - INFO
-    apiError:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
-    LogScaleActionVictorOpsAction:
-      type: object
-      properties:
-        message_type:
-          type: string
-          description: Type of the VictorOps message to make.
-        notify_url:
-          type: string
-          description: VictorOps webhook URL to send the request to.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    LogScaleActionUploadFileAction:
-      type: object
-      properties:
-        file_name:
-          type: string
-          description: File name for the uploaded file.
-    LogScaleActionSlackPostMessageAction:
-      type: object
-      properties:
-        api_token:
-          type: string
-          description: API token to authenticate with Slack.
-        channels:
-          type: array
-          description: List of Slack channels to message.
-          items:
-            type: string
-        fields:
-          type: object
-          additionalProperties:
-            type: string
-          description: Fields to include within the Slack message. Can be templated with values from the query result.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    configv1CreateLogScaleActionResponse:
-      type: object
-      properties:
-        log_scale_action:
-          $ref: '#/components/schemas/configv1LogScaleAction'
-    LogScaleActionSlackAction:
-      type: object
-      properties:
-        url:
-          type: string
-          description: Slack webhook URL to send the request to.
-        fields:
-          type: object
-          additionalProperties:
-            type: string
-          description: Fields to include within the Slack message. Can be templated with values from the query result.
-        use_proxy:
-          type: boolean
-          description: Defines whether the action should use the configured proxy to make web requests.
-    configv1DeleteLogScaleActionResponse:
-      type: object
     genericError:
       type: object
       additionalProperties: true
-    configv1ListLogScaleActionsResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        log_scale_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/configv1LogScaleAction'
     configv1LogScaleAction:
       type: object
       properties:
@@ -521,4 +302,222 @@ components:
           $ref: '#/components/schemas/LogScaleActionWebhookAction'
         upload_file_action:
           $ref: '#/components/schemas/LogScaleActionUploadFileAction'
-x-original-swagger-version: '2.0'
+    ConfigV1UpdateLogScaleActionBody:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+        create_if_missing:
+          type: boolean
+          description: If true, the LogScaleAction will be created if it does not already exist, identified by slug. If false, an error will be returned if the LogScaleAction does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAction isn't created or updated, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
+    configv1CreateLogScaleActionResponse:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+    configv1PageResult:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1ReadLogScaleActionResponse:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+    LogScaleActionEmailAction:
+      type: object
+      properties:
+        recipients:
+          type: array
+          description: List of email addresses to send an email to.
+          items:
+            type: string
+        subject_template:
+          type: string
+          description: Subject of the email. Can be templated with values from the query result.
+        body_template:
+          type: string
+          description: Body of the email. Can be templated with values from the query result.
+        attach_csv:
+          type: boolean
+          description: Whether the result set should be attached as a CSV file.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    configv1CreateLogScaleActionRequest:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+        dry_run:
+          type: boolean
+          description: If true, the LogScaleAction isn't created, and no response LogScaleAction will be returned. The response will return an error if the given LogScaleAction is invalid.
+    LogScaleActionSlackAction:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Slack webhook URL to send the request to.
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+          description: Fields to include within the Slack message. Can be templated with values from the query result.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    configv1ListLogScaleActionsResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        log_scale_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/configv1LogScaleAction'
+    LogScaleActionSlackPostMessageAction:
+      type: object
+      properties:
+        api_token:
+          type: string
+          description: API token to authenticate with Slack.
+        channels:
+          type: array
+          description: List of Slack channels to message.
+          items:
+            type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+          description: Fields to include within the Slack message. Can be templated with values from the query result.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    LogScaleActionOpsGenieAction:
+      type: object
+      properties:
+        api_url:
+          type: string
+          description: OpsGenie webhook URL to send the request to.
+        ops_genie_key:
+          type: string
+          description: Key to authenticate with OpsGenie.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    LogScaleActionHumioRepoAction:
+      type: object
+      properties:
+        ingest_token:
+          type: string
+          description: Ingest token for the repository that the action should ingest into.
+    PagerDutyActionSeverity:
+      type: string
+      enum:
+      - CRITICAL
+      - ERROR
+      - WARNING
+      - INFO
+    configv1DeleteLogScaleActionResponse:
+      type: object
+    LogScaleActionPagerDutyAction:
+      type: object
+      properties:
+        severity:
+          $ref: '#/components/schemas/PagerDutyActionSeverity'
+        routing_key:
+          type: string
+          description: Routing key to authenticate with PagerDuty.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    apiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    LogScaleActionUploadFileAction:
+      type: object
+      properties:
+        file_name:
+          type: string
+          description: File name for the uploaded file.
+    LogScaleActionVictorOpsAction:
+      type: object
+      properties:
+        message_type:
+          type: string
+          description: Type of the VictorOps message to make.
+        notify_url:
+          type: string
+          description: VictorOps webhook URL to send the request to.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    WebhookActionHTTPMethod:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - HEAD
+      - OPTIONS
+    LogScaleActionActionType:
+      type: string
+      enum:
+      - EMAIL
+      - HUMIO_REPO
+      - OPS_GENIE
+      - PAGER_DUTY
+      - SLACK
+      - SLACK_POST_MESSAGE
+      - VICTOR_OPS
+      - WEBHOOK
+      - UPLOAD_FILE
+    LogScaleActionWebhookAction:
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/WebhookActionHTTPMethod'
+        url:
+          type: string
+          description: URL to send the HTTP or HTTPS request to.
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Headers of the HTTP or HTTPS request.
+        body_template:
+          type: string
+          description: Body of the HTTP or HTTPS request. Can be templated with values from the query result.
+        ignore_ssl:
+          type: boolean
+          description: Flag indicating whether SSL should be ignored for the request.
+        use_proxy:
+          type: boolean
+          description: Defines whether the action should use the configured proxy to make web requests.
+    configv1UpdateLogScaleActionResponse:
+      type: object
+      properties:
+        log_scale_action:
+          $ref: '#/components/schemas/configv1LogScaleAction'
+x-refined-from:
+- chronosphere-openapi.yml
+- chronosphere-openapi.yaml

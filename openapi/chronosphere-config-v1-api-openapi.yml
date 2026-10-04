@@ -138,23 +138,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ConfigV1UpdateServiceAttributeBody:
-      properties:
-        create_if_missing:
-          type: boolean
-        dry_run:
-          type: boolean
-        service_attribute:
-          $ref: '#/components/schemas/configv1ServiceAttribute'
-      type: object
-    configv1UpdateServiceAttributeResponse:
-      properties:
-        service_attribute:
-          $ref: '#/components/schemas/configv1ServiceAttribute'
-        service_slug:
-          type: string
-      type: object
-    configv1ReadServiceAttributeResponse:
+    configv1CreateServiceAttributeResponse:
       properties:
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
@@ -174,14 +158,16 @@ components:
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
       type: object
-    configv1DeleteServiceAttributeResponse:
-      type: object
-    configv1CreateServiceAttributeResponse:
+    ConfigV1UpdateServiceAttributeBody:
       properties:
+        create_if_missing:
+          type: boolean
+        dry_run:
+          type: boolean
         service_attribute:
           $ref: '#/components/schemas/configv1ServiceAttribute'
-        service_slug:
-          type: string
+      type: object
+    configv1DeleteServiceAttributeResponse:
       type: object
     configv1ServiceAttribute:
       properties:
@@ -211,6 +197,20 @@ components:
           description: Timestamp of when the service attributes were updated. Cannot be set by clients.
           format: date-time
           readOnly: true
+          type: string
+      type: object
+    configv1ReadServiceAttributeResponse:
+      properties:
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+        service_slug:
+          type: string
+      type: object
+    configv1UpdateServiceAttributeResponse:
+      properties:
+        service_attribute:
+          $ref: '#/components/schemas/configv1ServiceAttribute'
+        service_slug:
           type: string
       type: object
   securitySchemes:

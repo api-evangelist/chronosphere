@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-datav1-list-traces-request-schema.json",
+  "title": "datav1ListTracesRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-datav1-api-openapi.yml#/components/schemas/datav1ListTracesRequest",
+  "properties": {
+    "end_time": {
+      "description": "End time for the search.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "operation": {
+      "description": "Operation to filter on. An empty value doesn't apply any operation filter.",
+      "type": "string"
+    },
+    "query_type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ListTracesRequestQueryType"
+        }
+      ],
+      "description": "Type of query to perform.\nTRACE_IDS: Search for specific trace IDs.\nSERVICE_OPERATION: Search for traces with a specific service and operation, over a specific time frame."
+    },
+    "service": {
+      "description": "Service to filter on. An empty value doesn't apply any service filter.",
+      "type": "string"
+    },
+    "start_time": {
+      "description": "Start time for the search.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "tag_filters": {
+      "description": "Tag filter to apply. An empty value doesn't apply any tag filter.",
+      "items": {
+        "$ref": "#/$defs/ListTracesRequestTagFilter"
+      },
+      "type": "array"
+    },
+    "trace_ids": {
+      "description": "Trace IDs to search for.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ListTracesRequestQueryType": {
+      "enum": [
+        "TRACE_IDS",
+        "SERVICE_OPERATION"
+      ],
+      "type": "string"
+    },
+    "ListTracesRequestTagFilter": {
+      "properties": {
+        "key": {
+          "description": "The key (or name) of the span tag that is inspected by this filter.",
+          "type": "string"
+        },
+        "numeric_value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TagFilterNumericFilter"
+            }
+          ],
+          "description": "Matcher used to evaluate the span tag value as a numeric value (if the\ntag with the given key is found and the value type is numerical)."
+        },
+        "value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TagFilterStringFilter"
+            }
+          ],
+          "description": "Matcher used to evaluate the span tag value (if the tag with the given\nkey is found and the value type is a string)."
+        }
+      },
+      "type": "object"
+    },
+    "NumericFilterComparisonType": {
+      "enum": [
+        "EQUAL",
+        "NOT_EQUAL",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUAL",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUAL"
+      ],
+      "type": "string"
+    },
+    "StringFilterStringFilterMatchType": {
+      "enum": [
+        "EXACT",
+        "REGEX",
+        "EXACT_NEGATION",
+        "REGEX_NEGATION",
+        "IN",
+        "NOT_IN"
+      ],
+      "type": "string"
+    },
+    "TagFilterNumericFilter": {
+      "properties": {
+        "comparison": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/NumericFilterComparisonType"
+            }
+          ],
+          "description": "The comparison operation to be applied to an input against the given filter value."
+        },
+        "value": {
+          "description": "The filter value used in comparison against match candidates.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TagFilterStringFilter": {
+      "properties": {
+        "in_values": {
+          "description": "Values the filter tests against when using IN or NOT_IN match type.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "match": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/StringFilterStringFilterMatchType"
+            }
+          ],
+          "description": "If EXACT, compared strings have the exact value of the filter value."
+        },
+        "value": {
+          "description": "The value the filter compares to the target trace or span field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

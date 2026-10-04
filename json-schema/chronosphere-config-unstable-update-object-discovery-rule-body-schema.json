@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-config-unstable-update-object-discovery-rule-body-schema.json",
+  "title": "ConfigUnstableUpdateObjectDiscoveryRuleBody",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-objectdiscoveryrule-api-openapi.yml#/components/schemas/ConfigUnstableUpdateObjectDiscoveryRuleBody",
+  "properties": {
+    "object_discovery_rule": {
+      "$ref": "#/$defs/configunstableObjectDiscoveryRule"
+    },
+    "create_if_missing": {
+      "description": "If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.",
+      "type": "boolean"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ObjectDiscoveryRuleMetricRule": {
+      "properties": {
+        "expr": {
+          "type": "string"
+        },
+        "objectLabels": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "objectMappingLabel": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableObjectDiscoveryRule": {
+      "properties": {
+        "slug": {
+          "description": "The unique identifier of the ObjectDiscoveryRule. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the ObjectDiscoveryRule is created.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the ObjectDiscoveryRule. You can modify this value after the ObjectDiscoveryRule is created.",
+          "type": "string"
+        },
+        "metric": {
+          "$ref": "#/$defs/ObjectDiscoveryRuleMetricRule"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

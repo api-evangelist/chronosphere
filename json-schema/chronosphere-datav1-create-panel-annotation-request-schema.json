@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-datav1-create-panel-annotation-request-schema.json",
+  "title": "datav1CreatePanelAnnotationRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-datav1-api-openapi.yml#/components/schemas/datav1CreatePanelAnnotationRequest",
+  "properties": {
+    "labels": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Map of user-supplied key:value pairs associated with the annotation. The\nfollowing maximums apply:\n- Number of labels per annotation: `50`\n- Key character length: `200`\n- Value character length: `500`",
+      "type": "object"
+    },
+    "starts_at": {
+      "description": "The start time of the period being annotated.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "target_reference": {
+      "description": "The `slug` of the resource being annotated.",
+      "type": "string"
+    },
+    "title": {
+      "description": "A short description explaining the annotation.\nMax character length: `100`.",
+      "type": "string"
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/datav1PanelAnnotationTargetType"
+        }
+      ],
+      "description": "The type of resource being annotated."
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "datav1PanelAnnotationTargetType": {
+      "enum": [
+        "DASHBOARD"
+      ],
+      "type": "string"
+    }
+  }
+}

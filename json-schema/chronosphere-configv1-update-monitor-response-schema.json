@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-update-monitor-response-schema.json",
+  "title": "configv1UpdateMonitorResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-monitor-api-openapi.yml#/components/schemas/configv1UpdateMonitorResponse",
+  "properties": {
+    "monitor": {
+      "$ref": "#/$defs/configv1Monitor"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ConditionOp": {
+      "enum": [
+        "GEQ",
+        "GT",
+        "LEQ",
+        "LT",
+        "EQ",
+        "NEQ",
+        "EXISTS",
+        "NOT_EXISTS",
+        "SIGNAL_NOT_EXISTS"
+      ],
+      "type": "string"
+    },
+    "MonitorNotificationTemplate": {
+      "properties": {
+        "description": {
+          "description": "Go template for the alert description.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Go template for the alert title.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MonitorSchedule": {
+      "properties": {
+        "timezone": {
+          "description": "The timezone of the time ranges.",
+          "type": "string"
+        },
+        "weekly_schedule": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ScheduleWeeklySchedule"
+            }
+          ],
+          "description": "Specifies the monitor schedule for each day of the week. You must include\nevery day of the week. Specify `active: NEVER` for days when you don't want\nthe monitor to be active."
+        }
+      },
+      "type": "object"
+    },
+    "MonitorSeriesConditions": {
+      "description": "Conditions evaluated against each queried series to determine the severity of each series.",
+      "properties": {
+        "defaults": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/SeriesConditionsSeverityConditions"
+            }
+          ],
+          "description": "Mapping of alert severity to its conditions. All conditions are\nevaluated for every series. If multiple conditions match, the highest\nseverity is chosen."
+        },
+        "overrides": {
+          "description": "Optional. Specifies a list of overrides to use for series having matching\nlabels. Each override defines labels that potentially match a series' labels.\nIf one or more overrides match a series, the severity conditions of the first\nmatching override are used instead of the defaults.\n\nCannot be used if `graphite_query` is set.",
+          "items": {
+            "$ref": "#/$defs/MonitorSeriesConditionsOverride"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "MonitorSeriesConditionsOverride": {
+      "properties": {
+        "label_matchers": {
+          "description": "Set of matchers on a series' labels. If all labels match, then the conditions\ndefined in this override are used.",
+          "items": {
+            "$ref": "#/$defs/configv1LabelMatcher"
+          },
+          "type": "array"
+        },
+        "severity_conditions": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/SeriesConditionsSeverityConditions"
+            }
+          ],
+          "description": "Mapping of alert severity to its conditions for series that match this\noverride. These conditions supersede the default conditions, and are not\nmerged with the default conditions."
+        }
+      },
+      "type": "object"
+    },
+    "MonitorSignalGrouping": {
+      "description": "SignalGrouping defines how the set of series from the query are split into signals.",
+      "properties": {
+        "label_names": {
+          "description": "Set of label names used to split series into signals. Each unique combination\nof labels result in its own signal. For example, if `label_names` is\n`[\"service\", \"code\"]`, then all series including labels\n`{service=\"foo\",code=\"404\"}` will be grouped together in the same signal.\n\nCannot be used if `graphite_query` is set.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "signal_per_series": {
+          "description": "If set to `true`, each series will have its own signal. Cannot be used with\n`label_names`.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ScheduleDayActive": {
+      "enum": [
+        "ALL_DAY",
+        "ONLY_DURING_RANGES",
+        "NEVER"
+      ],
+      "type": "string"
+    },
+    "ScheduleDayTimeRange": {
+      "properties": {
+        "end_hh_mm": {
+          "description": "End time in the in format `\"<hour>:<minute>\"`. For example, `\"15:30\"`.",
+          "type": "string"
+        },
+        "start_hh_mm": {
+          "description": "Start time in the in format `\"<hour>:<minute>\"`. For example, `\"15:30\"`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ScheduleScheduleDay": {
+      "properties": {
+        "active": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ScheduleDayActive"
+            }
+          ],
+          "description": "Determines when the monitor is active for the specified day. Accepts these\nvalues:\n- `ALL_DAY`: The monitor is active all day.\n- `ONLY_DURING_RANGES`: The monitor is only active during the given ranges.\n- `NEVER`: The monitor is never active during the selected day."
+        },
+        "ranges": {
+          "description": "The time ranges that the monitor is active on this day. Required if `active`\nis set to `ONLY_DURING_RANGES`. Otherwise, this field must be empty.",
+          "items": {
+            "$ref": "#/$defs/ScheduleDayTimeRange"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ScheduleWeeklySchedule": {
+      "properties": {
+        "friday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        },
+        "monday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        },
+        "saturday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        },
+        "sunday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        },
+        "thursday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        },
+        "tuesday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        },
+        "wednesday": {
+          "$ref": "#/$defs/ScheduleScheduleDay"
+        }
+      },
+      "type": "object"
+    },
+    "SeriesConditionsConditions": {
+      "properties": {
+        "conditions": {
+          "description": "List of conditions to evaluate against a series. Only one condition must\nmatch to assign a severity to a signal.",
+          "items": {
+            "$ref": "#/$defs/configv1MonitorCondition"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SeriesConditionsSeverityConditions": {
+      "properties": {
+        "critical": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/SeriesConditionsConditions"
+            }
+          ],
+          "description": "Defines the criteria that must be met to trigger a critical condition."
+        },
+        "warn": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/SeriesConditionsConditions"
+            }
+          ],
+          "description": "Defines the criteria that must be met to trigger a warning condition."
+        }
+      },
+      "type": "object"
+    },
+    "configv1CollectionReference": {
+      "properties": {
+        "slug": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/configv1CollectionReferenceType"
+        }
+      },
+      "type": "object"
+    },
+    "configv1CollectionReferenceType": {
+      "enum": [
+        "SIMPLE",
+        "SERVICE"
+      ],
+      "title": "Type values must match entitiespb.Collection.CollectionType.",
+      "type": "string"
+    },
+    "configv1LabelMatcher": {
+      "properties": {
+        "name": {
+          "description": "The name of the label to match against. This always matches against an\nexact label name, regardless of the value of `type`.",
+          "type": "string"
+        },
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1LabelMatcherMatcherType"
+            }
+          ],
+          "description": "Determines how the label `value` is matched. This parameter doesn't\naffect how the label `name` is matched."
+        },
+        "value": {
+          "description": "The value of the label to match against. If `type` is set to `EXACT`, this\nmatches against an exact label value. If `type` is set to `REGEX`, this\nparameter is treated as a regular expression for parsing label values.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1LabelMatcherMatcherType": {
+      "enum": [
+        "EXACT",
+        "REGEX"
+      ],
+      "type": "string"
+    },
+    "configv1Monitor": {
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Annotations are visible in notifications generated by this monitor.\nThey can be be templated with labels from notifications.",
+          "type": "object"
+        },
+        "bucket_slug": {
+          "description": "Slug of the bucket the monitor belongs to. Required if `collection_slug` isn't\nset.",
+          "type": "string"
+        },
+        "collection": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1CollectionReference"
+            }
+          ],
+          "description": "Collection that the monitor belongs to. Required if `bucket_slug` and\n`collection_slug` aren't set."
+        },
+        "collection_slug": {
+          "description": "Slug of the collection the monitor belongs to. Required if `bucket_slug` isn't\nset.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the Monitor was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "graphite_query": {
+          "description": "Graphite query to evaluate for the alert. If set, no other queries can be set.",
+          "type": "string"
+        },
+        "interval_secs": {
+          "description": "Specifies how often alerts are evaluated. Default: `60s`.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Required. Labels to include in notifications generated by this monitor, and can\nbe used to route alerts with notification overrides.",
+          "type": "object"
+        },
+        "logging_query": {
+          "description": "Logging query to evaluate for the alert. If set, no other queries can be set.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Monitor. You can modify this value after the Monitor is created.",
+          "type": "string"
+        },
+        "notification_policy_slug": {
+          "description": "Specifies the notification policy used to route alerts generated by the monitor.\nIf omitted, the notification policy is inherited from the monitor.",
+          "type": "string"
+        },
+        "notification_template": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/MonitorNotificationTemplate"
+            }
+          ],
+          "description": "Optional Go templates for customizing notification title and description.\nTemplates are expanded at notification time with alert context.\n\nAvailable template variables:\n  - `.Severity` — alert severity (`\"critical\"` or `\"warn\"`)\n  - `.Status` — `\"firing\"` or `\"resolved\"`\n  - `.Labels.<name>` — signal labels (e.g. `.Labels.env`)\n  - `.Threshold` — threshold value for the active severity\n  - `.ThresholdOp` — threshold comparison operator (e.g. `\">=\"`, `\"<\"`)\n  - `.ResolveThreshold` — effective resolve threshold; defaults to `.Threshold` when no separate resolve threshold is configured\n  - `.StartsAtEpoch` — start time of the earliest alert in `.Alerts`, in epoch milliseconds\n  - `.Alerts` — list of alerts in this notification group; each alert has:\n    - `.Status` — `\"firing\"` or `\"resolved\"`\n    - `.Labels` — per-alert labels\n    - `.Annotations` — per-alert annotations\n    - `.Threshold` / `.ThresholdOp` / `.ResolveThreshold` — per-alert threshold fields\n    - `.StartsAt` / `.EndsAt` — timestamps\n  - `.Alerts.Firing` / `.Alerts.Resolved` — filtered subsets\n\nAvailable template functions:\n  - `add`, `sub`, `mul` — integer arithmetic\n  - `toUpper`, `toLower`, `title` — string casing\n  - `match` — regexp matching\n  - `join` — join a string slice with a separator\n  - `reReplaceAll` — regexp replace"
+        },
+        "prometheus_query": {
+          "description": "PromQL query to evaluate for the alert. If set, no other queries can be set.",
+          "type": "string"
+        },
+        "schedule": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/MonitorSchedule"
+            }
+          ],
+          "description": "Defines the schedule for when the monitor should be evaluated. If not set, the\nmonitor defaults to always being active."
+        },
+        "series_conditions": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/MonitorSeriesConditions"
+            }
+          ],
+          "description": "Required. Conditions to determine the severity of each series. The highest\nseverity series of a signal determines that signal's severity."
+        },
+        "signal_grouping": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/MonitorSignalGrouping"
+            }
+          ],
+          "description": "Specifies the grouping of series into signals. If omitted, all series are\ngrouped into a single signal."
+        },
+        "slug": {
+          "description": "The unique identifier of the Monitor. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Monitor is created.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Monitor was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "configv1MonitorCondition": {
+      "properties": {
+        "new_series_delay_secs": {
+          "description": "How long a newly observed series is suppressed before it can trigger an\nalert. A series counts as new until `new_series_delay_secs` has elapsed\nsince it was first seen. It need not be present continuously over that\nperiod, but it must return at least one datapoint every 24 hours to stay\ntracked: a series that goes missing for longer than 24 hours is forgotten\nand counts as new again when it comes back. Existence is tracked by\nobserving the series whether or not it violates the condition.\n\nThis is additive with `sustain_secs`: the sustain clock only starts once\nthe delay has elapsed. A delay of `3600` combined with a sustain of `300`\nmeans a new violating series becomes pending after 60 minutes and fires\nafter 65 minutes. A newly created monitor therefore does not alert for up\nto `new_series_delay_secs`.\n\n`0`, the default, disables the delay. Must be at least `0` and at most 1\nweek (604800 seconds).\n\nNot supported for `EXISTS`, `NOT_EXISTS`, or `SIGNAL_NOT_EXISTS`\nconditions, or for Graphite monitors.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "op": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConditionOp"
+            }
+          ],
+          "description": "Required. Specifies the comparison operator for the metric value and the configured\nvalue:\n- `GEQ`: Greater than or equal to\n- `GT`: Greater than\n- `LEQ`: Less than or equal to\n- `LT`: Less than\n- `EQ`: Equal to\n- `NEQ`: Not equal to\n- `EXISTS`: Specified value exists\n- `NOT_EXISTS`: Specified value doesn't exist\n- `SIGNAL_NOT_EXISTS`: Signal no longer exists. Behavior varies by alert type:\n  single monitor alerts trigger if all series are missing; signal-based alerts\n  trigger if all series in the signal go missing; alert-on-every-series alerts\n  trigger if any individual series disappears."
+        },
+        "resolve_sustain_secs": {
+          "description": "Amount of time the query needs to no longer fire before resolving. Must be an\ninteger. Accepts one of `s` (seconds), `m` (minutes), or `h` (hours) as units.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "resolve_value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1OptionalDouble"
+            }
+          ],
+          "description": "Value the query must reach to resolve the alert. When enabled is true,\nthe alert resolves when the query reaches the specified value instead of\nwhen the triggering condition is no longer true."
+        },
+        "sustain_secs": {
+          "description": "Amount of time the query needs to fail the condition check before an alert is\ntriggered. Must be an integer. Accepts one of `s` (seconds), `m` (minutes), or\n`h` (hours) as units.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "description": "Required. The value to compare to the metric value using the `op` operation.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "configv1OptionalDouble": {
+      "properties": {
+        "enabled": {
+          "description": "Whether the value is enabled.",
+          "type": "boolean"
+        },
+        "value": {
+          "description": "The configured value, which is ignored if enabled is false.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

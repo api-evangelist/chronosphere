@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-create-trace-tail-sampling-rules-request-schema.json",
+  "title": "configv1CreateTraceTailSamplingRulesRequest",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-tracetailsamplingrules-api-openapi.yml#/components/schemas/configv1CreateTraceTailSamplingRulesRequest",
+  "properties": {
+    "dry_run": {
+      "description": "If `true`, validates the specified configuration without creating the TraceTailSamplingRules. If the specified configuration is valid, the endpoint returns a partial response without the TraceTailSamplingRules. If the specified configuration is invalid, the endpoint returns an error.",
+      "type": "boolean"
+    },
+    "trace_tail_sampling_rules": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/configv1TraceTailSamplingRules"
+        }
+      ],
+      "description": "The TraceTailSamplingRules to create."
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "NumericFilterComparisonType": {
+      "enum": [
+        "EQUAL",
+        "NOT_EQUAL",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUAL",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUAL"
+      ],
+      "type": "string"
+    },
+    "SpanFilterSpanFilterMatchType": {
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ],
+      "type": "string"
+    },
+    "StringFilterStringFilterMatchType": {
+      "enum": [
+        "EXACT",
+        "REGEX",
+        "EXACT_NEGATION",
+        "REGEX_NEGATION",
+        "IN",
+        "NOT_IN"
+      ],
+      "type": "string"
+    },
+    "TraceSearchFilterBoolFilter": {
+      "properties": {
+        "value": {
+          "description": "The value of the filter compared to the target trace or span field.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterCountFilter": {
+      "properties": {
+        "min": {
+          "description": "Minimum number of spans that must match a span query, inclusive.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "max": {
+          "description": "Maximum number of spans that must match a span query, inclusive.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterDurationFilter": {
+      "properties": {
+        "min_secs": {
+          "description": "Minimum duration, in seconds, required for a span or trace to match.",
+          "format": "double",
+          "type": "number"
+        },
+        "max_secs": {
+          "description": "Maximum duration, in seconds, required for a span or trace to match.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterNumericFilter": {
+      "properties": {
+        "comparison": {
+          "$ref": "#/$defs/NumericFilterComparisonType"
+        },
+        "value": {
+          "description": "The filter value used in comparison against match candidates.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterNumericFilter_2": {
+      "properties": {
+        "comparison": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/NumericFilterComparisonType"
+            }
+          ],
+          "description": "The comparison operation to apply to an input against the given query value."
+        },
+        "value": {
+          "description": "The filter value used in comparison against match candidates.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterScopeFilter": {
+      "properties": {
+        "span_scopes": {
+          "description": "Specifies the span filters that define which spans contribute to the metrics calculation.\nOnly spans matching these filters will be included in the metrics aggregation.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterSpanFilter"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterSpanFilter": {
+      "properties": {
+        "match_type": {
+          "$ref": "#/$defs/SpanFilterSpanFilterMatchType"
+        },
+        "service": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "operation": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "parent_service": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "parent_operation": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "duration": {
+          "$ref": "#/$defs/TraceSearchFilterDurationFilter"
+        },
+        "error": {
+          "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+        },
+        "tags": {
+          "description": "Matches the tags of the candidate span.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterTagFilter"
+          },
+          "type": "array"
+        },
+        "span_count": {
+          "$ref": "#/$defs/TraceSearchFilterCountFilter"
+        },
+        "is_root_span": {
+          "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterSpanFilter_2": {
+      "properties": {
+        "duration": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterDurationFilter"
+            }
+          ],
+          "description": "Matches the duration of the candidate span."
+        },
+        "error": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+            }
+          ],
+          "description": "Matches the error status of the candidate span."
+        },
+        "is_root_span": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+            }
+          ],
+          "description": "Matches the root span of a trace. For example, if the parent span has no child\nspans."
+        },
+        "match_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/SpanFilterSpanFilterMatchType"
+            }
+          ],
+          "description": "If `INCLUDE`, includes all traces that have at least one (or `span_count`)\nspans matching the query. If `EXCLUDE`, excludes all traces that have at least\none (or `span_count`) spans matching the query."
+        },
+        "operation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterStringFilter_2"
+            }
+          ],
+          "description": "Matches the operation of the candidate span."
+        },
+        "parent_operation": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterStringFilter_2"
+            }
+          ],
+          "description": "If not a root span, matches the operation of the candidate span's parent span"
+        },
+        "parent_service": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterStringFilter_2"
+            }
+          ],
+          "description": "If not a root span, matches the service of the candidate span's parent span."
+        },
+        "service": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterStringFilter_2"
+            }
+          ],
+          "description": "Matches the service of the candidate span."
+        },
+        "span_count": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterCountFilter"
+            }
+          ],
+          "description": "Defines the number of spans that must match the criteria defined by the span\nquery. Defaults to requiring that at least one span matches the span query."
+        },
+        "tags": {
+          "description": "Matches the tags of the candidate span.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterTagFilter_2"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterStringFilter": {
+      "properties": {
+        "match": {
+          "$ref": "#/$defs/StringFilterStringFilterMatchType"
+        },
+        "value": {
+          "description": "The value of the filter compared to the target trace or span field.",
+          "type": "string"
+        },
+        "in_values": {
+          "description": "Values the filter tests against when using `IN` or `NOT_IN` match type.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterStringFilter_2": {
+      "properties": {
+        "in_values": {
+          "description": "Values the filter tests against when using `IN` or `NOT_IN` match type.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "match": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/StringFilterStringFilterMatchType"
+            }
+          ],
+          "description": "Specifies the comparison operator for the query. If `EXACT`, compared strings\nmust have the exact value of the query value."
+        },
+        "value": {
+          "description": "The value of the filter compared to the target trace or span field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterTagFilter": {
+      "properties": {
+        "key": {
+          "description": "The key or name of the span tag that this filter inspects.",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/TraceSearchFilterStringFilter"
+        },
+        "numeric_value": {
+          "$ref": "#/$defs/TraceSearchFilterNumericFilter"
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterTagFilter_2": {
+      "properties": {
+        "key": {
+          "description": "The key or name of the span tag that this filter inspects.",
+          "type": "string"
+        },
+        "numeric_value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterNumericFilter_2"
+            }
+          ],
+          "description": "If the query matches the tag with the specified key, and the value type is\n`numeric`, specifies the matcher used to evaluate the span tag value."
+        },
+        "value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterStringFilter_2"
+            }
+          ],
+          "description": "If the query matches the tag with the specified key, and the value type is a\n`string`, specifies the matcher used to evaluate the span tag value."
+        }
+      },
+      "type": "object"
+    },
+    "TraceSearchFilterTraceFilter_2": {
+      "properties": {
+        "duration": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterDurationFilter"
+            }
+          ],
+          "description": "Matches traces based on the duration of the entire trace."
+        },
+        "error": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterBoolFilter"
+            }
+          ],
+          "description": "Matches traces based on the top-level error status."
+        }
+      },
+      "type": "object"
+    },
+    "configv1DefaultSampleRate": {
+      "properties": {
+        "enabled": {
+          "description": "Determines whether to override the default sample rate.",
+          "type": "boolean"
+        },
+        "sample_rate": {
+          "description": "Specifies the percentage of traces to keep, which must be a number between `0`\nand `1`, inclusive, where `1` equates to 100 percent.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "configv1TraceSearchFilter_2": {
+      "properties": {
+        "scope_filter": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterScopeFilter"
+            }
+          ],
+          "description": "Scope filter that defines which spans within matching traces contribute to metrics calculation."
+        },
+        "span": {
+          "description": "Specifies the span conditions to match on. All conditions must be true in a\nsingle span for the span to be considered a match. If `span_count` is specified,\nthe number of spans within the trace that match span conditions must be within\n`[min, max]`. You can specify multiple span conditions, and each can be\nsatisfied by any number of spans within the trace.",
+          "items": {
+            "$ref": "#/$defs/TraceSearchFilterSpanFilter_2"
+          },
+          "type": "array"
+        },
+        "trace": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/TraceSearchFilterTraceFilter_2"
+            }
+          ],
+          "description": "Trace-level filter criteria (effectively matching the root span)."
+        }
+      },
+      "type": "object"
+    },
+    "configv1TraceTailSamplingRule": {
+      "description": "Contains configuration for one tail sampling rule.",
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the rule was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "filter": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1TraceSearchFilter_2"
+            }
+          ],
+          "description": "Filter criteria applied to each trace to determine whether the trace is a match."
+        },
+        "name": {
+          "description": "A human-readable name of the rule.",
+          "type": "string"
+        },
+        "sample_rate": {
+          "description": "Specifies the percentage of traces to keep, which must be a number between `0`\nand `1`, inclusive, where `1` equates to 100 percent.",
+          "format": "double",
+          "type": "number"
+        },
+        "system_name": {
+          "description": "Name used as the metric label value for metrics that are emitted from this rule.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the rule was updated.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1TraceTailSamplingRules": {
+      "description": "Root object containing all tail sampling rules (for a tenant).",
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the rule was created.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "default_sample_rate": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1DefaultSampleRate"
+            }
+          ],
+          "description": "Optional. By default, all traces not matching the defined rules are kept. You\ncan override this behavior by providing a default sample rate."
+        },
+        "rules": {
+          "description": "Optional. Specifies a list of rules and a sampling rate to apply. Rules are\nevaluated in order until a match is found. If no sample rate is specified, the\ndefault sample rate is applied.",
+          "items": {
+            "$ref": "#/$defs/configv1TraceTailSamplingRule"
+          },
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the rule was updated.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

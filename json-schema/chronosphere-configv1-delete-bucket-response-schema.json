@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-delete-bucket-response-schema.json",
+  "title": "configv1DeleteBucketResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-bucket-api-openapi.yml#/components/schemas/configv1DeleteBucketResponse",
+  "properties": {
+    "changes": {
+      "description": "Changes contains what resources are deleted. The bucket being deleted will\nalways be included. When force_delete is used, the changelog will include\nall resources that reference the bucket that were deleted.",
+      "items": {
+        "$ref": "#/$defs/ResourceChange"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ResourceChange": {
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/ResourceChangeAction"
+        },
+        "resource": {
+          "$ref": "#/$defs/configv1ResourceType"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResourceChangeAction": {
+      "enum": [
+        "CREATED",
+        "UPDATED",
+        "DELETED",
+        "NOOP"
+      ],
+      "type": "string"
+    },
+    "configv1ResourceType": {
+      "enum": [
+        "BUCKET",
+        "DASHBOARD",
+        "GRAFANA_DASHBOARD",
+        "MONITOR",
+        "NOTIFICATION_POLICY",
+        "RECORDING_RULE",
+        "MAPPING_RULE",
+        "ROLLUP_RULE"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-statev1-list-metric-usages-by-label-name-response-schema.json",
+  "title": "statev1ListMetricUsagesByLabelNameResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-metricusagesbylabelname-api-openapi.yml#/components/schemas/statev1ListMetricUsagesByLabelNameResponse",
+  "properties": {
+    "page": {
+      "$ref": "#/$defs/configv1PageResult"
+    },
+    "usages": {
+      "items": {
+        "$ref": "#/$defs/statev1MetricUsageByLabelName"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "MetricUsageQueryExecutionCountsByType": {
+      "properties": {
+        "dashboard": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "explorer": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "external": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "MetricUsageReferenceCountsByType": {
+      "properties": {
+        "aggregation_rules": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dashboards": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "drop_rules": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "monitors": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "recording_rules": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "configv1PageResult": {
+      "properties": {
+        "next_token": {
+          "description": "An opaque page token that identifies the next page of items that the\nclient should request. An empty value indicates that there are no\nmore items to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "statev1MetricUsage": {
+      "properties": {
+        "query_execution_counts_by_type": {
+          "$ref": "#/$defs/MetricUsageQueryExecutionCountsByType"
+        },
+        "reference_counts_by_type": {
+          "$ref": "#/$defs/MetricUsageReferenceCountsByType"
+        },
+        "total_query_executions": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "total_references": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "total_unique_users": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "utility_score": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "statev1MetricUsageByLabelName": {
+      "properties": {
+        "dpps": {
+          "format": "double",
+          "type": "number"
+        },
+        "label_name": {
+          "type": "string"
+        },
+        "percent_of_series_with_label_name": {
+          "description": "Percent of persisted series observed to have the label name.\nReturns in format: [0.0, 100.0]",
+          "format": "double",
+          "type": "number"
+        },
+        "total_unique_values": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "usage": {
+          "$ref": "#/$defs/statev1MetricUsage"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-config-unstable-update-trace-jaeger-remote-sampling-strategy-body-schema.json",
+  "title": "ConfigUnstableUpdateTraceJaegerRemoteSamplingStrategyBody",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-tracejaegerremotesamplingstrategy-api-openapi.yml#/components/schemas/ConfigUnstableUpdateTraceJaegerRemoteSamplingStrategyBody",
+  "properties": {
+    "trace_jaeger_remote_sampling_strategy": {
+      "$ref": "#/$defs/configunstableTraceJaegerRemoteSamplingStrategy"
+    },
+    "create_if_missing": {
+      "description": "If `true`, the TraceJaegerRemoteSamplingStrategy will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the TraceJaegerRemoteSamplingStrategy does not already exist.",
+      "type": "boolean"
+    },
+    "dry_run": {
+      "description": "If `true`, validates the specified configuration without creating or updating the TraceJaegerRemoteSamplingStrategy. If the specified configuration is valid, the endpoint returns a partial response without the TraceJaegerRemoteSamplingStrategy. If the specified configuration is invalid, the endpoint returns an error.",
+      "type": "boolean"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "PerOperationSamplingStrategiesPerOperationSamplingStrategy": {
+      "properties": {
+        "operation": {
+          "description": "The operation to which this specific strategy should apply.",
+          "type": "string"
+        },
+        "probabilistic_sampling_strategy": {
+          "$ref": "#/$defs/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy"
+        }
+      },
+      "type": "object"
+    },
+    "TraceJaegerRemoteSamplingStrategyAppliedStrategy": {
+      "properties": {
+        "probabilistic_strategy": {
+          "$ref": "#/$defs/TraceJaegerRemoteSamplingStrategyProbabilisticStrategy"
+        },
+        "per_operation_strategies": {
+          "$ref": "#/$defs/TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies"
+        },
+        "rate_limiting_strategy": {
+          "$ref": "#/$defs/TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy"
+        }
+      },
+      "type": "object"
+    },
+    "TraceJaegerRemoteSamplingStrategyPerOperationSamplingStrategies": {
+      "properties": {
+        "default_sampling_rate": {
+          "description": "Defines the service-wide sampling probability (in the range [0, 1]) when specific operations are not matched.",
+          "format": "double",
+          "type": "number"
+        },
+        "default_lower_bound_traces_per_second": {
+          "description": "Defines a minimum number of traces to send for ANY operation in the service, regardless of matching per operation strategy.",
+          "format": "double",
+          "type": "number"
+        },
+        "default_upper_bound_traces_per_second": {
+          "description": "Defines a maximum number of traces to send for ANY operation in the service, regardless of matching per operation strategy.",
+          "format": "double",
+          "type": "number"
+        },
+        "per_operation_strategies": {
+          "description": "Defines explicit operations-specific strategies that take precedence over the default sampling rate.",
+          "items": {
+            "$ref": "#/$defs/PerOperationSamplingStrategiesPerOperationSamplingStrategy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TraceJaegerRemoteSamplingStrategyProbabilisticStrategy": {
+      "properties": {
+        "sampling_rate": {
+          "description": "Value in the range [0, 1] that defines the probability of sampling any trace.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "TraceJaegerRemoteSamplingStrategyRateLimitingSamplingStrategy": {
+      "properties": {
+        "max_traces_per_second": {
+          "description": "Maximum number of traces to sample per second.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "configunstableTraceJaegerRemoteSamplingStrategy": {
+      "properties": {
+        "slug": {
+          "description": "The unique identifier of the TraceJaegerRemoteSamplingStrategy. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the TraceJaegerRemoteSamplingStrategy is created.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the TraceJaegerRemoteSamplingStrategy. You can modify this value after the TraceJaegerRemoteSamplingStrategy is created.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the TraceJaegerRemoteSamplingStrategy was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the TraceJaegerRemoteSamplingStrategy was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "service_name": {
+          "description": "The name of the service this sampling strategy applies to. This must match the slug and name fields.",
+          "type": "string"
+        },
+        "applied_strategy": {
+          "$ref": "#/$defs/TraceJaegerRemoteSamplingStrategyAppliedStrategy"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

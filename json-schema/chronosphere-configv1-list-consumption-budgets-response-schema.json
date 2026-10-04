@@ -1,0 +1,302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-list-consumption-budgets-response-schema.json",
+  "title": "configv1ListConsumptionBudgetsResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-consumptionbudget-api-openapi.yml#/components/schemas/configv1ListConsumptionBudgetsResponse",
+  "properties": {
+    "consumption_budgets": {
+      "items": {
+        "$ref": "#/$defs/configv1ConsumptionBudget"
+      },
+      "type": "array"
+    },
+    "page": {
+      "$ref": "#/$defs/configv1PageResult"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "ConsumptionBudgetAlertActionConfig": {
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional annotations to set on the generated monitor. By default, the\nmonitors already contain \"description\", \"dashboard\", \"resource\",\n\"consumption_budget_slug\", \"threshold_type\", and \"partition\" annotations.\nSetting any of these annotations will override its default value.",
+          "type": "object"
+        },
+        "instant_rate_sustain_secs": {
+          "description": "How long instant rate consumption must sustain above the threshold in\norder to fire an alert. By default, the sustain is 0: any consumption\nover the threshold will fire an alert.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional labels to set on the generated monitor, which can be used for\nnotification routing. The following labels are reserved and cannot be\noverride: \"resource\", \"partition\", and \"threshold_type\".",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "ConsumptionBudgetPriority": {
+      "properties": {
+        "filters": {
+          "description": "Criteria that defines which data matches the `priority`. Filters are\nconcatenated together as implied `AND` operators. A request must match every\nfilter to match the `priority`.",
+          "items": {
+            "$ref": "#/$defs/ConsumptionBudgetPriorityFilter"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "description": "Priority order that determines when to drop data. A priority of `10` is\ndropped first, and a priority of `1` is dropped last.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "filters",
+        "priority"
+      ],
+      "type": "object"
+    },
+    "ConsumptionBudgetPriorityFilter": {
+      "properties": {
+        "dataset_slug": {
+          "description": "Deprecated. Use `log_filter` instead.",
+          "type": "string"
+        },
+        "log_filter": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1LogSearchFilter"
+            }
+          ],
+          "description": "If set, matches incoming log data by log query."
+        }
+      },
+      "type": "object"
+    },
+    "ConsumptionBudgetResourceGroup": {
+      "enum": [
+        "LOG_PERSISTED_BYTES",
+        "LOG_PROCESSED_BYTES",
+        "METRIC_PERSISTED_SERIES",
+        "METRIC_ALL",
+        "LOG_ALL",
+        "TRACE_PROCESSED_BYTES",
+        "TRACE_PERSISTED_BYTES",
+        "TRACE_ALL",
+        "ALL"
+      ],
+      "type": "string"
+    },
+    "ConsumptionBudgetThresholdAction": {
+      "enum": [
+        "ALERT_WARN",
+        "ALERT_CRITICAL",
+        "DROP"
+      ],
+      "type": "string"
+    },
+    "ConsumptionBudgetThresholdType": {
+      "enum": [
+        "DAILY_VOLUME",
+        "INSTANT_RATE",
+        "WEEKLY_VOLUME",
+        "MONTHLY_VOLUME",
+        "HOURLY_VOLUME",
+        "ROLLING_1_HOUR_VOLUME",
+        "ROLLING_3_HOUR_VOLUME",
+        "ROLLING_1_DAY_VOLUME",
+        "ROLLING_7_DAY_VOLUME",
+        "ROLLING_30_MINUTE_VOLUME"
+      ],
+      "type": "string"
+    },
+    "ConsumptionBudgetUnit": {
+      "enum": [
+        "NATIVE",
+        "CREDITS"
+      ],
+      "type": "string"
+    },
+    "ThresholdInstantRate": {
+      "properties": {
+        "fixed_value_per_sec": {
+          "description": "Value of the fixed rate threshold.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fixed_value_per_sec"
+      ],
+      "type": "object"
+    },
+    "ThresholdVolume": {
+      "properties": {
+        "fixed_value": {
+          "description": "Value of the volume threshold.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fixed_value"
+      ],
+      "type": "object"
+    },
+    "configv1ConsumptionBudget": {
+      "properties": {
+        "alert_action_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConsumptionBudgetAlertActionConfig"
+            }
+          ],
+          "description": "Optional. Configures all `ALERT_WARN` & `ALERT_CRITICAL` actions for this budget."
+        },
+        "created_at": {
+          "description": "Timestamp of when the ConsumptionBudget was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "default_priority": {
+          "description": "Optional. The default priority for requests that don't match any priority in the\n`priorities` list. If not set, then `priority=10` (dropped first) is used as the\ndefault.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "description": "The name of the ConsumptionBudget. You can modify this value after the ConsumptionBudget is created.",
+          "type": "string"
+        },
+        "notification_policy_slug": {
+          "description": "Notification policy slug for routing alerts. Required only if `ALERT_WARN` or\n`ALERT_CRITICAL` actions are configured.",
+          "type": "string"
+        },
+        "partition_slug_path": {
+          "description": "Path of the budget's partition, delimited by forward slashes (`/`), in the\nformat `global/SLUG1/SLUG2`, where `SLUG1` is a top-level partition, and `SLUG2`\nis a child partition of `SLUG1`.\n\nA well-formed partition path always starts with the `global` partition slug, and\nhas no leading or trailing forward slashes.",
+          "type": "string"
+        },
+        "priorities": {
+          "description": "Optional. Controls the order in which data is dropped when a drop action is\napplied. For example, a priority of 10 is dropped first, and a priority of 1 is\ndropped last. Priorities are evaluated in match order, and the first priority to\nmatch is applied. All other priorities are ignored. If a request does not match\nany priority, then it is assigned the `default_priority`.",
+          "items": {
+            "$ref": "#/$defs/ConsumptionBudgetPriority"
+          },
+          "type": "array"
+        },
+        "resource": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConsumptionBudgetResourceGroup"
+            }
+          ],
+          "description": "Resource of the budget.\nDeprecated: use thresholds.resource_group and unit instead."
+        },
+        "slug": {
+          "description": "The unique identifier of the ConsumptionBudget. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the ConsumptionBudget is created.",
+          "type": "string"
+        },
+        "thresholds": {
+          "description": "Optional. Defines which actions to take when a threshold is exceeded.",
+          "items": {
+            "$ref": "#/$defs/configv1ConsumptionBudgetThreshold"
+          },
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the ConsumptionBudget was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "partition_slug_path"
+      ],
+      "type": "object"
+    },
+    "configv1ConsumptionBudgetThreshold": {
+      "properties": {
+        "action": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConsumptionBudgetThresholdAction"
+            }
+          ],
+          "description": "The specified action to take when the threshold is exceeded."
+        },
+        "instant_rate": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ThresholdInstantRate"
+            }
+          ],
+          "description": "Configures the `INSTANT_RATE` threshold type."
+        },
+        "resource_group": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConsumptionBudgetResourceGroup"
+            }
+          ],
+          "description": "Specifies which resource group this threshold applies to."
+        },
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConsumptionBudgetThresholdType"
+            }
+          ],
+          "description": "Specifies the threshold type, which can be one of the following values.\n\n`INSTANT_RATE` sets an instantaneous rate threshold. The configured action\ntriggers when consumption exceeds the configured rate threshold, defined by\nthe `instant_rate` field. The `DROP` action accepts requests up to the\nthreshold, and drops any data over the threshold in priority order.\n\n`ROLLING_30_MINUTE_VOLUME`, `ROLLING_1_HOUR_VOLUME`,\n`ROLLING_3_HOUR_VOLUME`, `ROLLING_1_DAY_VOLUME`, and\n`ROLLING_7_DAY_VOLUME` set a volume threshold over a rolling time\nperiod. The configured action triggers when consumption over the last\ntime period (30 minutes, 1 hour, 3 hours, 1 day, or 7 days) exceeds\nthe configured threshold, defined by the `volume` field.\n\n`HOURLY_VOLUME`, `DAILY_VOLUME`, `WEEKLY_VOLUME`, and `MONTHLY_VOLUME` set a volume threshold\nover a fixed, non-overlapping time period. The configured action triggers when consumption\nover the specified time period (hourly, daily, weekly, or monthly) exceeds the\nconfigured threshold, defined by the `volume` field. Volumes reset\nto zero at the start of each time period. The `DROP` action drops all requests\nwhen a volume threshold is exceeded, regardless of priority.\n\n- `HOURLY_VOLUME` sums the consumption volume from `00:00:00` UTC` to `00:59:59` UTC\n  every hour.\n- `DAILY_VOLUME` sums the consumption volume from `00:00:00` UTC to `23:59:59` UTC\n  every day.\n- `WEEKLY_VOLUME` sums the consumption volume from `00:00:00` UTC Monday morning\n  to `23:59:59` UTC Sunday night.\n- `MONTHLY_VOLUME` sums the consumption volume from `00:00:00` UTC on the first\n  day of the month to `23:59:59` UTC on the last day of the month. For example,\n  `Jan 1 00:00:00` to `Jan 31 23:59:59`. Month thresholds are evaluated equally,\n  regardless of how many days are in the month. For example, thresholds for\n  January and February are the same, even though February has fewer days."
+        },
+        "unit": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConsumptionBudgetUnit"
+            }
+          ],
+          "description": "Specifies the unit of the threshold value. `NATIVE` uses the native\nunit of the resource group, e.g. bytes for `LOG_PERSISTED_BYTES`. `CREDITS`\nuses the credits cost of the resource group, if available."
+        },
+        "volume": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ThresholdVolume"
+            }
+          ],
+          "description": "Configures the `VOLUME` threshold type."
+        }
+      },
+      "required": [
+        "action",
+        "type"
+      ],
+      "type": "object"
+    },
+    "configv1LogSearchFilter": {
+      "properties": {
+        "query": {
+          "description": "Returns logs that match this query. The query can include only top-level\noperations. Nested clauses aren't supported. Only one type of `AND` or `OR`\noperator is allowed.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1PageResult": {
+      "properties": {
+        "next_token": {
+          "description": "An opaque page token that identifies the next page of items that the\nclient should request. An empty value indicates that there are no\nmore items to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

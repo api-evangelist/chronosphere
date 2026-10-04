@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configunstable-read-link-template-response-schema.json",
+  "title": "configunstableReadLinkTemplateResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-linktemplate-api-openapi.yml#/components/schemas/configunstableReadLinkTemplateResponse",
+  "properties": {
+    "link_template": {
+      "$ref": "#/$defs/configunstableLinkTemplate"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "configunstableLinkTemplate": {
+      "properties": {
+        "slug": {
+          "description": "Unique slug identifying the LinkTemplate.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Unique name of the LinkTemplate. Used as the link text.",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp of when the LinkTemplate was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the LinkTemplate was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "url_template": {
+          "description": "URL template.",
+          "type": "string"
+        },
+        "ui_component": {
+          "description": "Link template is scoped to the specified string representing a UI component here.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

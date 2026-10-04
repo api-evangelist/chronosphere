@@ -196,17 +196,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableCreateNoopEntityResponse:
-      properties:
-        noop_entity:
-          $ref: '#/components/schemas/configunstableNoopEntity'
-      type: object
-    configunstableNoopEnum:
-      enum:
-      - ACTIVE
-      type: string
     genericError:
       additionalProperties: true
+      type: object
+    configunstableDeleteNoopEntityResponse:
+      properties:
+        not_hidden:
+          type: boolean
       type: object
     ConfigUnstableUpdateNoopEntityBody:
       properties:
@@ -216,7 +212,7 @@ components:
           description: If `true`, the NoopEntity will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the NoopEntity does not already exist.
           type: boolean
       type: object
-    configunstableReadNoopEntityResponse:
+    configunstableCreateNoopEntityRequest:
       properties:
         noop_entity:
           $ref: '#/components/schemas/configunstableNoopEntity'
@@ -230,6 +226,11 @@ components:
         message:
           description: An error message describing what went wrong.
           type: string
+      type: object
+    configunstableCreateNoopEntityResponse:
+      properties:
+        noop_entity:
+          $ref: '#/components/schemas/configunstableNoopEntity'
       type: object
     configunstableNoopEntity:
       properties:
@@ -258,17 +259,16 @@ components:
       enum:
       - ENABLED
       type: string
-    configunstableDeleteNoopEntityResponse:
-      properties:
-        not_hidden:
-          type: boolean
-      type: object
     configunstableUpdateNoopEntityResponse:
       properties:
         noop_entity:
           $ref: '#/components/schemas/configunstableNoopEntity'
       type: object
-    configunstableCreateNoopEntityRequest:
+    configunstableNoopEnum:
+      enum:
+      - ACTIVE
+      type: string
+    configunstableReadNoopEntityResponse:
       properties:
         noop_entity:
           $ref: '#/components/schemas/configunstableNoopEntity'

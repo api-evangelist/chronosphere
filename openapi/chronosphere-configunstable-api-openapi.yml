@@ -58,22 +58,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateDashboardFromClassicResponseUnsupportedFeature:
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-        level:
-          description: 'The converter''s feature level (''supported'' | ''unsupported''); empty when
-
-            the converter didn''t set one.'
-          type: string
-        panel_key:
-          type: string
-        panel_name:
-          type: string
-      type: object
     configunstableCreateDashboardFromClassicRequest:
       description: 'CreateDashboardFromClassicRequest converts raw classic (Grafana) dashboard
 
@@ -113,6 +97,22 @@ components:
           type: integer
         message:
           description: An error message describing what went wrong.
+          type: string
+      type: object
+    CreateDashboardFromClassicResponseUnsupportedFeature:
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        level:
+          description: 'The converter''s feature level (''supported'' | ''unsupported''); empty when
+
+            the converter didn''t set one.'
+          type: string
+        panel_key:
+          type: string
+        panel_name:
           type: string
       type: object
     configunstableCreateDashboardFromClassicResponse:

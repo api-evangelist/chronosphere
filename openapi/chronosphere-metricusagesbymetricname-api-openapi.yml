@@ -93,28 +93,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MetricUsageQueryExecutionCountsByType:
-      properties:
-        dashboard:
-          format: int32
-          type: integer
-        explorer:
-          format: int32
-          type: integer
-        external:
-          format: int32
-          type: integer
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
     statev1MetricUsage:
       properties:
         query_execution_counts_by_type:
@@ -134,6 +112,18 @@ components:
           format: double
           type: number
       type: object
+    MetricUsageQueryExecutionCountsByType:
+      properties:
+        dashboard:
+          format: int32
+          type: integer
+        explorer:
+          format: int32
+          type: integer
+        external:
+          format: int32
+          type: integer
+      type: object
     statev1ListMetricUsagesByMetricNameResponse:
       properties:
         page:
@@ -148,16 +138,6 @@ components:
         message:
           description: An error message describing what went wrong.
           type: string
-      type: object
-    statev1MetricUsageByMetricName:
-      properties:
-        dpps:
-          format: double
-          type: number
-        metric_name:
-          type: string
-        usage:
-          $ref: '#/components/schemas/statev1MetricUsage'
       type: object
     MetricUsageReferenceCountsByType:
       properties:
@@ -176,6 +156,26 @@ components:
         recording_rules:
           format: int32
           type: integer
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    statev1MetricUsageByMetricName:
+      properties:
+        dpps:
+          format: double
+          type: number
+        metric_name:
+          type: string
+        usage:
+          $ref: '#/components/schemas/statev1MetricUsage'
       type: object
   securitySchemes:
     ApiKeyAuth:

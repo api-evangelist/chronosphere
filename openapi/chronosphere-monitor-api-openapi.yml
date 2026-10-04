@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Monitor API
   version: v1
-  description: 'Operations tagged Monitor across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Monitor across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -304,12 +304,8 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1CollectionReference:
-      properties:
-        slug:
-          type: string
-        type:
-          $ref: '#/components/schemas/configv1CollectionReferenceType'
+    genericError:
+      additionalProperties: true
       type: object
     configv1Monitor:
       properties:
@@ -405,22 +401,50 @@ components:
       required:
       - name
       type: object
-    ScheduleWeeklySchedule:
+    ConfigV1UpdateMonitorBody:
       properties:
-        friday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
-        monday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
-        saturday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
-        sunday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
-        thursday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
-        tuesday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
-        wednesday:
-          $ref: '#/components/schemas/ScheduleScheduleDay'
+        create_if_missing:
+          description: If `true`, the Monitor will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Monitor does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Monitor. If the specified configuration is valid, the endpoint returns a partial response without the Monitor. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        monitor:
+          allOf:
+          - $ref: '#/components/schemas/configv1Monitor'
+          description: The Monitor to update.
+      type: object
+    ScheduleScheduleDay:
+      properties:
+        active:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleDayActive'
+          description: 'Determines when the monitor is active for the specified day. Accepts these
+
+            values:
+
+            - `ALL_DAY`: The monitor is active all day.
+
+            - `ONLY_DURING_RANGES`: The monitor is only active during the given ranges.
+
+            - `NEVER`: The monitor is never active during the selected day.'
+        ranges:
+          description: 'The time ranges that the monitor is active on this day. Required if `active`
+
+            is set to `ONLY_DURING_RANGES`. Otherwise, this field must be empty.'
+          items:
+            $ref: '#/components/schemas/ScheduleDayTimeRange'
+          type: array
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
       type: object
     MonitorSchedule:
       properties:
@@ -436,15 +460,6 @@ components:
 
             the monitor to be active.'
       type: object
-    MonitorNotificationTemplate:
-      properties:
-        description:
-          description: Go template for the alert description.
-          type: string
-        title:
-          description: Go template for the alert title.
-          type: string
-      type: object
     configv1CreateMonitorRequest:
       properties:
         dry_run:
@@ -455,11 +470,27 @@ components:
           - $ref: '#/components/schemas/configv1Monitor'
           description: The Monitor to create.
       type: object
-    ScheduleDayActive:
+    configv1OptionalDouble:
+      properties:
+        enabled:
+          description: Whether the value is enabled.
+          type: boolean
+        value:
+          description: The configured value, which is ignored if enabled is false.
+          format: double
+          type: number
+      type: object
+    ConditionOp:
       enum:
-      - ALL_DAY
-      - ONLY_DURING_RANGES
-      - NEVER
+      - GEQ
+      - GT
+      - LEQ
+      - LT
+      - EQ
+      - NEQ
+      - EXISTS
+      - NOT_EXISTS
+      - SIGNAL_NOT_EXISTS
       type: string
     configv1DeleteMonitorResponse:
       type: object
@@ -468,20 +499,14 @@ components:
         monitor:
           $ref: '#/components/schemas/configv1Monitor'
       type: object
-    configv1CreateMonitorResponse:
+    ScheduleDayTimeRange:
       properties:
-        monitor:
-          $ref: '#/components/schemas/configv1Monitor'
-      type: object
-    SeriesConditionsConditions:
-      properties:
-        conditions:
-          description: 'List of conditions to evaluate against a series. Only one condition must
-
-            match to assign a severity to a signal.'
-          items:
-            $ref: '#/components/schemas/configv1MonitorCondition'
-          type: array
+        end_hh_mm:
+          description: End time in the in format `"<hour>:<minute>"`. For example, `"15:30"`.
+          type: string
+        start_hh_mm:
+          description: Start time in the in format `"<hour>:<minute>"`. For example, `"15:30"`.
+          type: string
       type: object
     MonitorSeriesConditionsOverride:
       properties:
@@ -500,66 +525,6 @@ components:
             override. These conditions supersede the default conditions, and are not
 
             merged with the default conditions.'
-      type: object
-    configv1ReadMonitorResponse:
-      properties:
-        monitor:
-          $ref: '#/components/schemas/configv1Monitor'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    MonitorSeriesConditions:
-      description: Conditions evaluated against each queried series to determine the severity of each series.
-      properties:
-        defaults:
-          allOf:
-          - $ref: '#/components/schemas/SeriesConditionsSeverityConditions'
-          description: 'Mapping of alert severity to its conditions. All conditions are
-
-            evaluated for every series. If multiple conditions match, the highest
-
-            severity is chosen.'
-        overrides:
-          description: 'Optional. Specifies a list of overrides to use for series having matching
-
-            labels. Each override defines labels that potentially match a series'' labels.
-
-            If one or more overrides match a series, the severity conditions of the first
-
-            matching override are used instead of the defaults.
-
-
-            Cannot be used if `graphite_query` is set.'
-          items:
-            $ref: '#/components/schemas/MonitorSeriesConditionsOverride'
-          type: array
-      type: object
-    configv1ListMonitorsResponse:
-      properties:
-        monitors:
-          items:
-            $ref: '#/components/schemas/configv1Monitor'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
-    configv1OptionalDouble:
-      properties:
-        enabled:
-          description: Whether the value is enabled.
-          type: boolean
-        value:
-          description: The configured value, which is ignored if enabled is false.
-          format: double
-          type: number
       type: object
     configv1LabelMatcher:
       properties:
@@ -581,45 +546,6 @@ components:
 
             parameter is treated as a regular expression for parsing label values.'
           type: string
-      type: object
-    ScheduleDayTimeRange:
-      properties:
-        end_hh_mm:
-          description: End time in the in format `"<hour>:<minute>"`. For example, `"15:30"`.
-          type: string
-        start_hh_mm:
-          description: Start time in the in format `"<hour>:<minute>"`. For example, `"15:30"`.
-          type: string
-      type: object
-    SeriesConditionsSeverityConditions:
-      properties:
-        critical:
-          allOf:
-          - $ref: '#/components/schemas/SeriesConditionsConditions'
-          description: Defines the criteria that must be met to trigger a critical condition.
-        warn:
-          allOf:
-          - $ref: '#/components/schemas/SeriesConditionsConditions'
-          description: Defines the criteria that must be met to trigger a warning condition.
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    ConfigV1UpdateMonitorBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the Monitor will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Monitor does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Monitor. If the specified configuration is valid, the endpoint returns a partial response without the Monitor. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        monitor:
-          allOf:
-          - $ref: '#/components/schemas/configv1Monitor'
-          description: The Monitor to update.
       type: object
     configv1MonitorCondition:
       properties:
@@ -691,27 +617,89 @@ components:
           format: double
           type: number
       type: object
-    ScheduleScheduleDay:
+    MonitorSeriesConditions:
+      description: Conditions evaluated against each queried series to determine the severity of each series.
       properties:
-        active:
+        defaults:
           allOf:
-          - $ref: '#/components/schemas/ScheduleDayActive'
-          description: 'Determines when the monitor is active for the specified day. Accepts these
+          - $ref: '#/components/schemas/SeriesConditionsSeverityConditions'
+          description: 'Mapping of alert severity to its conditions. All conditions are
 
-            values:
+            evaluated for every series. If multiple conditions match, the highest
 
-            - `ALL_DAY`: The monitor is active all day.
+            severity is chosen.'
+        overrides:
+          description: 'Optional. Specifies a list of overrides to use for series having matching
 
-            - `ONLY_DURING_RANGES`: The monitor is only active during the given ranges.
+            labels. Each override defines labels that potentially match a series'' labels.
 
-            - `NEVER`: The monitor is never active during the selected day.'
-        ranges:
-          description: 'The time ranges that the monitor is active on this day. Required if `active`
+            If one or more overrides match a series, the severity conditions of the first
 
-            is set to `ONLY_DURING_RANGES`. Otherwise, this field must be empty.'
+            matching override are used instead of the defaults.
+
+
+            Cannot be used if `graphite_query` is set.'
           items:
-            $ref: '#/components/schemas/ScheduleDayTimeRange'
+            $ref: '#/components/schemas/MonitorSeriesConditionsOverride'
           type: array
+      type: object
+    ScheduleDayActive:
+      enum:
+      - ALL_DAY
+      - ONLY_DURING_RANGES
+      - NEVER
+      type: string
+    configv1ListMonitorsResponse:
+      properties:
+        monitors:
+          items:
+            $ref: '#/components/schemas/configv1Monitor'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    SeriesConditionsConditions:
+      properties:
+        conditions:
+          description: 'List of conditions to evaluate against a series. Only one condition must
+
+            match to assign a severity to a signal.'
+          items:
+            $ref: '#/components/schemas/configv1MonitorCondition'
+          type: array
+      type: object
+    SeriesConditionsSeverityConditions:
+      properties:
+        critical:
+          allOf:
+          - $ref: '#/components/schemas/SeriesConditionsConditions'
+          description: Defines the criteria that must be met to trigger a critical condition.
+        warn:
+          allOf:
+          - $ref: '#/components/schemas/SeriesConditionsConditions'
+          description: Defines the criteria that must be met to trigger a warning condition.
+      type: object
+    configv1CollectionReference:
+      properties:
+        slug:
+          type: string
+        type:
+          $ref: '#/components/schemas/configv1CollectionReferenceType'
+      type: object
+    configv1LabelMatcherMatcherType:
+      enum:
+      - EXACT
+      - REGEX
+      type: string
+    configv1ReadMonitorResponse:
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
+      type: object
+    configv1CreateMonitorResponse:
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor'
       type: object
     configv1CollectionReferenceType:
       enum:
@@ -719,14 +707,15 @@ components:
       - SERVICE
       title: Type values must match entitiespb.Collection.CollectionType.
       type: string
-    genericError:
-      additionalProperties: true
+    MonitorNotificationTemplate:
+      properties:
+        description:
+          description: Go template for the alert description.
+          type: string
+        title:
+          description: Go template for the alert title.
+          type: string
       type: object
-    configv1LabelMatcherMatcherType:
-      enum:
-      - EXACT
-      - REGEX
-      type: string
     MonitorSignalGrouping:
       description: SignalGrouping defines how the set of series from the query are split into signals.
       properties:
@@ -750,18 +739,29 @@ components:
             `label_names`.'
           type: boolean
       type: object
-    ConditionOp:
-      enum:
-      - GEQ
-      - GT
-      - LEQ
-      - LT
-      - EQ
-      - NEQ
-      - EXISTS
-      - NOT_EXISTS
-      - SIGNAL_NOT_EXISTS
-      type: string
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    ScheduleWeeklySchedule:
+      properties:
+        friday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        monday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        saturday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        sunday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        thursday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        tuesday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+        wednesday:
+          $ref: '#/components/schemas/ScheduleScheduleDay'
+      type: object
     configv1Monitor_2:
       type: object
       properties:
@@ -833,125 +833,6 @@ components:
         logging_query:
           type: string
           description: Logging query to evaluate for the alert. If set, no other queries can be set.
-    MonitorSchedule_2:
-      type: object
-      properties:
-        timezone:
-          type: string
-          description: The timezone of the time ranges.
-        weekly_schedule:
-          $ref: '#/components/schemas/ScheduleWeeklySchedule'
-    MonitorCondition:
-      type: object
-      properties:
-        op:
-          $ref: '#/components/schemas/ConditionOp_2'
-        value:
-          type: number
-          description: Required. The value to compare to the metric value using the `op` operation.
-          format: double
-        sustain_secs:
-          type: integer
-          description: 'Amount of time the query needs to fail the condition check before an alert is
-
-            triggered. Must be an integer. Accepts one of `s` (seconds), `m` (minutes), or
-
-            `h` (hours) as units.'
-          format: int32
-        resolve_sustain_secs:
-          type: integer
-          description: 'Amount of time the query needs to no longer fire before resolving. Must be an
-
-            integer. Accepts one of `s` (seconds), `m` (minutes), or `h` (hours) as units.'
-          format: int32
-    configv1CreateMonitorRequest_2:
-      type: object
-      properties:
-        monitor:
-          $ref: '#/components/schemas/configv1Monitor_2'
-        dry_run:
-          type: boolean
-          description: If true, the Monitor isn't created, and no response Monitor will be returned. The response will return an error if the given Monitor is invalid.
-    SeriesConditionsConditions_2:
-      type: object
-      properties:
-        conditions:
-          type: array
-          description: 'List of conditions to evaluate against a series. Only one condition must
-
-            match to assign a severity to a signal.'
-          items:
-            $ref: '#/components/schemas/MonitorCondition'
-    MonitorSeriesConditionsOverride_2:
-      type: object
-      properties:
-        label_matchers:
-          type: array
-          description: 'Set of matchers on a series'' labels. If all labels match, then the conditions
-
-            defined in this override are used.'
-          items:
-            $ref: '#/components/schemas/configv1LabelMatcher_2'
-        severity_conditions:
-          $ref: '#/components/schemas/SeriesConditionsSeverityConditions_2'
-    configv1PageResult_2:
-      type: object
-      properties:
-        next_token:
-          type: string
-          description: 'Opaque page token which identifies the next page of items which the
-
-            client should request. An empty next_token indicates that there are no
-
-            more items to return.'
-    MonitorSeriesConditions_2:
-      type: object
-      properties:
-        defaults:
-          $ref: '#/components/schemas/SeriesConditionsSeverityConditions_2'
-        overrides:
-          type: array
-          description: 'Optional. Specifies a list of overrides to use for series having matching
-
-            labels. Each override defines labels that potentially match a series'' labels.
-
-            If one or more overrides match a series, the severity conditions of the first
-
-            matching override are used instead of the defaults.
-
-
-            Cannot be used if `graphite_query` is set.'
-          items:
-            $ref: '#/components/schemas/MonitorSeriesConditionsOverride_2'
-      description: Conditions evaluated against each queried series to determine the severity of each series.
-    configv1LabelMatcher_2:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
-        name:
-          type: string
-          description: name always matches against an exact label name.
-        value:
-          type: string
-          description: value matches against a label value based on the configured type.
-    SeriesConditionsSeverityConditions_2:
-      type: object
-      properties:
-        warn:
-          $ref: '#/components/schemas/SeriesConditionsConditions_2'
-        critical:
-          $ref: '#/components/schemas/SeriesConditionsConditions_2'
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     ConfigV1UpdateMonitorBody_2:
       type: object
       properties:
@@ -975,12 +856,32 @@ components:
             is set to `ONLY_DURING_RANGES`. Otherwise, this field must be empty.'
           items:
             $ref: '#/components/schemas/ScheduleDayTimeRange'
-    configv1CollectionReferenceType_2:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
+    configv1PageResult_2:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    MonitorSchedule_2:
+      type: object
+      properties:
+        timezone:
+          type: string
+          description: The timezone of the time ranges.
+        weekly_schedule:
+          $ref: '#/components/schemas/ScheduleWeeklySchedule'
+    configv1CreateMonitorRequest_2:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor_2'
+        dry_run:
+          type: boolean
+          description: If true, the Monitor isn't created, and no response Monitor will be returned. The response will return an error if the given Monitor is invalid.
     ConditionOp_2:
       type: string
       enum:
@@ -992,6 +893,335 @@ components:
       - NEQ
       - EXISTS
       - NOT_EXISTS
+    MonitorSeriesConditionsOverride_2:
+      type: object
+      properties:
+        label_matchers:
+          type: array
+          description: 'Set of matchers on a series'' labels. If all labels match, then the conditions
+
+            defined in this override are used.'
+          items:
+            $ref: '#/components/schemas/configv1LabelMatcher_2'
+        severity_conditions:
+          $ref: '#/components/schemas/SeriesConditionsSeverityConditions_2'
+    configv1LabelMatcher_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
+    MonitorSeriesConditions_2:
+      type: object
+      properties:
+        defaults:
+          $ref: '#/components/schemas/SeriesConditionsSeverityConditions_2'
+        overrides:
+          type: array
+          description: 'Optional. Specifies a list of overrides to use for series having matching
+
+            labels. Each override defines labels that potentially match a series'' labels.
+
+            If one or more overrides match a series, the severity conditions of the first
+
+            matching override are used instead of the defaults.
+
+
+            Cannot be used if `graphite_query` is set.'
+          items:
+            $ref: '#/components/schemas/MonitorSeriesConditionsOverride_2'
+      description: Conditions evaluated against each queried series to determine the severity of each series.
+    SeriesConditionsConditions_2:
+      type: object
+      properties:
+        conditions:
+          type: array
+          description: 'List of conditions to evaluate against a series. Only one condition must
+
+            match to assign a severity to a signal.'
+          items:
+            $ref: '#/components/schemas/MonitorCondition'
+    SeriesConditionsSeverityConditions_2:
+      type: object
+      properties:
+        warn:
+          $ref: '#/components/schemas/SeriesConditionsConditions_2'
+        critical:
+          $ref: '#/components/schemas/SeriesConditionsConditions_2'
+    configv1CollectionReferenceType_2:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    MonitorCondition:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/ConditionOp_2'
+        value:
+          type: number
+          description: Required. The value to compare to the metric value using the `op` operation.
+          format: double
+        sustain_secs:
+          type: integer
+          description: 'Amount of time the query needs to fail the condition check before an alert is
+
+            triggered. Must be an integer. Accepts one of `s` (seconds), `m` (minutes), or
+
+            `h` (hours) as units.'
+          format: int32
+        resolve_sustain_secs:
+          type: integer
+          description: 'Amount of time the query needs to no longer fire before resolving. Must be an
+
+            integer. Accepts one of `s` (seconds), `m` (minutes), or `h` (hours) as units.'
+          format: int32
+    configv1Monitor_3:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Monitor. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Monitor is created.
+        name:
+          type: string
+          description: Required. Name of the Monitor. You can modify this value after the Monitor is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Monitor was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Monitor was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        bucket_slug:
+          type: string
+          description: 'Slug of the bucket the monitor belongs to. Required if `collection_slug` isn''t
+
+            set.'
+        collection_slug:
+          type: string
+          description: 'Slug of the collection the monitor belongs to. Required if `bucket_slug` isn''t
+
+            set.'
+        collection:
+          $ref: '#/components/schemas/configv1CollectionReference'
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Required. Labels to include in notifications generated by this monitor, and can
+
+            be used to route alerts with notification overrides.'
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Annotations are visible in notifications generated by this monitor.
+
+            They can be be templated with labels from notifications.'
+        signal_grouping:
+          $ref: '#/components/schemas/MonitorSignalGrouping'
+        series_conditions:
+          $ref: '#/components/schemas/MonitorSeriesConditions_3'
+        notification_policy_slug:
+          type: string
+          description: 'Specifies the notification policy used to route alerts generated by the monitor.
+
+            If omitted, the notification policy is inherited from the monitor.'
+        interval_secs:
+          type: integer
+          description: 'Specifies how often alerts are evaluated. Default: `60s`.'
+          format: int32
+        prometheus_query:
+          type: string
+          description: PromQL query to evaluate for the alert. If set, no other queries can be set.
+          example: up{job="prometheus"} == 0
+        graphite_query:
+          type: string
+          description: Graphite query to evaluate for the alert. If set, no other queries can be set.
+          example: sumSeries(stats.timers.*.mean_90)
+        schedule:
+          $ref: '#/components/schemas/MonitorSchedule_3'
+        logging_query:
+          type: string
+          description: Logging query to evaluate for the alert. If set, no other queries can be set.
+    ConfigV1UpdateMonitorBody_3:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the Monitor will be created if it does not already exist, identified by slug. If false, an error will be returned if the Monitor does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Monitor isn't created or updated, and no response Monitor will be returned. The response will return an error if the given Monitor is invalid.
+    ScheduleScheduleDay_3:
+      type: object
+      properties:
+        active:
+          $ref: '#/components/schemas/ScheduleDayActive'
+        ranges:
+          type: array
+          description: 'The time ranges that the monitor is active on this day. Required if `active`
+
+            is set to `ONLY_DURING_RANGES`. Otherwise, this field must be empty.'
+          items:
+            $ref: '#/components/schemas/ScheduleDayTimeRange'
+    configv1PageResult_3:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    MonitorSchedule_3:
+      type: object
+      properties:
+        timezone:
+          type: string
+          description: The timezone of the time ranges.
+        weekly_schedule:
+          $ref: '#/components/schemas/ScheduleWeeklySchedule'
+    configv1CreateMonitorRequest_3:
+      type: object
+      properties:
+        monitor:
+          $ref: '#/components/schemas/configv1Monitor_3'
+        dry_run:
+          type: boolean
+          description: If true, the Monitor isn't created, and no response Monitor will be returned. The response will return an error if the given Monitor is invalid.
+    ConditionOp_3:
+      type: string
+      enum:
+      - GEQ
+      - GT
+      - LEQ
+      - LT
+      - EQ
+      - NEQ
+      - EXISTS
+      - NOT_EXISTS
+    MonitorSeriesConditionsOverride_3:
+      type: object
+      properties:
+        label_matchers:
+          type: array
+          description: 'Set of matchers on a series'' labels. If all labels match, then the conditions
+
+            defined in this override are used.'
+          items:
+            $ref: '#/components/schemas/configv1LabelMatcher_3'
+        severity_conditions:
+          $ref: '#/components/schemas/SeriesConditionsSeverityConditions_3'
+    configv1LabelMatcher_3:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/configv1LabelMatcherMatcherType'
+        name:
+          type: string
+          description: name always matches against an exact label name.
+        value:
+          type: string
+          description: value matches against a label value based on the configured type.
+    MonitorSeriesConditions_3:
+      type: object
+      properties:
+        defaults:
+          $ref: '#/components/schemas/SeriesConditionsSeverityConditions_3'
+        overrides:
+          type: array
+          description: 'Optional. Specifies a list of overrides to use for series having matching
+
+            labels. Each override defines labels that potentially match a series'' labels.
+
+            If one or more overrides match a series, the severity conditions of the first
+
+            matching override are used instead of the defaults.
+
+
+            Cannot be used if `graphite_query` is set.'
+          items:
+            $ref: '#/components/schemas/MonitorSeriesConditionsOverride_3'
+      description: Conditions evaluated against each queried series to determine the severity of each series.
+    SeriesConditionsConditions_3:
+      type: object
+      properties:
+        conditions:
+          type: array
+          description: 'List of conditions to evaluate against a series. Only one condition must
+
+            match to assign a severity to a signal.'
+          items:
+            $ref: '#/components/schemas/MonitorCondition_2'
+    SeriesConditionsSeverityConditions_3:
+      type: object
+      properties:
+        warn:
+          $ref: '#/components/schemas/SeriesConditionsConditions_3'
+        critical:
+          $ref: '#/components/schemas/SeriesConditionsConditions_3'
+    configv1CollectionReferenceType_3:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    apiError_3:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    MonitorCondition_2:
+      type: object
+      properties:
+        op:
+          $ref: '#/components/schemas/ConditionOp_3'
+        value:
+          type: number
+          description: Required. The value to compare to the metric value using the `op` operation.
+          format: double
+        sustain_secs:
+          type: integer
+          description: 'Amount of time the query needs to fail the condition check before an alert is
+
+            triggered. Must be an integer. Accepts one of `s` (seconds), `m` (minutes), or
+
+            `h` (hours) as units.'
+          format: int32
+        resolve_sustain_secs:
+          type: integer
+          description: 'Amount of time the query needs to no longer fire before resolving. Must be an
+
+            integer. Accepts one of `s` (seconds), `m` (minutes), or `h` (hours) as units.'
+          format: int32
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -1001,3 +1231,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

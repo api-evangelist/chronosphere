@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Dashboard API
   version: '1.0'
-  description: 'Operations tagged Dashboard across 3 of this provider''s published API definitions: chronosphere-config-unstable-swagger.json, chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Dashboard across 4 of this provider''s published API definitions: chronosphere-config-unstable-swagger.json, chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -557,25 +557,18 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configunstableReadDashboardResponse:
+    configunstableDeleteDashboardResponse:
+      type: object
+    genericError:
+      additionalProperties: true
+      type: object
+    ConfigUnstableUpdateDashboardBody:
       properties:
         dashboard:
           $ref: '#/components/schemas/configunstableDashboard'
-      type: object
-    configunstableUpdateDashboardResponse:
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configunstableDashboard'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+        create_if_missing:
+          description: If `true`, the Dashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Dashboard does not already exist.
+          type: boolean
       type: object
     configunstableListDashboardsResponse:
       properties:
@@ -586,10 +579,10 @@ components:
             $ref: '#/components/schemas/configunstableDashboard'
           type: array
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableDeleteDashboardResponse:
+    configunstableReadDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configunstableDashboard'
       type: object
     apiError:
       properties:
@@ -601,18 +594,25 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
-    configunstableCreateDashboardResponse:
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    configunstableCreateDashboardRequest:
       properties:
         dashboard:
           $ref: '#/components/schemas/configunstableDashboard'
       type: object
-    ConfigUnstableUpdateDashboardBody:
+    configunstableUpdateDashboardResponse:
       properties:
         dashboard:
           $ref: '#/components/schemas/configunstableDashboard'
-        create_if_missing:
-          description: If `true`, the Dashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Dashboard does not already exist.
-          type: boolean
       type: object
     configunstableDashboard:
       properties:
@@ -639,10 +639,28 @@ components:
           description: Required raw JSON of the dashboard.
           type: string
       type: object
-    configunstableCreateDashboardRequest:
+    configunstableCreateDashboardResponse:
       properties:
         dashboard:
           $ref: '#/components/schemas/configunstableDashboard'
+      type: object
+    configv1DeleteDashboardResponse:
+      type: object
+    configv1CreateDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
+      type: object
+    configv1ReadDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard'
+      type: object
+    apiError_2:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
     configv1CollectionReference:
       properties:
@@ -651,18 +669,14 @@ components:
         type:
           $ref: '#/components/schemas/configv1CollectionReferenceType'
       type: object
-    ConfigV1UpdateDashboardBody:
+    configv1ListDashboardsResponse:
       properties:
-        create_if_missing:
-          description: If `true`, the Dashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Dashboard does not already exist.
-          type: boolean
-        dashboard:
-          allOf:
-          - $ref: '#/components/schemas/configv1Dashboard'
-          description: The Dashboard to update.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the Dashboard. If the specified configuration is valid, the endpoint returns a partial response without the Dashboard. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
+        dashboards:
+          items:
+            $ref: '#/components/schemas/configv1Dashboard'
+          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
       type: object
     configv1CreateDashboardRequest:
       properties:
@@ -674,13 +688,7 @@ components:
           description: If `true`, validates the specified configuration without creating the Dashboard. If the specified configuration is valid, the endpoint returns a partial response without the Dashboard. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    configv1CollectionReferenceType:
-      enum:
-      - SIMPLE
-      - SERVICE
-      title: Type values must match entitiespb.Collection.CollectionType.
-      type: string
-    configv1CreateDashboardResponse:
+    configv1UpdateDashboardResponse:
       properties:
         dashboard:
           $ref: '#/components/schemas/configv1Dashboard'
@@ -723,44 +731,25 @@ components:
       required:
       - name
       type: object
-    configv1ReadDashboardResponse:
+    ConfigV1UpdateDashboardBody:
       properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-      type: object
-    configv1ListDashboardsResponse:
-      properties:
-        dashboards:
-          items:
-            $ref: '#/components/schemas/configv1Dashboard'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
-    apiError_2:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1DeleteDashboardResponse:
-      type: object
-    configv1UpdateDashboardResponse:
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard'
-      type: object
-    ConfigV1UpdateDashboardBody_2:
-      type: object
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/configv1Dashboard_2'
         create_if_missing:
+          description: If `true`, the Dashboard will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the Dashboard does not already exist.
           type: boolean
-          description: If true, the Dashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dashboard does not already exist.
+        dashboard:
+          allOf:
+          - $ref: '#/components/schemas/configv1Dashboard'
+          description: The Dashboard to update.
         dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the Dashboard. If the specified configuration is valid, the endpoint returns a partial response without the Dashboard. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
-          description: If true, the Dashboard isn't created or updated, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
+      type: object
+    configv1CollectionReferenceType:
+      enum:
+      - SIMPLE
+      - SERVICE
+      title: Type values must match entitiespb.Collection.CollectionType.
+      type: string
     configv1PageResult_2:
       type: object
       properties:
@@ -779,12 +768,6 @@ components:
         dry_run:
           type: boolean
           description: If true, the Dashboard isn't created, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
-    configv1CollectionReferenceType_2:
-      type: string
-      description: Type values must match entitiespb.Collection.CollectionType.
-      enum:
-      - SIMPLE
-      - SERVICE
     configv1Dashboard_2:
       type: object
       properties:
@@ -817,6 +800,90 @@ components:
           additionalProperties:
             type: string
           description: Optional. Defines tags that add metadata about the dashboard.
+    ConfigV1UpdateDashboardBody_2:
+      type: object
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the Dashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dashboard does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Dashboard isn't created or updated, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
+    configv1CollectionReferenceType_2:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
+    configv1PageResult_3:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1CreateDashboardRequest_3:
+      type: object
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard_3'
+        dry_run:
+          type: boolean
+          description: If true, the Dashboard isn't created, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
+    configv1Dashboard_3:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Dashboard. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Dashboard is created.
+        name:
+          type: string
+          description: Required. Name of the Dashboard. You can modify this value after the Dashboard is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Dashboard was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Dashboard was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        collection_slug:
+          type: string
+          description: Optional. Slug of the collection the dashboard belongs to.
+        collection:
+          $ref: '#/components/schemas/configv1CollectionReference'
+        dashboard_json:
+          type: string
+          description: Raw JSON representation that defines the structure of the dashboard.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional. Defines tags that add metadata about the dashboard.
+    ConfigV1UpdateDashboardBody_3:
+      type: object
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/configv1Dashboard_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the Dashboard will be created if it does not already exist, identified by slug. If false, an error will be returned if the Dashboard does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the Dashboard isn't created or updated, and no response Dashboard will be returned. The response will return an error if the given Dashboard is invalid.
+    configv1CollectionReferenceType_3:
+      type: string
+      description: Type values must match entitiespb.Collection.CollectionType.
+      enum:
+      - SIMPLE
+      - SERVICE
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -827,3 +894,4 @@ x-refined-from:
 - chronosphere-config-unstable-swagger.json
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

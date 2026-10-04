@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-datav1-query-logs-range-response-schema.json",
+  "title": "datav1QueryLogsRangeResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-datav1-api-openapi.yml#/components/schemas/datav1QueryLogsRangeResponse",
+  "properties": {
+    "grid_data": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/QueryLogsRangeResponseGridData"
+        }
+      ],
+      "description": "Returns log query results as in tabular format."
+    },
+    "metadata": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/QueryLogsRangeResponseMetadata"
+        }
+      ],
+      "description": "The metadata of the query."
+    },
+    "time_series_data": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/QueryLogsRangeResponseTimeSeriesData"
+        }
+      ],
+      "description": "Returns log query results as a time series chart. You can only return\n`group_by_dimension_names` or `series`, depending on the type of query a time\nseries query is defined by using a `make-series` aggregation."
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "QueryLogsRangeResponseColumnMeta": {
+      "properties": {
+        "name": {
+          "description": "The column names to include in the tabular results.",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/QueryLogsRangeResponseColumnMetaType"
+        }
+      },
+      "type": "object"
+    },
+    "QueryLogsRangeResponseColumnMetaType": {
+      "description": "The data type to include in each column.",
+      "enum": [
+        "BOOLEAN",
+        "FLOAT",
+        "STRING"
+      ],
+      "type": "string"
+    },
+    "QueryLogsRangeResponseGridData": {
+      "properties": {
+        "columns": {
+          "description": "Defines the structure and data types of columns in tabular log results.",
+          "items": {
+            "$ref": "#/$defs/QueryLogsRangeResponseColumnMeta"
+          },
+          "type": "array"
+        },
+        "rows": {
+          "description": "Defines the structure and data types of rows in tabular log results.",
+          "items": {
+            "$ref": "#/$defs/QueryLogsRangeResponseRow"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "QueryLogsRangeResponseMetadata": {
+      "properties": {
+        "limit_enforced": {
+          "description": "Indicates whether the result is truncated by the request limit.",
+          "type": "boolean"
+        },
+        "page": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/QueryLogsRangeResponseMetadataPageResult"
+            }
+          ],
+          "description": "If set, there are more results to return."
+        }
+      },
+      "type": "object"
+    },
+    "QueryLogsRangeResponseMetadataPageResult": {
+      "properties": {
+        "next_token": {
+          "description": "Opaque page token that identifies the next page of items to request.\nAn empty value indicates there are no more items to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "QueryLogsRangeResponseRow": {
+      "properties": {
+        "values": {
+          "description": "Values to include that match each column type. Only one of the supported\nfields can be set depending on the type of value.",
+          "items": {
+            "$ref": "#/$defs/QueryLogsRangeResponseRowValue"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "QueryLogsRangeResponseRowValue": {
+      "properties": {
+        "bool_value": {
+          "description": "Indicates a boolean value.",
+          "type": "boolean"
+        },
+        "float_value": {
+          "description": "Indicates a float value.",
+          "format": "double",
+          "type": "number"
+        },
+        "string_value": {
+          "description": "Indicates a string value.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "QueryLogsRangeResponseTimeSeriesData": {
+      "properties": {
+        "group_by_dimension_names": {
+          "description": "Names of the dimensions to group results by.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "series": {
+          "description": "Specifies the time series to return from query results.",
+          "items": {
+            "$ref": "#/$defs/TimeSeriesDataTimeSeries"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TimeSeriesBucket": {
+      "properties": {
+        "end_time": {
+          "description": "The end time of the time range for this bucket.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "float_value": {
+          "description": "The aggregated value for the time period of this bucket.\nThis value is nullable.",
+          "format": "double",
+          "type": "number"
+        },
+        "start_time": {
+          "description": "The start time of the time range for this bucket.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TimeSeriesDataTimeSeries": {
+      "properties": {
+        "aggregation_name": {
+          "description": "Name of the aggregation used to calculate the values.",
+          "type": "string"
+        },
+        "buckets": {
+          "description": "Defines a time-bounded data point in a time series to store aggregated\nvalues over specific time intervals.",
+          "items": {
+            "$ref": "#/$defs/TimeSeriesBucket"
+          },
+          "type": "array"
+        },
+        "group_by_dimension_values": {
+          "description": "Values of the dimensions to group results by.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

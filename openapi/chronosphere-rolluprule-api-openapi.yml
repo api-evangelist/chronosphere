@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Rollup Rule API
   version: v1
-  description: 'Operations tagged RollupRule across 2 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged RollupRule across 3 of this provider''s published API definitions: chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -283,16 +283,6 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configv1ReadRollupRuleResponse:
-      properties:
-        rollup_rule:
-          $ref: '#/components/schemas/configv1RollupRule'
-      type: object
-    configv1CreateRollupRuleResponse:
-      properties:
-        rollup_rule:
-          $ref: '#/components/schemas/configv1RollupRule'
-      type: object
     configv1RollupRule:
       properties:
         add_metric_type_label:
@@ -438,113 +428,6 @@ components:
       - bucket_slug
       - name
       type: object
-    RollupRuleMetricType:
-      description: " - CUMULATIVE_COUNTER: Alias of COUNTER.\n - DELTA_COUNTER: Alias of DELTA."
-      enum:
-      - COUNTER
-      - GAUGE
-      - DELTA
-      - DISTRIBUTION
-      - CUMULATIVE_EXPONENTIAL_HISTOGRAM
-      - MEASUREMENT
-      - CUMULATIVE_COUNTER
-      - DELTA_COUNTER
-      - DELTA_EXPONENTIAL_HISTOGRAM
-      type: string
-    configv1CreateRollupRuleRequest:
-      properties:
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the RollupRule. If the specified configuration is valid, the endpoint returns a partial response without the RollupRule. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        rollup_rule:
-          allOf:
-          - $ref: '#/components/schemas/configv1RollupRule'
-          description: The RollupRule to create.
-      type: object
-    RollupRuleLabelReplace:
-      description: 'Must keep this around for backwards compatibility because terraform will
-
-        still send this key w/ a null value.'
-      type: object
-    ConfigV1UpdateRollupRuleBody:
-      properties:
-        create_if_missing:
-          description: If `true`, the RollupRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the RollupRule does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the RollupRule. If the specified configuration is valid, the endpoint returns a partial response without the RollupRule. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-        rollup_rule:
-          allOf:
-          - $ref: '#/components/schemas/configv1RollupRule'
-          description: The RollupRule to update.
-      type: object
-    configv1ListRollupRulesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        rollup_rules:
-          items:
-            $ref: '#/components/schemas/configv1RollupRule'
-          type: array
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    GraphiteLabelPolicyReplace:
-      properties:
-        name:
-          description: 'Name of the label to replace the value for. Only positional Graphite labels
-
-            such as `__gX__` are allowed.'
-          example: __g1__
-          type: string
-        new_value:
-          description: New value of the replaced label.
-          example: ALL_HOSTS
-          type: string
-      required:
-      - name
-      - new_value
-      type: object
-    configv1DeleteRollupRuleResponse:
-      type: object
-    apiError:
-      properties:
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configv1RollupRuleMode:
-      enum:
-      - ENABLED
-      - PREVIEW
-      title: '- PREVIEW: TODO: DISABLED = 2;'
-      type: string
-    configv1UpdateRollupRuleResponse:
-      properties:
-        rollup_rule:
-          $ref: '#/components/schemas/configv1RollupRule'
-      type: object
-    configv1RollupRuleStoragePolicy:
-      properties:
-        resolution:
-          description: Resolution of the aggregated metrics.
-          type: string
-        retention:
-          description: Retention of the aggregated metrics.
-          type: string
-      required:
-      - resolution
-      - retention
-      type: object
     configv1AggregationType:
       enum:
       - LAST
@@ -574,16 +457,47 @@ components:
       - COUNT_SAMPLES
       - HISTOGRAM
       type: string
-    configv1LabelFilter:
+    genericError:
+      additionalProperties: true
+      type: object
+    RollupRuleGraphiteLabelPolicy:
       properties:
-        name:
-          description: The name of the label to match.
-          example: job
+        replace:
+          description: 'List of labels to replace. Use to discard high-cardinality values while still
+
+            preserving the original positions of the Graphite metric.'
+          items:
+            $ref: '#/components/schemas/GraphiteLabelPolicyReplace'
+          type: array
+      required:
+      - replace
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
           type: string
-        value_glob:
-          description: The glob value of the label to match.
-          example: myservice*
+      type: object
+    configv1RollupRuleStoragePolicy:
+      properties:
+        resolution:
+          description: Resolution of the aggregated metrics.
           type: string
+        retention:
+          description: Retention of the aggregated metrics.
+          type: string
+      required:
+      - resolution
+      - retention
+      type: object
+    configv1UpdateRollupRuleResponse:
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule'
       type: object
     configv1RollupRuleLabelPolicy:
       description: "TODO: consolidate w/ RecordingRule.LabelPolicy once both of these\n entities implement the same label semantics."
@@ -603,21 +517,107 @@ components:
             type: string
           type: array
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    RollupRuleGraphiteLabelPolicy:
+    configv1ListRollupRulesResponse:
       properties:
-        replace:
-          description: 'List of labels to replace. Use to discard high-cardinality values while still
-
-            preserving the original positions of the Graphite metric.'
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        rollup_rules:
           items:
-            $ref: '#/components/schemas/GraphiteLabelPolicyReplace'
+            $ref: '#/components/schemas/configv1RollupRule'
           type: array
-      required:
-      - replace
       type: object
+    configv1DeleteRollupRuleResponse:
+      type: object
+    configv1RollupRuleMode:
+      enum:
+      - ENABLED
+      - PREVIEW
+      title: '- PREVIEW: TODO: DISABLED = 2;'
+      type: string
+    GraphiteLabelPolicyReplace:
+      properties:
+        name:
+          description: 'Name of the label to replace the value for. Only positional Graphite labels
+
+            such as `__gX__` are allowed.'
+          example: __g1__
+          type: string
+        new_value:
+          description: New value of the replaced label.
+          example: ALL_HOSTS
+          type: string
+      required:
+      - name
+      - new_value
+      type: object
+    ConfigV1UpdateRollupRuleBody:
+      properties:
+        create_if_missing:
+          description: If `true`, the RollupRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the RollupRule does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the RollupRule. If the specified configuration is valid, the endpoint returns a partial response without the RollupRule. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        rollup_rule:
+          allOf:
+          - $ref: '#/components/schemas/configv1RollupRule'
+          description: The RollupRule to update.
+      type: object
+    configv1CreateRollupRuleResponse:
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule'
+      type: object
+    apiError:
+      properties:
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1ReadRollupRuleResponse:
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule'
+      type: object
+    configv1CreateRollupRuleRequest:
+      properties:
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the RollupRule. If the specified configuration is valid, the endpoint returns a partial response without the RollupRule. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+        rollup_rule:
+          allOf:
+          - $ref: '#/components/schemas/configv1RollupRule'
+          description: The RollupRule to create.
+      type: object
+    configv1LabelFilter:
+      properties:
+        name:
+          description: The name of the label to match.
+          example: job
+          type: string
+        value_glob:
+          description: The glob value of the label to match.
+          example: myservice*
+          type: string
+      type: object
+    RollupRuleLabelReplace:
+      description: 'Must keep this around for backwards compatibility because terraform will
+
+        still send this key w/ a null value.'
+      type: object
+    RollupRuleMetricType:
+      description: " - CUMULATIVE_COUNTER: Alias of COUNTER.\n - DELTA_COUNTER: Alias of DELTA."
+      enum:
+      - COUNTER
+      - GAUGE
+      - DELTA
+      - DISTRIBUTION
+      - CUMULATIVE_EXPONENTIAL_HISTOGRAM
+      - MEASUREMENT
+      - CUMULATIVE_COUNTER
+      - DELTA_COUNTER
+      - DELTA_EXPONENTIAL_HISTOGRAM
+      type: string
     configv1RollupRule_2:
       type: object
       properties:
@@ -699,25 +699,18 @@ components:
           $ref: '#/components/schemas/configv1RollupRuleMode'
         graphite_label_policy:
           $ref: '#/components/schemas/RollupRuleGraphiteLabelPolicy_2'
-    configv1CreateRollupRuleRequest_2:
+    RollupRuleGraphiteLabelPolicy_2:
       type: object
       properties:
-        rollup_rule:
-          $ref: '#/components/schemas/configv1RollupRule_2'
-        dry_run:
-          type: boolean
-          description: If true, the RollupRule isn't created, and no response RollupRule will be returned. The response will return an error if the given RollupRule is invalid.
-    ConfigV1UpdateRollupRuleBody_2:
-      type: object
-      properties:
-        rollup_rule:
-          $ref: '#/components/schemas/configv1RollupRule_2'
-        create_if_missing:
-          type: boolean
-          description: If true, the RollupRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the RollupRule does not already exist.
-        dry_run:
-          type: boolean
-          description: If true, the RollupRule isn't created or updated, and no response RollupRule will be returned. The response will return an error if the given RollupRule is invalid.
+        replace:
+          type: array
+          description: 'Required list of labels to replace. Useful for discarding
+
+            high-cardinality values while still preserving the original positions of
+
+            the Graphite metric.'
+          items:
+            $ref: '#/components/schemas/GraphiteLabelPolicyReplace_2'
     configv1PageResult_2:
       type: object
       properties:
@@ -728,29 +721,6 @@ components:
             client should request. An empty next_token indicates that there are no
 
             more items to return.'
-    GraphiteLabelPolicyReplace_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'Required name of the label whose value should be replaced. Only
-
-            `__gX__` labels are allowed (aka positional Graphite labels).'
-          example: __g1__
-        new_value:
-          type: string
-          description: Required new value of the replaced label.
-          example: ALL_HOSTS
-    apiError_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: An optional private error code whose values are undefined.
-          format: int32
-        message:
-          type: string
-          description: An error message describing what went wrong.
     configv1RollupRuleStoragePolicy_2:
       type: object
       properties:
@@ -760,17 +730,6 @@ components:
         retention:
           type: string
           description: Required retention of the aggregated metrics.
-    configv1LabelFilter_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the label to match.
-          example: job
-        value_glob:
-          type: string
-          description: Glob value of the label to match.
-          example: myservice*
     configv1RollupRuleLabelPolicy_2:
       type: object
       properties:
@@ -789,7 +748,141 @@ components:
           items:
             type: string
       description: "TODO: consolidate w/ RecordingRule.LabelPolicy once both of these\n entities implement the same label semantics."
-    RollupRuleGraphiteLabelPolicy_2:
+    GraphiteLabelPolicyReplace_2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Required name of the label whose value should be replaced. Only
+
+            `__gX__` labels are allowed (aka positional Graphite labels).'
+          example: __g1__
+        new_value:
+          type: string
+          description: Required new value of the replaced label.
+          example: ALL_HOSTS
+    ConfigV1UpdateRollupRuleBody_2:
+      type: object
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule_2'
+        create_if_missing:
+          type: boolean
+          description: If true, the RollupRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the RollupRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the RollupRule isn't created or updated, and no response RollupRule will be returned. The response will return an error if the given RollupRule is invalid.
+    apiError_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateRollupRuleRequest_2:
+      type: object
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule_2'
+        dry_run:
+          type: boolean
+          description: If true, the RollupRule isn't created, and no response RollupRule will be returned. The response will return an error if the given RollupRule is invalid.
+    configv1LabelFilter_2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
+    configv1RollupRule_3:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the RollupRule. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the RollupRule is created.
+        name:
+          type: string
+          description: Required. Name of the RollupRule. You can modify this value after the RollupRule is created.
+        created_at:
+          type: string
+          description: Timestamp of when the RollupRule was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the RollupRule was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        bucket_slug:
+          type: string
+          description: Required. Slug of the bucket the RollupRule belongs to.
+        filters:
+          type: array
+          description: "Filters incoming metrics by label. If multiple label filters are specified, an\nincoming metric must match every label filter to match the rule. Label values\nsupport glob patterns, including matching multiple patterns with an `OR`, such\nas `service:{svc1,svc2}`. These special filters are available for matching\nmetrics by non-label request metadata:\n * `__metric_type__`: Matches the incoming metric's [Cortex XCOR\n   metric\n   type](https://docs.chronosphere.io/control/shaping/types#cortex-xcor-types).\n   This is the recommended method for filtering on metric type. Valid values:\n   `cumulative_counter`, `cumulative_exponential_histogram`, `delta_counter`,\n   `delta_exponential_histogram`, `gauge`, `measurement`.\n * `__metric_source__`: Matches the incoming metric's [source\n   format](https://docs.chronosphere.io/control/shaping/types#supported-formats).\n   Valid values: `carbon`, `chrono_gcp`, `dogstatsd`, `open_metrics`,\n   `open_telemetry`, `prometheus`, `signalfx`, `statsd`, `wavefront`.\n * `__m3_prom_type__`: When ingesting with Prometheus, matches the incoming\n   metric's [Prometheus metric\n   type](https://docs.chronosphere.io/control/shaping/types#prometheus). Valid\n   values: `counter`, `gauge`, `histogram`, `gauge_histogram`, `summary`,\n   `info`, `state_set`, `quantile`.\n * `__otel_type__`: When ingesting with OpenTelemetry, matches on the incoming\n   metric's [OpenTelemetry metric type](https://docs.chronosphere.io/control/shaping/types#opentelemetry).\n   Valid values: `sum`, `monotonic_sum`, `gauge`, `histogram`, `exp_histogram`,\n   `summary`.\nFor example, the following filter matches any cumulative counter metric with a\n`service=gateway` label whose metric name starts with `http_requests_`:\n```\n__metric_type__:cumulative_counter service:gateway __name__:http_requests_*\n```"
+          items:
+            $ref: '#/components/schemas/configv1LabelFilter_3'
+        metric_name:
+          type: string
+          description: This field is optional for Graphite rollup rules.
+        metric_type:
+          $ref: '#/components/schemas/RollupRuleMetricType'
+        aggregation:
+          $ref: '#/components/schemas/configv1AggregationType'
+        storage_policy:
+          $ref: '#/components/schemas/configv1RollupRuleStoragePolicy_3'
+        interval:
+          type: string
+          description: 'The distance in time between aggregated data points. Intervals are based on your
+
+            [retention policy](https://docs.chronosphere.io/administer/licensing#retention-policies).
+
+            Use this optional field to set a custom interval.
+
+            This field was known as `storage_policies` in version
+
+            0.286.0-2023-01-06-release.1 and earlier.'
+        expansive_match:
+          type: boolean
+          description: 'DEPRECATED.
+
+            A series matches and aggregates only if each label defined by filters and
+
+            `label_policy.keep` or `graphite_label_policy.replace` (respectively) exist in
+
+            the series. Setting `expansive_match=true` removes this restriction. Default:
+
+            `expansive_match=false`.
+
+
+            If `false`, a series matches and aggregates only if each label defined by the
+
+            provided `filters` and the `label_policy.keep` or
+
+            `graphite_label_policy.replace` settings exist in the series.'
+        add_metric_type_label:
+          type: boolean
+          description: Defines whether to add a `__rollup_type__` label in the new metric.
+        drop_raw:
+          type: boolean
+          description: 'Defines whether to automatically generate drop rules for this rollup rule.
+
+            Set to `true` to remove raw metrics that match this rollup rule. Default: `false`.'
+        label_policy:
+          $ref: '#/components/schemas/configv1RollupRuleLabelPolicy_3'
+        label_replace:
+          $ref: '#/components/schemas/RollupRuleLabelReplace'
+        mode:
+          $ref: '#/components/schemas/configv1RollupRuleMode'
+        graphite_label_policy:
+          $ref: '#/components/schemas/RollupRuleGraphiteLabelPolicy_3'
+    RollupRuleGraphiteLabelPolicy_3:
       type: object
       properties:
         replace:
@@ -800,7 +893,97 @@ components:
 
             the Graphite metric.'
           items:
-            $ref: '#/components/schemas/GraphiteLabelPolicyReplace_2'
+            $ref: '#/components/schemas/GraphiteLabelPolicyReplace_3'
+    configv1PageResult_3:
+      type: object
+      properties:
+        next_token:
+          type: string
+          description: 'Opaque page token which identifies the next page of items which the
+
+            client should request. An empty next_token indicates that there are no
+
+            more items to return.'
+    configv1RollupRuleStoragePolicy_3:
+      type: object
+      properties:
+        resolution:
+          type: string
+          description: Required resolution of the aggregated metrics.
+        retention:
+          type: string
+          description: Required retention of the aggregated metrics.
+    configv1RollupRuleLabelPolicy_3:
+      type: object
+      properties:
+        keep:
+          type: array
+          description: 'Labels that should be retained in the output metric. If set, then the
+
+            discard field must be empty.'
+          items:
+            type: string
+        discard:
+          type: array
+          description: 'Labels that should be discarded in the output metric. If set, then the
+
+            keep field must be empty.'
+          items:
+            type: string
+      description: "TODO: consolidate w/ RecordingRule.LabelPolicy once both of these\n entities implement the same label semantics."
+    GraphiteLabelPolicyReplace_3:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Required name of the label whose value should be replaced. Only
+
+            `__gX__` labels are allowed (aka positional Graphite labels).'
+          example: __g1__
+        new_value:
+          type: string
+          description: Required new value of the replaced label.
+          example: ALL_HOSTS
+    ConfigV1UpdateRollupRuleBody_3:
+      type: object
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule_3'
+        create_if_missing:
+          type: boolean
+          description: If true, the RollupRule will be created if it does not already exist, identified by slug. If false, an error will be returned if the RollupRule does not already exist.
+        dry_run:
+          type: boolean
+          description: If true, the RollupRule isn't created or updated, and no response RollupRule will be returned. The response will return an error if the given RollupRule is invalid.
+    apiError_3:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: An optional private error code whose values are undefined.
+          format: int32
+        message:
+          type: string
+          description: An error message describing what went wrong.
+    configv1CreateRollupRuleRequest_3:
+      type: object
+      properties:
+        rollup_rule:
+          $ref: '#/components/schemas/configv1RollupRule_3'
+        dry_run:
+          type: boolean
+          description: If true, the RollupRule isn't created, and no response RollupRule will be returned. The response will return an error if the given RollupRule is invalid.
+    configv1LabelFilter_3:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the label to match.
+          example: job
+        value_glob:
+          type: string
+          description: Glob value of the label to match.
+          example: myservice*
   securitySchemes:
     ApiKeyAuth:
       description: Chronosphere API token
@@ -810,3 +993,4 @@ components:
 x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

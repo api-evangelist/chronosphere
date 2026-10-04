@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Chronosphere Service API
   version: '1.0'
-  description: 'Operations tagged Service across 3 of this provider''s published API definitions: chronosphere-config-unstable-swagger.json, chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Service across 4 of this provider''s published API definitions: chronosphere-config-unstable-swagger.json, chronosphere-config-v1-openapi3.json, chronosphere-openapi.yml, chronosphere-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{tenant}.chronosphere.io
   variables:
@@ -414,10 +414,8 @@ paths:
           description: tenant ID assigned by the service provider
 components:
   schemas:
-    configunstableUpdateServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configunstableService'
+    genericError:
+      additionalProperties: true
       type: object
     configunstableListServicesResponse:
       properties:
@@ -428,10 +426,23 @@ components:
             $ref: '#/components/schemas/configunstableService'
           type: array
       type: object
-    configunstableCreateServiceResponse:
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configunstableCreateServiceRequest:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     configv1PageResult:
       properties:
@@ -442,6 +453,18 @@ components:
 
             more items to return.'
           type: string
+      type: object
+    configunstableDeleteServiceResponse:
+      type: object
+    configunstableUpdateServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
+      type: object
+    configunstableReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configunstableService'
       type: object
     configunstableService:
       properties:
@@ -478,16 +501,10 @@ components:
             This does not override the policy used when a monitor explicitly references a policy.'
           type: string
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableCreateServiceRequest:
+    configunstableCreateServiceResponse:
       properties:
         service:
           $ref: '#/components/schemas/configunstableService'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
       type: object
     ConfigUnstableUpdateServiceBody:
       properties:
@@ -500,37 +517,16 @@ components:
           description: If `true`, validates the specified configuration without creating or updating the Service. If the specified configuration is valid, the endpoint returns a partial response without the Service. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableReadServiceResponse:
-      properties:
-        service:
-          $ref: '#/components/schemas/configunstableService'
-      type: object
-    configunstableDeleteServiceResponse:
-      type: object
-    configv1ListServicesResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        services:
-          items:
-            $ref: '#/components/schemas/configv1Service'
-          type: array
-      type: object
     apiError_2:
       properties:
         message:
           description: An error message describing what went wrong.
           type: string
+      type: object
+    configv1ReadServiceResponse:
+      properties:
+        service:
+          $ref: '#/components/schemas/configv1Service'
       type: object
     configv1Service:
       properties:
@@ -571,12 +567,48 @@ components:
       - name
       - team_slug
       type: object
-    configv1ReadServiceResponse:
+    configv1ListServicesResponse:
       properties:
-        service:
-          $ref: '#/components/schemas/configv1Service'
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        services:
+          items:
+            $ref: '#/components/schemas/configv1Service'
+          type: array
       type: object
     configv1Service_2:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: Unique identifier of the Service. If a `slug` isn't provided, one will be generated based of the `name` field. You can't modify this field after the Service is created.
+        name:
+          type: string
+          description: Required. Name of the Service. You can modify this value after the Service is created.
+        created_at:
+          type: string
+          description: Timestamp of when the Service was created. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp of when the Service was last updated. Cannot be set by clients.
+          format: date-time
+          readOnly: true
+        team_slug:
+          type: string
+          description: Required slug of the team the service collection belongs to.
+        description:
+          type: string
+          description: Optional description of the service collection.
+        notification_policy_slug:
+          type: string
+          description: 'Slug of the notification policy used by default for monitors in this service collection.
+
+            This is optional if the collection does not contain monitors or all of its monitors explicitly reference a policy.
+
+            This does not override the policy used when a monitor explicitly references a policy.'
+    configv1Service_3:
       type: object
       properties:
         slug:
@@ -618,3 +650,4 @@ x-refined-from:
 - chronosphere-config-unstable-swagger.json
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
+- chronosphere-openapi.yaml

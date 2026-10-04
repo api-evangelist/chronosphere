@@ -262,69 +262,28 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configv1ReadAzureMetricsIntegrationResponse:
+    AzureMetricsIntegrationAzureScrapeConfig:
       properties:
-        azure_metrics_integration:
-          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
-      type: object
-    configv1CreateAzureMetricsIntegrationRequest:
-      properties:
-        azure_metrics_integration:
-          allOf:
-          - $ref: '#/components/schemas/configv1AzureMetricsIntegration'
-          description: The AzureMetricsIntegration to create.
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the AzureMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the AzureMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    configv1ListAzureMetricsIntegrationsResponse:
-      properties:
-        azure_metrics_integrations:
-          items:
-            $ref: '#/components/schemas/configv1AzureMetricsIntegration'
-          type: array
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-      type: object
-    configv1PageResult:
-      properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
-      type: object
-    configv1CreateAzureMetricsIntegrationResponse:
-      properties:
-        azure_metrics_integration:
-          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
-      type: object
-    AzureMetricsIntegrationAzureResourceType:
-      properties:
-        metric_names:
-          description: List of metric names to be targeted (these apply to this resource type; use empty for all metrics).
+        locations:
+          description: Locations to be ingested for this integration (these apply to all subscriptions; use empty for all locations).
           items:
             type: string
           type: array
-        name:
-          description: Name of the resource type.
-          type: string
+        resource_types:
+          description: Metric groups to be ingested for this integration.
+          items:
+            $ref: '#/components/schemas/AzureMetricsIntegrationAzureResourceType'
+          type: array
+        subscription_ids:
+          description: Subscriptions to be targeted for this integration (use empty for all subscriptions).
+          items:
+            type: string
+          type: array
       type: object
-    AzureMetricsIntegrationAzurePrincipal:
-      properties:
-        client_id:
-          description: Specifies the OAuth2 client ID of the managed identity principal.
-          type: string
-        tenant_id:
-          description: Specifies the ID of the Azure tenant that hosts the managed identity principal.
-          type: string
+    genericError:
+      additionalProperties: true
       type: object
-    configv1UpdateAzureMetricsIntegrationResponse:
-      properties:
-        azure_metrics_integration:
-          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+    configv1DeleteAzureMetricsIntegrationResponse:
       type: object
     configv1AzureMetricsIntegration:
       properties:
@@ -364,13 +323,16 @@ components:
       required:
       - name
       type: object
-    apiError:
+    AzureMetricsIntegrationAzureResourceType:
       properties:
-        message:
-          description: An error message describing what went wrong.
+        metric_names:
+          description: List of metric names to be targeted (these apply to this resource type; use empty for all metrics).
+          items:
+            type: string
+          type: array
+        name:
+          description: Name of the resource type.
           type: string
-      type: object
-    configv1DeleteAzureMetricsIntegrationResponse:
       type: object
     ConfigV1UpdateAzureMetricsIntegrationBody:
       properties:
@@ -385,26 +347,64 @@ components:
           description: If `true`, validates the specified configuration without creating or updating the AzureMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the AzureMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    AzureMetricsIntegrationAzureScrapeConfig:
+    apiError:
       properties:
-        locations:
-          description: Locations to be ingested for this integration (these apply to all subscriptions; use empty for all locations).
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1CreateAzureMetricsIntegrationResponse:
+      properties:
+        azure_metrics_integration:
+          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+      type: object
+    configv1UpdateAzureMetricsIntegrationResponse:
+      properties:
+        azure_metrics_integration:
+          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
+    AzureMetricsIntegrationAzurePrincipal:
+      properties:
+        client_id:
+          description: Specifies the OAuth2 client ID of the managed identity principal.
+          type: string
+        tenant_id:
+          description: Specifies the ID of the Azure tenant that hosts the managed identity principal.
+          type: string
+      type: object
+    configv1ReadAzureMetricsIntegrationResponse:
+      properties:
+        azure_metrics_integration:
+          $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+      type: object
+    configv1ListAzureMetricsIntegrationsResponse:
+      properties:
+        azure_metrics_integrations:
           items:
-            type: string
+            $ref: '#/components/schemas/configv1AzureMetricsIntegration'
           type: array
-        resource_types:
-          description: Metric groups to be ingested for this integration.
-          items:
-            $ref: '#/components/schemas/AzureMetricsIntegrationAzureResourceType'
-          type: array
-        subscription_ids:
-          description: Subscriptions to be targeted for this integration (use empty for all subscriptions).
-          items:
-            type: string
-          type: array
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+      type: object
+    configv1CreateAzureMetricsIntegrationRequest:
+      properties:
+        azure_metrics_integration:
+          allOf:
+          - $ref: '#/components/schemas/configv1AzureMetricsIntegration'
+          description: The AzureMetricsIntegration to create.
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the AzureMetricsIntegration. If the specified configuration is valid, the endpoint returns a partial response without the AzureMetricsIntegration. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
   securitySchemes:
     ApiKeyAuth:

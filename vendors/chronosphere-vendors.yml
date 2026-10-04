@@ -1,0 +1,76 @@
+generated: '2026-10-03'
+method: probed
+source: pre-flight dossier (docs platform, portal detections) + CNAME chains and response headers of the hosts apis.yml names
+registry: all/0-working/vendors.yml
+areas_vocabulary:
+- documentation
+- developer-portal
+- api-gateway
+- cdn
+- hosting
+- sdk-generation
+- api-collections
+- status-page
+- support
+- community
+- identity
+- mcp-hosting
+vendors:
+- vendor: cloudflare
+  name: Cloudflare
+  area: cdn
+  host: chronosphere.io
+  evidence: header:cf-ray
+  signal: header
+  confidence: high
+  kin_score:
+  - https_enforced
+  - hsts
+- vendor: mintlify
+  name: Mintlify
+  area: documentation
+  host: docs.chronosphere.io
+  evidence: markup:mintlify
+  signal: docs-platform
+  confidence: medium
+  kin_score:
+  - openapi_published
+  - llms_txt
+  - mcp_server
+  - markdown_negotiation
+  - x_mint_pointer
+- vendor: vercel
+  name: Vercel
+  area: hosting
+  host: docs.chronosphere.io
+  evidence: header:x-vercel-id
+  signal: header
+  confidence: high
+  kin_score: []
+- vendor: wpengine
+  name: WP Engine
+  area: hosting
+  host: chronosphere.io
+  evidence: header:x-powered-by:wp engine
+  signal: header
+  confidence: high
+  kin_score: []
+reliance:
+  areas_vendor_served:
+  - cdn
+  - documentation
+  - hosting
+  vendor_count: 4
+  areas_observed: 12
+  share_of_observable_areas: 0.25
+  note: areas where a third party was DETECTED serving this provider; an area absent here was either self-run or not observed, and this script
+    cannot tell those apart
+checked:
+- 'docs-platform: mintlify'
+- chronosphere.io (Website)
+- docs.chronosphere.io (Documentation)
+- docs.chronosphere.io (APIReference)
+- docs.chronosphere.io (GettingStarted)
+- docs.chronosphere.io (Support)
+- '{tenant}.chronosphere.io (baseURL)'
+- '{org}.chronosphere.io (mcp)'

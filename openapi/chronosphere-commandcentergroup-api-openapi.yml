@@ -257,6 +257,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    genericError:
+      additionalProperties: true
+      type: object
+    configunstableDeleteCommandCenterGroupResponse:
+      type: object
+    apiError:
+      properties:
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
+      type: object
+    configv1PageResult:
+      properties:
+        next_token:
+          description: 'An opaque page token that identifies the next page of items that the
+
+            client should request. An empty value indicates that there are no
+
+            more items to return.'
+          type: string
+      type: object
     ConfigUnstableUpdateCommandCenterGroupBody:
       properties:
         command_center_group:
@@ -268,15 +293,14 @@ components:
           description: If `true`, validates the specified configuration without creating or updating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    configv1PageResult:
+    configunstableListCommandCenterGroupsResponse:
       properties:
-        next_token:
-          description: 'An opaque page token that identifies the next page of items that the
-
-            client should request. An empty value indicates that there are no
-
-            more items to return.'
-          type: string
+        page:
+          $ref: '#/components/schemas/configv1PageResult'
+        command_center_groups:
+          items:
+            $ref: '#/components/schemas/configunstableCommandCenterGroup'
+          type: array
       type: object
     configunstableCommandCenterGroup:
       description: CommandCenterGroup is a group of signals tracked in the command center.
@@ -300,24 +324,10 @@ components:
         group_slo_reference:
           $ref: '#/components/schemas/configunstableSloReference'
       type: object
-    configunstableSloReference:
-      description: SloReference references an SLO by slug.
+    configunstableCreateCommandCenterGroupResponse:
       properties:
-        slug:
-          description: Slug of the referenced SLO.
-          type: string
-      type: object
-    configunstableListCommandCenterGroupsResponse:
-      properties:
-        page:
-          $ref: '#/components/schemas/configv1PageResult'
-        command_center_groups:
-          items:
-            $ref: '#/components/schemas/configunstableCommandCenterGroup'
-          type: array
-      type: object
-    genericError:
-      additionalProperties: true
+        command_center_group:
+          $ref: '#/components/schemas/configunstableCommandCenterGroup'
       type: object
     configunstableCreateCommandCenterGroupRequest:
       properties:
@@ -327,19 +337,7 @@ components:
           description: If `true`, validates the specified configuration without creating the CommandCenterGroup. If the specified configuration is valid, the endpoint returns a partial response without the CommandCenterGroup. If the specified configuration is invalid, the endpoint returns an error.
           type: boolean
       type: object
-    configunstableDeleteCommandCenterGroupResponse:
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    configunstableCreateCommandCenterGroupResponse:
+    configunstableUpdateCommandCenterGroupResponse:
       properties:
         command_center_group:
           $ref: '#/components/schemas/configunstableCommandCenterGroup'
@@ -349,8 +347,10 @@ components:
         command_center_group:
           $ref: '#/components/schemas/configunstableCommandCenterGroup'
       type: object
-    configunstableUpdateCommandCenterGroupResponse:
+    configunstableSloReference:
+      description: SloReference references an SLO by slug.
       properties:
-        command_center_group:
-          $ref: '#/components/schemas/configunstableCommandCenterGroup'
+        slug:
+          description: Slug of the referenced SLO.
+          type: string
       type: object

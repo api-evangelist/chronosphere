@@ -1,0 +1,565 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/chronosphere/main/json-schema/chronosphere-configv1-create-notifier-response-schema.json",
+  "title": "configv1CreateNotifierResponse",
+  "x-generated": "2026-10-03",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/chronosphere-notifier-api-openapi.yml#/components/schemas/configv1CreateNotifierResponse",
+  "properties": {
+    "notifier": {
+      "$ref": "#/$defs/configv1Notifier"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "NotifierEmailConfig": {
+      "properties": {
+        "html": {
+          "description": "The body of the email to send, in HTML format.",
+          "type": "string"
+        },
+        "text": {
+          "description": "The body of the email to send, in plain text format.",
+          "type": "string"
+        },
+        "to": {
+          "description": "The email address to send notifications to. Required if including an\n`email` object in your request body.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NotifierSlackConfigAction": {
+      "properties": {
+        "confirm_field": {
+          "$ref": "#/$defs/SlackConfigConfirmationField"
+        },
+        "name": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OpsGenieConfigResponder": {
+      "properties": {
+        "id": {
+          "description": "The ID of the responder. Cannot be set if `name` or `username` are set.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the responder. Cannot be set if `id` or `username` are set.",
+          "type": "string"
+        },
+        "responder_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ResponderResponderType"
+            }
+          ],
+          "description": "The type of the responder."
+        },
+        "username": {
+          "description": "The username of the responder. Cannot be set if `id` or `name` are set.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PagerdutyConfigImage": {
+      "properties": {
+        "alt": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        },
+        "src": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PagerdutyConfigLink": {
+      "properties": {
+        "href": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResponderResponderType": {
+      "enum": [
+        "TEAM",
+        "USER",
+        "ESCALATION",
+        "SCHEDULE"
+      ],
+      "type": "string"
+    },
+    "SlackConfigConfirmationField": {
+      "properties": {
+        "dismiss_text": {
+          "type": "string"
+        },
+        "ok_text": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SlackConfigField": {
+      "properties": {
+        "short": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1Notifier": {
+      "properties": {
+        "created_at": {
+          "description": "Timestamp of when the Notifier was created. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "discard": {
+          "description": "If `true`, enables the `discard` integration, which discards all\nnotifications. Cannot be set if another integration is set.",
+          "type": "boolean"
+        },
+        "email": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/NotifierEmailConfig"
+            }
+          ],
+          "description": "If an object is specified, sends notifications through an email integration.\nCannot be set if another integration is set."
+        },
+        "name": {
+          "description": "The name of the Notifier. You can modify this value after the Notifier is created.",
+          "type": "string"
+        },
+        "ops_genie": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierOpsGenieConfig"
+            }
+          ],
+          "description": "If an object is specified, sends notifications through an Opsgenie integration.\nCannot be set if another integration is set."
+        },
+        "pagerduty": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierPagerdutyConfig"
+            }
+          ],
+          "description": "If an object is specified, sends notifications through a PagerDuty integration.\nCannot be set if another integration is set."
+        },
+        "skip_resolved": {
+          "description": "If `true`, disables notifications for resolved alerts. Cannot be set if\n`discard` equals `true`.",
+          "type": "boolean"
+        },
+        "slack": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierSlackConfig"
+            }
+          ],
+          "description": "If an object is specified, sends notifications through a Slack integration.\nCannot be set if another integration is set."
+        },
+        "slug": {
+          "description": "The unique identifier of the Notifier. If a `slug` isn't provided, one is generated based on the `name` field. You can't modify this field after the Notifier is created.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the Notifier was last updated. Cannot be set by clients.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "victor_ops": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierVictorOpsConfig"
+            }
+          ],
+          "description": "If an object is specified, sends notifications through a VictorOps integration.\nCannot be set if another integration is set."
+        },
+        "webhook": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierWebhookConfig"
+            }
+          ],
+          "description": "If an object is specified, sends notifications through a webhook integration.\nCannot be set if another integration is set."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "configv1NotifierHTTPConfig": {
+      "properties": {
+        "basic_auth": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfigBasicAuth"
+            }
+          ],
+          "description": "If an object is specified, sets an `Authorization` header with the\nvalues of `password` and `username`. Cannot be set if `bearer_token` is\nset."
+        },
+        "bearer_token": {
+          "description": "Sets a token for bearer authentication. Cannot be set if `basic_auth` is set.",
+          "type": "string"
+        },
+        "proxy_url": {
+          "description": "Your proxy URL. (This parameter is deprecated, and custom proxies are\nunsupported.)",
+          "type": "string"
+        },
+        "tls_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfigTLSConfig"
+            }
+          ],
+          "description": "Your TLS configuration."
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierHTTPConfigBasicAuth": {
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierHTTPConfigTLSConfig": {
+      "properties": {
+        "insecure_skip_verify": {
+          "description": "If `true`, disables validation of the server certificate.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierOpsGenieConfig": {
+      "properties": {
+        "api_key": {
+          "description": "Your Opsgenie API key. Required if including an `ops_genie` object in your\nrequest body.",
+          "type": "string"
+        },
+        "api_url": {
+          "description": "The Opsgenie API URL to send requests to. Required if including an\n`ops_genie` object in your request body.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the alert.",
+          "type": "string"
+        },
+        "details": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of key/value pairs with additional information about the alert. These\nkey/value pairs can include any arbitrary data.",
+          "type": "object"
+        },
+        "http_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfig"
+            }
+          ],
+          "description": "Your HTTP client configuration."
+        },
+        "message": {
+          "description": "The alert text.",
+          "type": "string"
+        },
+        "note": {
+          "description": "A note about the alert.",
+          "type": "string"
+        },
+        "priority": {
+          "description": "The priority level of alert. Possible values are `P1`, `P2`, `P3`, `P4`, and `P5`.",
+          "type": "string"
+        },
+        "responders": {
+          "description": "List of responders responsible for notifications.",
+          "items": {
+            "$ref": "#/$defs/OpsGenieConfigResponder"
+          },
+          "type": "array"
+        },
+        "source": {
+          "description": "A backlink to the sender of the notification.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "A comma-separated list of tags attached to the notifications.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierPagerdutyConfig": {
+      "properties": {
+        "class": {
+          "description": "The class of the event.",
+          "type": "string"
+        },
+        "client": {
+          "description": "The client identification of the notification sender.",
+          "type": "string"
+        },
+        "client_url": {
+          "description": "A backlink to the sender of the notification.",
+          "type": "string"
+        },
+        "component": {
+          "description": "The part or component of the affected system that is broken.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the incident.",
+          "type": "string"
+        },
+        "details": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of key/value pairs with additional information about the incident. These\nkey/value pairs can include any arbitrary data.",
+          "type": "object"
+        },
+        "group": {
+          "description": "A cluster or grouping of services.",
+          "type": "string"
+        },
+        "http_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfig"
+            }
+          ],
+          "description": "Your HTTP client configuration."
+        },
+        "images": {
+          "description": "Images to attach to the incident.",
+          "items": {
+            "$ref": "#/$defs/PagerdutyConfigImage"
+          },
+          "type": "array"
+        },
+        "links": {
+          "description": "Links to attach to the incident.",
+          "items": {
+            "$ref": "#/$defs/PagerdutyConfigLink"
+          },
+          "type": "array"
+        },
+        "routing_key": {
+          "description": "Your PagerDuty integration key, if using the PagerDuty integration type\n`Events API v2`. Cannot be set if `service_key` is set.",
+          "type": "string"
+        },
+        "service_key": {
+          "description": "Your PagerDuty integration key, if using the PagerDuty integration type\n`Prometheus`. Cannot be set if `routing_key` is set.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "The severity of the incident. Possible values: `critical`, `error`,\n`warning`, or `info`.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The Pagerduty URL to send API requests to.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierSlackConfig": {
+      "properties": {
+        "actions": {
+          "items": {
+            "$ref": "#/$defs/NotifierSlackConfigAction"
+          },
+          "type": "array"
+        },
+        "api_url": {
+          "description": "Your Slack webhook API URL. Required if including a `slack` object in\nyour request body.",
+          "type": "string"
+        },
+        "callback_id": {
+          "type": "string"
+        },
+        "channel": {
+          "description": "The channel to send notifications to.",
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "fallback": {
+          "type": "string"
+        },
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/SlackConfigField"
+          },
+          "type": "array"
+        },
+        "footer": {
+          "type": "string"
+        },
+        "http_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfig"
+            }
+          ],
+          "description": "Your HTTP client configuration."
+        },
+        "icon_emoji": {
+          "type": "string"
+        },
+        "icon_url": {
+          "type": "string"
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "link_names": {
+          "type": "boolean"
+        },
+        "mrkdwn_in": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "pretext": {
+          "type": "string"
+        },
+        "short_fields": {
+          "type": "boolean"
+        },
+        "text": {
+          "type": "string"
+        },
+        "thumb_url": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "title_link": {
+          "type": "string"
+        },
+        "username": {
+          "description": "The user to send notifications to.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierVictorOpsConfig": {
+      "properties": {
+        "api_key": {
+          "description": "Your VictorOps API key. Required if including a `victor_ops` object in\nyour request body.",
+          "type": "string"
+        },
+        "api_url": {
+          "description": "The VictorOps API URL. Required if including a `victor_ops` object in your\nrequest body.",
+          "type": "string"
+        },
+        "custom_fields": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "entity_display_name": {
+          "description": "A summary of the alerted problem.",
+          "type": "string"
+        },
+        "http_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfig"
+            }
+          ],
+          "description": "Your HTTP client configuration."
+        },
+        "message_type": {
+          "description": "The behavior of the alert. Possible values are `CRITICAL`, `WARNING`, and\n`INFO`.",
+          "type": "string"
+        },
+        "monitoring_tool": {
+          "description": "The monitoring tool from which the state message originated.",
+          "type": "string"
+        },
+        "routing_key": {
+          "description": "Your VictorOps routing key. Required if including a `victor_ops` object in\nyour request body.",
+          "type": "string"
+        },
+        "state_message": {
+          "description": "A detailed explanation of the alerted problem.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "configv1NotifierWebhookConfig": {
+      "properties": {
+        "http_config": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/configv1NotifierHTTPConfig"
+            }
+          ],
+          "description": "Your HTTP client configuration."
+        },
+        "url": {
+          "description": "Your webhook URL. This URL will be called as a `POST` request. Required\nif including a `webhook` object in your request body.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

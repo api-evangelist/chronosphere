@@ -239,17 +239,20 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableCreateObjectDiscoveryRuleRequest:
-      properties:
-        object_discovery_rule:
-          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+    genericError:
+      additionalProperties: true
       type: object
-    configunstableUpdateObjectDiscoveryRuleResponse:
+    apiError:
       properties:
-        object_discovery_rule:
-          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+        code:
+          description: An optional private error code whose values are undefined.
+          format: int32
+          type: integer
+        message:
+          description: An error message describing what went wrong.
+          type: string
       type: object
-    configunstableReadObjectDiscoveryRuleResponse:
+    configunstableCreateObjectDiscoveryRuleResponse:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
@@ -264,44 +267,22 @@ components:
             more items to return.'
           type: string
       type: object
+    configunstableReadObjectDiscoveryRuleResponse:
+      properties:
+        object_discovery_rule:
+          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+      type: object
     configunstableDeleteObjectDiscoveryRuleResponse:
       type: object
-    configunstableCreateObjectDiscoveryRuleResponse:
+    configunstableUpdateObjectDiscoveryRuleResponse:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
       type: object
-    genericError:
-      additionalProperties: true
-      type: object
-    apiError:
-      properties:
-        code:
-          description: An optional private error code whose values are undefined.
-          format: int32
-          type: integer
-        message:
-          description: An error message describing what went wrong.
-          type: string
-      type: object
-    ObjectDiscoveryRuleMetricRule:
-      properties:
-        expr:
-          type: string
-        objectLabels:
-          items:
-            type: string
-          type: array
-        objectMappingLabel:
-          type: string
-      type: object
-    ConfigUnstableUpdateObjectDiscoveryRuleBody:
+    configunstableCreateObjectDiscoveryRuleRequest:
       properties:
         object_discovery_rule:
           $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
-        create_if_missing:
-          description: If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.
-          type: boolean
       type: object
     configunstableListObjectDiscoveryRulesResponse:
       properties:
@@ -322,4 +303,23 @@ components:
           type: string
         metric:
           $ref: '#/components/schemas/ObjectDiscoveryRuleMetricRule'
+      type: object
+    ConfigUnstableUpdateObjectDiscoveryRuleBody:
+      properties:
+        object_discovery_rule:
+          $ref: '#/components/schemas/configunstableObjectDiscoveryRule'
+        create_if_missing:
+          description: If `true`, the ObjectDiscoveryRule will be created if it does not already exist, identified by `slug`. If `false`, an error will be returned if the ObjectDiscoveryRule does not already exist.
+          type: boolean
+      type: object
+    ObjectDiscoveryRuleMetricRule:
+      properties:
+        expr:
+          type: string
+        objectLabels:
+          items:
+            type: string
+          type: array
+        objectMappingLabel:
+          type: string
       type: object

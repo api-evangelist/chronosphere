@@ -177,49 +177,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    configunstableUpdateQueryResourcePoolsRequest:
-      properties:
-        query_resource_pools:
-          $ref: '#/components/schemas/configunstableQueryResourcePools'
-        create_if_missing:
-          description: If `true`, the QueryResourcePools will be created if it does not already exist. If `false`, an error will be returned if the QueryResourcePools does not already exist.
-          type: boolean
-        dry_run:
-          description: If `true`, validates the specified configuration without creating or updating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
-      type: object
-    QueryResourcePoolsPool:
-      properties:
-        name:
-          description: Name of the pool, which must be unique.
-          type: string
-        source_types:
-          description: 'Source types that map to this pool. A query source maps to the first
-
-            pool, in configured order, whose `source_types` matches its source
-
-            type and whose `source_names` (if set) matches its source name.'
-          items:
-            $ref: '#/components/schemas/QueryResourcePoolsSourceType'
-          type: array
-        source_names:
-          description: 'Optional. Narrows the pool to specific named sources of the pool''s
-
-            source types: service account IDs for `SERVICE_ACCOUNT`, monitor slugs
-
-            for `MONITOR`, recording rule slugs for `RECORDING_RULE`, and SLO
-
-            slugs for `SLO`.'
-          items:
-            type: string
-          type: array
-        data_read_limit:
-          $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
-      type: object
-    configunstableReadQueryResourcePoolsResponse:
-      properties:
-        query_resource_pools:
-          $ref: '#/components/schemas/configunstableQueryResourcePools'
+    QueryResourcePoolsSourceType:
+      enum:
+      - MONITOR
+      - RECORDING_RULE
+      - SLO
+      - SERVICE_ACCOUNT
+      type: string
+    genericError:
+      additionalProperties: true
       type: object
     QueryResourcePoolsDataReadLimit:
       description: 'DataReadLimit defines the datapoints-read rate limit for a pool and the
@@ -262,10 +228,18 @@ components:
           format: int32
           type: integer
       type: object
-    configunstableCreateQueryResourcePoolsResponse:
+    configunstableCreateQueryResourcePoolsRequest:
       properties:
         query_resource_pools:
           $ref: '#/components/schemas/configunstableQueryResourcePools'
+        dry_run:
+          description: If `true`, validates the specified configuration without creating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
+      type: object
+    QueryResourcePoolsDefaultPool:
+      properties:
+        data_read_limit:
+          $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
       type: object
     configunstableQueryResourcePools:
       description: 'QueryResourcePools groups automated metrics query sources (monitors,
@@ -307,17 +281,16 @@ components:
           readOnly: true
           type: string
       type: object
-    QueryResourcePoolsSourceType:
-      enum:
-      - MONITOR
-      - RECORDING_RULE
-      - SLO
-      - SERVICE_ACCOUNT
-      type: string
-    genericError:
-      additionalProperties: true
-      type: object
-    configunstableDeleteQueryResourcePoolsResponse:
+    configunstableUpdateQueryResourcePoolsRequest:
+      properties:
+        query_resource_pools:
+          $ref: '#/components/schemas/configunstableQueryResourcePools'
+        create_if_missing:
+          description: If `true`, the QueryResourcePools will be created if it does not already exist. If `false`, an error will be returned if the QueryResourcePools does not already exist.
+          type: boolean
+        dry_run:
+          description: If `true`, validates the specified configuration without creating or updating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
+          type: boolean
       type: object
     apiError:
       properties:
@@ -329,21 +302,48 @@ components:
           description: An error message describing what went wrong.
           type: string
       type: object
+    configunstableDeleteQueryResourcePoolsResponse:
+      type: object
     configunstableUpdateQueryResourcePoolsResponse:
       properties:
         query_resource_pools:
           $ref: '#/components/schemas/configunstableQueryResourcePools'
       type: object
-    QueryResourcePoolsDefaultPool:
-      properties:
-        data_read_limit:
-          $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
-      type: object
-    configunstableCreateQueryResourcePoolsRequest:
+    configunstableReadQueryResourcePoolsResponse:
       properties:
         query_resource_pools:
           $ref: '#/components/schemas/configunstableQueryResourcePools'
-        dry_run:
-          description: If `true`, validates the specified configuration without creating the QueryResourcePools. If the specified configuration is valid, the endpoint returns a partial response without the QueryResourcePools. If the specified configuration is invalid, the endpoint returns an error.
-          type: boolean
+      type: object
+    QueryResourcePoolsPool:
+      properties:
+        name:
+          description: Name of the pool, which must be unique.
+          type: string
+        source_types:
+          description: 'Source types that map to this pool. A query source maps to the first
+
+            pool, in configured order, whose `source_types` matches its source
+
+            type and whose `source_names` (if set) matches its source name.'
+          items:
+            $ref: '#/components/schemas/QueryResourcePoolsSourceType'
+          type: array
+        source_names:
+          description: 'Optional. Narrows the pool to specific named sources of the pool''s
+
+            source types: service account IDs for `SERVICE_ACCOUNT`, monitor slugs
+
+            for `MONITOR`, recording rule slugs for `RECORDING_RULE`, and SLO
+
+            slugs for `SLO`.'
+          items:
+            type: string
+          type: array
+        data_read_limit:
+          $ref: '#/components/schemas/QueryResourcePoolsDataReadLimit'
+      type: object
+    configunstableCreateQueryResourcePoolsResponse:
+      properties:
+        query_resource_pools:
+          $ref: '#/components/schemas/configunstableQueryResourcePools'
       type: object
