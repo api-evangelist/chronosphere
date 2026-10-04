@@ -1576,6 +1576,8 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
+  - ResourcePools
+  tags_raw:
   - Resource Pools
   properties:
   - type: OpenAPI
@@ -1596,6 +1598,8 @@ apis:
   humanURL: https://chronosphere.io
   baseURL: https://{tenant}.chronosphere.io
   tags:
+  - ServiceAccount
+  tags_raw:
   - Service Account
   properties:
   - type: OpenAPI
