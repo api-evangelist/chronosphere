@@ -1,0 +1,12 @@
+{
+ "url": "https://docs-xcor.paloaltonetworks.com/openapi/api_v1_config_openapi3_DOCUMENTATION_ONLY.json",
+ "requested_url": "https://docs-xcor.paloaltonetworks.com/openapi/api_v1_config_openapi3_DOCUMENTATION_ONLY.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 833102,
+ "sha256": "0c270a7e3d4acd46305f6d0ef94baf87cdacb016ecb772ba19bf8f9201b62e58",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.943), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

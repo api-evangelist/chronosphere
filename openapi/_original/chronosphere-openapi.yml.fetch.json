@@ -1,0 +1,12 @@
+{
+ "url": "https://docs-xcor.paloaltonetworks.com/openapi.yaml",
+ "requested_url": "https://docs.chronosphere.io/openapi.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 411125,
+ "sha256": "bb228585a27910a0d3e8dd2e155d36538eddac80c3b2311598b696d05d06a551",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
