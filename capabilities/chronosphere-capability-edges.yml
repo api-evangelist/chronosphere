@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 22
+edge_count: 33
 edges:
 - tag: SLO
   spec_file: chronosphere-slo-api-openapi.yml
@@ -22,6 +22,25 @@ edges:
   evidence: POST /api/v1/config/slos  CreateSLO; schemas configv1SLI, DefinitionBurnRateDefinition, DefinitionTimeWindow
   reason: CRUD over service-level objectives with SLIs and burn-rate/error-budget definitions — the definition
     and stewardship of SLIs/SLOs is Service Reliability Engineering.
+- tag: SyntheticTest
+  spec_file: chronosphere-synthetictest-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.88
+  evidence: GET /api/v1/config/synthetic-tests  ListSyntheticTests  List synthetic tests; SyntheticTestHttpTestConfig,
+    SyntheticTestResponseTimeAssertion
+  reason: CRUD over synthetic HTTP/TCP probes with response-time and status-code assertions — this is
+    exactly the 'synthetic monitoring' element of observability management for a running service.
+- tag: DataV1
+  spec_file: chronosphere-datav1-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.85
+  evidence: GET /api/v1/data/logs:range  QueryLogsRange ... POST /api/v1/data/traces  ListTraces ... ReadMetricMetadata
+  reason: Reading and writing logs, metrics, traces, events and dashboard panel annotations is squarely
+    logs/metrics/traces observability of a running service.
 - tag: TraceTailSamplingRules
   spec_file: chronosphere-tracetailsamplingrules-api-openapi.yml
   capability_id: BC-4220.20
@@ -54,6 +73,16 @@ edges:
   reason: Management of Grafana monitoring dashboards on an observability platform makes the running service
     understandable in production; this is Observability Management rather than BI/analytics reporting
     for business users.
+- tag: LogControlConfig
+  spec_file: chronosphere-logcontrolconfig-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.8
+  evidence: '"Create log control config"; schemas LogIngestConfigLogParser, LogControlRuleEmitMetrics,
+    LogParserGrokParser'
+  reason: Configures how log telemetry is parsed, fields replaced and metrics emitted at ingest — logs/metrics
+    instrumentation of a running service, i.e. observability management on this observability platform.
 - tag: LogIngestConfig
   spec_file: chronosphere-logingestconfig-api-openapi.yml
   capability_id: BC-4220.20
@@ -126,6 +155,16 @@ edges:
   evidence: PUT /api/v1/config/trace-behavior-config  UpdateTraceBehaviorConfig; TraceBehaviorConfigMainBehaviorAssignment
   reason: Assigns main/override trace behaviours across the platform; tracing configuration for production
     observability.
+- tag: AzureMetricsIntegration
+  spec_file: chronosphere-azuremetricsintegration-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.75
+  evidence: POST /api/v1/config/azure-metrics-integrations  CreateAzureMetricsIntegration ... schema AzureMetricsIntegrationAzureScrapeConfig
+  reason: Configures scraping of Azure cloud metrics into Chronosphere's observability platform — metrics
+    collection/monitoring configuration, i.e. Observability Management. Not an ERP/finance capability
+    despite 'Azure Metrics' wording.
 - tag: Monitor
   spec_file: chronosphere-monitor-api-openapi.yml
   capability_id: BC-4220.20
@@ -154,6 +193,25 @@ edges:
   evidence: POST /api/v1/config/recording-rules  CreateRecordingRule; configv1RecordingRuleLabelPolicy
   reason: Prometheus-style recording rules that pre-compute metric series; part of managing metrics telemetry
     for production observability rather than any business process.
+- tag: SavedTraceSearch
+  spec_file: chronosphere-savedtracesearch-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.75
+  evidence: '"Create saved trace search"; configv1TraceSearchFilter, SavedTraceSearchTraceSearch, TraceSearchFilterSpanFilter'
+  reason: Manages saved queries over distributed-trace telemetry (spans, filters), squarely traces-based
+    observability rather than generic search infrastructure.
+- tag: TraceTopTagConfig
+  spec_file: chronosphere-tracetoptagconfig-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.75
+  evidence: GET /api/unstable/config/trace-top-tag-config  ReadTraceTopTagConfig; TraceTopTagConfigTraceTopTag
+  reason: Configuration of which trace tags are surfaced in the observability platform's trace analysis
+    — distributed-tracing telemetry configuration, i.e. observability management. Config-only surface
+    so moderate confidence.
 - tag: LogAllocationConfig
   spec_file: chronosphere-logallocationconfig-api-openapi.yml
   capability_id: BC-4220.20
@@ -211,6 +269,26 @@ edges:
   evidence: CreateDerivedMetric; schemas DerivedMetricQuery, DerivedMetricSelectorQuery
   reason: Defining derived metrics and their queries is metrics management on an observability platform,
     squarely Observability Management.
+- tag: External Connection
+  spec_file: chronosphere-external-connection-api-openapi.yml
+  capability_id: BC-4220.30
+  capability_id_l1: BC-4220
+  capability_name: Incident Response Management
+  confidence: 0.7
+  evidence: 'schemas: configv1ExternalConnectionPagerdutyConfig, configv1ExternalConnectionOpsGenieConfig,
+    configv1ExternalConnectionSlackConfig'
+  reason: External connections target PagerDuty, OpsGenie, Slack and webhooks — the alert notification/paging
+    path for on-call incident response. Could also be seen as generic notifier config, so 0.7 rather than
+    higher.
+- tag: LogRetentionConfig
+  spec_file: chronosphere-logretentionconfig-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: '"List log retention configs"; configv1LogRetentionConfigMode'
+  reason: Controls retention of log telemetry in the observability platform — log management configuration
+    rather than any enterprise records or data-governance capability.
 - tag: LogScaleAction
   spec_file: chronosphere-logscaleaction-api-openapi.yml
   capability_id: BC-4220.30
@@ -220,3 +298,30 @@ edges:
   evidence: LogScaleActionPagerDutyAction, LogScaleActionOpsGenieAction, LogScaleActionSlackAction, LogScaleActionVictorOpsAction
   reason: Actions fired from log alerts route to on-call/paging tools (PagerDuty, OpsGenie, VictorOps),
     which is incident detection and on-call response coordination.
+- tag: MetricUsagesByLabelName
+  spec_file: chronosphere-metricusagesbylabelname-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: '"List metric usages by label name"; statev1MetricUsage, MetricUsageQueryExecutionCountsByType'
+  reason: Reports runtime usage/query-execution counts of metrics telemetry, supporting understanding
+    and cost control of metrics in production — observability management.
+- tag: MetricUsagesByMetricName
+  spec_file: chronosphere-metricusagesbymetricname-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: '"List metric usages by metric name"; statev1MetricUsageByMetricName, MetricUsageReferenceCountsByType'
+  reason: Same metrics-usage state surface keyed by metric name; it exposes which metrics are queried/referenced
+    in the observability platform.
+- tag: RuleEvaluations
+  spec_file: chronosphere-ruleevaluations-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: '"List rule evaluations"; statev1RuleEvaluation, RuleEvaluationSeverity, RuleEvaluationRuleType'
+  reason: Exposes runtime state of monitoring rule evaluations and their severity — monitoring of the
+    running service, not business rules or financial-crime alerting.
