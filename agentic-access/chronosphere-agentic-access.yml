@@ -1,19 +1,116 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/chronosphere-openapi.yml
+source: openapi/chronosphere-azuremetricsintegration-api-openapi.yml, openapi/chronosphere-bucket-api-openapi.yml,
+  openapi/chronosphere-classicdashboard-api-openapi.yml, openapi/chronosphere-cloud-integration-api-openapi.yml,
+  openapi/chronosphere-collection-api-openapi.yml, openapi/chronosphere-commandcentergroup-api-openapi.yml,
+  openapi/chronosphere-config-v1-api-openapi.yml, openapi/chronosphere-configunstable-api-openapi.yml,
+  openapi/chronosphere-consumptionbudget-api-openapi.yml, openapi/chronosphere-consumptionconfig-api-openapi.yml,
+  openapi/chronosphere-dashboard-api-openapi.yml, openapi/chronosphere-dataset-api-openapi.yml,
+  openapi/chronosphere-datav1-api-openapi.yml, openapi/chronosphere-derivedlabel-api-openapi.yml,
+  openapi/chronosphere-derivedmetric-api-openapi.yml, openapi/chronosphere-droprule-api-openapi.yml,
+  openapi/chronosphere-external-connection-api-openapi.yml, openapi/chronosphere-gcpmetricsintegration-api-openapi.yml,
+  openapi/chronosphere-grafana-dashboard-api-openapi.yml, openapi/chronosphere-linktemplate-api-openapi.yml,
+  openapi/chronosphere-logallocationconfig-api-openapi.yml, openapi/chronosphere-logcontrolconfig-api-openapi.yml,
+  openapi/chronosphere-logingestconfig-api-openapi.yml, openapi/chronosphere-logprimarykey-api-openapi.yml,
+  openapi/chronosphere-logretentionconfig-api-openapi.yml, openapi/chronosphere-logscaleaction-api-openapi.yml,
+  openapi/chronosphere-logscalealert-api-openapi.yml, openapi/chronosphere-mappingrule-api-openapi.yml,
+  openapi/chronosphere-metricusagesbylabelname-api-openapi.yml, openapi/chronosphere-metricusagesbymetricname-api-openapi.yml,
+  openapi/chronosphere-monitor-api-openapi.yml, openapi/chronosphere-mutingrule-api-openapi.yml,
+  openapi/chronosphere-noopentity-api-openapi.yml, openapi/chronosphere-notebook-api-openapi.yml,
+  openapi/chronosphere-notification-policy-api-openapi.yml, openapi/chronosphere-notifier-api-openapi.yml,
+  openapi/chronosphere-objectdiscoveryrule-api-openapi.yml, openapi/chronosphere-otelmetricsingestion-api-openapi.yml,
+  openapi/chronosphere-queryresourcepools-api-openapi.yml, openapi/chronosphere-recordingrule-api-openapi.yml,
+  openapi/chronosphere-resource-pools-api-openapi.yml, openapi/chronosphere-rolluprule-api-openapi.yml,
+  openapi/chronosphere-ruleevaluations-api-openapi.yml, openapi/chronosphere-savedtracesearch-api-openapi.yml,
+  openapi/chronosphere-service-account-api-openapi.yml, openapi/chronosphere-service-api-openapi.yml,
+  openapi/chronosphere-serviceattribute-api-openapi.yml, openapi/chronosphere-slo-api-openapi.yml,
+  openapi/chronosphere-syncprometheus-api-openapi.yml, openapi/chronosphere-synthetictest-api-openapi.yml,
+  openapi/chronosphere-team-api-openapi.yml, openapi/chronosphere-tracebehavior-api-openapi.yml,
+  openapi/chronosphere-tracebehaviorconfig-api-openapi.yml, openapi/chronosphere-tracejaegerremotesamplingstrategy-api-openapi.yml,
+  openapi/chronosphere-tracemetricsrule-api-openapi.yml, openapi/chronosphere-tracetailsamplingrules-api-openapi.yml,
+  openapi/chronosphere-tracetoptagconfig-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 149
+  operations: 267
   by_action_class:
-    connected: 57
-    acting: 92
+    connected: 104
+    acting: 163
   by_consequence:
-    read: 57
-    write: 92
-  human_in_the_loop_required: 0
+    read: 104
+    write: 160
+    safety-critical: 3
+  human_in_the_loop_required: 3
 operations:
+- path: /api/v1/config/azure-metrics-integrations
+  method: get
+  operationId: ListAzureMetricsIntegrations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/azure-metrics-integrations
+  method: post
+  operationId: CreateAzureMetricsIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/azure-metrics-integrations/{slug}
+  method: delete
+  operationId: DeleteAzureMetricsIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/azure-metrics-integrations/{slug}
+  method: get
+  operationId: ReadAzureMetricsIntegration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/azure-metrics-integrations/{slug}
+  method: put
+  operationId: UpdateAzureMetricsIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /api/v1/config/buckets
   method: get
   operationId: ListBuckets
@@ -41,18 +138,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/buckets/{slug}
-  method: get
-  operationId: ReadBucket
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/buckets/{slug}
-  method: put
-  operationId: UpdateBucket
+  method: delete
+  operationId: DeleteBucket
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -67,8 +154,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/buckets/{slug}
-  method: delete
-  operationId: DeleteBucket
+  method: get
+  operationId: ReadBucket
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/buckets/{slug}
+  method: put
+  operationId: UpdateBucket
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -109,6 +206,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/classic-dashboards/{slug}
+  method: delete
+  operationId: DeleteClassicDashboard
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/classic-dashboards/{slug}
   method: get
   operationId: ReadClassicDashboard
   x-agentic-access:
@@ -134,9 +247,61 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/classic-dashboards/{slug}
+- path: /api/v1/config/cloud-integrations
+  method: get
+  operationId: ListCloudIntegrations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/cloud-integrations
+  method: post
+  operationId: CreateCloudIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/cloud-integrations/{slug}
   method: delete
-  operationId: DeleteClassicDashboard
+  operationId: DeleteCloudIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/cloud-integrations/{slug}
+  method: get
+  operationId: ReadCloudIntegration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/cloud-integrations/{slug}
+  method: put
+  operationId: UpdateCloudIntegration
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -177,6 +342,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/collections/{slug}
+  method: delete
+  operationId: DeleteCollection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/collections/{slug}
   method: get
   operationId: ReadCollection
   x-agentic-access:
@@ -202,9 +383,329 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/collections/{slug}
+- path: /api/unstable/config/command-center-groups
+  method: get
+  operationId: ListCommandCenterGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/command-center-groups
+  method: post
+  operationId: CreateCommandCenterGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/command-center-groups/{slug}
   method: delete
-  operationId: DeleteCollection
+  operationId: DeleteCommandCenterGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/command-center-groups/{slug}
+  method: get
+  operationId: ReadCommandCenterGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/command-center-groups/{slug}
+  method: put
+  operationId: UpdateCommandCenterGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/services/{service_slug}/attributes
+  method: delete
+  operationId: DeleteServiceAttribute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/services/{service_slug}/attributes
+  method: get
+  operationId: ReadServiceAttribute
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/services/{service_slug}/attributes
+  method: post
+  operationId: CreateServiceAttribute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/services/{service_slug}/attributes
+  method: put
+  operationId: UpdateServiceAttribute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/dashboards:createFromClassic
+  method: post
+  operationId: CreateDashboardFromClassic
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/consumption-budgets
+  method: get
+  operationId: ListConsumptionBudgets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/consumption-budgets
+  method: post
+  operationId: CreateConsumptionBudget
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/consumption-budgets/{slug}
+  method: delete
+  operationId: DeleteConsumptionBudget
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/consumption-budgets/{slug}
+  method: get
+  operationId: ReadConsumptionBudget
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/consumption-budgets/{slug}
+  method: put
+  operationId: UpdateConsumptionBudget
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/consumption-config
+  method: delete
+  operationId: DeleteConsumptionConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/consumption-config
+  method: get
+  operationId: ReadConsumptionConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/consumption-config
+  method: post
+  operationId: CreateConsumptionConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/consumption-config
+  method: put
+  operationId: UpdateConsumptionConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/dashboards
+  method: get
+  operationId: ListDashboards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/dashboards
+  method: post
+  operationId: CreateDashboard
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/dashboards/{slug}
+  method: delete
+  operationId: DeleteDashboard
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/dashboards/{slug}
+  method: get
+  operationId: ReadDashboard
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/dashboards/{slug}
+  method: put
+  operationId: UpdateDashboard
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -245,18 +746,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/dashboards/{slug}
-  method: get
-  operationId: ReadDashboard
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/dashboards/{slug}
-  method: put
-  operationId: UpdateDashboard
+  method: delete
+  operationId: DeleteDashboard
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -271,8 +762,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/dashboards/{slug}
-  method: delete
-  operationId: DeleteDashboard
+  method: get
+  operationId: ReadDashboard
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/dashboards/{slug}
+  method: put
+  operationId: UpdateDashboard
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -313,6 +814,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/datasets/{slug}
+  method: delete
+  operationId: DeleteDataset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/datasets/{slug}
   method: get
   operationId: ReadDataset
   x-agentic-access:
@@ -338,9 +855,19 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/datasets/{slug}
-  method: delete
-  operationId: DeleteDataset
+- path: /api/v1/data/events
+  method: get
+  operationId: ListEvents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/data/events
+  method: post
+  operationId: CreateEvent
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -354,6 +881,94 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/v1/data/logs:range
+  method: get
+  operationId: QueryLogsRange
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/data/metrics:metadata/{metric_name}
+  method: get
+  operationId: ReadMetricMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/data/panel_annotations
+  method: get
+  operationId: ListPanelAnnotations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/data/panel_annotations
+  method: post
+  operationId: CreatePanelAnnotation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/data/panel_annotations/{id}
+  method: delete
+  operationId: DeletePanelAnnotation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/data/panel_annotations/{id}
+  method: put
+  operationId: PutPanelAnnotation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/data/traces
+  method: post
+  operationId: ListTraces
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/config/derived-labels
   method: get
   operationId: ListDerivedLabels
@@ -381,18 +996,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/derived-labels/{slug}
-  method: get
-  operationId: ReadDerivedLabel
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/derived-labels/{slug}
-  method: put
-  operationId: UpdateDerivedLabel
+  method: delete
+  operationId: DeleteDerivedLabel
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -407,8 +1012,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/derived-labels/{slug}
-  method: delete
-  operationId: DeleteDerivedLabel
+  method: get
+  operationId: ReadDerivedLabel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/derived-labels/{slug}
+  method: put
+  operationId: UpdateDerivedLabel
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -449,18 +1064,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/derived-metrics/{slug}
-  method: get
-  operationId: ReadDerivedMetric
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/derived-metrics/{slug}
-  method: put
-  operationId: UpdateDerivedMetric
+  method: delete
+  operationId: DeleteDerivedMetric
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -475,8 +1080,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/derived-metrics/{slug}
-  method: delete
-  operationId: DeleteDerivedMetric
+  method: get
+  operationId: ReadDerivedMetric
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/derived-metrics/{slug}
+  method: put
+  operationId: UpdateDerivedMetric
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -517,6 +1132,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/drop-rules/{slug}
+  method: delete
+  operationId: DeleteDropRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/drop-rules/{slug}
   method: get
   operationId: ReadDropRule
   x-agentic-access:
@@ -542,9 +1173,61 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/drop-rules/{slug}
+- path: /api/v1/config/external-connections
+  method: get
+  operationId: ListExternalConnections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/external-connections
+  method: post
+  operationId: CreateExternalConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/external-connections/{slug}
   method: delete
-  operationId: DeleteDropRule
+  operationId: DeleteExternalConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/external-connections/{slug}
+  method: get
+  operationId: ReadExternalConnection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/external-connections/{slug}
+  method: put
+  operationId: UpdateExternalConnection
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -585,18 +1268,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/gcp-metrics-integrations/{slug}
-  method: get
-  operationId: ReadGcpMetricsIntegration
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/gcp-metrics-integrations/{slug}
-  method: put
-  operationId: UpdateGcpMetricsIntegration
+  method: delete
+  operationId: DeleteGcpMetricsIntegration
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -611,8 +1284,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/gcp-metrics-integrations/{slug}
-  method: delete
-  operationId: DeleteGcpMetricsIntegration
+  method: get
+  operationId: ReadGcpMetricsIntegration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/gcp-metrics-integrations/{slug}
+  method: put
+  operationId: UpdateGcpMetricsIntegration
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -653,6 +1336,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/grafana-dashboards/{slug}
+  method: delete
+  operationId: DeleteGrafanaDashboard
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/grafana-dashboards/{slug}
   method: get
   operationId: ReadGrafanaDashboard
   x-agentic-access:
@@ -678,25 +1377,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/grafana-dashboards/{slug}
-  method: delete
-  operationId: DeleteGrafanaDashboard
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/log-allocation-config
+- path: /api/unstable/config/link-templates
   method: get
-  operationId: ReadLogAllocationConfig
+  operationId: ListLinkTemplates
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -704,9 +1387,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/config/log-allocation-config
-  method: put
-  operationId: UpdateLogAllocationConfig
+- path: /api/unstable/config/link-templates
+  method: post
+  operationId: CreateLinkTemplate
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -720,9 +1403,35 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/log-allocation-config
-  method: post
-  operationId: CreateLogAllocationConfig
+- path: /api/unstable/config/link-templates/{slug}
+  method: delete
+  operationId: DeleteLinkTemplate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/link-templates/{slug}
+  method: get
+  operationId: ReadLinkTemplate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/link-templates/{slug}
+  method: put
+  operationId: UpdateLinkTemplate
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -752,9 +1461,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/log-ingest-config
+- path: /api/v1/config/log-allocation-config
   method: get
-  operationId: ReadLogIngestConfig
+  operationId: ReadLogAllocationConfig
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -762,9 +1471,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/config/log-ingest-config
-  method: put
-  operationId: UpdateLogIngestConfig
+- path: /api/v1/config/log-allocation-config
+  method: post
+  operationId: CreateLogAllocationConfig
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -778,6 +1487,106 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/v1/config/log-allocation-config
+  method: put
+  operationId: UpdateLogAllocationConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/log-control-config
+  method: delete
+  operationId: DeleteLogControlConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/config/log-control-config
+  method: get
+  operationId: ReadLogControlConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/log-control-config
+  method: post
+  operationId: CreateLogControlConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/config/log-control-config
+  method: put
+  operationId: UpdateLogControlConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/config/log-ingest-config
+  method: delete
+  operationId: DeleteLogIngestConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/log-ingest-config
+  method: get
+  operationId: ReadLogIngestConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/config/log-ingest-config
   method: post
   operationId: CreateLogIngestConfig
@@ -795,8 +1604,128 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/log-ingest-config
+  method: put
+  operationId: UpdateLogIngestConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/log-primary-keys
+  method: get
+  operationId: ListLogPrimaryKeys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/log-primary-keys
+  method: post
+  operationId: CreateLogPrimaryKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/log-primary-keys/{slug}
   method: delete
-  operationId: DeleteLogIngestConfig
+  operationId: DeleteLogPrimaryKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/log-primary-keys/{slug}
+  method: get
+  operationId: ReadLogPrimaryKey
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/log-retention-configs
+  method: get
+  operationId: ListLogRetentionConfigs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/log-retention-configs
+  method: post
+  operationId: CreateLogRetentionConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/log-retention-configs/{slug}
+  method: delete
+  operationId: DeleteLogRetentionConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/log-retention-configs/{slug}
+  method: get
+  operationId: ReadLogRetentionConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/log-retention-configs/{slug}
+  method: put
+  operationId: UpdateLogRetentionConfig
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -973,6 +1902,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/mapping-rules/{slug}
+  method: delete
+  operationId: DeleteMappingRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/mapping-rules/{slug}
   method: get
   operationId: ReadMappingRule
   x-agentic-access:
@@ -998,22 +1943,26 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/mapping-rules/{slug}
-  method: delete
-  operationId: DeleteMappingRule
+- path: /api/v1/state/metric-usages-by-label-name
+  method: get
+  operationId: ListMetricUsagesByLabelName
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/state/metric-usages-by-metric-name
+  method: get
+  operationId: ListMetricUsagesByMetricName
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/config/monitors
   method: get
   operationId: ListMonitors
@@ -1041,18 +1990,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/monitors/{slug}
-  method: get
-  operationId: ReadMonitor
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/monitors/{slug}
-  method: put
-  operationId: UpdateMonitor
+  method: delete
+  operationId: DeleteMonitor
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1067,8 +2006,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/monitors/{slug}
-  method: delete
-  operationId: DeleteMonitor
+  method: get
+  operationId: ReadMonitor
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/monitors/{slug}
+  method: put
+  operationId: UpdateMonitor
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1109,6 +2058,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/muting-rules/{slug}
+  method: delete
+  operationId: DeleteMutingRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/muting-rules/{slug}
   method: get
   operationId: ReadMutingRule
   x-agentic-access:
@@ -1134,9 +2099,119 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/muting-rules/{slug}
+- path: /api/unstable/config/noop-entities
+  method: post
+  operationId: CreateNoopEntity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/noop-entities/{slug}
   method: delete
-  operationId: DeleteMutingRule
+  operationId: DeleteNoopEntity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/noop-entities/{slug}
+  method: get
+  operationId: ReadNoopEntity
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/noop-entities/{slug}
+  method: put
+  operationId: UpdateNoopEntity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/notebooks
+  method: get
+  operationId: ListNotebooks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/notebooks
+  method: post
+  operationId: CreateNotebook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/notebooks/{slug}
+  method: delete
+  operationId: DeleteNotebook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/notebooks/{slug}
+  method: get
+  operationId: ReadNotebook
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/notebooks/{slug}
+  method: put
+  operationId: UpdateNotebook
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1177,18 +2252,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/notification-policies/{slug}
-  method: get
-  operationId: ReadNotificationPolicy
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/notification-policies/{slug}
-  method: put
-  operationId: UpdateNotificationPolicy
+  method: delete
+  operationId: DeleteNotificationPolicy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1203,8 +2268,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/notification-policies/{slug}
-  method: delete
-  operationId: DeleteNotificationPolicy
+  method: get
+  operationId: ReadNotificationPolicy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/notification-policies/{slug}
+  method: put
+  operationId: UpdateNotificationPolicy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1245,6 +2320,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/notifiers/{slug}
+  method: delete
+  operationId: DeleteNotifier
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/notifiers/{slug}
   method: get
   operationId: ReadNotifier
   x-agentic-access:
@@ -1270,9 +2361,77 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/notifiers/{slug}
+- path: /api/unstable/config/object-discovery-rules
+  method: get
+  operationId: ListObjectDiscoveryRule
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/object-discovery-rules
+  method: post
+  operationId: CreateObjectDiscoveryRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/object-discovery-rules/{slug}
   method: delete
-  operationId: DeleteNotifier
+  operationId: DeleteObjectDiscoveryRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/object-discovery-rules/{slug}
+  method: get
+  operationId: ReadObjectDiscoveryRule
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/object-discovery-rules/{slug}
+  method: put
+  operationId: UpdateObjectDiscoveryRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/otel-metrics-ingestion
+  method: delete
+  operationId: DeleteOtelMetricsIngestion
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1297,22 +2456,6 @@ operations:
       max-ttl: 3600
     audit: none
 - path: /api/v1/config/otel-metrics-ingestion
-  method: put
-  operationId: UpdateOtelMetricsIngestion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/otel-metrics-ingestion
   method: post
   operationId: CreateOtelMetricsIngestion
   x-agentic-access:
@@ -1329,8 +2472,66 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/otel-metrics-ingestion
+  method: put
+  operationId: UpdateOtelMetricsIngestion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/query-resource-pools
   method: delete
-  operationId: DeleteOtelMetricsIngestion
+  operationId: DeleteQueryResourcePools
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/query-resource-pools
+  method: get
+  operationId: ReadQueryResourcePools
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/query-resource-pools
+  method: post
+  operationId: CreateQueryResourcePools
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/query-resource-pools
+  method: put
+  operationId: UpdateQueryResourcePools
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1371,6 +2572,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/recording-rules/{slug}
+  method: delete
+  operationId: DeleteRecordingRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/recording-rules/{slug}
   method: get
   operationId: ReadRecordingRule
   x-agentic-access:
@@ -1396,9 +2613,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/recording-rules/{slug}
+- path: /api/v1/config/resource-pools
   method: delete
-  operationId: DeleteRecordingRule
+  operationId: DeleteResourcePools
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1423,22 +2640,6 @@ operations:
       max-ttl: 3600
     audit: none
 - path: /api/v1/config/resource-pools
-  method: put
-  operationId: UpdateResourcePools
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/resource-pools
   method: post
   operationId: CreateResourcePools
   x-agentic-access:
@@ -1455,8 +2656,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/resource-pools
-  method: delete
-  operationId: DeleteResourcePools
+  method: put
+  operationId: UpdateResourcePools
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1497,6 +2698,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/rollup-rules/{slug}
+  method: delete
+  operationId: DeleteRollupRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/rollup-rules/{slug}
   method: get
   operationId: ReadRollupRule
   x-agentic-access:
@@ -1522,9 +2739,71 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/rollup-rules/{slug}
+- path: /api/v1/state/rule-evaluations
+  method: get
+  operationId: ListRuleEvaluations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/saved-trace-searches
+  method: get
+  operationId: ListSavedTraceSearches
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/saved-trace-searches
+  method: post
+  operationId: CreateSavedTraceSearch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/saved-trace-searches/{slug}
   method: delete
-  operationId: DeleteRollupRule
+  operationId: DeleteSavedTraceSearch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/saved-trace-searches/{slug}
+  method: get
+  operationId: ReadSavedTraceSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/saved-trace-searches/{slug}
+  method: put
+  operationId: UpdateSavedTraceSearch
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1565,16 +2844,6 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/service-accounts/{slug}
-  method: get
-  operationId: ReadServiceAccount
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/service-accounts/{slug}
   method: delete
   operationId: DeleteServiceAccount
   x-agentic-access:
@@ -1590,9 +2859,107 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/v1/config/service-accounts/{slug}
+  method: get
+  operationId: ReadServiceAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/services
+  method: get
+  operationId: ListServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/services
+  method: post
+  operationId: CreateService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/services/{slug}
+  method: delete
+  operationId: DeleteService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/services/{slug}
+  method: get
+  operationId: ReadService
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/services/{slug}
+  method: put
+  operationId: UpdateService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/services
+  method: get
+  operationId: ListServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/config/services/{slug}
   method: get
   operationId: ReadService
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/service-attributes
+  method: get
+  operationId: ListServiceAttributes
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1613,6 +2980,22 @@ operations:
 - path: /api/v1/config/slos
   method: post
   operationId: CreateSLO
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/slos/{slug}
+  method: delete
+  operationId: DeleteSLO
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1652,9 +3035,77 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/slos/{slug}
+- path: /api/unstable/config/sync-prometheus
+  method: post
+  operationId: SyncPrometheus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/synthetic-tests
+  method: get
+  operationId: ListSyntheticTests
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/synthetic-tests
+  method: post
+  operationId: CreateSyntheticTest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/synthetic-tests/{slug}
   method: delete
-  operationId: DeleteSLO
+  operationId: DeleteSyntheticTest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/synthetic-tests/{slug}
+  method: get
+  operationId: ReadSyntheticTest
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/synthetic-tests/{slug}
+  method: put
+  operationId: UpdateSyntheticTest
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1695,32 +3146,6 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/teams/{slug}
-  method: get
-  operationId: ReadTeam
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/teams/{slug}
-  method: put
-  operationId: UpdateTeam
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/teams/{slug}
   method: delete
   operationId: DeleteTeam
   x-agentic-access:
@@ -1736,9 +3161,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/trace-behavior-config
+- path: /api/v1/config/teams/{slug}
   method: get
-  operationId: ReadTraceBehaviorConfig
+  operationId: ReadTeam
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1746,41 +3171,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/config/trace-behavior-config
+- path: /api/v1/config/teams/{slug}
   method: put
-  operationId: UpdateTraceBehaviorConfig
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/trace-behavior-config
-  method: post
-  operationId: CreateTraceBehaviorConfig
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/trace-behavior-config
-  method: delete
-  operationId: DeleteTraceBehaviorConfig
+  operationId: UpdateTeam
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1821,6 +3214,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/trace-behaviors/{slug}
+  method: delete
+  operationId: DeleteTraceBehavior
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/trace-behaviors/{slug}
   method: get
   operationId: ReadTraceBehavior
   x-agentic-access:
@@ -1846,9 +3255,119 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/trace-behaviors/{slug}
+- path: /api/v1/config/trace-behavior-config
   method: delete
-  operationId: DeleteTraceBehavior
+  operationId: DeleteTraceBehaviorConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/trace-behavior-config
+  method: get
+  operationId: ReadTraceBehaviorConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/trace-behavior-config
+  method: post
+  operationId: CreateTraceBehaviorConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/trace-behavior-config
+  method: put
+  operationId: UpdateTraceBehaviorConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-jaeger-remote-sampling-strategies
+  method: get
+  operationId: ListTraceJaegerRemoteSamplingStrategies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/trace-jaeger-remote-sampling-strategies
+  method: post
+  operationId: CreateTraceJaegerRemoteSamplingStrategy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-jaeger-remote-sampling-strategies/{slug}
+  method: delete
+  operationId: DeleteTraceJaegerRemoteSamplingStrategy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-jaeger-remote-sampling-strategies/{slug}
+  method: get
+  operationId: ReadTraceJaegerRemoteSamplingStrategy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/trace-jaeger-remote-sampling-strategies/{slug}
+  method: put
+  operationId: UpdateTraceJaegerRemoteSamplingStrategy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1889,18 +3408,8 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/trace-jaeger-remote-sampling-strategies/{slug}
-  method: get
-  operationId: ReadTraceJaegerRemoteSamplingStrategy
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/config/trace-jaeger-remote-sampling-strategies/{slug}
-  method: put
-  operationId: UpdateTraceJaegerRemoteSamplingStrategy
+  method: delete
+  operationId: DeleteTraceJaegerRemoteSamplingStrategy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1915,8 +3424,18 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/trace-jaeger-remote-sampling-strategies/{slug}
-  method: delete
-  operationId: DeleteTraceJaegerRemoteSamplingStrategy
+  method: get
+  operationId: ReadTraceJaegerRemoteSamplingStrategy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/config/trace-jaeger-remote-sampling-strategies/{slug}
+  method: put
+  operationId: UpdateTraceJaegerRemoteSamplingStrategy
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1957,6 +3476,22 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/trace-metrics-rules/{slug}
+  method: delete
+  operationId: DeleteTraceMetricsRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/trace-metrics-rules/{slug}
   method: get
   operationId: ReadTraceMetricsRule
   x-agentic-access:
@@ -1982,9 +3517,67 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/config/trace-metrics-rules/{slug}
+- path: /api/unstable/config/trace-tail-sampling-rules
   method: delete
-  operationId: DeleteTraceMetricsRule
+  operationId: DeleteTraceTailSamplingRules
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-tail-sampling-rules
+  method: get
+  operationId: ReadTraceTailSamplingRules
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/trace-tail-sampling-rules
+  method: post
+  operationId: CreateTraceTailSamplingRules
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-tail-sampling-rules
+  method: put
+  operationId: UpdateTraceTailSamplingRules
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/config/trace-tail-sampling-rules
+  method: delete
+  operationId: DeleteTraceTailSamplingRules
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2009,22 +3602,6 @@ operations:
       max-ttl: 3600
     audit: none
 - path: /api/v1/config/trace-tail-sampling-rules
-  method: put
-  operationId: UpdateTraceTailSamplingRules
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/config/trace-tail-sampling-rules
   method: post
   operationId: CreateTraceTailSamplingRules
   x-agentic-access:
@@ -2041,8 +3618,66 @@ operations:
       - high-value
     audit: required
 - path: /api/v1/config/trace-tail-sampling-rules
+  method: put
+  operationId: UpdateTraceTailSamplingRules
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-top-tag-config
   method: delete
-  operationId: DeleteTraceTailSamplingRules
+  operationId: DeleteTraceTopTagConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-top-tag-config
+  method: get
+  operationId: ReadTraceTopTagConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/unstable/config/trace-top-tag-config
+  method: post
+  operationId: CreateTraceTopTagConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/unstable/config/trace-top-tag-config
+  method: put
+  operationId: UpdateTraceTopTagConfig
   x-agentic-access:
     action-class: acting
     consequence: write
