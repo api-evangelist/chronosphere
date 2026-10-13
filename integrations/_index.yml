@@ -27,3 +27,15 @@
     detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
+- slug: chronosphere-aws-marketplace
+  label: AWS Marketplace
+  partner: amazon-web-services
+  partner_name: AWS Marketplace
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=7370561c-0f4f-4e64-9e97-45387d26cec5
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
