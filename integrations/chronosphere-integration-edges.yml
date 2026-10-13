@@ -6,22 +6,6 @@ checked:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
 marketplace_apps: []
 edges:
-- partner_name: AWS Marketplace
-  partner: amazon-web-services
-  partner_match: aggregator
-  type: marketplace
-  marketplace: aws-marketplace
-  channel: distribution
-  relationship: platform-app
-  direction: provider-built
-  evidence: https://aws.amazon.com/marketplace/seller-profile?id=7370561c-0f4f-4e64-9e97-45387d26cec5
-  listing_count: 2
-  apps:
-  - Chronosphere SaaS
-  - Chronosphere Telemetry Pipeline
-  seller_name: Chronosphere
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
 - partner_name: OpenTelemetry
   partner: null
   type: contract
@@ -44,6 +28,22 @@ edges:
     detected_by: sweep-observability.py
     detected: '2026-10-13'
   detected_by: sweep-observability.py
+  detected: '2026-10-13'
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=7370561c-0f4f-4e64-9e97-45387d26cec5
+  listing_count: 2
+  apps:
+  - Chronosphere SaaS
+  - Chronosphere Telemetry Pipeline
+  seller_name: Chronosphere
+  detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
