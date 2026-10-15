@@ -39,3 +39,59 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: chronosphere-a2a-protocol-own-agent-card
+  label: A2A protocol (own Agent Card)
+  partner_name: A2A protocol (own Agent Card)
+  category: A2A agent
+  type: register
+  channel: provider-built
+  evidence: https://docs.chronosphere.io/.well-known/agent-card.json
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: provider's own /.well-known/agent-card.json
+    spec_file: null
+    standard: A2A
+    role: a2a-agent-card
+    registered_name: Cortex XCOR Documentation
+    organization: Chronosphere Documentation
+    matched_domain: chronosphere.io
+    matched_by: own-domain
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
+- slug: chronosphere-cncf-cloud-native-landscape
+  label: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_name: CNCF (Cloud Native Landscape)
+  category: Cloud native landscape
+  type: register
+  channel: standard-directory
+  evidence: https://github.com/cncf/landscape/blob/3a7d378b1824b82e729a453bb03fa6f1e37557e1/landscape.yml
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @3a7d378b18)
+    spec_file: null
+    standard: Cloud Native (CNCF)
+    role: cncf-member (Silver)
+    registered_name: Chronosphere
+    registered_names:
+    - Chronosphere
+    website: https://chronosphere.io/
+    matched_domain: chronosphere.io
+    matched_by: domain
+    member_tier: Silver
+    joined: '2019-07-01'
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - Observability and Analysis / Observability
+    landscape_entries: 1
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null

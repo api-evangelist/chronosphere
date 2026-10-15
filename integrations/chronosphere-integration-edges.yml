@@ -1,7 +1,11 @@
 generated: '2026-10-13'
 method: searched
 checked:
+- https://a2aregistry.org/api/agents
 - https://aws.amazon.com/marketplace/
+- https://focus.finops.org/data-generators/
+- https://github.com/cncf/k8s-conformance
+- https://github.com/cncf/landscape
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
 marketplace_apps: []
@@ -45,6 +49,72 @@ edges:
   seller_name: Chronosphere
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: A2A protocol (own Agent Card)
+  partner: null
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: A2A agent
+  evidence: https://docs.chronosphere.io/.well-known/agent-card.json
+  channel: provider-built
+  relationship: compatible
+  shape: a2a
+  evidence_kind: own-wellknown
+  degree: conformant
+  report_only: true
+  a2a_card:
+    grade: conformant
+    verdict: live
+    protocol_version: '0.3'
+    deviations:
+    - supportedInterfaces-instead-of-additionalInterfaces
+    card_subject: docs
+  contract_reference:
+    register: provider's own /.well-known/agent-card.json
+    spec_file: null
+    standard: A2A
+    role: a2a-agent-card
+    registered_name: Cortex XCOR Documentation
+    organization: Chronosphere Documentation
+    matched_domain: chronosphere.io
+    matched_by: own-domain
+    detected_by: sweep-ai-agents.py
+    detected: '2026-10-15'
+  detected_by: sweep-ai-agents.py
+  first_seen: '2026-10-15'
+- partner_name: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: Cloud native landscape
+  evidence: https://github.com/cncf/landscape/blob/3a7d378b1824b82e729a453bb03fa6f1e37557e1/landscape.yml
+  channel: standard-directory
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @3a7d378b18)
+    spec_file: null
+    standard: Cloud Native (CNCF)
+    role: cncf-member (Silver)
+    registered_name: Chronosphere
+    registered_names:
+    - Chronosphere
+    website: https://chronosphere.io/
+    matched_domain: chronosphere.io
+    matched_by: domain
+    member_tier: Silver
+    joined: '2019-07-01'
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - Observability and Analysis / Observability
+    landscape_entries: 1
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-15'
+  detected_by: sweep-cloud-native.py
+  first_seen: '2026-10-15'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
