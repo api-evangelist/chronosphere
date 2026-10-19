@@ -95,3 +95,100 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: chronosphere-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/chronosphereio/calyptia-api
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/chronosphereio/calyptia-api
+      version: v1.11.0
+      released: '2024-08-28'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/chronosphereio/calyptia-api
+      repo_leg: github-org:chronosphereio
+      publisher_leg: org:chronosphereio
+      matched_by: github-org
+    - name: github.com/chronosphereio/calyptia-cli
+      version: v1.20.3
+      released: '2024-06-24'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/chronosphereio/calyptia-cli
+      repo_leg: github-org:chronosphereio
+      publisher_leg: org:chronosphereio
+      matched_by: github-org
+    - name: github.com/chronosphereio/chronoctl-core
+      version: v1.36.0
+      released: '2026-10-15'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/chronosphereio/chronoctl-core
+      repo_leg: github-org:chronosphereio
+      publisher_leg: org:chronosphereio
+      matched_by: github-org
+    - name: github.com/chronosphereio/pulumi-chronosphere
+      version: v0.9.16
+      released: '2026-06-05'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/chronosphereio/pulumi-chronosphere
+      repo_leg: github-org:chronosphereio
+      publisher_leg: org:chronosphereio
+      matched_by: github-org
+    - name: github.com/chronosphereio/terraform-provider-chronosphere
+      version: v1.39.0
+      released: '2026-10-14'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/chronosphereio/terraform-provider-chronosphere
+      repo_leg: github-org:chronosphereio
+      publisher_leg: org:chronosphereio
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: chronosphere-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@pulumi-chronosphere/pulumi-chronosphere
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@pulumi-chronosphere/pulumi-chronosphere'
+      version: 0.9.10
+      released: '2025-10-23'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@pulumi-chronosphere/pulumi-chronosphere
+      repo_leg: domain:chronosphere.io
+      publisher_leg: email:chronosphere.io
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
