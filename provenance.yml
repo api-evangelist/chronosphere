@@ -243,130 +243,742 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/chronosphere-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/chronosphere-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
+  json-ld/chronosphere-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-command-center-group-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-dashboard-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-link-template-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-noop-entity-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-notebook-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-object-discovery-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-service-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-unstable-update-trace-jaeger-remote-sampling-strategy-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-azure-metrics-integration-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-bucket-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-classic-dashboard-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-collection-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-consumption-budget-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-dashboard-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-dataset-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-derived-label-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-derived-metric-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-drop-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-gcp-metrics-integration-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-log-retention-config-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-log-scale-action-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-log-scale-alert-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-mapping-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-monitor-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-muting-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-notifier-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-recording-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-rollup-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-slobody-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-team-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-trace-behavior-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-trace-jaeger-remote-sampling-strategy-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-config-v1-update-trace-metrics-rule-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-command-center-group-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-command-center-group-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-dashboard-from-classic-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-dashboard-from-classic-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-dashboard-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-link-template-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-link-template-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-log-primary-key-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-log-primary-key-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-noop-entity-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-noop-entity-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-notebook-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-notebook-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-object-discovery-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-service-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-service-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-trace-jaeger-remote-sampling-strategy-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-trace-tail-sampling-rules-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-create-trace-tail-sampling-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-delete-log-primary-key-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-delete-noop-entity-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-command-center-groups-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-dashboards-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-link-templates-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-log-primary-keys-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-notebooks-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-object-discovery-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-services-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-list-trace-jaeger-remote-sampling-strategies-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-command-center-group-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-link-template-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-log-primary-key-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-noop-entity-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-notebook-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-service-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-read-trace-tail-sampling-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-update-command-center-group-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-update-link-template-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-update-noop-entity-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-update-notebook-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configunstable-update-trace-tail-sampling-rules-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-azure-metrics-integration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-azure-metrics-integration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-bucket-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-bucket-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-classic-dashboard-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-classic-dashboard-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-collection-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-collection-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-consumption-budget-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-consumption-budget-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-consumption-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-consumption-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-dashboard-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-dataset-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-dataset-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-derived-label-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-derived-label-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-derived-metric-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-derived-metric-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-drop-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-drop-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-gcp-metrics-integration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-gcp-metrics-integration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-allocation-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-allocation-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-control-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-control-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-ingest-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-ingest-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-retention-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-retention-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-scale-action-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-scale-action-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-scale-alert-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-log-scale-alert-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-mapping-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-mapping-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-monitor-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-monitor-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-muting-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-muting-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-notifier-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-notifier-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-otel-metrics-ingestion-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-otel-metrics-ingestion-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-recording-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-recording-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-rollup-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-rollup-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-slorequest-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-sloresponse-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-team-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-team-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-behavior-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-behavior-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-behavior-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-behavior-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-jaeger-remote-sampling-strategy-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-metrics-rule-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-metrics-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-create-trace-tail-sampling-rules-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-bucket-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-consumption-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-log-allocation-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-log-control-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-log-ingest-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-otel-metrics-ingestion-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-delete-trace-behavior-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-azure-metrics-integrations-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-buckets-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-classic-dashboards-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-collections-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-consumption-budgets-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-dashboards-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-datasets-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-derived-labels-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-derived-metrics-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-drop-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-gcp-metrics-integrations-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-log-retention-configs-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-log-scale-actions-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-log-scale-alerts-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-mapping-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-monitors-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-muting-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-notifiers-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-recording-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-rollup-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-services-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-slos-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-teams-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-trace-behaviors-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-trace-jaeger-remote-sampling-strategies-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-list-trace-metrics-rules-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-azure-metrics-integration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-bucket-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-classic-dashboard-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-collection-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-consumption-budget-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-consumption-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-dataset-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-derived-label-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-derived-metric-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-drop-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-gcp-metrics-integration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-log-allocation-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-log-control-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-log-ingest-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-log-retention-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-log-scale-action-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-log-scale-alert-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-mapping-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-monitor-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-muting-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-notifier-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-otel-metrics-ingestion-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-recording-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-rollup-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-sloresponse-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-team-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-trace-behavior-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-trace-behavior-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-read-trace-metrics-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-azure-metrics-integration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-classic-dashboard-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-collection-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-consumption-budget-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-consumption-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-consumption-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-dataset-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-derived-label-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-derived-metric-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-drop-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-gcp-metrics-integration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-allocation-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-allocation-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-control-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-control-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-ingest-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-ingest-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-retention-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-scale-action-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-log-scale-alert-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-mapping-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-monitor-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-muting-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-notifier-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-otel-metrics-ingestion-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-otel-metrics-ingestion-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-recording-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-rollup-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-sloresponse-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-team-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-trace-behavior-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-trace-behavior-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-trace-behavior-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-trace-metrics-rule-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-configv1-update-trace-tail-sampling-rules-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/chronosphere-dashboard-schema.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  json-schema/chronosphere-data-v1-put-panel-annotation-body-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-datav1-create-panel-annotation-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-datav1-list-traces-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-datav1-panel-annotation-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-datav1-query-logs-range-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-datav1-read-metric-metadata-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-statev1-list-metric-usages-by-label-name-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/chronosphere-statev1-list-metric-usages-by-metric-name-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -450,9 +1062,27 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/chronosphere-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
+  llms/chronosphere-llms-provenance.yml:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   llms/chronosphere-llms.txt:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
@@ -467,16 +1097,20 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/chronosphere-config-unstable-swagger.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://docs-xcor.paloaltonetworks.com/openapi/api_unstable_config_openapi3_DOCUMENTATION_ONLY.json
+      (sha256 ebcc82735d8a, fetched 2026-10-04)
   openapi/_original/chronosphere-config-v1-openapi3.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://docs-xcor.paloaltonetworks.com/openapi/api_v1_config_openapi3_DOCUMENTATION_ONLY.json
+      (sha256 0c270a7e3d4a, fetched 2026-10-04)
+  openapi/_original/chronosphere-openapi.yaml:
+    method: harvested
+    evidence: the same operations as https://docs-xcor.paloaltonetworks.com/openapi.yaml (sha256 bb228585a279,
+      fetched 2026-10-04)
   openapi/_original/chronosphere-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://docs-xcor.paloaltonetworks.com/openapi.yaml (sha256 bb228585a279,
+      fetched 2026-10-04)
   openapi/chronosphere-azuremetricsintegration-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -649,107 +1283,107 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/chronosphere-bucket-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-classicdashboard-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-collection-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-dashboard-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-data-v1-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-dataset-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-derivedlabel-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-derivedmetric-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-droprule-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-gcpmetricsintegration-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-grafanadashboard-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-logallocationconfig-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-logingestconfig-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-logscaleaction-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-logscalealert-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-mappingrule-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-monitor-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-mutingrule-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-notificationpolicy-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-notifier-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-otelmetricsingestion-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-recordingrule-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-resourcepools-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-rolluprule-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-service-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-serviceaccount-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-slo-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-state-v1-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-team-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-tracebehavior-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-tracebehaviorconfig-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-tracejaegerremotesamplingstrategy-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-tracemetricsrule-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/chronosphere-tracetailsamplingrules-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   packages/chronosphere-packages.yml:
     method: searched
     evidence: declared in the artifact
@@ -758,6 +1392,9 @@ artifacts:
     evidence: declared in the artifact
   rate-limits/chronosphere-rate-limits.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/chronosphere-rules.yml:
+    method: generated
     evidence: declared in the artifact
   scopes/chronosphere-scopes.yml:
     method: unknown
@@ -782,6 +1419,12 @@ artifacts:
     evidence: no authorship recorded
   skills/chronosphere-safe-config-change.md:
     method: generated
+    evidence: declared in the artifact
+  vendors/chronosphere-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/chronosphere-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/chronosphere-docs-mcp-manifest.json:
     method: unknown

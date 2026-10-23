@@ -710,3 +710,9 @@ x-refined-from:
 - chronosphere-config-v1-openapi3.json
 - chronosphere-openapi.yml
 - chronosphere-openapi.yaml
+x-provenance:
+  method: harvested
+  publisher: Chronosphere
+  source: https://docs-xcor.paloaltonetworks.com/openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

@@ -383,3 +383,9 @@ components:
       - SERVICE
       title: Type values must match entitiespb.Collection.CollectionType.
       type: string
+x-provenance:
+  method: harvested
+  publisher: Chronosphere
+  source: https://docs-xcor.paloaltonetworks.com/openapi/api_unstable_config_openapi3_DOCUMENTATION_ONLY.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
