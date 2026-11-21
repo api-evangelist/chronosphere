@@ -1,0 +1,1737 @@
+aid: chronosphere
+name: Chronosphere
+description: 'Chronosphere is a cloud-native observability platform for controlling the cost and volume of telemetry data at scale, spanning metrics,
+  logs, traces and change events. It ships an Observability Platform (dashboards, monitors, SLOs, differential diagnosis, PromQL querying and
+  metrics shaping) and a Telemetry Pipeline built on Fluent Bit, acquired with Calyptia. Its APIs are per-tenant HTTP/JSON: a Config API for resources
+  as code, a Data API for events, logs and traces, and a State API for usage and rule health, with Prometheus-compatible query endpoints, an open-source
+  MCP server, a Terraform provider and the Chronoctl CLI. Palo Alto Networks completed its acquisition of Chronosphere in 2026.'
+type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-29'
+  method: derived
+accessModel:
+  pricing: enterprise
+  onboarding: sales-gated
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Sales-gated onboarding
+  confidence: high
+  source:
+  - plans
+  generated: '2026-08-29'
+  method: searched
+  note: 'Corrects a derived value of "Paid · Self-serve signup". Probed 2026-08-29: chronosphere.io/pricing and /pricing/ both return 404, no
+    pricing link exists in the navigation or footer, and the only commercial call to action is https://chronosphere.io/demo-request/ ("Request
+    a Demo"). There is no self-serve signup, no published free tier and no trial; API access requires an existing tenant, which is why the API
+    base is a per-customer subdomain. See plans/chronosphere-plans-pricing.yml.'
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/chronosphere.png
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-21
+x-docs-hosting: vercel
+tags:
+- Observability
+- AIOps
+- Monitoring
+- Metrics
+- Logging
+- Distributed Tracing
+- Telemetry
+- OpenTelemetry
+- Prometheus
+- Alerting
+- SLO
+- Infrastructure as Code
+- MCP
+- A2A
+tags_raw:
+- Observability
+- AIOps
+- Monitoring
+- Metrics
+- Logging
+- Distributed Tracing
+- Telemetry
+- OpenTelemetry
+- Prometheus
+- Alerting
+- SLO
+- Infrastructure as Code
+- MCP
+- Agent Ready
+- A2A
+url: https://raw.githubusercontent.com/api-evangelist/chronosphere/refs/heads/main/apis.yml
+created: '2026-03-27'
+modified: '2026-08-29'
+specificationVersion: '0.23'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+common:
+- type: FinOps
+  url: finops/chronosphere-finops.yml
+- type: Spectral
+  url: rules/chronosphere-rules.yml
+- type: JSONLD
+  url: json-ld/chronosphere-context.jsonld
+- type: Vocabulary
+  url: vocabulary/chronosphere-vocabulary.yml
+- type: Deprecation
+  url: lifecycle/chronosphere-lifecycle.yml
+- type: Hosts
+  url: hosts/chronosphere-hosts.yml
+- type: Vendors
+  url: vendors/chronosphere-vendors.yml
+- type: Overlay
+  url: overlays/chronosphere-grafanadashboard-api-overlay.yaml
+- type: Overlay
+  url: overlays/chronosphere-notificationpolicy-api-overlay.yaml
+- type: Overlay
+  url: overlays/chronosphere-resourcepools-api-overlay.yaml
+- type: Overlay
+  url: overlays/chronosphere-serviceaccount-api-overlay.yaml
+- type: Overlay
+  url: overlays/chronosphere-data-v1-api-overlay.yaml
+- type: Overlay
+  url: overlays/chronosphere-state-v1-api-overlay.yaml
+- type: Authentication
+  url: authentication/chronosphere-authentication.yml
+- type: CapabilityMap
+  url: capabilities/chronosphere-capability-edges.yml
+  name: Chronosphere Business Capability Map
+- type: AgenticAccess
+  url: agentic-access/chronosphere-agentic-access.yml
+- type: TrustCenter
+  url: security/chronosphere-trust-center.yml
+- type: DomainSecurity
+  url: security/chronosphere-domain-security.yml
+- type: GitHubOrganization
+  url: https://github.com/chronosphereio
+- type: LinkedIn
+  url: https://www.linkedin.com/company/chronosphereio
+- type: Website
+  url: https://chronosphere.io
+- type: Documentation
+  url: https://docs.chronosphere.io
+- type: Integrations
+  url: https://chronosphere.io/integrations/
+- type: LlmsText
+  url: https://docs.chronosphere.io/llms.txt
+- type: Blog
+  url: https://chronosphere.io/blog/
+- type: Packages
+  url: packages/chronosphere-packages.yml
+  name: Chronosphere first-party packages and SDK currency
+- type: SDKs
+  url: packages/chronosphere-packages.yml
+- type: CLI
+  url: cli/chronosphere-cli.yml
+  name: Chronoctl
+- type: WellKnown
+  url: well-known/chronosphere-well-known.yml
+- type: MCPServer
+  url: mcp/chronosphere-mcp.yml
+  name: Chronosphere MCP server
+- type: ToolCrosswalk
+  url: mcp/chronosphere-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/chronosphere-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/chronosphere-llms.txt
+- type: Conformance
+  url: conformance/chronosphere-conformance.yml
+- type: Compliance
+  url: security/chronosphere-trust-center.yml
+- type: ErrorCatalog
+  url: errors/chronosphere-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/chronosphere-lifecycle.yml
+- type: StatusPage
+  url: lifecycle/chronosphere-lifecycle.yml
+- type: Conventions
+  url: conventions/chronosphere-conventions.yml
+- type: Idempotency
+  url: conventions/chronosphere-conventions.yml
+- type: Webhooks
+  url: asyncapi/chronosphere-webhooks.yml
+- type: ChangeLog
+  url: changelog/chronosphere-changelog.yml
+- type: DataModel
+  url: data-model/chronosphere-data-model.yml
+- type: JSONSchema
+  url: json-schema/chronosphere-dashboard-schema.json
+  name: Standard Dashboard Configuration schema
+- type: Plans
+  url: plans/chronosphere-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/chronosphere-rate-limits.yml
+- type: APIReference
+  url: https://docs.chronosphere.io/tooling/api-info/definition
+- type: GettingStarted
+  url: https://docs.chronosphere.io/tooling/api-info
+- type: Support
+  url: https://docs.chronosphere.io/support
+- type: PrivacyPolicy
+  url: https://chronosphere.io/privacy/
+- type: Newsroom
+  url: https://chronosphere.io/newsroom/
+- type: Careers
+  url: https://chronosphere.io/careers/
+- type: Partners
+  url: https://chronosphere.io/partners/
+- type: X
+  url: https://x.com/chronosphereio
+- type: YouTube
+  url: https://www.youtube.com/@chronosphere-observability
+- type: OAuthScopes
+  url: scopes/chronosphere-scopes.yml
+- type: Contact
+  url: mailto:support@chronosphere.io
+apis:
+- aid: chronosphere:chronosphere-bucket-api
+  name: Chronosphere Bucket API
+  description: The Bucket API from Chronosphere — 2 operation(s) for bucket.
+  humanURL: https://chronosphere.io
+  tags:
+  - Bucket
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-bucket-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-bucket-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-bucket-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-bucket-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-bucket-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-buckets-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-bucket-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-bucket-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-classicdashboard-api
+  name: Chronosphere ClassicDashboard API
+  description: The ClassicDashboard API from Chronosphere — 2 operation(s) for classicdashboard.
+  humanURL: https://chronosphere.io
+  tags:
+  - ClassicDashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-classicdashboard-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-classicdashboard-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-classic-dashboard-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-classic-dashboard-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-classic-dashboards-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-classic-dashboard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-classic-dashboard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-classic-dashboard-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-collection-api
+  name: Chronosphere Collection API
+  description: The Collection API from Chronosphere — 2 operation(s) for collection.
+  humanURL: https://chronosphere.io
+  tags:
+  - Collection
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-collection-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-collection-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-collection-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-collection-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-collections-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-collection-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-collection-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-collection-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-dashboard-api
+  name: Chronosphere Dashboard API
+  description: The Dashboard API from Chronosphere — 2 operation(s) for dashboard.
+  humanURL: https://chronosphere.io
+  tags:
+  - Dashboards
+  tags_raw:
+  - Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-dashboard-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-dashboard-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-dashboard-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-dashboard-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-dashboard-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-dashboards-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-dashboards-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-dashboard-request-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-dataset-api
+  name: Chronosphere Dataset API
+  description: The Dataset API from Chronosphere — 2 operation(s) for dataset.
+  humanURL: https://chronosphere.io
+  tags:
+  - Datasets
+  tags_raw:
+  - Dataset
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-dataset-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-dataset-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-dataset-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-dataset-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-datasets-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-dataset-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-dataset-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-dataset-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-derivedlabel-api
+  name: Chronosphere DerivedLabel API
+  description: The DerivedLabel API from Chronosphere — 2 operation(s) for derivedlabel.
+  humanURL: https://chronosphere.io
+  tags:
+  - DerivedLabel
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-derivedlabel-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-derivedlabel-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-derived-label-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-derived-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-derived-labels-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-derived-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-derived-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-derived-label-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-derivedmetric-api
+  name: Chronosphere DerivedMetric API
+  description: The DerivedMetric API from Chronosphere — 2 operation(s) for derivedmetric.
+  humanURL: https://chronosphere.io
+  tags:
+  - DerivedMetric
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-derivedmetric-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-derivedmetric-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-derived-metric-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-derived-metric-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-derived-metrics-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-derived-metric-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-derived-metric-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-derived-metric-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-droprule-api
+  name: Chronosphere DropRule API
+  description: The DropRule API from Chronosphere — 2 operation(s) for droprule.
+  humanURL: https://chronosphere.io
+  tags:
+  - DropRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-droprule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-droprule-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-drop-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-drop-rule-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-drop-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-drop-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-drop-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-drop-rule-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-gcpmetricsintegration-api
+  name: Chronosphere GcpMetricsIntegration API
+  description: >-
+    The GcpMetricsIntegration API from Chronosphere — 2 operation(s) for gcpmetricsintegration.
+  humanURL: https://chronosphere.io
+  tags:
+  - GcpMetricsIntegration
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-gcpmetricsintegration-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-gcpmetricsintegration-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-gcp-metrics-integration-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-gcp-metrics-integration-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-gcp-metrics-integrations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-gcp-metrics-integration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-gcp-metrics-integration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-gcp-metrics-integration-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-logallocationconfig-api
+  name: Chronosphere LogAllocationConfig API
+  description: The LogAllocationConfig API from Chronosphere — 1 operation(s) for logallocationconfig.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogAllocationConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logallocationconfig-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logallocationconfig-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-allocation-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-allocation-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-allocation-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-log-allocation-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-allocation-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-log-allocation-config-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-logingestconfig-api
+  name: Chronosphere LogIngestConfig API
+  description: The LogIngestConfig API from Chronosphere — 1 operation(s) for logingestconfig.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogIngestConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logingestconfig-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logingestconfig-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-ingest-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-ingest-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-ingest-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-log-ingest-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-ingest-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-log-ingest-config-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-logscaleaction-api
+  name: Chronosphere LogScaleAction API
+  description: The LogScaleAction API from Chronosphere — 2 operation(s) for logscaleaction.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogScaleAction
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logscaleaction-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logscaleaction-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-log-scale-action-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-scale-action-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-log-scale-actions-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-scale-action-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-log-scale-action-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-scale-action-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-logscalealert-api
+  name: Chronosphere LogScaleAlert API
+  description: The LogScaleAlert API from Chronosphere — 2 operation(s) for logscalealert.
+  humanURL: https://chronosphere.io
+  tags:
+  - LogScaleAlert
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logscalealert-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-logscalealert-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-log-scale-alert-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-scale-alert-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-log-scale-alerts-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-scale-alert-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-log-scale-alert-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-scale-alert-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-mappingrule-api
+  name: Chronosphere MappingRule API
+  description: The MappingRule API from Chronosphere — 2 operation(s) for mappingrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - MappingRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-mappingrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-mappingrule-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-mapping-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-mapping-rule-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-mapping-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-mapping-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-mapping-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-mapping-rule-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-monitor-api
+  name: Chronosphere Monitor API
+  description: The Monitor API from Chronosphere — 2 operation(s) for monitor.
+  humanURL: https://chronosphere.io
+  tags:
+  - Monitors
+  tags_raw:
+  - Monitor
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-monitor-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-monitor-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-monitor-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-monitor-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-monitors-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-monitor-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-monitor-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-monitor-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-mutingrule-api
+  name: Chronosphere MutingRule API
+  description: The MutingRule API from Chronosphere — 2 operation(s) for mutingrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - MutingRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-mutingrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-mutingrule-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-muting-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-muting-rule-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-muting-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-muting-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-muting-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-muting-rule-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-notifier-api
+  name: Chronosphere Notifier API
+  description: The Notifier API from Chronosphere — 2 operation(s) for notifier.
+  humanURL: https://chronosphere.io
+  tags:
+  - Notifier
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-notifier-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-notifier-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-notifier-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-notifier-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-notifiers-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-notifier-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-notifier-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-notifier-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-otelmetricsingestion-api
+  name: Chronosphere OtelMetricsIngestion API
+  description: >-
+    The OtelMetricsIngestion API from Chronosphere — 1 operation(s) for otelmetricsingestion.
+  humanURL: https://chronosphere.io
+  tags:
+  - OtelMetricsIngestion
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-otelmetricsingestion-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-otelmetricsingestion-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-otel-metrics-ingestion-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-otel-metrics-ingestion-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-otel-metrics-ingestion-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-otel-metrics-ingestion-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-otel-metrics-ingestion-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-otel-metrics-ingestion-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-recordingrule-api
+  name: Chronosphere RecordingRule API
+  description: The RecordingRule API from Chronosphere — 2 operation(s) for recordingrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - RecordingRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-recordingrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-recordingrule-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-recording-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-recording-rule-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-recording-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-recording-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-recording-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-recording-rule-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-rolluprule-api
+  name: Chronosphere RollupRule API
+  description: The RollupRule API from Chronosphere — 2 operation(s) for rolluprule.
+  humanURL: https://chronosphere.io
+  tags:
+  - RollupRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-rolluprule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-rolluprule-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-rollup-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-rollup-rule-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-rollup-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-rollup-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-rollup-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-rollup-rule-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-service-api
+  name: Chronosphere Service API
+  description: The Service API from Chronosphere — 1 operation(s) for service.
+  humanURL: https://chronosphere.io
+  tags:
+  - Services
+  tags_raw:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-service-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-service-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-service-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-service-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-services-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-services-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-service-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-read-service-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-slo-api
+  name: Chronosphere SLO API
+  description: The SLO API from Chronosphere — 2 operation(s) for slo.
+  humanURL: https://chronosphere.io
+  tags:
+  - SLO
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-slo-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-slo-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-slobody-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-slorequest-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-slos-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-sloresponse-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-sloresponse-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-sloresponse-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-team-api
+  name: Chronosphere Team API
+  description: The Team API from Chronosphere — 2 operation(s) for team.
+  humanURL: https://chronosphere.io
+  tags:
+  - Team
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-team-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-team-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-team-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-team-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-teams-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-team-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-team-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-team-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-tracebehavior-api
+  name: Chronosphere TraceBehavior API
+  description: The TraceBehavior API from Chronosphere — 2 operation(s) for tracebehavior.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceBehavior
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracebehavior-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracebehavior-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-trace-behavior-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-behavior-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-trace-behaviors-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-behavior-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-trace-behavior-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-trace-behavior-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-tracebehaviorconfig-api
+  name: Chronosphere TraceBehaviorConfig API
+  description: The TraceBehaviorConfig API from Chronosphere — 1 operation(s) for tracebehaviorconfig.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceBehaviorConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracebehaviorconfig-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracebehaviorconfig-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-trace-behavior-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-behavior-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-behavior-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-trace-behavior-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-trace-behavior-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-trace-behavior-config-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-tracejaegerremotesamplingstrategy-api
+  name: Chronosphere TraceJaegerRemoteSamplingStrategy API
+  description: >-
+    The TraceJaegerRemoteSamplingStrategy API from Chronosphere — 2 operation(s) for tracejaegerremotesamplingstrategy.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceJaegerRemoteSamplingStrategy
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracejaegerremotesamplingstrategy-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracejaegerremotesamplingstrategy-api-overlay.yaml
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-config-v1-update-trace-jaeger-remote-sampling-strategy-body-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-config-unstable-update-trace-jaeger-remote-sampling-strategy-body-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configv1-create-trace-jaeger-remote-sampling-strategy-request-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-create-trace-jaeger-remote-sampling-strategy-request-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-list-trace-jaeger-remote-sampling-strategies-response-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configv1-list-trace-jaeger-remote-sampling-strategies-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-tracemetricsrule-api
+  name: Chronosphere TraceMetricsRule API
+  description: The TraceMetricsRule API from Chronosphere — 2 operation(s) for tracemetricsrule.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceMetricsRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracemetricsrule-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracemetricsrule-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-trace-metrics-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-metrics-rule-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-trace-metrics-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-metrics-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-trace-metrics-rule-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-trace-metrics-rule-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-tracetailsamplingrules-api
+  name: Chronosphere TraceTailSamplingRules API
+  description: >-
+    The TraceTailSamplingRules API from Chronosphere — 1 operation(s) for tracetailsamplingrules.
+  humanURL: https://chronosphere.io
+  tags:
+  - TraceTailSamplingRules
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracetailsamplingrules-api-openapi.yml
+  - type: Overlay
+    url: overlays/chronosphere-tracetailsamplingrules-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-trace-tail-sampling-rules-request-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-update-trace-tail-sampling-rules-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-trace-tail-sampling-rules-request-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-create-trace-tail-sampling-rules-request-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-create-trace-tail-sampling-rules-response-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-read-trace-tail-sampling-rules-response-schema.json
+  baseURL: https://{tenant}.chronosphere.io
+- aid: chronosphere:chronosphere-azuremetricsintegration-api
+  name: Chronosphere Azure Metrics Integration API
+  description: >-
+    The AzureMetricsIntegration API from Chronosphere — 2 operation(s) for azuremetricsintegration.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - AzureMetricsIntegration
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-azuremetricsintegration-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-azure-metrics-integration-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-azure-metrics-integration-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-azure-metrics-integrations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-azure-metrics-integration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-azure-metrics-integration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-azure-metrics-integration-response-schema.json
+- aid: chronosphere:chronosphere-commandcentergroup-api
+  name: Chronosphere Command Center Group API
+  description: The CommandCenterGroup API from Chronosphere — 2 operation(s) for commandcentergroup.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - CommandCenterGroup
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-commandcentergroup-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-command-center-group-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-command-center-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-command-center-groups-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-command-center-group-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-read-command-center-group-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-update-command-center-group-response-schema.json
+- aid: chronosphere:chronosphere-configunstable-api
+  name: Chronosphere Config Unstable API
+  description: The ConfigUnstable API from Chronosphere — 1 operation(s) for configunstable.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ConfigUnstable
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-configunstable-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-create-dashboard-from-classic-request-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/chronosphere-configunstable-create-dashboard-from-classic-response-schema.json
+- aid: chronosphere:chronosphere-consumptionbudget-api
+  name: Chronosphere Consumption Budget API
+  description: The ConsumptionBudget API from Chronosphere — 2 operation(s) for consumptionbudget.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ConsumptionBudget
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-consumptionbudget-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-consumption-budget-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-consumption-budget-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-consumption-budgets-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-consumption-budget-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-consumption-budget-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-consumption-budget-response-schema.json
+- aid: chronosphere:chronosphere-consumptionconfig-api
+  name: Chronosphere Consumption Config API
+  description: The ConsumptionConfig API from Chronosphere — 1 operation(s) for consumptionconfig.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ConsumptionConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-consumptionconfig-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-consumption-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-consumption-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-consumption-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-consumption-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-consumption-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-consumption-config-response-schema.json
+- aid: chronosphere:chronosphere-datav1-api
+  name: Chronosphere Data V1 API
+  description: The DataV1 API from Chronosphere — 6 operation(s) for datav1.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - DataV1
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-datav1-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-datav1-list-traces-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-datav1-panel-annotation-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-datav1-create-panel-annotation-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-datav1-query-logs-range-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-data-v1-put-panel-annotation-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-datav1-read-metric-metadata-response-schema.json
+- aid: chronosphere:chronosphere-linktemplate-api
+  name: Chronosphere Link Template API
+  description: The LinkTemplate API from Chronosphere — 2 operation(s) for linktemplate.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - LinkTemplate
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-linktemplate-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-link-template-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-link-template-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-link-templates-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-link-template-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-read-link-template-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-update-link-template-response-schema.json
+- aid: chronosphere:chronosphere-logcontrolconfig-api
+  name: Chronosphere Log Control Config API
+  description: The LogControlConfig API from Chronosphere — 1 operation(s) for logcontrolconfig.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - LogControlConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logcontrolconfig-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-control-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-control-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-control-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-log-control-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-control-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-delete-log-control-config-response-schema.json
+- aid: chronosphere:chronosphere-logprimarykey-api
+  name: Chronosphere Log Primary Key API
+  description: The LogPrimaryKey API from Chronosphere — 2 operation(s) for logprimarykey.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - LogPrimaryKey
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logprimarykey-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-log-primary-key-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-log-primary-keys-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-log-primary-key-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-read-log-primary-key-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-delete-log-primary-key-response-schema.json
+- aid: chronosphere:chronosphere-logretentionconfig-api
+  name: Chronosphere Log Retention Config API
+  description: The LogRetentionConfig API from Chronosphere — 2 operation(s) for logretentionconfig.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - LogRetentionConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-logretentionconfig-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-v1-update-log-retention-config-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-retention-config-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-list-log-retention-configs-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-create-log-retention-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-read-log-retention-config-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configv1-update-log-retention-config-response-schema.json
+- aid: chronosphere:chronosphere-metricusagesbylabelname-api
+  name: Chronosphere Metric Usages By Label Name API
+  description: >-
+    The MetricUsagesByLabelName API from Chronosphere — 1 operation(s) for metricusagesbylabelname.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - MetricUsagesByLabelName
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-metricusagesbylabelname-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-statev1-list-metric-usages-by-label-name-response-schema.json
+- aid: chronosphere:chronosphere-metricusagesbymetricname-api
+  name: Chronosphere Metric Usages By Metric Name API
+  description: >-
+    The MetricUsagesByMetricName API from Chronosphere — 1 operation(s) for metricusagesbymetricname.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - MetricUsagesByMetricName
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-metricusagesbymetricname-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-statev1-list-metric-usages-by-metric-name-response-schema.json
+- aid: chronosphere:chronosphere-noopentity-api
+  name: Chronosphere Noop Entity API
+  description: The NoopEntity API from Chronosphere — 2 operation(s) for noopentity.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - NoopEntity
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-noopentity-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-noop-entity-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-noop-entity-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-noop-entity-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-read-noop-entity-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-update-noop-entity-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-delete-noop-entity-response-schema.json
+- aid: chronosphere:chronosphere-notebook-api
+  name: Chronosphere Notebook API
+  description: The Notebook API from Chronosphere — 2 operation(s) for notebook.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - Notebooks
+  tags_raw:
+  - Notebook
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-notebook-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-notebook-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-notebook-request-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-notebooks-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-notebook-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-read-notebook-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-update-notebook-response-schema.json
+- aid: chronosphere:chronosphere-objectdiscoveryrule-api
+  name: Chronosphere Object Discovery Rule API
+  description: The ObjectDiscoveryRule API from Chronosphere — 2 operation(s) for objectdiscoveryrule.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ObjectDiscoveryRule
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-objectdiscoveryrule-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+  - type: JSONSchema
+    url: json-schema/chronosphere-config-unstable-update-object-discovery-rule-body-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-list-object-discovery-rules-response-schema.json
+  - type: JSONSchema
+    url: json-schema/chronosphere-configunstable-create-object-discovery-rule-request-schema.json
+- aid: chronosphere:chronosphere-queryresourcepools-api
+  name: Chronosphere Query Resource Pools API
+  description: The QueryResourcePools API from Chronosphere — 1 operation(s) for queryresourcepools.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - QueryResourcePools
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-queryresourcepools-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-ruleevaluations-api
+  name: Chronosphere Rule Evaluations API
+  description: The RuleEvaluations API from Chronosphere — 1 operation(s) for ruleevaluations.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - RuleEvaluations
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-ruleevaluations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-savedtracesearch-api
+  name: Chronosphere Saved Trace Search API
+  description: The SavedTraceSearch API from Chronosphere — 2 operation(s) for savedtracesearch.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - SavedTraceSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-savedtracesearch-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-serviceattribute-api
+  name: Chronosphere Service Attribute API
+  description: The ServiceAttribute API from Chronosphere — 1 operation(s) for serviceattribute.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ServiceAttribute
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-serviceattribute-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-syncprometheus-api
+  name: Chronosphere Sync Prometheus API
+  description: The SyncPrometheus API from Chronosphere — 1 operation(s) for syncprometheus.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - SyncPrometheus
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-syncprometheus-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-synthetictest-api
+  name: Chronosphere Synthetic Test API
+  description: The SyntheticTest API from Chronosphere — 2 operation(s) for synthetictest.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - SyntheticTest
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-synthetictest-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-tracetoptagconfig-api
+  name: Chronosphere Trace Top Tag Config API
+  description: The TraceTopTagConfig API from Chronosphere — 1 operation(s) for tracetoptagconfig.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - TraceTopTagConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-tracetoptagconfig-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-cloud-integration-api
+  name: Chronosphere Cloud Integration API
+  description: The Cloud Integration API from Chronosphere — 2 operation(s) for cloud integration.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - Cloud Integration
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-cloud-integration-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-config-v1-api
+  name: Chronosphere Config (v1) API
+  description: The Config (v1) API from Chronosphere — 1 operation(s) for config (v1).
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - Config (v1)
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-config-v1-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-external-connection-api
+  name: Chronosphere External Connection API
+  description: The External Connection API from Chronosphere — 2 operation(s) for external connection.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - External Connection
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-external-connection-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-grafana-dashboard-api
+  name: Chronosphere Grafana Dashboard API
+  description: The Grafana Dashboard API from Chronosphere — 2 operation(s) for grafana dashboard.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - Grafana Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-grafana-dashboard-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-notification-policy-api
+  name: Chronosphere Notification Policy API
+  description: The Notification Policy API from Chronosphere — 2 operation(s) for notification policy.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - Notification Policy
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-notification-policy-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-resource-pools-api
+  name: Chronosphere Resource Pools API
+  description: The Resource Pools API from Chronosphere — 1 operation(s) for resource pools.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ResourcePools
+  tags_raw:
+  - Resource Pools
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-resource-pools-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+- aid: chronosphere:chronosphere-service-account-api
+  name: Chronosphere Service Account API
+  description: The Service Account API from Chronosphere — 2 operation(s) for service account.
+  humanURL: https://chronosphere.io
+  baseURL: https://{tenant}.chronosphere.io
+  tags:
+  - ServiceAccount
+  tags_raw:
+  - Service Account
+  properties:
+  - type: OpenAPI
+    url: openapi/chronosphere-service-account-api-openapi.yml
+  - type: Documentation
+    url: https://docs.chronosphere.io
+  - type: APIReference
+    url: https://docs.chronosphere.io/tooling/api-info/definition
+  - type: GettingStarted
+    url: https://docs.chronosphere.io/tooling/api-info
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/data_definition
+  - type: Documentation
+    url: https://docs.chronosphere.io/tooling/api-info/state_definition
+integrations:
+- name: chronosphere
+- name: Observability Platform
+- name: Open Source Data Collection
+- name: Control Plane
+- name: Scalable and Reliable Data Stores
+- name: Chronosphere Lens
+- name: Differential Diagnosis DDx
+- name: Chronosphere SLOs
+- name: Telemetry Pipeline
+- name: Telemetry Pipeline Demo
+- name: Data Collection
+- name: By Telemetry Data
+- name: Metrics
+- name: Distributed Tracing
+- name: Chronosphere Logs
+- name: By Layer
+- name: Application Observability
+- name: Business Observability
+- name: Infrastructure Observability
+- name: Control Costs
+- name: Scale Prometheus
+- name: AI Workload Observability
+- name: Improve Developer Efficiency
+- name: Kubernetes Workload Observability Simplified
+- name: Company
+- name: Security
+- name: Newsroom
+- name: FAQs
+- name: Availability Commitment
+- name: Resource Center
+- name: Customer Stories
+- name: Whitepapers
+- name: Webinars
+- name: Demos on Demand
+- name: Videos
+- name: Podcasts
+- name: Research
+- name: Briefs
+- name: Business Value Calculator
+- name: Migration Timeline Estimator
+- name: Open Source
+- name: OpenTelemetry
+- name: Fluent Bit
+- name: Prometheus
+- name: nav-search
+- name: Search Integrations
+x-pointer-check:
+  date: '2026-08-29'
+  method: manual curl with a browser User-Agent, following redirects, one attempt per URL
+  result: every pointer emitted or retained in this file returned a live document
+  removed:
+  - type: HelpCenter
+    url: https://support.chronosphere.io
+    status: 403
+    reason: Cloudflare interstitial ("Just a moment...") on an authenticated support portal; the shared pointer probe grades it soft-404, so it
+      was not retained as a claim.
+  not_emitted:
+  - type: SignUp
+    url: https://chronosphere.io/demo-request/
+    status: 200
+    reason: The page is live but it is a "Request a Demo" sales form, not a self-serve signup. Emitting SignUp for it would assert an onboarding
+      path Chronosphere does not offer, and it made the derived accessModel read "self-serve".
+  - type: Pricing
+    url: https://chronosphere.io/pricing
+    status: 404
+    reason: Chronosphere publishes no pricing page.
+  - type: TermsOfService
+    status: 404
+    reason: No terms page found on chronosphere.io; /terms/, /terms-of-service/, /terms-of-use/, /terms-and-conditions/ and /legal/ all 404 and
+      the footer links none.
+  - type: Postman
+    url: https://www.postman.com/chronosphere
+    status: 200
+    reason: 'Soft-200: the page returns the Postman shell with no Chronosphere content, and a nonsense-workspace control returns the same 200.
+      No public collection exists.'
+  - type: Security
+    reason: No vulnerability disclosure program, security.txt or bug bounty found. /.well-known/security.txt returns 404 on chronosphere.io and
+      docs.chronosphere.io; the security overview page describes internal scanning and pen testing but names no reporting channel.
+  - type: Deprecation
+    reason: No deprecation policy is published, and no Sunset or Deprecation headers are documented.
+  - type: Roadmap
+    reason: No public roadmap.
+  - type: SecurityTxt
+    reason: 404 on every probed host.
+  - type: AsyncAPI
+    reason: No AsyncAPI document published; the webhook surface is catalogued under type Webhooks instead.
+  - type: Protobuf
+    reason: The APIs are grpc-gateway generated but no .proto is published in the 84 public repos of the chronosphereio organization.
+  - type: WSDL
+    reason: No SOAP surface; ?wsdl and ?singleWsdl return the ordinary HTML page.
+  - type: Sandbox
+    reason: No sandbox, test mode or free trial is published.
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: https://docs.chronosphere.io/.well-known/agent-card.json
+  grade: conformant
+  protocol_version: '0.3'
+  control: 404
+x-enrichment:
+  date: '2026-10-03'
+  status: enriched
+  artifacts_added: 187
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local
